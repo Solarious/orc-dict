@@ -1,5 +1,6 @@
 var path = require('path');
 var Word = require('./models/word');
+var autofill = require('./autofill');
 
 function updateWordFromReq(word, req) {
 	word.orcish = req.body['orcish'];
@@ -78,6 +79,20 @@ app.delete('/api/words/:word_orcish', function(req, res) {
 	Word.findOneAndRemove({
 		'orcish': req.params.word_orcish
 	}, function (err, word) {
+		if (err) {
+			res.status(500).send(err);
+		} else {
+			res.json(word);
+		}
+	});
+});
+
+app.post('/api/autofillword', function(req, res) {
+	var word = new Word();
+	orcish = req.body['orcish'];
+	english = req.body['english'];
+	PoS = req.body['PoS'];
+	autofill(orcish, english, PoS, function(err, word) {
 		if (err) {
 			res.status(500).send(err);
 		} else {
