@@ -1,0 +1,20 @@
+{
+  "name": "orc-dict",
+  "version": "1.0.0",
+  "description": "A online dictionary for the Orcish language",
+  "engines": {
+    "node": "4.2.6"
+  },
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nathan Aplin",
+  "dependencies": {
+    "express": "^4.15.2",
+    "method-override": "^2.3.8",
+    "mongoose": "^4.9.3",
+    "morgan": "^1.8.1"
+  }
+}
