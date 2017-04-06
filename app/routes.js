@@ -87,16 +87,14 @@ app.delete('/api/words/:word_orcish', function(req, res) {
 	});
 });
 
-app.post('/api/autofillword', function(req, res) {
-	var word = new Word();
-	orcish = req.body['orcish'];
-	english = req.body['english'];
-	PoS = req.body['PoS'];
-	autofill(orcish, english, PoS, function(err, word) {
+app.get('/api/autofillword/:PoS/:orcish', function(req, res) {
+	var PoS = req.params.PoS;
+	var orcish = req.params.orcish;
+	autofill(orcish, PoS, function(err, wordPart) {
 		if (err) {
 			res.status(500).send(err);
 		} else {
-			res.json(word);
+			res.json(wordPart);
 		}
 	});
 });

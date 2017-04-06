@@ -81,7 +81,8 @@ var VerbVoiceSchema = new Schema({
 var VerbSchema = new Schema({
 	conjugation: {
 		type: String,
-		enum: ['first', 'second', 'irregular']
+		enum: ['first', 'second', 'irregular'],
+		required: true
 	},
 	infinitive: {
 		type: String,
@@ -113,6 +114,39 @@ var VerbSchema = new Schema({
 	}
 }, { _id: false });
 
+var NounSchema = new Schema({
+	declension: {
+		type: String,
+		enum: ['first', 'second', 'third', 'fourth', 'fifth'],
+		required: true
+	},
+	gender: {
+		type: String,
+		enum: ['feminine', 'masculine', 'neutral'],
+		required: true
+	},
+	nominative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	genitive: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	dative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	accusative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	vocative: {
+		type: SingularPluralSchema,
+		required: true
+	}
+}, { _id: false});
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -133,10 +167,44 @@ var WordSchema = new Schema({
 });
 
 WordSchema.pre('save', function(next) {
-	if (this.PoS == 'verb') {
+	if (this.PoS === 'verb') {
 		if (!this.verb) {
 			next(new Error('Word has PoS=="verb" but verb is undefined'));
 			return;
+		}
+	} else if (this.PoS === 'noun') {
+		var nout = this.noun
+		if (!noun) {
+			next(new Error('Word has PoS==noun but noun is undefined'));
+			return;
+		}
+		if (noun.declension === 'first') {
+			if (!(noun.feminine && !noun.masculine && !noun.neutral)) {
+				next(new Error('1st declention noun must only have feminine'));
+				return;
+			}
+		} else if (noun.declension === 'second') {
+			if (!(!noun.feminine && noun.masculine && noun.neutral)) {
+				next(new Error(
+					'1st declention noun must have only masculine and neutral'
+				));
+				return;
+			}
+		} else if (noun.declension === 'third') {
+			if (!(noun.feminine && !noun.masculine && !noun.neutral)) {
+				next(new Error('1st declention noun must have only feminine'));
+				return;
+			}
+		} else if (noun.declension === 'fourth') {
+			if (!(!noun.feminine && noun.masculine && !noun.neutral)) {
+				next(new Error('1st declention noun must have only masculine'));
+				return;
+			}
+		} else if (noun.declension === 'fifth') {
+			if (!(!noun.feminine && !noun.masculine && noun.neutral)) {
+				next(new Error('1st declention noun must have only neutral'));
+				return;
+			}
 		}
 	}
 	next();
