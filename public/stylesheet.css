@@ -1,0 +1,4 @@
+/* Required to prevent fixed navbar from overlaying other content */
+body {
+	padding-top: 50px;
+}
