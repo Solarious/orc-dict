@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
 
 var port = process.env.PORT;
 var dburl = process.env.MONGODB_URI;
@@ -16,8 +18,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.disable('etag');
+app.use(session({
+	secret: process.env.SECRET_KEY,
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-require('./app/routes.js')(app);
+require('./app/routes')(app);
+require('./app/authentication')();
 app.listen(port);
 console.log('Server started on port ' + port);
 

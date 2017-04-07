@@ -7,7 +7,6 @@ angular
 
 function WordsIndexController() {
 	var vm = this;
-	console.log('yar');
 }
 
 })();

@@ -1,4 +1,5 @@
 var path = require('path');
+var passport = require('passport');
 var Word = require('./models/word');
 var autofill = require('./autofill');
 
@@ -97,6 +98,49 @@ app.get('/api/autofillword/:PoS/:orcish', function(req, res) {
 			res.json(wordPart);
 		}
 	});
+});
+
+app.post('/api/user/login', function(req, res, next) {
+	passport.authenticate('local', function(err, user, info) {
+		if (err) {
+			return next(err);
+		}
+		if (!user) {
+			return res.status(401).json({
+				err: info
+			});
+		}
+		req.logIn(user, function(err) {
+			if (err) {
+				return status(500).json({
+					err: err
+				});
+			}
+			res.status(200).json({
+				status: 'Login successful'
+			});
+		});
+	})(req, res, next);
+});
+
+app.get('/api/user/logout', function(req, res) {
+	req.logout();
+	res.json({
+		status: 'Logout success'
+	});
+});
+
+app.get('/api/user/status', function(req, res) {
+	if (req.isAuthenticated()) {
+		return res.status(200).json({
+			status: true,
+			username: req.user.username
+		});
+	} else {
+		return res.status(200).json({
+			status: false
+		});
+	}
 });
 
 app.get('*', function(req, res) {

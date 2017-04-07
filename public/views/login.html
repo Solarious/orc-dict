@@ -1,0 +1,19 @@
+<div ng-show="vm.error" class="alert alert-danger">
+	{{ vm.errorMessage}}
+</div>
+<form ng-submit="vm.login()">
+	<legend>Login</legend>
+	<div class="form-group">
+		<label for="username">Username</label>
+		<input type="text" class="form-control" id="username"
+		name="username" placeholder="username" ng-model="vm.username"/>
+	</div>
+	<div class="form-group">
+		<label for="password">Password</label>
+		<input type="password" class="form-control" id="password"
+		name="password" placeholder="password" ng-model="vm.password"/>
+	</div>
+	<button type="submit" class="btn btn-default" ng-disabled="vm.disabled">
+		Submit
+	</button>
+</form>
