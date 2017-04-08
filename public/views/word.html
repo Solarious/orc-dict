@@ -1,1 +1,85 @@
 <h1>Word View for {{vm.orcish}}</h1>
+
+<div class="col-md-4">
+	<table class="table table-condensed min-first-col">
+		<tr>
+			<th>Orcish:</th>
+			<td>{{vm.word.orcish}}</td>
+		</tr>
+		<tr>
+			<th>English:</th>
+			<td>{{vm.word.english}}</td>
+		</tr>
+		<tr>
+			<th>Part of Speech:</th>
+			<td>{{vm.word.PoS}}</td>
+		</tr>
+		<tr>
+			<th>Infinitive:</th>
+			<td>{{vm.word.verb.infinitive}}</td>
+		</tr>
+		<tr>
+			<th>Conjugation:</th>
+			<td class="capitalize">{{vm.word.verb.conjugation}}</td>
+		</tr>
+		<tr>
+			<th>Gerund:</th>
+			<td>{{vm.word.verb.gerund}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="2" class="text-center">Imperative</th>
+		</tr>
+		<tr>
+			<th>Singular</th>
+			<th>Plural</th>
+		</tr>
+		<tr>
+			<td>{{vm.word.verb.imperative.singular}}</td>
+			<td>{{vm.word.verb.imperative.plural}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="2" class="text-center">Participle</th>
+		</tr>
+		<tr>
+			<th>Feminine</th>
+			<th>Masculine</th>
+		</tr>
+		<tr>
+			<td>{{vm.word.verb.participle.feminine}}</td>
+			<td>{{vm.word.verb.participle.masculine}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="3" class="text-center">Agent</th>
+		</tr>
+		<tr>
+			<th>Feminine</th>
+			<th>Masculine</th>
+			<th>Dishonorable</th>
+		</tr>
+		<tr>
+			<td>{{vm.word.verb.agent.feminine}}</td>
+			<td>{{vm.word.verb.agent.masculine}}</td>
+			<td>{{vm.word.verb.agent.dishonorable}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="clearfix"></div>
+
+<orc-dict-verb-voices active="vm.word.verb.active"
+passive="vm.word.verb.passive"></orc-dict-verb-voices>

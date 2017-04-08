@@ -1,1 +1,7 @@
 <h1>Words Index View</h1>
+
+<ul>
+	<li ng-repeat="word in vm.words"><a ng-href="/words/{{word.orcish}}">
+		<strong>{{ word.orcish }}</strong>, {{ word.PoS }}, {{ word.english }}
+	</a></li>
+</ul>

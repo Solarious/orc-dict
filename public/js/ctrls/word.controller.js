@@ -5,13 +5,22 @@ angular
 	.module('orcDictApp')
 	.controller('WordController', WordController);
 
-WordController.$inject = ['$routeParams'];
+WordController.$inject = ['$routeParams', 'WordsService'];
 
-function WordController($routeParams) {
+function WordController($routeParams, WordsService) {
 	var vm = this;
 
-	vm.orcish = $routeParams.orcish;
+	activate();
+
+	function activate() {
+		vm.orcish = $routeParams.orcish;
+
+		return WordsService.get(vm.orcish)
+		.then(function(data) {
+			vm.word = data;
+			return vm.word;
+		});
+	}
 }
 
 })();
-
