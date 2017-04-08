@@ -26,15 +26,19 @@ app.get('/api/words', function(req, res) {
 });
 
 app.post('/api/words', function(req, res) {
-	var newWord = new Word();
-	updateWordFromReq(newWord, req);
-	newWord.save(function(err) {
-		if (err) {
-			res.status(500).send(err);
-		} else {
-			res.json(newWord);
-		}
-	});
+	if (!req.isAuthenticated()) {
+		res.status(401).send({ error: 'Unauthorized' });
+	} else {
+		var newWord = new Word();
+		updateWordFromReq(newWord, req);
+		newWord.save(function(err) {
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				res.json(newWord);
+			}
+		});
+	}
 });
 
 app.get('/api/words/:word_orcish', function(req, res) {
@@ -58,34 +62,42 @@ app.get('/api/words/:word_orcish', function(req, res) {
 });
 
 app.put('/api/words/:word_orcish', function(req, res) {
-	Word.findOne({
-		'orcish': req.params.word_orcish
-	}, function(err, word) {
-		if (err) {
-			res.status(500).send(err);
-		} else {
-			updateWordFromReq(word, req);
-			word.save(function(err) {
-				if (err) {
-					res.status(500).send(err);
-				} else {
-					res.json(word);
-				}
-			});
-		}
-	});
+	if (!req.isAuthenticated()) {
+		res.status(401).send({ error: 'Unauthorized' });
+	} else {
+		Word.findOne({
+			'orcish': req.params.word_orcish
+		}, function(err, word) {
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				updateWordFromReq(word, req);
+				word.save(function(err) {
+					if (err) {
+						res.status(500).send(err);
+					} else {
+						res.json(word);
+					}
+				});
+			}
+		});
+	}
 });
 
 app.delete('/api/words/:word_orcish', function(req, res) {
-	Word.findOneAndRemove({
-		'orcish': req.params.word_orcish
-	}, function (err, word) {
-		if (err) {
-			res.status(500).send(err);
-		} else {
-			res.json(word);
-		}
-	});
+	if (!req.isAuthenticated()) {
+		res.status(401).send({ error: 'Unauthorized' });
+	} else {
+		Word.findOneAndRemove({
+			'orcish': req.params.word_orcish
+		}, function (err, word) {
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				res.json(word);
+			}
+		});
+	}
 });
 
 app.get('/api/autofillword/:PoS/:orcish', function(req, res) {
