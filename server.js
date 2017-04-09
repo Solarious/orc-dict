@@ -7,6 +7,7 @@ var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
 var csurf = require('csurf');
+var MongoStore = require('connect-mongo')(session);
 
 var port = process.env.PORT;
 var dburl = process.env.MONGODB_URI;
@@ -22,7 +23,11 @@ app.disable('etag');
 app.use(session({
 	secret: process.env.SECRET_KEY,
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection,
+		touchAfter: 24 * 3600
+	})
 }));
 app.use(passport.initialize());
 app.use(passport.session());
