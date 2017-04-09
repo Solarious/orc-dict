@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var csurf = require('csurf');
 
 var port = process.env.PORT;
 var dburl = process.env.MONGODB_URI;
@@ -18,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.disable('etag');
+app.use(cookieParser(process.env.SECRET_KEY));
 app.use(session({
 	secret: process.env.SECRET_KEY,
 	resave: false,
@@ -25,6 +28,19 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(csurf());
+app.use(function(req, res, next) {
+	res.cookie('XSRF-TOKEN', req.csrfToken());
+	next();
+});
+app.use(function(err, req, res, next) {
+	if (err.code !== 'EBADCSRFTOKEN') {
+		return next(err);
+	} else {
+		res.status(403).send('Invalid/Missing csrf token');
+	}
+});
 
 require('./app/routes')(app);
 require('./app/authentication')();

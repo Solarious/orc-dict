@@ -33,6 +33,8 @@ function config($locationProvider, $routeProvider) {
 	})
 	.when('/admin', {
 		templateUrl: 'views/admin.html',
+		controller: 'AdminController',
+		controllerAs: 'vm',
 		restricted: true
 	})
 	.otherwise({

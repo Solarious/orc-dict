@@ -155,6 +155,10 @@ app.get('/api/user/status', function(req, res) {
 	}
 });
 
+app.post('/api/csrftest', function(req, res) {
+	res.json({ message: 'CSRF test success' });
+});
+
 app.get('*', function(req, res) {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
