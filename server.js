@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
-var cookieParser = require('cookie-parser');
 var csurf = require('csurf');
 
 var port = process.env.PORT;
@@ -20,7 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.disable('etag');
-app.use(cookieParser(process.env.SECRET_KEY));
 app.use(session({
 	secret: process.env.SECRET_KEY,
 	resave: false,
