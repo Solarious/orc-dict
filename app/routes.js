@@ -10,6 +10,9 @@ function updateWordFromReq(word, req) {
 	if (req.body['verb']) {
 		word.verb = req.body['verb'];
 	}
+	if (req.body['noun']) {
+		word.noun = req.body['noun'];
+	}
 }
 
 module.exports = function(app) {

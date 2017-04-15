@@ -163,7 +163,8 @@ var WordSchema = new Schema({
 		required: true,
 		enum: ['noun', 'verb', 'adjective', 'adverb']
 	},
-	verb: VerbSchema
+	verb: VerbSchema,
+	noun: NounSchema
 });
 
 WordSchema.pre('save', function(next) {
@@ -173,41 +174,65 @@ WordSchema.pre('save', function(next) {
 			return;
 		}
 	} else if (this.PoS === 'noun') {
-		var nout = this.noun
+		var noun = this.noun
 		if (!noun) {
 			next(new Error('Word has PoS==noun but noun is undefined'));
 			return;
 		}
 		if (noun.declension === 'first') {
-			if (!(noun.feminine && !noun.masculine && !noun.neutral)) {
-				next(new Error('1st declention noun must only have feminine'));
+			if (noun.gender !== 'feminine') {
+				next(new Error(
+					'1st declention noun must have gender feminine'
+				));
 				return;
 			}
 		} else if (noun.declension === 'second') {
-			if (!(!noun.feminine && noun.masculine && noun.neutral)) {
+			if (noun.gender === 'neutral' ) {
 				next(new Error(
-					'1st declention noun must have only masculine and neutral'
+					'1st declention noun must have gender masculine or neutral'
 				));
 				return;
 			}
 		} else if (noun.declension === 'third') {
-			if (!(noun.feminine && !noun.masculine && !noun.neutral)) {
-				next(new Error('1st declention noun must have only feminine'));
+			if (noun.gender !== 'feminine') {
+				next(new Error(
+					'1st declention noun must have gender feminine'
+				));
 				return;
 			}
 		} else if (noun.declension === 'fourth') {
-			if (!(!noun.feminine && noun.masculine && !noun.neutral)) {
-				next(new Error('1st declention noun must have only masculine'));
+			if (noun.gender !== 'masculine') {
+				next(new Error(
+					'1st declention noun must have gender masculine'
+				));
 				return;
 			}
 		} else if (noun.declension === 'fifth') {
-			if (!(!noun.feminine && !noun.masculine && noun.neutral)) {
-				next(new Error('1st declention noun must have only neutral'));
+			if (noun.gender !== 'neutral') {
+				next(new Error(
+					'1st declention noun must have gender neutral'
+				));
 				return;
 			}
 		}
 	}
 	next();
+});
+
+WordSchema.post('save', function(error, doc, next) {
+	if (error.name === 'MongoError' && error.code === 11000) {
+		next(new Error('A word with the same orcish already exists'));
+	} else {
+		next(error);
+	}
+});
+
+WordSchema.post('update', function(error, res, next) {
+	if (error.name === 'MongoError' && error.code === 11000) {
+		next(new Error('A word with the same orcish already exists'));
+	} else {
+		next(error);
+	}
 });
 
 module.exports = mongoose.model('Word', WordSchema);
