@@ -1,0 +1,97 @@
+<div class="col-md-4">
+	<table class="table table-condensed">
+		<tr>
+			<th>Infinitive</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.infinitive"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Conjugation</th>
+			<td>
+				<select ng-model="verb.conjugation">
+					<option value="">--Please Select--</option>
+					<option value="first">First</option>
+					<option value="second">Second</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="2" class="text-center">Imperative</th>
+		</tr>
+		<tr>
+			<th>Singular</th>
+			<th>Plural</th>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.imperative.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.imperative.plural"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="2" class="text-center">Participle</th>
+		</tr>
+		<tr>
+			<th>Feminine</th>
+			<th>Masculine</th>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.participle.feminine"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.participle.masculine"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-4">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="3" class="text-center">Agent</th>
+		</tr>
+		<tr>
+			<th>Feminine</th>
+			<th>Masculine</th>
+			<th>Dishonorable</th>
+		</tr>
+		<tr>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.agent.feminine"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.agent.masculine"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="verb.agent.dishonorable"/>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="clearfix"></div>
+
+<orc-dict-editable-verb-voices active="verb.active" passive="verb.passive">
+</orc-dict-editable-verb-voices>

@@ -69,7 +69,10 @@ function wordsService($http, $q) {
 	}
 
 	function autofill(PoS, orcish) {
-		return $http.get('/api/autofillword/' + Pos + '/' + orcish)
+		if (!PoS || !orcish) {
+			return $q.reject('Orcish/Part of Speech must not be empty');
+		}
+		return $http.get('/api/autofillword/' + PoS + '/' + orcish)
 		.then(function(response) {
 			return response.data;
 		})

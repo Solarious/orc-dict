@@ -37,6 +37,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/admin/newword', {
+		templateUrl: 'views/newWord.html',
+		controller: 'NewWordController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
