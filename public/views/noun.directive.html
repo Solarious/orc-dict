@@ -1,0 +1,59 @@
+<div class="col-md-6">
+	<table class="table table-condensed min-first-col">
+		<tr>
+			<th>Orcish</th>
+			<td>{{word.orcish}}</td>
+		</tr>
+		<tr>
+			<th>English</th>
+			<td>{{word.english}}</td>
+		</tr>
+		<tr>
+			<th>Part of Speech</th>
+			<td class="capitalize">{{word.PoS}}</td>
+		</tr>
+		<tr>
+			<th>Declension</th>
+			<td class="capitalize">{{word.noun.declension}}</td>
+		</tr>
+		<tr>
+			<th>Gender</th>
+			<td class="capitalize">{{word.noun.gender}}</td>
+		</tr>
+		<tr>
+	</table>
+</div>
+
+<div class="col-md-6">
+	<table class="table table-condensed">
+		<tr>
+			<th>Case</th>
+			<th>Singular</th>
+			<th>Plural</th>
+		</tr>
+			<th>Nominative</th>
+			<td>{{word.noun.nominative.singular}}</td>
+			<td>{{word.noun.nominative.plural}}</td>
+		</tr>
+		<tr>
+			<th>Genitive</th>
+			<td>{{word.noun.genitive.singular}}</td>
+			<td>{{word.noun.genitive.plural}}</td>
+		</tr>
+		<tr>
+			<th>Dative</th>
+			<td>{{word.noun.dative.singular}}</td>
+			<td>{{word.noun.dative.plural}}</td>
+		</tr>
+		<tr>
+			<th>Accusative</th>
+			<td>{{word.noun.accusative.singular}}</td>
+			<td>{{word.noun.accusative.plural}}</td>
+		</tr>
+		<tr>
+			<th>Vocative</th>
+			<td>{{word.noun.vocative.singular}}</td>
+			<td>{{word.noun.vocative.plural}}</td>
+		</tr>
+	</table>
+</div>
