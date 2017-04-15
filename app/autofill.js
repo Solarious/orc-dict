@@ -10,40 +10,40 @@ module.exports = function(orcish, PoS, callback) {
 			return callback('Word ' + orcish + ' has no valid conjugation');
 		}
 	} else if (PoS === 'noun') {
-		for (ending in ['ad', 'am', 'ag', 'aed']) {
+		['ad', 'am', 'ag', 'aed'].forEach(function(ending) {
 			if (orcish.endsWith(ending)) {
-				return callback(null, firstConjVerb(orcish, ending));
+				return callback(null, firstDeclNoun(orcish, ending));
 			}
-		}
-		for (ending in ['ul', 'or', 'k', 'x']) {
+		});
+		['ul', 'or', 'k', 'x'].forEach(function(ending) {
 			if (orcish.endsWith(ending)) {
 				return callback(
 					null, secondDeclNoun(orcish, ending, 'masculine')
 				);
 			}
-		}
-		for (ending in ['id', 'ed', 'd', 'z', 'dj']) {
+		});
+		['id', 'ed', 'd', 'z', 'dj'].forEach(function(ending) {
 			if (orcish.endsWith(ending)) {
 				return callback(
 					null, secondDeclNoun(orcish, ending, 'neutral')
 				);
 			}
-		}
-		for (ending in ['ash', 'ard', 'rd']) {
+		});
+		['ash', 'ard', 'rd'].forEach(function(ending) {
 			if (orcish.endsWith(ending)) {
-				return callback(null, thirdConjVerb(orcish, ending));
+				return callback(null, thirdDeclNoun(orcish, ending));
 			}
-		}
-		for (ending in ['b', 'f', 'p']) {
+		});
+		['b', 'f', 'p'].forEach(function(ending) {
 			if (orcish.endsWith(ending)) {
-				return callback(null, fourthConjVerb(orcish, ending));
+				return callback(null, fourthDeclNoun(orcish, ending));
 			}
-		}
-		for (ending in ['ath', 'at']) {
-			if (orcish.end(ending)) {
-				return callback(null, fifthConjVerb(orcish, ending));
+		});
+		['ath', 'at'].forEach(function(ending) {
+			if (orcish.endsWith(ending)) {
+				return callback(null, fifthDeclNoun(orcish, ending));
 			}
-		}
+		});
 		return callback(orcish + ' has no valid declension');
 	} else {
 		return callback('Invalid PoS: ' + PoS);
@@ -416,7 +416,13 @@ function firstDeclNoun(orcish, ending) {
 function secondDeclNoun(orcish, ending, gender) {
 	var base = orcish.slice(0, -(ending.length));
 	if (ending === 'k') {
-		if (!['a','e','i','o','u','y'].includes(orcish[orcish.length - 2])) {
+		var found = false;
+		['a', 'e', 'i', 'o', 'u', 'y'].forEach(function(vowel) {
+			if (vowel === orcish[orcish.length - 2]) {
+				found = true;
+			}
+		});
+		if (!found) {
 			base = orcish;
 		}
 	}
@@ -449,7 +455,7 @@ function secondDeclNoun(orcish, ending, gender) {
 	};
 }
 
-function thirdDeclVerb(orcish, ending) {
+function thirdDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
 	return {
 		declension: 'third',
@@ -477,7 +483,7 @@ function thirdDeclVerb(orcish, ending) {
 	};
 }
 
-function fourthDeclVerb(orcish, ending) {
+function fourthDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
 	return {
 		declension: 'fourth',
@@ -505,7 +511,7 @@ function fourthDeclVerb(orcish, ending) {
 	};
 }
 
-function fifthDeclVerb(orcish, ending) {
+function fifthDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
 	return {
 		declension: 'fifth',
