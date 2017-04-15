@@ -36,7 +36,7 @@ app.post('/api/words', function(req, res) {
 		updateWordFromReq(newWord, req);
 		newWord.save(function(err) {
 			if (err) {
-				res.status(500).send(err);
+				res.status(500).send(err.message);
 			} else {
 				res.json(newWord);
 			}

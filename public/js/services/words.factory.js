@@ -25,7 +25,7 @@ function wordsService($http, $q) {
 				return response.data;
 			})
 			.catch(function(error) {
-				return $q.reject(e);
+				return $q.reject(error.data);
 			});
 		} else {
 			return $http.get('/api/words/' + orcish)
@@ -33,7 +33,7 @@ function wordsService($http, $q) {
 				return response.data;
 			})
 			.catch(function(error) {
-				return $q.reject(e);
+				return $q.reject(error.data);
 			});
 		}
 	}
@@ -44,7 +44,7 @@ function wordsService($http, $q) {
 			return response.data;
 		})
 		.catch(function(error) {
-			return $q.reject(e);
+			return $q.reject(error.data);
 		});
 	}
 
@@ -54,7 +54,7 @@ function wordsService($http, $q) {
 			return response.data;
 		})
 		.catch(function(error) {
-			return $q.reject(e);
+			return $q.reject(error.data);
 		});
 	}
 
@@ -64,7 +64,7 @@ function wordsService($http, $q) {
 			return response.data;
 		})
 		.catch(function(error) {
-			return $q.reject(e);
+			return $q.reject(error.data);
 		});
 	}
 
@@ -74,7 +74,7 @@ function wordsService($http, $q) {
 			return response.data;
 		})
 		.catch(function(error) {
-			return $q.reject(e);
+			return $q.reject(error.data);
 		});
 	}
 }
