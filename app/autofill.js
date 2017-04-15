@@ -7,46 +7,68 @@ module.exports = function(orcish, PoS, callback) {
 		} else if (orcish.endsWith('ai')) {
 			return callback(null, secondConjVerb(orcish));
 		} else {
-			return callback('Word ' + orcish + ' has no valid conjugation');
+			return callback(
+				new Error('Word ' + orcish + ' has no valid conjugation')
+			);
 		}
 	} else if (PoS === 'noun') {
-		['ad', 'am', 'ag', 'aed'].forEach(function(ending) {
+		var endings;
+
+		endings = ['ad', 'am', 'ag', 'aed'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(null, firstDeclNoun(orcish, ending));
 			}
-		});
-		['ul', 'or', 'k', 'x'].forEach(function(ending) {
+		}
+
+		endings = ['ul', 'or', 'k', 'x'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(
 					null, secondDeclNoun(orcish, ending, 'masculine')
 				);
 			}
-		});
-		['id', 'ed', 'd', 'z', 'dj'].forEach(function(ending) {
+		}
+
+		endings = ['id', 'ed', 'd', 'z', 'dj'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(
 					null, secondDeclNoun(orcish, ending, 'neutral')
 				);
 			}
-		});
-		['ash', 'ard', 'rd'].forEach(function(ending) {
+		}
+
+		endings = ['ash', 'ard', 'rd'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(null, thirdDeclNoun(orcish, ending));
 			}
-		});
-		['b', 'f', 'p'].forEach(function(ending) {
+		}
+
+		endings = ['b', 'f', 'p'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(null, fourthDeclNoun(orcish, ending));
 			}
-		});
-		['ath', 'at'].forEach(function(ending) {
+		}
+
+		endings = ['ath', 'at'];
+		for (var i = 0; i < endings.length; i++) {
+			var ending = endings[i];
 			if (orcish.endsWith(ending)) {
 				return callback(null, fifthDeclNoun(orcish, ending));
 			}
-		});
-		return callback(orcish + ' has no valid declension');
+		}
+
+		return callback(new Error(orcish + ' has no valid declension'));
 	} else {
-		return callback('Invalid PoS: ' + PoS);
+		return callback(new Error('Invalid PoS: ' + PoS));
 	}
 };// module.exports
 

@@ -20,7 +20,7 @@ module.exports = function(app) {
 app.get('/api/words', function(req, res) {
 	Word.find({}, 'orcish english PoS', function(err, words) {
 		if (err) {
-			res.status(500).send(err);
+			res.status(500).send(err.message);
 		} else {
 			res.setHeader('Cache-Control', 'no-cache');
 			res.json(words);
@@ -30,7 +30,7 @@ app.get('/api/words', function(req, res) {
 
 app.post('/api/words', function(req, res) {
 	if (!req.isAuthenticated()) {
-		res.status(401).send({ error: 'Unauthorized' });
+		res.status(401).send('Unauthorized');
 	} else {
 		var newWord = new Word();
 		updateWordFromReq(newWord, req);
@@ -49,13 +49,12 @@ app.get('/api/words/:word_orcish', function(req, res) {
 		'orcish': req.params.word_orcish
 	}, function(err, word) {
 		if (err) {
-			console.log('did not find: ' + req.params.word_orcish);
-			res.status(500).send(err);
+			res.status(500).send(err.message);
 		} else {
 			if (!word) {
-				res.status(404).send({
-					error: 'cannot find word: ' + req.params.word_orcish
-				});
+				res.status(404).send(
+					'cannot find word: ' + req.params.word_orcish
+				);
 			} else {
 				res.setHeader('Cache-Control', 'no-cache');
 				res.json(word);
@@ -72,12 +71,13 @@ app.put('/api/words/:word_orcish', function(req, res) {
 			'orcish': req.params.word_orcish
 		}, function(err, word) {
 			if (err) {
-				res.status(500).send(err);
+				res.status(500).send(err.message);
 			} else {
+				word = word || new Word();
 				updateWordFromReq(word, req);
 				word.save(function(err) {
 					if (err) {
-						res.status(500).send(err);
+						res.status(500).send(err.message);
 					} else {
 						res.json(word);
 					}
@@ -95,7 +95,11 @@ app.delete('/api/words/:word_orcish', function(req, res) {
 			'orcish': req.params.word_orcish
 		}, function (err, word) {
 			if (err) {
-				res.status(500).send(err);
+				res.status(500).send(err.message);
+			} else if (!word) {
+				res.status(404).send(
+					'word ' + req.params.word_orcish + ' does not exist'
+				);
 			} else {
 				res.json(word);
 			}
@@ -108,7 +112,7 @@ app.get('/api/autofillword/:PoS/:orcish', function(req, res) {
 	var orcish = req.params.orcish;
 	autofill(orcish, PoS, function(err, wordPart) {
 		if (err) {
-			res.status(500).send(err);
+			res.status(404).send(err.message);
 		} else {
 			res.json(wordPart);
 		}
