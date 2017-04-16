@@ -49,6 +49,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/admin/words/:orcish', {
+		templateUrl: 'views/adminWord.html',
+		controller: 'AdminWordController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

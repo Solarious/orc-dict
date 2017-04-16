@@ -1,0 +1,49 @@
+<div class="col-md-4">
+	<table class="table table-condensed">
+		<tr>
+			<th>Orcish:</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="word.orcish"/>
+			</td>
+		</tr>
+		<tr>
+			<th>English:</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="word.english"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Part of Speech:</th>
+			<td>
+				<select ng-model="word.PoS">
+					<option value="">--Please Select--</option>
+					<option value="verb">Verb</option>
+					<option value="noun">Noun</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="button" class="btn btn-primary"
+				ng-click="submitFunction()">
+					{{submitText}}
+				</button>
+			</td>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="autofillFunction()" ng-disabled="submitDisabled">
+					Autofill
+				</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<orc-dict-editable-noun noun="word.noun" ng-if="word.PoS==='noun'">
+</orc-dict-editable-noun>
+
+<orc-dict-editable-verb verb="word.verb" ng-if="word.PoS==='verb'">
+</orc-dict-editable-verb>
+
