@@ -72,6 +72,12 @@ module.exports = function(orcish, PoS, callback) {
 	}
 };// module.exports
 
+var vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+
+function isVowel(letter) {
+	return (vowels.indexOf(letter) !== -1);
+}
+
 function firstConjVerb(orcish) {
 	return {
 		conjugation: 'first',
@@ -438,20 +444,18 @@ function firstDeclNoun(orcish, ending) {
 
 function secondDeclNoun(orcish, ending, gender) {
 	var base = orcish.slice(0, -(ending.length));
+	var lastLetterOfBase = base[base.length - 1];
 	if (ending === 'k') {
-		var found = false;
-		['a', 'e', 'i', 'o', 'u', 'y'].forEach(function(vowel) {
-			if (vowel === orcish[orcish.length - 2]) {
-				found = true;
-			}
-		});
-		if (!found) {
+		if (!isVowel(lastLetterOfBase)) {
 			base = orcish;
 		}
 	}
 	if (ending === 'dj') {
 		base = orcish;
+	} else if (!isVowel(ending[0]) && isVowel(lastLetterOfBase)) {
+		base = base.slice(0, -1);
 	}
+
 	return {
 		declension: 'second',
 		gender: gender,
@@ -508,6 +512,11 @@ function thirdDeclNoun(orcish, ending) {
 
 function fourthDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
+
+	if (isVowel(lastLetterOfBase)) {
+		base = base.slice(0, -1);
+	}
+
 	return {
 		declension: 'fourth',
 		gender: 'masculine',
