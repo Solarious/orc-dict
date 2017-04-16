@@ -44,8 +44,8 @@ function NewWordController(WordsService, $location) {
 		.then(function() {
 			$location.path('/admin');
 		}, function(error) {
-			var defaultErrorMessage = 'Unknown error createing word';
-			vm.errorMessage = data.error.message || defaultErrorMessage;
+			var defaultErrorMessage = 'Unknown error creating word';
+			vm.errorMessage = error || defaultErrorMessage;
 			vm.submitDisabled = false;
 		});
 	}
