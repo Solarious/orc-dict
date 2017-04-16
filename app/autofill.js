@@ -397,7 +397,8 @@ function secondConjVerb(orcish) {
 		},
 		agent: {
 			feminine: base + 'ag',
-			masculine: base + 'ak'
+			masculine: base + 'ak',
+			dishonorable: orcish + 'dj'
 		}
 	};
 }
