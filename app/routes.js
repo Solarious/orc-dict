@@ -2,6 +2,7 @@ var path = require('path');
 var passport = require('passport');
 var Word = require('./models/word');
 var autofill = require('./autofill');
+var bulkAdd = require('./bulkAdd');
 
 function updateWordFromReq(word, req) {
 	word.orcish = req.body['orcish'];
@@ -164,6 +165,23 @@ app.get('/api/user/status', function(req, res) {
 
 app.post('/api/csrftest', function(req, res) {
 	res.json({ message: 'CSRF test success' });
+});
+
+app.post('/api/bulkadd', function(req, res) {
+	if (!req.isAuthenticated()) {
+		res.status(401).send('Unauthorized');
+	} else {
+		var data = req.body['data'];
+		var encoding = req.body['encoding'];
+		var remove = (req.body['remove'] === 'true');
+		bulkAdd(data, encoding, remove, function(err, results) {
+			if (err) {
+				res.status(404).send(err.message);
+			} else {
+				res.json(results);
+			}
+		});
+	}
 });
 
 app.get('*', function(req, res) {

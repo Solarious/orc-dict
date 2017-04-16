@@ -1,0 +1,20 @@
+<h1>Bulk Add</h1>
+
+<div ng-show="vm.errorMessage" class="alert alert-danger">
+	{{ vm.errorMessage}}
+</div>
+
+<select ng-model="vm.encoding">
+	<option value="csv">Comma Separated Values (CSV)</option>
+	<option value="tsv">Tab Separated Values (TSV)</option>
+</select>
+<select ng-model="vm.remove">
+	<option value="true">Replace Existing Words</option>
+	<option value="false">Send error upon duplicate</option>
+</select>
+<textarea class="form-control" spellcheck="false" rows="20" ng-model="vm.data">
+</textarea>
+<button type="button" class="btn btn-primary" ng-click="vm.submit()"
+ng-disabled="vm.submitDisabled">
+	Submit
+</button>

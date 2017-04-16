@@ -43,6 +43,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/admin/bulkadd', {
+		templateUrl: 'views/bulkAdd.html',
+		controller: 'BulkAddController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

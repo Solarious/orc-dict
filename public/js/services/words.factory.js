@@ -13,7 +13,8 @@ function wordsService($http, $q) {
 		create: create,
 		update: update,
 		remove: remove,
-		autofill: autofill
+		autofill: autofill,
+		bulkAdd: bulkAdd
 	};
 
 	return service;
@@ -75,6 +76,20 @@ function wordsService($http, $q) {
 		return $http.get('/api/autofillword/' + PoS + '/' + orcish)
 		.then(function(response) {
 			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
+
+	function bulkAdd(data, encoding, remove) {
+		return $http.post('/api/bulkadd', {
+			data: data,
+			encoding: encoding,
+			remove: remove
+		})
+		.then(function(response) {
+			return response.data
 		})
 		.catch(function(error) {
 			return $q.reject(error.data);
