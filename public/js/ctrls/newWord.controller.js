@@ -21,17 +21,11 @@ function NewWordController(WordsService, $location) {
 	}
 
 	function autofill() {
-		if (vm.word.PoS === 'verb') {
+		var partName = vm.word.PoS;
+		if (vm.word.PoS != "") {
 			WordsService.autofill(vm.word.PoS, vm.word.orcish)
 			.then(function(data) {
-				vm.word.verb = data;
-			}, function(err) {
-				vm.errorMessage = err;
-			});
-		} else if (vm.word.PoS === 'noun') {
-			WordsService.autofill(vm.word.PoS, vm.word.orcish)
-			.then(function(data) {
-				vm.word.noun = data;
+				vm.word[partName] = data;
 			}, function(err) {
 				vm.errorMessage = err;
 			});

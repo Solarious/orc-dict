@@ -147,6 +147,40 @@ var NounSchema = new Schema({
 	}
 }, { _id: false});
 
+var AdjectiveDeclensionSchema = new Schema({
+	nominative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	genitive: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	dative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	accusative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	vocative: {
+		type: SingularPluralSchema,
+		required: true
+	}
+}, { _id: false});
+
+var AdjectiveSchema = new Schema({
+	feminine: {
+		type: AdjectiveDeclensionSchema,
+		required: true
+	},
+	masculineNeutral: {
+		type: AdjectiveDeclensionSchema,
+		required: true
+	}
+}, { _id: false});
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -164,7 +198,20 @@ var WordSchema = new Schema({
 		enum: ['noun', 'verb', 'adjective', 'adverb']
 	},
 	verb: VerbSchema,
-	noun: NounSchema
+	noun: NounSchema,
+	adjective: AdjectiveSchema
+});
+
+WordSchema.post('validate', function() {
+	if (this.verb !== undefined && this.PoS !== 'verb') {
+		delete this.verb;
+	}
+	if (this.noun !== undefined && this.PoS !== 'noun') {
+		delete this.noun;
+	}
+	if (this.adjective !== undefined && this.PoS !== 'adjective') {
+		delete this.adjective;
+	}
 });
 
 WordSchema.pre('save', function(next) {
@@ -215,6 +262,13 @@ WordSchema.pre('save', function(next) {
 				return;
 			}
 		}
+	} else if (this.PoS === 'adjective') {
+		if (!this.adjective) {
+			next(new Error(
+				'Word has PoS==adjective but adjective is undefined'
+			));
+			return;
+		}
 	}
 	next();
 });
@@ -222,6 +276,17 @@ WordSchema.pre('save', function(next) {
 WordSchema.post('save', function(error, doc, next) {
 	if (error.name === 'MongoError' && error.code === 11000) {
 		next(new Error('A word with the same orcish already exists'));
+	} else {
+		next(error);
+	}
+});
+
+WordSchema.post('insertMany', function(error, doc, next) {
+	if (error.name === 'MongoError' && error.code === 11000) {
+		var msg = error.message;
+		var pos = msg.search('dup key');
+		msg = msg.slice(pos + 14, -3);
+		next(new Error('Word with orcish ' + msg + ' already exists'));
 	} else {
 		next(error);
 	}

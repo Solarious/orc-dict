@@ -2,71 +2,13 @@ var Word = require('./models/word');
 
 module.exports = function(orcish, PoS, callback) {
 	if (PoS === 'verb') {
-		if (orcish.endsWith('a')) {
-			return callback(null, firstConjVerb(orcish));
-		} else if (orcish.endsWith('ai')) {
-			return callback(null, secondConjVerb(orcish));
-		} else {
-			return callback(
-				new Error('Word ' + orcish + ' has no valid conjugation')
-			);
-		}
+		getVerb(orcish, callback);
 	} else if (PoS === 'noun') {
-		var endings;
-
-		endings = ['ad', 'am', 'ag', 'aed'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(null, firstDeclNoun(orcish, ending));
-			}
-		}
-
-		endings = ['ul', 'or', 'k', 'x'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(
-					null, secondDeclNoun(orcish, ending, 'masculine')
-				);
-			}
-		}
-
-		endings = ['id', 'ed', 'd', 'z', 'dj'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(
-					null, secondDeclNoun(orcish, ending, 'neutral')
-				);
-			}
-		}
-
-		endings = ['ash', 'ard', 'rd'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(null, thirdDeclNoun(orcish, ending));
-			}
-		}
-
-		endings = ['b', 'f', 'p'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(null, fourthDeclNoun(orcish, ending));
-			}
-		}
-
-		endings = ['ath', 'at'];
-		for (var i = 0; i < endings.length; i++) {
-			var ending = endings[i];
-			if (orcish.endsWith(ending)) {
-				return callback(null, fifthDeclNoun(orcish, ending));
-			}
-		}
-
-		return callback(new Error(orcish + ' has no valid declension'));
+		getNoun(orcish, callback);
+	} else if (PoS === 'adjective') {
+		getAdjective(orcish, callback);
+	} else if (PoS === 'adverb') {
+		callback(null, {});
 	} else {
 		return callback(new Error('Invalid PoS: ' + PoS));
 	}
@@ -76,6 +18,130 @@ var vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
 
 function isVowel(letter) {
 	return (vowels.indexOf(letter) !== -1);
+}
+
+function getVerb(orcish, callback) {
+	if (orcish.endsWith('a')) {
+		return callback(null, firstConjVerb(orcish));
+	} else if (orcish.endsWith('ai')) {
+		return callback(null, secondConjVerb(orcish));
+	} else {
+		return callback(
+			new Error('Word ' + orcish + ' has no valid conjugation')
+		);
+	}
+}
+
+function getNoun(orcish, callback) {
+	var endings;
+
+	endings = ['ad', 'am', 'ag', 'aed'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(null, firstDeclNoun(orcish, ending));
+		}
+	}
+
+	endings = ['ul', 'or', 'k', 'x'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(
+				null, secondDeclNoun(orcish, ending, 'masculine')
+			);
+		}
+	}
+
+	endings = ['id', 'ed', 'd', 'z', 'dj'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(
+				null, secondDeclNoun(orcish, ending, 'neutral')
+			);
+		}
+	}
+
+	endings = ['ash', 'ard', 'rd'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(null, thirdDeclNoun(orcish, ending));
+		}
+	}
+
+	endings = ['b', 'f', 'p'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(null, fourthDeclNoun(orcish, ending));
+		}
+	}
+
+	endings = ['ath', 'at'];
+	for (var i = 0; i < endings.length; i++) {
+		var ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(null, fifthDeclNoun(orcish, ending));
+		}
+	}
+
+	return callback(new Error(orcish + ' has no valid declension'));
+}
+
+function getAdjective(orcish, callback) {
+	var parts = orcish.split(', ');
+	if (parts.length !== 2) {
+		return callback(new Error(
+			'Word ' + orcish + ' must have format feminine, masculine or' +
+			' feminine, -masculineEnding'
+		));
+	}
+	var feminineOrcish = parts[0];
+	var mascNeutOrcish = parts[1];
+	if (mascNeutOrcish[0] === '-') {
+		mascNeutOrcish = mascNeutOrcish.slice(1);
+		var endLen = mascNeutOrcish.length;
+		mascNeutOrcish = feminineOrcish.slice(0, -endLen) + mascNeutOrcish;
+	}
+	var error;
+	var feminineData;
+	var mascNeutData;
+	getNoun(feminineOrcish, function(err, data) {
+		err = error;
+		feminineData = data;
+	});
+	if (error) {
+		return callback(new Error(
+			'Word ' + orcish + ' feminine part had error ' + error.message
+		));
+	}
+	getNoun(mascNeutOrcish, function(err, data) {
+		error = err;
+		mascNeutData = data;
+	});
+	if (error) {
+		return callback(new Error(
+			'Word ' + orcish + ' masculine/neutral part had error ' +
+			error.message
+		));
+	}
+
+	callback(null, {
+		feminine: nounToAdjectivePart(feminineData),
+		masculineNeutral: nounToAdjectivePart(mascNeutData)
+	});
+}
+
+function nounToAdjectivePart(noun) {
+	return {
+		nominative: noun.nominative,
+		genitive: noun.genitive,
+		dative: noun.dative,
+		accusative: noun.accusative,
+		vocative: noun.vocative
+	}
 }
 
 function firstConjVerb(orcish) {
@@ -445,6 +511,12 @@ function firstDeclNoun(orcish, ending) {
 function secondDeclNoun(orcish, ending, gender) {
 	var base = orcish.slice(0, -(ending.length));
 	var lastLetterOfBase = base[base.length - 1];
+	if (gender === 'masculine') {
+		var dativeVocativePlural = 'ors';
+	} else {
+		var dativeVocativePlural = 'aes';
+	}
+
 	if (ending === 'k') {
 		if (!isVowel(lastLetterOfBase)) {
 			base = orcish;
@@ -469,7 +541,7 @@ function secondDeclNoun(orcish, ending, gender) {
 		},
 		dative: {
 			singular: base + 'o',
-			plural: base + 'ors'
+			plural: base + dativeVocativePlural
 		},
 		accusative: {
 			singular: base + 'udz',
@@ -477,7 +549,7 @@ function secondDeclNoun(orcish, ending, gender) {
 		},
 		vocative: {
 			singular: base + 'o',
-			plural: base + 'aes'
+			plural: base + dativeVocativePlural
 		}
 	};
 }

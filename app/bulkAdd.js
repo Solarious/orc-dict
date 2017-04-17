@@ -32,19 +32,20 @@ module.exports = function(data, encoding, remove, callback) {
 				orcish: record[1],
 				PoS: record[2]
 			};
-			var wasAnError = true;
-			autofill(word.orcish, word.PoS, function(err, data) {
-				if (err) {
-					return callback(new Error(
-						'Error with ' + record + ': ' + err.message
-					));
-				}
-				wasAnError = false;
-				word[word.PoS] = data;
+
+			var error;
+			var data;
+			autofill(word.orcish, word.PoS, function(err, theData) {
+				error = err;
+				data = theData;
 			});
-			if (wasAnError) {
-				return;
+			if (error) {
+				return callback(new Error(
+					'Error with ' + record + ': ' + error.message
+				));
 			}
+			word[word.PoS] = data;
+
 			words.push(word);
 			opts.push({
 				deleteOne: {

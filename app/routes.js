@@ -14,6 +14,9 @@ function updateWordFromReq(word, req) {
 	if (req.body['noun']) {
 		word.noun = req.body['noun'];
 	}
+	if (req.body['adjective']) {
+		word.adjective = req.body['adjective'];
+	}
 }
 
 module.exports = function(app) {
