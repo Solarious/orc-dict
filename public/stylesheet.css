@@ -10,3 +10,9 @@ body {
 .capitalize {
 	text-transform: capitalize;
 }
+
+textarea {
+	-moz-tab-size: 64;
+	-o-tab-size: 64;
+	tab-size: 64;
+}
