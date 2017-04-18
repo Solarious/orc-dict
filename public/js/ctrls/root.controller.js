@@ -13,6 +13,7 @@ function RootController(AuthService, $location) {
 	vm.isLoggedIn = isLoggedIn;
 	vm.getUserName = getUserName;
 	vm.logout = logout;
+	vm.search = search;
 
 	function isLoggedIn() {
 		return AuthService.isLoggedIn();
@@ -26,6 +27,13 @@ function RootController(AuthService, $location) {
 		AuthService.logout()
 		.then(function() {
 			$location.path('/');
+		});
+	}
+
+	function search() {
+		$location.path('/search')
+		.search({
+			q: vm.searchText
 		});
 	}
 }

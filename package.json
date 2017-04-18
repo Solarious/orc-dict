@@ -13,7 +13,8 @@
     "createUser": "node scripts/userActions.js createUser",
     "removeUser": "node scripts/userActions.js removeUser",
     "changePassword": "node scripts/userActions.js changePassword",
-    "listUsers": "node scripts/userActions.js listUsers"
+    "listUsers": "node scripts/userActions.js listUsers",
+    "rebuildSearchIndexes": "node scripts/rebuild.js"
   },
   "author": "Nathan Aplin",
   "dependencies": {

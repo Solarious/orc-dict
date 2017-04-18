@@ -22,6 +22,7 @@
 	<script src="js/ctrls/newWord.controller.js"></script>
 	<script src="js/ctrls/bulkAdd.controller.js"></script>
 	<script src="js/ctrls/adminWord.controller.js"></script>
+	<script src="js/ctrls/search.controller.js"></script>
 	<script src="js/services/auth.factory.js"></script>
 	<script src="js/services/words.factory.js"></script>
 	<script src="js/directives/verbConjTable.directive.js"></script>
@@ -71,12 +72,14 @@
 				</a></li>
 			</ul>
 
-			<form class="navbar-form navbar-right">
+			<form class="navbar-form navbar-right" ng-submit="rootVM.search()">
 				<div class="form-group">
 					<input type="text" class="form-control"
-					placeholder="Search"/>
+					placeholder="Search" ng-model="rootVM.searchText"/>
 				</div>
-				<button type="submit" class="btn btn-default">Search</button>
+				<button type="submit" class="btn btn-default">
+					Search
+				</button>
 			</form>
 		</div>
 	</div>

@@ -3,6 +3,7 @@ var passport = require('passport');
 var Word = require('./models/word');
 var autofill = require('./autofill');
 var bulkAdd = require('./bulkAdd');
+var search = require('./search');
 
 function updateWordFromReq(word, req) {
 	word.orcish = req.body['orcish'];
@@ -17,6 +18,19 @@ function updateWordFromReq(word, req) {
 	if (req.body['adjective']) {
 		word.adjective = req.body['adjective'];
 	}
+}
+
+function rebuild() {
+	var start = process.hrtime();
+	search.rebuild(function(error, data) {
+		if (error) {
+			console.log('Error with search.rebuild:');
+			console.log(error.message);
+		}
+		var total = process.hrtime(start);
+		var ms = total[1] / 1000000;
+		console.log('Search.rebuild took ' + ms + ' ms');
+	});
 }
 
 module.exports = function(app) {
@@ -43,6 +57,7 @@ app.post('/api/words', function(req, res) {
 				res.status(500).send(err.message);
 			} else {
 				res.json(newWord);
+				rebuild();
 			}
 		});
 	}
@@ -84,6 +99,7 @@ app.put('/api/words/:word_orcish', function(req, res) {
 						res.status(500).send(err.message);
 					} else {
 						res.json(word);
+						rebuild();
 					}
 				});
 			}
@@ -106,6 +122,7 @@ app.delete('/api/words/:word_orcish', function(req, res) {
 				);
 			} else {
 				res.json(word);
+				rebuild();
 			}
 		});
 	}
@@ -182,9 +199,33 @@ app.post('/api/bulkadd', function(req, res) {
 				res.status(404).send(err.message);
 			} else {
 				res.json(results);
+				rebuild();
 			}
 		});
 	}
+});
+
+app.get('/api/search', function(req, res) {
+	var q = req.query.q;
+	search.getMatches(q, function(error, data) {
+		if (error) {
+			res.status(500).send(error.message);
+		} else {
+			res.json({
+				results: data
+			});
+		}
+	});
+});
+
+app.get('/api/list-search-indexes', function(req, res) {
+	search.getAll(function(error, data) {
+		if (error) {
+			res.status(500).send(error.message);
+		} else {
+			res.send(data);
+		}
+	});
 });
 
 app.get('*', function(req, res) {

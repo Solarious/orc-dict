@@ -14,7 +14,8 @@ function wordsService($http, $q) {
 		update: update,
 		remove: remove,
 		autofill: autofill,
-		bulkAdd: bulkAdd
+		bulkAdd: bulkAdd,
+		search: search
 	};
 
 	return service;
@@ -90,6 +91,20 @@ function wordsService($http, $q) {
 		})
 		.then(function(response) {
 			return response.data
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
+
+	function search(str) {
+		return $http.get('api/search', {
+			params: {
+				q: str
+			}
+		})
+		.then(function(response) {
+			return response.data;
 		})
 		.catch(function(error) {
 			return $q.reject(error.data);

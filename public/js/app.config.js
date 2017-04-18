@@ -55,6 +55,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/search', {
+		templateUrl: 'views/search.html',
+		controller: 'SearchController',
+		controllerAs: 'vm',
+		restricted: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
