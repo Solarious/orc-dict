@@ -1,33 +1,21 @@
-<div class="col-md-4">
+<div class="col-md-6">
 	<table class="table table-condensed min-first-col">
 		<tr>
-			<th>Orcish:</th>
-			<td>{{word.orcish}}</td>
-		</tr>
-		<tr>
-			<th>English:</th>
-			<td>{{word.english}}</td>
-		</tr>
-		<tr>
-			<th>Part of Speech:</th>
-			<td class="capitalize">{{word.PoS}}</td>
-		</tr>
-		<tr>
 			<th>Infinitive:</th>
-			<td>{{word.verb.infinitive}}</td>
+			<td>{{verb.infinitive}}</td>
 		</tr>
 		<tr>
 			<th>Conjugation:</th>
-			<td class="capitalize">{{word.verb.conjugation}}</td>
+			<td class="capitalize">{{verb.conjugation}}</td>
 		</tr>
 		<tr>
 			<th>Gerund:</th>
-			<td>{{word.verb.gerund}}</td>
+			<td>{{verb.gerund}}</td>
 		</tr>
 	</table>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="2" class="text-center">Imperative</th>
@@ -37,13 +25,13 @@
 			<th>Plural</th>
 		</tr>
 		<tr>
-			<td>{{word.verb.imperative.singular}}</td>
-			<td>{{word.verb.imperative.plural}}</td>
+			<td>{{verb.imperative.singular}}</td>
+			<td>{{verb.imperative.plural}}</td>
 		</tr>
 	</table>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="2" class="text-center">Participle</th>
@@ -53,13 +41,13 @@
 			<th>Masculine</th>
 		</tr>
 		<tr>
-			<td>{{word.verb.participle.feminine}}</td>
-			<td>{{word.verb.participle.masculine}}</td>
+			<td>{{verb.participle.feminine}}</td>
+			<td>{{verb.participle.masculine}}</td>
 		</tr>
 	</table>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="3" class="text-center">Agent</th>
@@ -70,14 +58,14 @@
 			<th>Dishonorable</th>
 		</tr>
 		<tr>
-			<td>{{word.verb.agent.feminine}}</td>
-			<td>{{word.verb.agent.masculine}}</td>
-			<td>{{word.verb.agent.dishonorable}}</td>
+			<td>{{verb.agent.feminine}}</td>
+			<td>{{verb.agent.masculine}}</td>
+			<td>{{verb.agent.dishonorable}}</td>
 		</tr>
 	</table>
 </div>
 
 <div class="clearfix"></div>
 
-<orc-dict-verb-voices active="word.verb.active"
-passive="word.verb.passive"></orc-dict-verb-voices>
+<orc-dict-verb-voices active="verb.active"
+passive="verb.passive"></orc-dict-verb-voices>

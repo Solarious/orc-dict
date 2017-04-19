@@ -9,7 +9,7 @@ function noun() {
 	var directive = {
 		restrict: 'E',
 		scope: {
-			word: '='
+			noun: '='
 		},
 		templateUrl: 'views/noun.directive.html'
 	};

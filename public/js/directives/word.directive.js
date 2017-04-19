@@ -3,15 +3,15 @@
 
 angular
 	.module('orcDictApp')
-	.directive('orcDictAdjective', adjective);
+	.directive('orcDictWord', word);
 
-function adjective() {
+function word() {
 	var directive = {
 		restrict: 'E',
 		scope: {
-			adjective: '='
+			word: '='
 		},
-		templateUrl: 'views/adjective.directive.html'
+		templateUrl: 'views/word.directive.html'
 	};
 
 	return directive;

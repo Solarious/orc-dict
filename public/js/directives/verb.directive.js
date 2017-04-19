@@ -9,7 +9,7 @@ function verb() {
 	var directive = {
 		restrict: 'E',
 		scope: {
-			word: '='
+			verb: '='
 		},
 		templateUrl: 'views/verb.directive.html'
 	};
