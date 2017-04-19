@@ -33,18 +33,21 @@ module.exports = function(data, encoding, remove, callback) {
 				PoS: record[2]
 			};
 
-			var error;
-			var data;
-			autofill(word.orcish, word.PoS, function(err, theData) {
-				error = err;
-				data = theData;
-			});
-			if (error) {
-				return callback(new Error(
-					'Error with ' + record + ': ' + error.message
-				));
+			var hasPart = ['adjective', 'noun', 'verb'];
+			if (hasPart.indexOf(word.PoS) !== -1) {
+				var error;
+				var data;
+				autofill(word.orcish, word.PoS, function(err, theData) {
+					error = err;
+					data = theData;
+				});
+				if (error) {
+					return callback(new Error(
+						'Error with ' + record + ': ' + error.message
+					));
+				}
+				word[word.PoS] = data;
 			}
-			word[word.PoS] = data;
 
 			words.push(word);
 			opts.push({

@@ -195,23 +195,34 @@ var WordSchema = new Schema({
 	PoS: {
 		type: String,
 		required: true,
-		enum: ['noun', 'verb', 'adjective', 'adverb']
+		enum: [
+			'adjective',
+			'adverb',
+			'cardinal',
+			'conjunction',
+			'exclamation',
+			'interjection',
+			'noun',
+			'preposition',
+			'verb',
+		]
 	},
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema
 });
 
-WordSchema.post('validate', function() {
+WordSchema.pre('validate', function(next) {
 	if (this.verb !== undefined && this.PoS !== 'verb') {
-		delete this.verb;
+		this.verb = undefined;
 	}
 	if (this.noun !== undefined && this.PoS !== 'noun') {
-		delete this.noun;
+		this.noun = undefined;
 	}
 	if (this.adjective !== undefined && this.PoS !== 'adjective') {
-		delete this.adjective;
+		this.adjective = undefined;
 	}
+	next();
 });
 
 WordSchema.pre('save', function(next) {

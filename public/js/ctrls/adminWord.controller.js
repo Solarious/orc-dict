@@ -32,7 +32,9 @@ function AdminWordController($routeParams, WordsService, $location) {
 		if (vm.word.PoS != "") {
 			WordsService.autofill(vm.word.PoS, vm.word.orcish)
 			.then(function(data) {
-				vm.word[partName] = data;
+				if (!angular.equals(data, {})) {
+					vm.word[partName] = data;
+				}
 			}, function(err) {
 				vm.errorMessage = err;
 			});

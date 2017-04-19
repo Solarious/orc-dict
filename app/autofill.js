@@ -9,6 +9,18 @@ module.exports = function(orcish, PoS, callback) {
 		getAdjective(orcish, callback);
 	} else if (PoS === 'adverb') {
 		callback(null, {});
+	} else if (PoS === 'cardinal') {
+		callback(null, {});
+	} else if (PoS === 'conjunction') {
+		callback(null, {});
+	} else if (PoS === 'demonstrative') {
+		callback(null, {});
+	} else if (PoS === 'exclamation') {
+		callback(null, {});
+	} else if (PoS === 'interjection') {
+		callback(null, {});
+	} else if (PoS === 'preposition') {
+		callback(null, {});
 	} else {
 		return callback(new Error('Invalid PoS: ' + PoS));
 	}
