@@ -181,6 +181,17 @@ var AdjectiveSchema = new Schema({
 	}
 }, { _id: false});
 
+var ExampleSentenceSchema = new Schema({
+	orcish: {
+		type: String,
+		required: true
+	},
+	english: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -207,6 +218,11 @@ var WordSchema = new Schema({
 			'verb',
 		]
 	},
+	extraInfo: String,
+	coinedBy: String,
+	namedAfter: String,
+	relatedWords: [String],
+	exampleSentences: [ExampleSentenceSchema],
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema

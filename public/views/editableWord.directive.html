@@ -4,20 +4,20 @@
 			<th>Orcish:</th>
 			<td>
 				<input type="text" class="form-control"
-				ng-model="word.orcish"/>
+				ng-model="vm.word.orcish"/>
 			</td>
 		</tr>
 		<tr>
 			<th>English:</th>
 			<td>
 				<input type="text" class="form-control"
-				ng-model="word.english"/>
+				ng-model="vm.word.english"/>
 			</td>
 		</tr>
 		<tr>
 			<th>Part of Speech:</th>
 			<td>
-				<select ng-model="word.PoS">
+				<select ng-model="vm.word.PoS">
 					<option value="">--Please Select--</option>
 					<option value="adjective">Adjective</option>
 					<option value="adverb">Adverb</option>
@@ -32,15 +32,52 @@
 			</td>
 		</tr>
 		<tr>
+			<th>Extra Info (optional):</th>
+			<td>
+				<textarea class="form-control" ng-model="vm.word.extraInfo">
+				</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>Coined By (optional):</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="vm.word.coinedBy"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Named After (optional):</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="vm.word.namedAfter"/>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<ng-pluralize count="vm.getNumExamples()"
+				when="{'0': 'There are no examples',
+				'one': 'There is 1 example',
+				'other': 'There are {} examples'}">
+				</ng-pluralize>
+			</th>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="vm.toggleExamples()">
+					{{vm.showExamplesText}}
+				</button>
+			</td>
+		</tr>
+		<tr>
 			<td>
 				<button type="button" class="btn btn-primary"
-				ng-click="submitFunction()">
-					{{submitText}}
+				ng-click="vm.submitFunction()">
+					<span class="glyphicon glyphicon-edit">
+					</span> {{vm.submitText}}
 				</button>
 			</td>
 			<td>
 				<button type="button" class="btn btn-default"
-				ng-click="autofillFunction()" ng-disabled="submitDisabled">
+				ng-click="vm.autofillFunction()" ng-disabled="vm.submitDisabled">
 					Autofill
 				</button>
 			</td>
@@ -48,12 +85,49 @@
 	</table>
 </div>
 
-<orc-dict-editable-noun noun="word.noun" ng-if="word.PoS==='noun'">
+<div class="col-md-8" ng-show="vm.showExamples">
+	<table class="table table-condensed">
+		<tr>
+			<th colspan="2">Example Sentences</th>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="vm.addExample()">
+					New Example
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<th>Orcish</th>
+			<th>English</th>
+			<td></td>
+		</tr>
+		<tr ng-repeat="example in vm.word.exampleSentences">
+			<td>
+				<textarea class="form-control" spellcheck="false"
+				ng-model="example.orcish">
+				</textarea>
+			</td>
+			<td>
+				<textarea class="form-control" ng-model="example.english">
+				</textarea>
+			</td>
+			<td>
+				<button type="button" class="btn btn-danger"
+				ng-click="vm.removeExample($index)">
+					<span class="glyphicon glyphicon-remove">
+					</span> Remove
+				</button>
+			</td>
+		</tr>
+	</table>
+</div
+
+<orc-dict-editable-noun noun="vm.word.noun" ng-if="vm.word.PoS==='noun'">
 </orc-dict-editable-noun>
 
-<orc-dict-editable-verb verb="word.verb" ng-if="word.PoS==='verb'">
+<orc-dict-editable-verb verb="vm.word.verb" ng-if="vm.word.PoS==='verb'">
 </orc-dict-editable-verb>
 
-<orc-dict-editable-adjective adjective="word.adjective"
-ng-if="word.PoS==='adjective'">
+<orc-dict-editable-adjective adjective="vm.word.adjective"
+ng-if="vm.word.PoS==='adjective'">
 </orc-dict-editable-adjective>

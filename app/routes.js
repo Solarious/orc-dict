@@ -9,14 +9,19 @@ function updateWordFromReq(word, req) {
 	word.orcish = req.body['orcish'];
 	word.english = req.body['english'];
 	word.PoS = req.body['PoS'];
-	if (req.body['verb']) {
-		word.verb = req.body['verb'];
-	}
-	if (req.body['noun']) {
-		word.noun = req.body['noun'];
-	}
-	if (req.body['adjective']) {
-		word.adjective = req.body['adjective'];
+	addIfExists(word, req, 'extraInfo');
+	addIfExists(word, req, 'coinedBy');
+	addIfExists(word, req, 'namedAfter');
+	addIfExists(word, req, 'relatedWords');
+	addIfExists(word, req, 'exampleSentences');
+	addIfExists(word, req, 'adjective');
+	addIfExists(word, req, 'noun');
+	addIfExists(word, req, 'verb');
+}
+
+function addIfExists(word, req, property) {
+	if (req.body[property]) {
+		word[property] = req.body[property];
 	}
 }
 

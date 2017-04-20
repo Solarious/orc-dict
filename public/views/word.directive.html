@@ -12,6 +12,42 @@
 			<th>Part of Speech</th>
 			<td class="capitalize">{{word.PoS}}</td>
 		</tr>
+		<tr ng-if="word.extraInfo">
+			<th>Extra Info</th>
+			<td>{{word.extraInfo}}</td>
+		</tr>
+		<tr ng-if="word.coinedBy">
+			<th>Coined By</th>
+			<td>{{word.coinedBy}}</td>
+		</tr>
+		<tr ng-if="word.namedAfter">
+			<th>Named After</th>
+			<td>{{word.namedAfter}}</td>
+		</tr>
+		<tr ng-if="word.relatedWords.length > 0">
+			<th>Related Words</th>
+			<td>
+				<div ng-repeat="relatedWord in relatedWords">
+					<a ng-href="/words/{{word.orcish}}">
+						{{word.orcish}}<span ng-show="!$last">, </span>
+					</a>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<table class="table table-condensed"
+	ng-if="word.exampleSentences.length > 0">
+		<tr>
+			<th colspan="2">Example Sentences</th>
+		</tr>
+		<tr>
+			<th>Orcish</th>
+			<th>English<th>
+		</tr>
+		<tr ng-repeat="example in word.exampleSentences">
+			<td>{{example.orcish}}</td>
+			<td>{{example.english}}</td>
+		</tr>
 	</table>
 </div>
 
