@@ -11,7 +11,7 @@ function editableVerb() {
 		scope: {
 			verb: '='
 		},
-		templateUrl: 'views/editableVerb.directive.html'
+		templateUrl: 'editable/editableVerb.directive.html'
 	};
 
 	return directive;

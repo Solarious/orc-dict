@@ -14,7 +14,7 @@ function modal() {
 			actionText: '@',
 			modalId: '@'
 		},
-		templateUrl: 'views/modal.directive.html'
+		templateUrl: 'shared/modal.directive.html'
 	};
 
 	return directive;

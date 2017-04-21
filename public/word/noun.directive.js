@@ -11,7 +11,7 @@ function noun() {
 		scope: {
 			noun: '='
 		},
-		templateUrl: 'views/noun.directive.html'
+		templateUrl: 'word/noun.directive.html'
 	};
 
 	return directive;

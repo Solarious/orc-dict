@@ -12,7 +12,7 @@ function editableVerbConjTable() {
 			conj: '=',
 			title: '@'
 		},
-		templateUrl: 'views/editableVerbConjTable.directive.html'
+		templateUrl: 'editable/editableVerbConjTable.directive.html'
 	};
 
 	return directive;

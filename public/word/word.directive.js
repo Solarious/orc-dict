@@ -11,7 +11,7 @@ function word() {
 		scope: {
 			word: '='
 		},
-		templateUrl: 'views/word.directive.html'
+		templateUrl: 'word/word.directive.html'
 	};
 
 	return directive;

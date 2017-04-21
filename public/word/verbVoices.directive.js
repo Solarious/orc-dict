@@ -12,7 +12,7 @@ function verbVoices() {
 			active: '=',
 			passive: '='
 		},
-		templateUrl: 'views/verbVoices.directive.html'
+		templateUrl: 'word/verbVoices.directive.html'
 	};
 
 	return directive;

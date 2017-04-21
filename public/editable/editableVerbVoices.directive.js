@@ -12,7 +12,7 @@ function editableVerbVoices() {
 			active: '=',
 			passive: '='
 		},
-		templateUrl: 'views/editableVerbVoices.directive.html'
+		templateUrl: 'editable/editableVerbVoices.directive.html'
 	};
 
 	return directive;

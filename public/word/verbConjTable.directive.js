@@ -12,7 +12,7 @@ function verbConjTable() {
 			conj: '=',
 			title: '@'
 		},
-		templateUrl: 'views/verbConjTable.directive.html'
+		templateUrl: 'word/verbConjTable.directive.html'
 	};
 
 	return directive;

@@ -11,7 +11,7 @@ function verb() {
 		scope: {
 			verb: '='
 		},
-		templateUrl: 'views/verb.directive.html'
+		templateUrl: 'word/verb.directive.html'
 	};
 
 	return directive;

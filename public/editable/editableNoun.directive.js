@@ -11,7 +11,7 @@ function editableNoun() {
 		scope: {
 			noun: '='
 		},
-		templateUrl: 'views/editableNoun.directive.html'
+		templateUrl: 'editable/editableNoun.directive.html'
 	};
 
 	return directive;

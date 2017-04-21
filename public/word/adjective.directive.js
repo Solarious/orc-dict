@@ -11,7 +11,7 @@ function adjective() {
 		scope: {
 			adjective: '='
 		},
-		templateUrl: 'views/adjective.directive.html'
+		templateUrl: 'word/adjective.directive.html'
 	};
 
 	return directive;

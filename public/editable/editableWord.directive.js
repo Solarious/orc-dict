@@ -15,7 +15,7 @@ function editableWord() {
 			submitDisabled: '=',
 			autofillFunction: '&'
 		},
-		templateUrl: 'views/editableWord.directive.html',
+		templateUrl: 'editable/editableWord.directive.html',
 		controller: EditableWordController,
 		controllerAs: 'vm',
 		bindToController: true

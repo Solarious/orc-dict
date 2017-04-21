@@ -11,7 +11,7 @@ function editableAdjective() {
 		scope: {
 			adjective: '='
 		},
-		templateUrl: 'views/editableAdjective.directive.html'
+		templateUrl: 'editable/editableAdjective.directive.html'
 	};
 
 	return directive;

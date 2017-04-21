@@ -12,7 +12,7 @@ function editableAdjectiveCaseTable() {
 			caseGroup: '=',
 			title: '@'
 		},
-		templateUrl: 'views/editableAdjectiveCaseTable.directive.html'
+		templateUrl: 'editable/editableAdjectiveCaseTable.directive.html'
 	};
 
 	return directive;
