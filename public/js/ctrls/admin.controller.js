@@ -13,7 +13,6 @@ function AdminController($http, WordsService, $location) {
 	vm.csrftest = csrftest;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
-	vm.edit = edit;
 
 	activate();
 
@@ -46,10 +45,6 @@ function AdminController($http, WordsService, $location) {
 			activate();
 		});
 		$('#removeModal').modal('hide');
-	}
-
-	function edit(word) {
-		$location.path('/admin/words/' + word.orcish);
 	}
 }
 

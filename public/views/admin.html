@@ -34,10 +34,9 @@ modal-id="removeModal">
 		<td>{{word.english}}</td>
 		<td>{{word.PoS}}</td>
 		<td>
-			<button type="button" class="btn btn-primary"
-			ng-click="vm.edit(word)">
+			<a class="btn btn-primary" ng-href="/admin/words/{{word.orcish}}">
 				<span class="glyphicon glyphicon-edit"></span> Edit
-			</button>
+			</a>
 		</td>
 		<td>
 			<button type="button" class="btn btn-danger"
