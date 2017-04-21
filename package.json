@@ -9,12 +9,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "postinstall": "bower install",
+    "postinstall": "bower install & gulp build-js",
     "createUser": "node scripts/userActions.js createUser",
     "removeUser": "node scripts/userActions.js removeUser",
     "changePassword": "node scripts/userActions.js changePassword",
     "listUsers": "node scripts/userActions.js listUsers",
-    "rebuildSearchIndexes": "node scripts/rebuild.js"
+    "rebuildSearchIndexes": "node scripts/rebuild.js",
+	"gulp": "gulp"
   },
   "author": "Nathan Aplin",
   "dependencies": {
@@ -25,6 +26,10 @@
     "csv-parse": "^1.2.0",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.1.2",
     "method-override": "^2.3.8",
     "mongoose": "^4.9.3",
     "morgan": "^1.8.1",
