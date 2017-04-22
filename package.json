@@ -15,7 +15,7 @@
     "changePassword": "node scripts/userActions.js changePassword",
     "listUsers": "node scripts/userActions.js listUsers",
     "rebuildSearchIndexes": "node scripts/rebuild.js",
-	"gulp": "gulp"
+    "gulp": "gulp"
   },
   "author": "Nathan Aplin",
   "dependencies": {
@@ -38,5 +38,10 @@
     "readline-sync": "^1.4.7"
   },
   "license": "GPL-3.0",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "gulp-jshint": "^2.0.4",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
+  }
 }

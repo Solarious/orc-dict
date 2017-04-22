@@ -90,7 +90,7 @@ function wordsService($http, $q) {
 			remove: remove
 		})
 		.then(function(response) {
-			return response.data
+			return response.data;
 		})
 		.catch(function(error) {
 			return $q.reject(error.data);

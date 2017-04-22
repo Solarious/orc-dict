@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
 
 var jsFiles = [
 	'public/app.module.js',
@@ -19,6 +20,12 @@ gulp.task('build-js', function() {
 	.pipe(concat('app.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('public/dist'));
+});
+
+gulp.task('lint', function() {
+	return gulp.src(jsFiles)
+	.pipe(jshint())
+	.pipe(jshint.reporter('jshint-stylish'))
 });
 
 gulp.task('watch', function() {

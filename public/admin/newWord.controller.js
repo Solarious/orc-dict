@@ -22,7 +22,7 @@ function NewWordController(WordsService, $location) {
 
 	function autofill() {
 		var partName = vm.word.PoS;
-		if (vm.word.PoS != "") {
+		if (vm.word.PoS !== "") {
 			WordsService.autofill(vm.word.PoS, vm.word.orcish)
 			.then(function(data) {
 				if (!angular.equals(data, {})) {
