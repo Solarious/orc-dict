@@ -4,7 +4,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 
-var jsFiles = [
+var jsPublicFiles = [
 	'public/app.module.js',
 	'public/app.config.js',
 	'public/app.run.js',
@@ -15,18 +15,34 @@ var jsFiles = [
 	'public/editable/*.js',
 ];
 
+var jsAppFiles = [
+	'server.js',
+	'app/*.js'
+];
+
 gulp.task('build-js', function() {
-	return gulp.src(jsFiles)
+	return gulp.src(jsPublicFiles)
 	.pipe(concat('app.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('public/dist'));
 });
 
-gulp.task('lint', function() {
-	return gulp.src(jsFiles)
+gulp.task('lintPublic', function() {
+	return gulp.src(jsPublicFiles)
 	.pipe(jshint())
 	.pipe(jshint.reporter('jshint-stylish'))
 });
+
+gulp.task('lintApp', function() {
+	return gulp.src(jsAppFiles)
+	.pipe(jshint({
+		node: true,
+		esversion: 6
+	}))
+	.pipe(jshint.reporter('jshint-stylish'))
+});
+
+gulp.task('lint', ['lintPublic', 'lintApp'], function() {});
 
 gulp.task('watch', function() {
 	gulp.watch(jsFiles, ['build-js']);
