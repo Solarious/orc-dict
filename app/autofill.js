@@ -1,3 +1,5 @@
+'use strict';
+
 var Word = require('./models/word');
 
 module.exports = function(orcish, PoS, callback) {
@@ -48,16 +50,16 @@ function getNoun(orcish, callback) {
 	var endings;
 
 	endings = ['ad', 'am', 'ag', 'aed'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(null, firstDeclNoun(orcish, ending));
 		}
 	}
 
 	endings = ['ul', 'or', 'k', 'x'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(
 				null, secondDeclNoun(orcish, ending, 'masculine')
@@ -66,8 +68,8 @@ function getNoun(orcish, callback) {
 	}
 
 	endings = ['id', 'ed', 'd', 'z', 'dj'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(
 				null, secondDeclNoun(orcish, ending, 'neutral')
@@ -76,24 +78,24 @@ function getNoun(orcish, callback) {
 	}
 
 	endings = ['ash', 'ard', 'rd'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(null, thirdDeclNoun(orcish, ending));
 		}
 	}
 
 	endings = ['b', 'f', 'p'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(null, fourthDeclNoun(orcish, ending));
 		}
 	}
 
 	endings = ['ath', 'at'];
-	for (var i = 0; i < endings.length; i++) {
-		var ending = endings[i];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(null, fifthDeclNoun(orcish, ending));
 		}
@@ -153,7 +155,7 @@ function nounToAdjectivePart(noun) {
 		dative: noun.dative,
 		accusative: noun.accusative,
 		vocative: noun.vocative
-	}
+	};
 }
 
 function firstConjVerb(orcish) {
@@ -489,11 +491,8 @@ function secondConjVerb(orcish) {
 
 function firstDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
-	if (ending === 'am') {
-		var accusativeEnding = 'adz';
-	} else {
-		var accusativeEnding = 'az';
-	}
+	var accusativeEnding = (ending === 'am') ? 'adz' : 'az';
+
 	return {
 		declension: 'first',
 		gender: 'feminine',
@@ -523,11 +522,7 @@ function firstDeclNoun(orcish, ending) {
 function secondDeclNoun(orcish, ending, gender) {
 	var base = orcish.slice(0, -(ending.length));
 	var lastLetterOfBase = base[base.length - 1];
-	if (gender === 'masculine') {
-		var dativeVocativePlural = 'ors';
-	} else {
-		var dativeVocativePlural = 'aes';
-	}
+	var dativeVocativePlural = (gender === 'masculine') ? 'ors' : 'aes';
 
 	if (ending === 'k') {
 		if (!isVowel(lastLetterOfBase)) {
@@ -596,6 +591,7 @@ function thirdDeclNoun(orcish, ending) {
 
 function fourthDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
+	var lastLetterOfBase = base[base.length - 1];
 
 	if (isVowel(lastLetterOfBase)) {
 		base = base.slice(0, -1);

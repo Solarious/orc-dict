@@ -1,3 +1,5 @@
+'use strict';
+
 var path = require('path');
 var passport = require('passport');
 var Word = require('./models/word');
@@ -6,9 +8,9 @@ var bulkAdd = require('./bulkAdd');
 var search = require('./search');
 
 function updateWordFromReq(word, req) {
-	word.orcish = req.body['orcish'];
-	word.english = req.body['english'];
-	word.PoS = req.body['PoS'];
+	word.orcish = req.body.orcish;
+	word.english = req.body.english;
+	word.PoS = req.body.PoS;
 	addIfExists(word, req, 'extraInfo');
 	addIfExists(word, req, 'coinedBy');
 	addIfExists(word, req, 'namedAfter');
@@ -157,7 +159,7 @@ app.post('/api/user/login', function(req, res, next) {
 		}
 		req.logIn(user, function(err) {
 			if (err) {
-				return status(500).json({
+				return res.status(500).json({
 					err: err
 				});
 			}
@@ -196,9 +198,9 @@ app.post('/api/bulkadd', function(req, res) {
 	if (!req.isAuthenticated()) {
 		res.status(401).send('Unauthorized');
 	} else {
-		var data = req.body['data'];
-		var encoding = req.body['encoding'];
-		var remove = (req.body['remove'] === 'true');
+		var data = req.body.data;
+		var encoding = req.body.encoding;
+		var remove = (req.body.remove === 'true');
 		bulkAdd(data, encoding, remove, function(err, results) {
 			if (err) {
 				res.status(404).send(err.message);

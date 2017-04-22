@@ -1,3 +1,5 @@
+'use strict';
+
 var parse = require('csv-parse');
 var Word = require('./models/word');
 var autofill = require('./autofill');
@@ -20,6 +22,13 @@ module.exports = function(data, encoding, remove, callback) {
 		}
 		var words = [];
 		var opts = [];
+		var autofillError;
+		var autofillData;
+		var autofillCallback = function(error, data) {
+			autofillError = error;
+			autofillData = data;
+		};
+
 		for (var i = 0; i < output.length; i++) {
 			var record = output[i];
 			if (record.length < 3) {
@@ -35,18 +44,13 @@ module.exports = function(data, encoding, remove, callback) {
 
 			var hasPart = ['adjective', 'noun', 'verb'];
 			if (hasPart.indexOf(word.PoS) !== -1) {
-				var error;
-				var data;
-				autofill(word.orcish, word.PoS, function(err, theData) {
-					error = err;
-					data = theData;
-				});
-				if (error) {
+				autofill(word.orcish, word.PoS, autofillCallback);
+				if (autofillError) {
 					return callback(new Error(
-						'Error with ' + record + ': ' + error.message
+						'Error with ' + record + ': ' + autofillError.message
 					));
 				}
-				word[word.PoS] = data;
+				word[word.PoS] = autofillData;
 			}
 
 			words.push(word);

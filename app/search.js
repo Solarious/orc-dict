@@ -1,3 +1,5 @@
+'use strict';
+
 var SearchIndex = require('./models/searchIndex');
 var Word = require('./models/word');
 
@@ -11,12 +13,8 @@ function getMatches(str, callback) {
 	var regex = /[^\s"]+|"([^"]*)"/g;
 	var match;
 	var searches = [];
-	while (match = regex.exec(str.toLowerCase())) {
-		if (match[1]) {
-			var s = match[1];
-		} else {
-			var s = match[0];
-		}
+	while ((match = regex.exec(str.toLowerCase()))) {
+		var s = match[1] ? match[1] : match[0];
 		searches.push(s);
 	}
 
@@ -161,7 +159,7 @@ function addVerbVoice(word, searchIndexes, verbVoice) {
 
 function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 	var tense = word.verb[verbVoice][verbTense];
-	tenseStr = verbTense.replace(/([A-Z])/g, ' $1').toLowerCase();
+	var tenseStr = verbTense.replace(/([A-Z])/g, ' $1').toLowerCase();
 	searchIndexes.push({
 		keyword: tense.first.singular,
 		priority: 2,
