@@ -50,7 +50,7 @@ AlertService) {
 		WordsService.update(vm.orcish, vm.word)
 		.then(function() {
 			$location.path('/admin');
-			var w = [vm.word.orcish, vm.word.english, vm.word.PoS].join(', ');
+			var w = [vm.word.orcish, vm.word.PoS, vm.word.english].join(', ');
 			AlertService.successDeferred('Word "' + w + '" updated');
 		}, function(error) {
 			AlertService.error(error || 'Unknown error updating word');
