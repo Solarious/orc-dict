@@ -3,12 +3,12 @@
 
 angular
 	.module('orcDictApp')
-	.controller('AdminWordController', AdminWordController);
+	.controller('EditWordController', EditWordController);
 
-AdminWordController.$inject = ['$routeParams', 'WordsService', '$location',
+EditWordController.$inject = ['$routeParams', 'WordsService', '$location',
 'AlertService'];
 
-function AdminWordController($routeParams, WordsService, $location,
+function EditWordController($routeParams, WordsService, $location,
 AlertService) {
 	var vm = this;
 

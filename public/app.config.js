@@ -50,8 +50,8 @@ function config($locationProvider, $routeProvider) {
 		restricted: true
 	})
 	.when('/admin/words/:orcish', {
-		templateUrl: 'admin/adminWord.html',
-		controller: 'AdminWordController',
+		templateUrl: 'admin/editWord.html',
+		controller: 'EditWordController',
 		controllerAs: 'vm',
 		restricted: true
 	})
