@@ -15,20 +15,30 @@ var jsPublicFiles = [
 	'public/editable/*.js',
 ];
 
+var jsPublicProductionFiles = jsPublicFiles.concat([
+	'public/app.production.js'
+]);
+
 var jsAppFiles = [
 	'server.js',
 	'app/*.js'
 ];
 
-gulp.task('build-js', function() {
-	return gulp.src(jsPublicFiles)
+gulp.task('js', function() {
+	return gulp.src(jsPublicProductionFiles)
 	.pipe(concat('app.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('public/dist'));
 });
 
-gulp.task('lintPublic', function() {
+gulp.task('js-debug', function() {
 	return gulp.src(jsPublicFiles)
+	.pipe(concat('app.min.js'))
+	.pipe(gulp.dest('public/dist'));
+});
+
+gulp.task('lintPublic', function() {
+	return gulp.src(jsPublicProductionFiles)
 	.pipe(jshint())
 	.pipe(jshint.reporter('jshint-stylish'))
 });
@@ -44,8 +54,12 @@ gulp.task('lintApp', function() {
 
 gulp.task('lint', ['lintPublic', 'lintApp'], function() {});
 
-gulp.task('watch', function() {
-	gulp.watch(jsFiles, ['build-js']);
+gulp.task('watch', ['js'], function() {
+	gulp.watch(jsPublicFiles, ['js']);
 });
 
-gulp.task('default', ['build-js'], function(){});
+gulp.task('watch-debug', ['js-debug'], function() {
+	gulp.watch(jsPublicFiles, ['js-debug']);
+});
+
+gulp.task('default', ['js'], function(){});
