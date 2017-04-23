@@ -9,7 +9,7 @@ run.$inject = ['$rootScope', '$location', '$route', 'AuthService',
 'AlertService'];
 
 function run($rootScope, $location, $route, AuthService, AlertService) {
-	$rootScope.$on('$routeChangeStart', function(event, next, current) {
+	$rootScope.$on('$routeChangeStart', function(angularEvent, next, current) {
 		AlertService.clear();
 		AuthService.getUserStatus()
 		.then(function() {
@@ -18,6 +18,11 @@ function run($rootScope, $location, $route, AuthService, AlertService) {
 				$route.reload();
 			}
 		});
+	});
+
+	$rootScope.$on('$routeChangeError',
+	function(angularEvent, next, current, rejection) {
+		AlertService.error(rejection.message);
 	});
 }
 
