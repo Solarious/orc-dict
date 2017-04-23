@@ -5,9 +5,9 @@ angular
 	.module('orcDictApp')
 	.controller('NewWordController', NewWordController);
 
-NewWordController.$inject = ['WordsService', '$location'];
+NewWordController.$inject = ['WordsService', '$location', 'AlertService'];
 
-function NewWordController(WordsService, $location) {
+function NewWordController(WordsService, $location, AlertService) {
 	var vm = this;
 
 	vm.autofill = autofill;
@@ -39,9 +39,10 @@ function NewWordController(WordsService, $location) {
 		WordsService.create(vm.word)
 		.then(function() {
 			$location.path('/admin');
+			var w = [vm.word.orcish, vm.word.english, vm.word.PoS].join(', ');
+			AlertService.successDeferred('Word "' + w + '" created');
 		}, function(error) {
-			var defaultErrorMessage = 'Unknown error creating word';
-			vm.errorMessage = error || defaultErrorMessage;
+			AlertService.error(error || 'Unknown error creating word');
 			vm.submitDisabled = false;
 		});
 	}

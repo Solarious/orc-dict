@@ -5,9 +5,9 @@ angular
 	.module('orcDictApp')
 	.controller('WordsIndexController', WordsIndexController);
 
-WordsIndexController.$inject = ['WordsService'];
+WordsIndexController.$inject = ['WordsService', 'AlertService'];
 
-function WordsIndexController(WordsService) {
+function WordsIndexController(WordsService, AlertService) {
 	var vm = this;
 
 	activate();
@@ -17,6 +17,8 @@ function WordsIndexController(WordsService) {
 		.then(function(data) {
 			vm.words = data;
 			return vm.words;
+		}, function(error) {
+			AlertService.error(error);
 		});
 	}
 }

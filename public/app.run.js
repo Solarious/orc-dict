@@ -5,10 +5,12 @@ angular.
 	module('orcDictApp').
 	run(run);
 
-run.$inject = ['$rootScope', '$location', '$route', 'AuthService'];
+run.$inject = ['$rootScope', '$location', '$route', 'AuthService',
+'AlertService'];
 
-function run($rootScope, $location, $route, AuthService) {
+function run($rootScope, $location, $route, AuthService, AlertService) {
 	$rootScope.$on('$routeChangeStart', function(event, next, current) {
+		AlertService.clear();
 		AuthService.getUserStatus()
 		.then(function() {
 			if (next.restricted && AuthService.isLoggedIn() === false) {

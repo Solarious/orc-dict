@@ -5,14 +5,18 @@ angular.
 	module('orcDictApp').
 	controller('AdminController', AdminController);
 
-AdminController.$inject = ['$http', 'WordsService', '$location'];
+AdminController.$inject = ['$http', 'WordsService', '$location',
+'AlertService'];
 
-function AdminController($http, WordsService, $location) {
+function AdminController($http, WordsService, $location, AlertService) {
 	var vm = this;
 
 	vm.csrftest = csrftest;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
+	vm.alertTest = alertTest;
+	vm.successTest = successTest;
+	vm.alertLinkTest = alertLinkTest;
 
 	activate();
 
@@ -45,6 +49,19 @@ function AdminController($http, WordsService, $location) {
 			activate();
 		});
 		$('#removeModal').modal('hide');
+	}
+
+	function alertTest() {
+		AlertService.error('WARNING!!!');
+	}
+
+	function successTest() {
+		AlertService.success('SUCCESS!!!');
+	}
+
+	function alertLinkTest() {
+		$location.path('/');
+		AlertService.successDeferred('HUZZAH!!!');
 	}
 }
 

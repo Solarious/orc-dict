@@ -1,9 +1,5 @@
 <h1>NewWord View</h1>
 
-<div ng-show="vm.errorMessage" class="alert alert-danger">
-	{{ vm.errorMessage}}
-</div>
-
 <orc-dict-editable-word word="vm.word" submit-function="vm.submit()"
 submit-text="Submit" submit-disabled="vm.submitDisabled"
 autofill-function="vm.autofill()">

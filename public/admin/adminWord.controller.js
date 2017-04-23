@@ -5,9 +5,11 @@ angular
 	.module('orcDictApp')
 	.controller('AdminWordController', AdminWordController);
 
-AdminWordController.$inject = ['$routeParams', 'WordsService', '$location'];
+AdminWordController.$inject = ['$routeParams', 'WordsService', '$location',
+'AlertService'];
 
-function AdminWordController($routeParams, WordsService, $location) {
+function AdminWordController($routeParams, WordsService, $location,
+AlertService) {
 	var vm = this;
 
 	vm.autofill = autofill;
@@ -24,6 +26,8 @@ function AdminWordController($routeParams, WordsService, $location) {
 			vm.word = data;
 			vm.submitDisabled = false;
 			return vm.word;
+		}, function(error) {
+			AlertService.error(error);
 		});
 	}
 
@@ -46,9 +50,10 @@ function AdminWordController($routeParams, WordsService, $location) {
 		WordsService.update(vm.orcish, vm.word)
 		.then(function() {
 			$location.path('/admin');
+			var w = [vm.word.orcish, vm.word.english, vm.word.PoS].join(', ');
+			AlertService.successDeferred('Word "' + w + '" updated');
 		}, function(error) {
-			var defaultErrorMessage = 'Unknown error updating word';
-			vm.errorMessage = error || defaultErrorMessage;
+			AlertService.error(error || 'Unknown error updating word');
 			vm.submitDisabled = false;
 		});
 	}

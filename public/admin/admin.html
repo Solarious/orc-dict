@@ -8,18 +8,22 @@ modal-id="removeModal">
 
 <h1>Admin</h1>
 
-<ul>
-	<li>
-		<button type="button" ng-click="vm.csrftest()">Test CSRF</button>
-	</li>
-
-	<li>
-		<a href="/admin/newword/">New Word</a>
-	</li>
-	<li>
-		<a href="/admin/bulkadd/">Bulk Add</a>
-	</li>
-</ul>
+<div class="btn-toolbar">
+	<button type="button" class="btn btn-default" ng-click="vm.csrftest()">
+		Test CSRF
+	</button>
+	<a class="btn btn-primary" href="/admin/newword/">New Word</a>
+	<a class="btn btn-primary" href="/admin/bulkadd/">Bulk Add</a>
+	<button type="button" class="btn btn-default" ng-click="vm.alertTest()">
+		Test Alert
+	</button>
+	<button type="button" class="btn btn-default" ng-click="vm.successTest()">
+		Test Success
+	</button>
+	<button type="button" class="btn btn-default" ng-click="vm.alertLinkTest()">
+		Test Link
+	</button>
+</div>
 
 <h3>Words</h3>
 <table class="table table-condensed">
