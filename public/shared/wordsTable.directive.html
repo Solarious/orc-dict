@@ -1,0 +1,91 @@
+<orc-dict-modal action-function="vm.removeModalAction()" action-text="Delete"
+modal-id="removeModal">
+	<h4>
+		Are you sure you want to delete {{vm.wordToRemove.orcish}}
+		, {{vm.wordToRemove.english}}, {{vm.wordToRemove.PoS}}?
+	</h4>
+</orc-dict-modal>
+
+<form class="form-horizontal col-md-3 clearfix">
+	<div class="form-group">
+		<label class="control-label">Words per Page</label>
+		<select class="form-control" ng-model="vm.numPerPage"
+		ng-change="vm.loadWords()">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label class="control-label">Part of Speach</label>
+		<select class="form-control" ng-model="vm.word.PoS">
+			<option value="">--All--</option>
+			<option value="adjective">Adjective</option>
+			<option value="adverb">Adverb</option>
+			<option value="cardinal">Cardinal</option>
+			<option value="conjection">Conjection</option>
+			<option value="exclamation">Exclamation</option>
+			<option value="interjection">Interjection</option>
+			<option value="noun">Noun</option>
+			<option value="preposition">Preposition</option>
+			<option value="verb">Verb</option>
+		</select>
+	</div>
+</form>
+
+<div class="clearfix"></div>
+
+<nav>
+	<ul class="pagination">
+		<li ng-class="{disabled: vm.goBackDisabled}">
+			<a href="#" ng-click="vm.goBack()">&laquo;</a>
+		</li>
+		<li ng-repeat="num in vm.nums" ng-class="{active: num.selected}">
+			<a href="#" ng-click="vm.changePage(num.num)">{{num.num}}</a>
+		</li>
+		<li ng-class="{disabled: vm.goForwardDisabled}">
+			<a href="#" ng-click="vm.goForward()">&raquo;</a>
+		</li>
+	</ul>
+</nav>
+
+<table class="table table-condensed" ng-if="!vm.isAdmin">
+	<tr>
+		<th>Orcish</th>
+		<th>English</th>
+		<th>Part of Speech</th>
+	</tr>
+	<tr ng-repeat="word in vm.words">
+		<td>
+			<a href="/words/{{word.orcish}}">{{word.orcish}}</a>
+		</td>
+		<td>{{word.english}}</td>
+		<td>{{word.PoS}}</td>
+	</tr>
+</table>
+
+<table class="table table-condensed" ng-if="vm.isAdmin">
+	<tr>
+		<th>Orcish</th>
+		<th>English</th>
+		<th>Part of Speech</th>
+		<th colspan="2"></th>
+	</tr>
+	<tr ng-repeat="word in vm.words">
+		<td>{{word.orcish}}</td>
+		<td>{{word.english}}</td>
+		<td>{{word.PoS}}</td>
+		<td>
+			<a class="btn btn-primary" ng-href="/admin/words/{{word.orcish}}">
+				<span class="glyphicon glyphicon-edit"></span> Edit
+			</a>
+		</td>
+		<td>
+			<button type="button" class="btn btn-danger"
+			ng-click="vm.showRemoveModal(word)">
+				<span class="glyphicon glyphicon-remove"></span> Delete
+			</button>
+		</td>
+	</tr>
+</table>

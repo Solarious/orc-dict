@@ -10,6 +10,7 @@ wordsService.$inject = ['$http', '$q'];
 function wordsService($http, $q) {
 	var service = {
 		get: get,
+		list: list,
 		create: create,
 		update: update,
 		remove: remove,
@@ -38,6 +39,18 @@ function wordsService($http, $q) {
 				return $q.reject(error.data);
 			});
 		}
+	}
+
+	function list(options) {
+		return $http.get('api/words', {
+			params: options
+		})
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
 	}
 
 	function create(word) {

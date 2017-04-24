@@ -1,11 +1,3 @@
-<orc-dict-modal action-function="vm.removeModalAction()" action-text="Delete"
-modal-id="removeModal">
-	<h4>
-		Are you sure you want to delete {{vm.wordToRemove.orcish}}, 
-		{{vm.wordToRemove.english}}, {{vm.wordToRemove.PoS}}?
-	</h4>
-</orc-dict-modal>
-
 <h1>Admin</h1>
 
 <div class="btn-toolbar">
@@ -25,28 +17,5 @@ modal-id="removeModal">
 	</button>
 </div>
 
-<h3>Words</h3>
-<table class="table table-condensed">
-	<tr>
-		<th>Orcish</th>
-		<th>English</th>
-		<th>Part of Speech</th>
-		<th colspan="2"></th>
-	</tr>
-	<tr ng-repeat="word in vm.words">
-		<td>{{word.orcish}}</td>
-		<td>{{word.english}}</td>
-		<td>{{word.PoS}}</td>
-		<td>
-			<a class="btn btn-primary" ng-href="/admin/words/{{word.orcish}}">
-				<span class="glyphicon glyphicon-edit"></span> Edit
-			</a>
-		</td>
-		<td>
-			<button type="button" class="btn btn-danger"
-			ng-click="vm.showRemoveModal(word)">
-				<span class="glyphicon glyphicon-remove"></span> Delete
-			</button>
-		</td>
-	</tr>
-</table>
+<orc-dict-words-table is-admin="true">
+</orc-dict-words-table>
