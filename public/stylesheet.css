@@ -16,3 +16,18 @@ textarea {
 	-o-tab-size: 64;
 	tab-size: 64;
 }
+
+select.form-control {
+	padding-right: 25px;
+	/*background-image: url("data:image/svg+xml,\
+      <svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='14px'\
+           height='14px' viewBox='0 0 1200 1000' fill='rgb(51,51,51)'>\
+        <path d='M1100 411l-198 -199l-353 353l-353 -353l-197 199l551 551z'/>\
+      </svg>");*/
+	background-image: url("data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPScxLjEnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzE0cHgnCiAgICAgICAgICAgaGVpZ2h0PScxNHB4JyB2aWV3Qm94PScwIDAgMTIwMCAxMDAwJyBmaWxsPSdyZ2IoNTEsNTEsNTEpJz4KICAgICAgICA8cGF0aCBkPSdNMTEwMCA0MTFsLTE5OCAtMTk5bC0zNTMgMzUzbC0zNTMgLTM1M2wtMTk3IDE5OWw1NTEgNTUxeicvPgogICAgICA8L3N2Zz4=");
+	background-repeat: no-repeat;
+	background-position: calc(100% - 7px) 50%;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
