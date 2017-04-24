@@ -43,13 +43,41 @@ function rebuild() {
 module.exports = function(app) {
 
 app.get('/api/words', function(req, res) {
-	Word.find({}, 'orcish english PoS', function(err, words) {
-		if (err) {
-			res.status(500).send(err.message);
-		} else {
-			res.setHeader('Cache-Control', 'no-cache');
-			res.json(words);
+	var resQuery = req.query || {};
+	var sort = resQuery.sort;
+	var skip = Number(resQuery.skip);
+	var limit = Number(resQuery.limit);
+	var getcount = resQuery.getcount;
+	var query = Word.find({}).select({
+		orcish: 1,
+		english: 1,
+		PoS: 1
+	});
+	if (sort) {
+		query = query.sort(sort);
+	}
+	if (skip) {
+		query = query.skip(skip);
+	}
+	if (limit) {
+		query = query.limit(limit);
+	}
+	var promises = [query.exec()];
+	if (getcount) {
+		promises.push(Word.count({}).exec());
+	}
+	Promise.all(promises)
+	.then(function(values) {
+		var data = {
+			words: values[0]
+		};
+		if (values[1]) {
+			data.count = values[1];
 		}
+		res.setHeader('Cache-Control', 'no-cache');
+		res.json(data);
+	}, function(error) {
+		res.status(500).send(error.message);
 	});
 });
 
@@ -213,7 +241,12 @@ app.post('/api/bulkadd', function(req, res) {
 });
 
 app.get('/api/search', function(req, res) {
-	var q = req.query.q;
+	var query = req.query || {};
+	var q = query.q;
+	if (!q) {
+		return res.status(400).send('missing query paramerter q');
+	}
+
 	search.getMatches(q, function(error, data) {
 		if (error) {
 			res.status(500).send(error.message);
