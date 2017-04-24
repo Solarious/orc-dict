@@ -48,6 +48,7 @@ app.get('/api/words', function(req, res) {
 	var skip = Number(resQuery.skip);
 	var limit = Number(resQuery.limit);
 	var getcount = resQuery.getcount;
+	var pos = resQuery.pos;
 	var query = Word.find({}).select({
 		orcish: 1,
 		english: 1,
@@ -62,9 +63,16 @@ app.get('/api/words', function(req, res) {
 	if (limit) {
 		query = query.limit(limit);
 	}
+	if (pos) {
+		query = query.where('PoS', pos);
+	}
 	var promises = [query.exec()];
 	if (getcount) {
-		promises.push(Word.count({}).exec());
+		if (pos) {
+			promises.push(Word.count().where('PoS', pos).exec());
+		} else {
+			promises.push(Word.count({}).exec());
+		}
 	}
 	Promise.all(promises)
 	.then(function(values) {

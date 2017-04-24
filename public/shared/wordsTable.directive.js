@@ -32,6 +32,7 @@ function WordsTableController(WordsService, AlertService) {
 	vm.goForward = goForward;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
+	vm.resetPageAndLoadWords = resetPageAndLoadWords;
 
 	activate();
 
@@ -47,12 +48,16 @@ function WordsTableController(WordsService, AlertService) {
 	}
 
 	function loadWords() {
-		return WordsService.list({
+		var options = {
 			sort: 'orcish',
 			limit: vm.numPerPage,
 			skip: vm.numPerPage * (vm.page - 1),
 			getcount: true
-		})
+		};
+		if (vm.PoS !== "") {
+			options.pos = vm.PoS;
+		}
+		return WordsService.list(options)
 		.then(function(data) {
 			vm.words = data.words;
 			vm.numOfPages = Math.ceil(data.count / vm.numPerPage);
@@ -99,6 +104,11 @@ function WordsTableController(WordsService, AlertService) {
 			vm.loadWords();
 		});
 		$('#removeModal').modal('hide');
+	}
+
+	function resetPageAndLoadWords() {
+		vm.page = 1;
+		vm.loadWords();
 	}
 }
 

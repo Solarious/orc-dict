@@ -19,7 +19,8 @@ modal-id="removeModal">
 	</div>
 	<div class="form-group">
 		<label class="control-label">Part of Speach</label>
-		<select class="form-control" ng-model="vm.word.PoS">
+		<select class="form-control" ng-model="vm.PoS"
+		ng-change="vm.resetPageAndLoadWords()">
 			<option value="">--All--</option>
 			<option value="adjective">Adjective</option>
 			<option value="adverb">Adverb</option>
