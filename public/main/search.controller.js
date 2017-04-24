@@ -5,7 +5,7 @@ angular.
 	module('orcDictApp').
 	controller('SearchController', SearchController);
 
-SearchController.$inject = ['WordsService', '$location', 'AlertSerive'];
+SearchController.$inject = ['WordsService', '$location', 'AlertService'];
 
 function SearchController(WordsService, $location, AlertService) {
 	var vm = this;
