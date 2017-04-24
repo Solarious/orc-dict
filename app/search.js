@@ -59,12 +59,21 @@ function rebuild(callback) {
 				addVerb(word, searchIndexes);
 			} else if (word.PoS === 'adjective') {
 				addAdjective(word, searchIndexes);
+			} else if (word.PoS === 'pronoun') {
+				addPronoun(word, searchIndexes);
+			} else if (word.PoS === 'possessive') {
+				addPossessive(word, searchIndexes);
+			} else if (word.PoS === 'demonstrative') {
+				addDemonstrative(word, searchIndexes);
+			} else if (word.PoS === 'relative') {
+				addRelative(word, searchIndexes);
 			}
 		}
 		return SearchIndex.insertMany(searchIndexes, callback);
 	})
 	.catch(function(error) {
 		console.log(error);
+		console.log(error.stack);
 		callback(error);
 	});
 }
@@ -223,6 +232,62 @@ function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
 		keyword: word.adjective[gender][adjectiveCase].plural,
 		priority: 2,
 		message: gender + ' ' + caseStr + ' plural',
+		orcish: word.orcish
+	});
+}
+
+function addPronoun(word, searchIndexes) {
+	addCase(word, searchIndexes, 'pronoun', 'nominative');
+	addCase(word, searchIndexes, 'pronoun', 'genitive');
+	addCase(word, searchIndexes, 'pronoun', 'dative');
+	addCase(word, searchIndexes, 'pronoun', 'accusative');
+	addCase(word, searchIndexes, 'pronoun', 'vocative');
+}
+
+function addPossessive(word, searchIndexes) {
+	addCase(word, searchIndexes, 'possessive', 'nominative');
+	addCase(word, searchIndexes, 'possessive', 'genitive');
+	addCase(word, searchIndexes, 'possessive', 'dative');
+	addCase(word, searchIndexes, 'possessive', 'accusative');
+	addCase(word, searchIndexes, 'possessive', 'vocative');
+}
+
+function addDemonstrative(word, searchIndexes) {
+	addCase(word, searchIndexes, 'demonstrative', 'nominative');
+	addCase(word, searchIndexes, 'demonstrative', 'genitive');
+	addCase(word, searchIndexes, 'demonstrative', 'dative');
+	addCase(word, searchIndexes, 'demonstrative', 'accusative');
+	addCase(word, searchIndexes, 'demonstrative', 'vocative');
+}
+
+function addCase(word, searchIndexes, PoS, caseName) {
+	searchIndexes.push({
+		keyword: word[PoS][caseName],
+		priority: 2,
+		message: caseName,
+		orcish: word.orcish
+	});
+}
+
+function addRelative(word, searchIndexes) {
+	addRelativeGender(word, searchIndexes, 'masculine');
+	addRelativeGender(word, searchIndexes, 'feminine');
+	addRelativeGender(word, searchIndexes, 'neutral');
+}
+
+function addRelativeGender(word, searchIndexes, gender) {
+	addRelativeCase(word, searchIndexes, gender, 'nominative');
+	addRelativeCase(word, searchIndexes, gender, 'genitive');
+	addRelativeCase(word, searchIndexes, gender, 'dative');
+	addRelativeCase(word, searchIndexes, gender, 'accusative');
+	addRelativeCase(word, searchIndexes, gender, 'vocative');
+}
+
+function addRelativeCase(word, searchIndexes, gender, relativeCase) {
+	searchIndexes.push({
+		keyword: word.relative[gender][relativeCase],
+		priority: 2,
+		message: relativeCase,
 		orcish: word.orcish
 	});
 }

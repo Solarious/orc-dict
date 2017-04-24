@@ -23,10 +23,14 @@
 					<option value="adverb">Adverb</option>
 					<option value="cardinal">Cardinal</option>
 					<option value="conjection">Conjection</option>
+					<option value="demonstrative">Demonstrative</option>
 					<option value="exclamation">Exclamation</option>
 					<option value="interjection">Interjection</option>
 					<option value="noun">Noun</option>
+					<option value="possessive">Possessive</option>
 					<option value="preposition">Preposition</option>
+					<option value="pronoun">Pronoun</option>
+					<option value="relative">Relative</option>
 					<option value="verb">Verb</option>
 				</select>
 			</td>
@@ -131,3 +135,19 @@
 <orc-dict-editable-adjective adjective="vm.word.adjective"
 ng-if="vm.word.PoS==='adjective'">
 </orc-dict-editable-adjective>
+
+<orc-dict-editable-pronoun pronoun="vm.word.pronoun"
+ng-if="vm.word.PoS==='pronoun'">
+</orc-dict-editable-pronoun>
+
+<orc-dict-editable-possessive possessive="vm.word.possessive"
+ng-if="vm.word.PoS==='possessive'">
+</orc-dict-editable-possessive>
+
+<orc-dict-editable-demonstrative demonstrative="vm.word.demonstrative"
+ng-if="vm.word.PoS==='demonstrative'">
+</orc-dict-editable-demonstrative>
+
+<orc-dict-editable-relative relative="vm.word.relative"
+ng-if="vm.word.PoS==='relative'">
+</orc-dict-editable-relative>

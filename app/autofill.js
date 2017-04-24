@@ -21,7 +21,13 @@ module.exports = function(orcish, PoS, callback) {
 		callback(null, {});
 	} else if (PoS === 'interjection') {
 		callback(null, {});
+	} else if (PoS === 'possessive') {
+		callback(null, {});
 	} else if (PoS === 'preposition') {
+		callback(null, {});
+	} else if (PoS === 'pronoun') {
+		callback(null, {});
+	} else if (PoS === 'relative') {
 		callback(null, {});
 	} else {
 		return callback(new Error('Invalid PoS: ' + PoS));

@@ -52,6 +52,17 @@ module.exports = function(data, encoding, remove, callback) {
 				}
 				word[word.PoS] = autofillData;
 			}
+			var hasOtherPart = [
+				'pronoun',
+				'possessive',
+				'demonstrative',
+				'relative'
+			];
+			if (hasOtherPart.indexOf(word.PoS) !== -1) {
+				return callback(new Error(
+					'Cannot use bulkadd with words with PoS ' + word.PoS
+				));
+			}
 
 			words.push(word);
 			opts.push({

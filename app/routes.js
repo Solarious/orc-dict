@@ -19,6 +19,10 @@ function updateWordFromReq(word, req) {
 	addIfExists(word, req, 'adjective');
 	addIfExists(word, req, 'noun');
 	addIfExists(word, req, 'verb');
+	addIfExists(word, req, 'pronoun');
+	addIfExists(word, req, 'possessive');
+	addIfExists(word, req, 'demonstrative');
+	addIfExists(word, req, 'relative');
 }
 
 function addIfExists(word, req, property) {
