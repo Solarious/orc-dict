@@ -5,9 +5,9 @@ angular
 	.module('orcDictApp')
 	.controller('BulkAddController', BulkAddController);
 
-BulkAddController.$inject = ['WordsService', '$location'];
+BulkAddController.$inject = ['WordsService', '$location', 'AlertService'];
 
-function BulkAddController(WordsService, $location) {
+function BulkAddController(WordsService, $location, AlertService) {
 	var vm = this;
 
 	vm.submit = submit;
@@ -26,8 +26,7 @@ function BulkAddController(WordsService, $location) {
 		.then(function() {
 			$location.path('/admin');
 		}, function(error) {
-			var defaultErrorMessage = 'Unknown error';
-			vm.errorMessage = error || defaultErrorMessage;
+			AlertService.error(error || 'Unknown error');
 			vm.submitDisabled = false;
 		});
 	}
