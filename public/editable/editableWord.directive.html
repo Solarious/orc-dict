@@ -58,6 +58,21 @@
 		</tr>
 		<tr>
 			<th>
+				<ng-pluralize count="vm.getNumRelatedWords()"
+				when="{'0': 'There are no related words',
+				'one': 'There is 1 related word',
+				'other': 'There are {} related words'}">
+				</ng-pluralize>
+			</th>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="vm.toggleRelatedWords()">
+					{{vm.showRelatedWordsText}}
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<th>
 				<ng-pluralize count="vm.getNumExamples()"
 				when="{'0': 'There are no examples',
 				'one': 'There is 1 example',
@@ -81,7 +96,8 @@
 			</td>
 			<td>
 				<button type="button" class="btn btn-default"
-				ng-click="vm.autofillFunction()" ng-disabled="vm.submitDisabled">
+				ng-click="vm.autofillFunction()"
+				ng-disabled="vm.submitDisabled">
 					Autofill
 				</button>
 			</td>
@@ -118,6 +134,32 @@
 			<td>
 				<button type="button" class="btn btn-danger"
 				ng-click="vm.removeExample($index)">
+					<span class="glyphicon glyphicon-remove">
+					</span> Remove
+				</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-8" ng-show="vm.showRelatedWords">
+	<table class="table table-condensed">
+		<tr>
+			<th colspan>Related Words</th>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="vm.addRelatedWord()">
+					New Related Word
+				</button>
+			</td>
+		</tr>
+		<tr ng-repeat="relatedWord in vm.word.relatedWords track by $index">
+			<td>
+				<input class="form-control" ng-model="relatedWord.orcish"/>
+			</td>
+			<td>
+				<button type="button" class="btn btn-danger"
+				ng-click="vm.removeRelatedWord($index)">
 					<span class="glyphicon glyphicon-remove">
 					</span> Remove
 				</button>

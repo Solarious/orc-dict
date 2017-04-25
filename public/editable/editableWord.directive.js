@@ -28,14 +28,19 @@ function EditableWordController() {
 	var vm = this;
 
 	vm.toggleExamples = toggleExamples;
+	vm.toggleRelatedWords = toggleRelatedWords;
 	vm.addExample = addExample;
+	vm.addRelatedWord = addRelatedWord;
 	vm.removeExample = removeExample;
+	vm.removeRelatedWord = removeRelatedWord;
 	vm.getNumExamples = getNumExamples;
+	vm.getNumRelatedWords = getNumRelatedWords;
 
 	activate();
 
 	function activate() {
 		vm.toggleExamples();
+		vm.toggleRelatedWords();
 	}
 
 	function toggleExamples() {
@@ -48,6 +53,16 @@ function EditableWordController() {
 		}
 	}
 
+	function toggleRelatedWords() {
+		if (vm.showRelatedWords === undefined || vm.showRelatedWords) {
+			vm.showRelatedWords = false;
+			vm.showRelatedWordsText = 'Show Related Words Section';
+		} else {
+			vm.showRelatedWords = true;
+			vm.showRelatedWordsText = 'Hide Related Words Section';
+		}
+	}
+
 	function addExample() {
 		vm.word.exampleSentences = vm.word.exampleSentences || [];
 		vm.word.exampleSentences.push({
@@ -56,13 +71,32 @@ function EditableWordController() {
 		});
 	}
 
+	function addRelatedWord() {
+		vm.word.relatedWords = vm.word.relatedWords || [];
+		vm.word.relatedWords.push({
+			orcish: ''
+		});
+	}
+
 	function removeExample(index) {
 		vm.word.exampleSentences.splice(index, 1);
+	}
+
+	function removeRelatedWord(index) {
+		vm.word.relatedWords.splice(index, 1);
 	}
 
 	function getNumExamples() {
 		if (vm.word && vm.word.exampleSentences) {
 			return vm.word.exampleSentences.length;
+		} else {
+			return 0;
+		}
+	}
+
+	function getNumRelatedWords() {
+		if (vm.word && vm.word.relatedWords) {
+			return vm.word.relatedWords.length;
 		} else {
 			return 0;
 		}

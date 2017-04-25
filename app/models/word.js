@@ -232,6 +232,13 @@ var ExampleSentenceSchema = new Schema({
 	}
 }, { _id: false });
 
+var RelatedWordSchema = new Schema({
+	orcish: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -265,7 +272,7 @@ var WordSchema = new Schema({
 	extraInfo: String,
 	coinedBy: String,
 	namedAfter: String,
-	relatedWords: [String],
+	relatedWords: [RelatedWordSchema],
 	exampleSentences: [ExampleSentenceSchema],
 	verb: VerbSchema,
 	noun: NounSchema,

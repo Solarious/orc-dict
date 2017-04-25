@@ -24,15 +24,16 @@
 			<th>Named After</th>
 			<td>{{word.namedAfter}}</td>
 		</tr>
-		<tr ng-if="word.relatedWords.length > 0">
+	</table>
+	<table class="table table-condensed"
+	ng-if="word.relatedWords.length > 0">
+		<tr>
 			<th>Related Words</th>
-			<td>
-				<div ng-repeat="relatedWord in relatedWords">
-					<a ng-href="/words/{{word.orcish}}">
-						{{word.orcish}}<span ng-show="!$last">, </span>
-					</a>
-				</div>
-			</td>
+		</tr>
+		<tr ng-repeat="relatedWord in word.relatedWords">
+			<td><a href="/words/{{relatedWord.orcish}}">
+				{{relatedWord.orcish}}
+			</a></td>
 		</tr>
 	</table>
 	<table class="table table-condensed"
