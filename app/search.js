@@ -49,8 +49,14 @@ function rebuild(callback) {
 			var word = words[i];
 			searchIndexes.push({
 				keyword: word.orcish,
-				priority: 2,
+				priority: 1,
 				message: 'orcish',
+				orcish: word.orcish
+			});
+			searchIndexes.push({
+				keyword: word.english,
+				priority: 1,
+				message: 'english',
 				orcish: word.orcish
 			});
 			if (word.PoS === 'noun') {
