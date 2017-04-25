@@ -68,6 +68,8 @@ function rebuild(callback) {
 			} else if (word.PoS === 'relative') {
 				addRelative(word, searchIndexes);
 			}
+
+			addKeywords(word, searchIndexes);
 		}
 		return SearchIndex.insertMany(searchIndexes, callback);
 	})
@@ -290,4 +292,16 @@ function addRelativeCase(word, searchIndexes, gender, relativeCase) {
 		message: relativeCase,
 		orcish: word.orcish
 	});
+}
+
+function addKeywords(word, searchIndexes) {
+	for (let i = 0; i < word.keywords.length; i++) {
+		let keyword = word.keywords[i];
+		searchIndexes.push({
+			keyword: keyword.keyword,
+			priority: keyword.priority,
+			message: keyword.message,
+			orcish: word.orcish
+		});
+	}
 }

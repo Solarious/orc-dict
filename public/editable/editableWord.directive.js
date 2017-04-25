@@ -29,18 +29,23 @@ function EditableWordController() {
 
 	vm.toggleExamples = toggleExamples;
 	vm.toggleRelatedWords = toggleRelatedWords;
+	vm.toggleKeywords = toggleKeywords;
 	vm.addExample = addExample;
 	vm.addRelatedWord = addRelatedWord;
+	vm.addKeyword = addKeyword;
 	vm.removeExample = removeExample;
 	vm.removeRelatedWord = removeRelatedWord;
+	vm.removeKeyword = removeKeyword;
 	vm.getNumExamples = getNumExamples;
 	vm.getNumRelatedWords = getNumRelatedWords;
+	vm.getNumKeywords = getNumKeywords;
 
 	activate();
 
 	function activate() {
 		vm.toggleExamples();
 		vm.toggleRelatedWords();
+		vm.toggleKeywords();
 	}
 
 	function toggleExamples() {
@@ -63,6 +68,16 @@ function EditableWordController() {
 		}
 	}
 
+	function toggleKeywords() {
+		if (vm.showKeywords === undefined || vm.showKeywords) {
+			vm.showKeywords = false;
+			vm.showKeywordsText = 'Show Keywords Section';
+		} else {
+			vm.showKeywords = true;
+			vm.showKeywordsText = 'Hide Keywords Section';
+		}
+	}
+
 	function addExample() {
 		vm.word.exampleSentences = vm.word.exampleSentences || [];
 		vm.word.exampleSentences.push({
@@ -78,12 +93,25 @@ function EditableWordController() {
 		});
 	}
 
+	function addKeyword() {
+		vm.word.keywords = vm.word.keywords || [];
+		vm.word.keywords.push({
+			keyword: '',
+			priority: 3,
+			message: ''
+		});
+	}
+
 	function removeExample(index) {
 		vm.word.exampleSentences.splice(index, 1);
 	}
 
 	function removeRelatedWord(index) {
 		vm.word.relatedWords.splice(index, 1);
+	}
+
+	function removeKeyword(index) {
+		vm.word.keywords.splice(index, 1);
 	}
 
 	function getNumExamples() {
@@ -97,6 +125,14 @@ function EditableWordController() {
 	function getNumRelatedWords() {
 		if (vm.word && vm.word.relatedWords) {
 			return vm.word.relatedWords.length;
+		} else {
+			return 0;
+		}
+	}
+
+	function getNumKeywords() {
+		if (vm.word && vm.word.keywords) {
+			return vm.word.keywords.length;
 		} else {
 			return 0;
 		}

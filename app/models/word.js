@@ -239,6 +239,21 @@ var RelatedWordSchema = new Schema({
 	}
 }, { _id: false });
 
+var KeywordSchema = new Schema({
+	keyword: {
+		type: String,
+		required: true
+	},
+	priority: {
+		type: Number,
+		required: true
+	},
+	message: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -274,6 +289,7 @@ var WordSchema = new Schema({
 	namedAfter: String,
 	relatedWords: [RelatedWordSchema],
 	exampleSentences: [ExampleSentenceSchema],
+	keywords: [KeywordSchema],
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema,
