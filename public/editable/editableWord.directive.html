@@ -112,7 +112,7 @@
 			<td>
 				<button type="button" class="btn btn-default"
 				ng-click="vm.autofillFunction()"
-				ng-disabled="vm.submitDisabled">
+				ng-disabled="vm.submitDisabled || !vm.canAutofill()">
 					Autofill
 				</button>
 			</td>

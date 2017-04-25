@@ -39,6 +39,7 @@ function EditableWordController() {
 	vm.getNumExamples = getNumExamples;
 	vm.getNumRelatedWords = getNumRelatedWords;
 	vm.getNumKeywords = getNumKeywords;
+	vm.canAutofill = canAutofill;
 
 	activate();
 
@@ -136,6 +137,19 @@ function EditableWordController() {
 		} else {
 			return 0;
 		}
+	}
+
+	function canAutofill() {
+		var PoS = vm.word.PoS;
+		return (
+			PoS === 'adjective' ||
+			PoS === 'noun' ||
+			PoS === 'verb' ||
+			PoS === 'pronoun' ||
+			PoS === 'possessive' ||
+			PoS === 'demonstrative' ||
+			PoS === 'relative'
+		);
 	}
 }
 
