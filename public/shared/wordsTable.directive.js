@@ -43,13 +43,14 @@ function WordsTableController(WordsService, AlertService) {
 		vm.nums = [];
 		vm.goBackDisabled = false;
 		vm.goForwardDisabled = false;
+		vm.order = 'orcish';
 
 		vm.loadWords();
 	}
 
 	function loadWords() {
 		var options = {
-			sort: 'orcish',
+			sort: vm.order,
 			limit: vm.numPerPage,
 			skip: vm.numPerPage * (vm.page - 1),
 			getcount: true
