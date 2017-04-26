@@ -1,3 +1,6 @@
+<orc-dict-edit-help-modal modal-id="helpModal">
+</orc-dict-edit-help-modal>
+
 <div class="col-md-4">
 	<table class="table table-condensed">
 		<tr>
@@ -65,7 +68,7 @@
 				</ng-pluralize>
 			</th>
 			<td>
-				<button type="button" class="btn btn-default"
+				<button type="button" class="btn btn-default form-control"
 				ng-click="vm.toggleRelatedWords()">
 					{{vm.showRelatedWordsText}}
 				</button>
@@ -80,7 +83,7 @@
 				</ng-pluralize>
 			</th>
 			<td>
-				<button type="button" class="btn btn-default"
+				<button type="button" class="btn btn-default form-control"
 				ng-click="vm.toggleExamples()">
 					{{vm.showExamplesText}}
 				</button>
@@ -89,13 +92,13 @@
 		<tr>
 			<th>
 				<ng-pluralize count="vm.getNumKeywords()"
-				when="{'0': 'There are no keywords',
-				'one': 'There is 1 keyword',
-				'other': 'There are {} keywords'}">
+				when="{'0': 'There are no extra keywords',
+				'one': 'There is 1 extra keyword',
+				'other': 'There are {} extra keywords'}">
 				</ng-pluralize>
 			</th>
 			<td>
-				<button type="button" class="btn btn-default"
+				<button type="button" class="btn btn-default form-control"
 				ng-click="vm.toggleKeywords()">
 					{{vm.showKeywordsText}}
 				</button>
@@ -110,10 +113,16 @@
 				</button>
 			</td>
 			<td>
-				<button type="button" class="btn btn-default"
+				<button type="button" class="btn btn-success"
 				ng-click="vm.autofillFunction()"
 				ng-disabled="vm.submitDisabled || !vm.canAutofill()">
-					Autofill
+					<span class="glyphicon glyphicon-save">
+					</span> Autofill
+				</button>
+				<button type="button" class="btn btn-info pull-right"
+				ng-click="vm.showHelpModal()">
+					<span class="glyphicon glyphicon-question-sign">
+					</span> Help
 				</button>
 			</td>
 		</tr>
@@ -187,7 +196,7 @@
 <div class="col-md-8" ng-show="vm.showKeywords">
 	<table class="table table-condensed">
 		<tr>
-			<th colspan="3">Keywords</th>
+			<th colspan="3">Extra Keywords</th>
 			<td>
 				<button type="button" class="btn btn-default"
 				ng-click="vm.addKeyword()">

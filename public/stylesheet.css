@@ -31,3 +31,13 @@ select.form-control {
 	-webkit-appearance: none;
 	appearance: none;
 }
+
+dd {
+	margin-left: 0;
+	padding-left: 1em;
+	text-indent: -0.7em;
+}
+
+dd:before {
+	content: "- ";
+}

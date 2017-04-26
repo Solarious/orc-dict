@@ -40,6 +40,7 @@ function EditableWordController() {
 	vm.getNumRelatedWords = getNumRelatedWords;
 	vm.getNumKeywords = getNumKeywords;
 	vm.canAutofill = canAutofill;
+	vm.showHelpModal = showHelpModal;
 
 	activate();
 
@@ -72,10 +73,10 @@ function EditableWordController() {
 	function toggleKeywords() {
 		if (vm.showKeywords === undefined || vm.showKeywords) {
 			vm.showKeywords = false;
-			vm.showKeywordsText = 'Show Keywords Section';
+			vm.showKeywordsText = 'Show Additional Keywords';
 		} else {
 			vm.showKeywords = true;
-			vm.showKeywordsText = 'Hide Keywords Section';
+			vm.showKeywordsText = 'Hide Additional Keywords';
 		}
 	}
 
@@ -98,7 +99,7 @@ function EditableWordController() {
 		vm.word.keywords = vm.word.keywords || [];
 		vm.word.keywords.push({
 			keyword: '',
-			priority: 3,
+			priority: 1,
 			message: ''
 		});
 	}
@@ -146,6 +147,10 @@ function EditableWordController() {
 			PoS === 'noun' ||
 			PoS === 'verb'
 		);
+	}
+
+	function showHelpModal() {
+		$('#helpModal').modal('show');
 	}
 }
 

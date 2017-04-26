@@ -12,7 +12,9 @@ function modal() {
 		scope: {
 			actionFunction: '&',
 			actionText: '@',
-			modalId: '@'
+			closeText: '@',
+			modalId: '@',
+			classes: '@'
 		},
 		templateUrl: 'shared/modal.directive.html'
 	};
