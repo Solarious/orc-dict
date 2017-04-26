@@ -52,4 +52,29 @@ SearchIndexSchema.statics.getMatches = function(str, callback) {
 	.exec(callback);
 };
 
+SearchIndexSchema.statics.getMatchesWithMessage = function(msg, callback) {
+	return this.aggregate()
+	.match({
+		message: msg
+	})
+	.lookup({
+		from: 'words',
+		localField: 'orcish',
+		foreignField: 'orcish',
+		as: 'word'
+	})
+	.unwind('word')
+	.project({
+		keyword: 1,
+		priority: 1,
+		message: 1,
+		word: {
+			orcish: 1,
+			english: 1,
+			PoS: 1
+		}
+	})
+	.exec(callback);
+}
+
 module.exports = mongoose.model('SeachIndex', SearchIndexSchema);

@@ -5,24 +5,27 @@ var Word = require('./models/word');
 
 module.exports = {
 	getMatches: getMatches,
+	getSearchIndexes: getSearchIndexes,
+	getPrefixMatches: getPrefixMatches,
+	getSuffixMatches: getSuffixMatches,
 	rebuild: rebuild,
 	getAll: getAll
 };
 
-function getMatches(str, callback) {
+function getMatches(text) {
 	var regex = /[^\s"]+|"([^"]*)"/g;
 	var match;
 	var searches = [];
-	while ((match = regex.exec(str.toLowerCase()))) {
+	while ((match = regex.exec(text.toLowerCase()))) {
 		var s = match[1] ? match[1] : match[0];
 		searches.push(s);
 	}
 
 	var promises = [];
 	for (var i = 0; i < searches.length; i++) {
-		promises.push(SearchIndex.getMatches(searches[i]));
+		promises.push(getSearchIndexes(searches[i]));
 	}
-	Promise.all(promises)
+	return Promise.all(promises)
 	.then(function(data) {
 		var results = [];
 		for (var i = 0; i < searches.length; i++) {
@@ -31,10 +34,88 @@ function getMatches(str, callback) {
 				matches: data[i]
 			});
 		}
-		callback(null, results);
+		return results;
+	});
+}
+
+function getSearchIndexes(searchString) {
+	return Promise.all([
+		SearchIndex.getMatches(searchString),
+		getPrefixMatches(searchString),
+		getSuffixMatches(searchString)
+	])
+	.then(function(data) {
+		return data[0].concat(data[1], data[2]);
+	});
+}
+
+function getPrefixMatches(str) {
+	var prefixWords;
+	var affixlessStrs;
+	return SearchIndex.getMatchesWithMessage('prefix')
+	.then(function(results) {
+		prefixWords = results.filter(function(prefixWord) {
+			return str.startsWith(prefixWord.word.orcish.replace(/\W/g, ''));
+		});
+		var promises = prefixWords.map(function(prefixWord) {
+			var prefix = prefixWord.word.orcish.replace(/\W/g, '');
+			var affixless = str.slice(prefix.length);
+			return SearchIndex.getMatches(affixless);
+		});
+		return Promise.all(promises);
 	})
-	.catch(function(error) {
-		callback(error);
+	.then(function(matches) {
+		var results = [];
+		for (let i = 0; i < matches.length; i++) {
+			let prefixWord = prefixWords[i];
+			let matchesForPrefix = matches[i];
+			if (matchesForPrefix.length > 0) {
+				results.push(prefixWord);
+				for (let j = 0; j < matchesForPrefix.length; j++) {
+					let match = matchesForPrefix[j];
+					let start = '(with prefix ' + prefixWord.keyword + ') ';
+					match.message = start + match.message;
+					match.priority += prefixWord.priority;
+					results.push(match);
+				}
+			}
+		}
+		return results;
+	});
+}
+
+function getSuffixMatches(str) {
+	var suffixWords;
+	var affixlessStrs;
+	return SearchIndex.getMatchesWithMessage('suffix')
+	.then(function(results) {
+		suffixWords = results.filter(function(suffixWord) {
+			return str.endsWith(suffixWord.word.orcish.replace(/\W/g, ''));
+		});
+		var promises = suffixWords.map(function(suffixWord) {
+			var suffix = suffixWord.word.orcish.replace(/\W/g, '');
+			var affixless = str.slice(0, -suffix.length);
+			return SearchIndex.getMatches(affixless);
+		});
+		return Promise.all(promises);
+	})
+	.then(function(matches) {
+		var results = [];
+		for (let i = 0; i < matches.length; i++) {
+			let suffixWord = suffixWords[i];
+			let matchesForSuffix = matches[i];
+			if (matchesForSuffix.length > 0) {
+				results.push(suffixWord);
+				for (let j = 0; j < matchesForSuffix.length; j++) {
+					let match = matchesForSuffix[j];
+					let start = '(with suffix ' + suffixWord.keyword + ') ';
+					match.message = start + match.message;
+					match.priority += suffixWord.priority;
+					results.push(match);
+				}
+			}
+		}
+		return results;
 	});
 }
 
@@ -73,6 +154,10 @@ function rebuild(callback) {
 				addDemonstrative(word, searchIndexes);
 			} else if (word.PoS === 'relative') {
 				addRelative(word, searchIndexes);
+			} else if (word.PoS === 'prefix') {
+				addPrefix(word, searchIndexes);
+			} else if (word.PoS === 'suffix') {
+				addSuffix(word, searchIndexes);
 			}
 
 			addKeywords(word, searchIndexes);
@@ -296,6 +381,24 @@ function addRelativeCase(word, searchIndexes, gender, relativeCase) {
 		keyword: word.relative[gender][relativeCase],
 		priority: 2,
 		message: relativeCase,
+		orcish: word.orcish
+	});
+}
+
+function addPrefix(word, searchIndexes) {
+	searchIndexes.push({
+		keyword: word.orcish.replace(/\W/g, ''),
+		priority: 4,
+		message: 'prefix',
+		orcish: word.orcish
+	});
+}
+
+function addSuffix(word, searchIndexes) {
+	searchIndexes.push({
+		keyword: word.orcish.replace(/\W/g, ''),
+		priority: 4,
+		message: 'suffix',
 		orcish: word.orcish
 	});
 }

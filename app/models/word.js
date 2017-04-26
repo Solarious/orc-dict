@@ -278,9 +278,11 @@ var WordSchema = new Schema({
 			'interjection',
 			'noun',
 			'possessive',
+			'prefix',
 			'preposition',
 			'pronoun',
 			'relative',
+			'suffix',
 			'verb',
 		]
 	},

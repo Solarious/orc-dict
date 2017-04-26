@@ -260,14 +260,14 @@ app.get('/api/search', function(req, res) {
 		return res.status(400).send('missing query paramerter q');
 	}
 
-	search.getMatches(q, function(error, data) {
-		if (error) {
-			res.status(500).send(error.message);
-		} else {
-			res.json({
-				results: data
-			});
-		}
+	search.getMatches(q)
+	.then(function(data) {
+		res.json({
+			results: data
+		});
+	})
+	.catch(function(error) {
+		res.status(500).send(error.message);
 	});
 });
 
