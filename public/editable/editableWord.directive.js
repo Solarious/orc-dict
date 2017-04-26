@@ -144,11 +144,7 @@ function EditableWordController() {
 		return (
 			PoS === 'adjective' ||
 			PoS === 'noun' ||
-			PoS === 'verb' ||
-			PoS === 'pronoun' ||
-			PoS === 'possessive' ||
-			PoS === 'demonstrative' ||
-			PoS === 'relative'
+			PoS === 'verb'
 		);
 	}
 }
