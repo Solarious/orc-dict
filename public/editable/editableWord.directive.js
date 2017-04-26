@@ -73,10 +73,10 @@ function EditableWordController() {
 	function toggleKeywords() {
 		if (vm.showKeywords === undefined || vm.showKeywords) {
 			vm.showKeywords = false;
-			vm.showKeywordsText = 'Show Additional Keywords';
+			vm.showKeywordsText = 'Show Extra Keywords';
 		} else {
 			vm.showKeywords = true;
-			vm.showKeywordsText = 'Hide Additional Keywords';
+			vm.showKeywordsText = 'Hide Extra Keywords';
 		}
 	}
 
