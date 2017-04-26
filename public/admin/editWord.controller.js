@@ -40,7 +40,7 @@ AlertService) {
 					vm.word[partName] = data;
 				}
 			}, function(err) {
-				vm.errorMessage = err;
+				AlertService.error(err || 'Unknown error with autofill');
 			});
 		}
 	}
