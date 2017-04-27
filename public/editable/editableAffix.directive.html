@@ -1,0 +1,40 @@
+<div class="col-md-8">
+	<table class="table table-condensed">
+		<tr>
+			<th>Limited to the Following Parts of Speech</th>
+			<td>
+				<button type="button" class="btn btn-default"
+				ng-click="vm.addLimit()">
+					New Limit
+				</button>
+			</td>
+		</tr>
+		<tr ng-repeat="limit in vm.affix.limits">
+			<td>
+				<select class="form-control" ng-model="limit.PoS">
+					<option value="">--Please Select--</option>
+					<option value="adjective">Adjective</option>
+					<option value="adverb">Adverb</option>
+					<option value="cardinal">Cardinal</option>
+					<option value="conjection">Conjection</option>
+					<option value="demonstrative">Demonstrative</option>
+					<option value="exclamation">Exclamation</option>
+					<option value="interjection">Interjection</option>
+					<option value="noun">Noun</option>
+					<option value="possessive">Possessive</option>
+					<option value="preposition">Preposition</option>
+					<option value="pronoun">Pronoun</option>
+					<option value="relative">Relative</option>
+					<option value="verb">Verb</option>
+				</select>
+			</td>
+			<td>
+				<button type="button" class="btn btn-danger"
+				ng-click="vm.removeLimit($index)">
+					<span class="glyphicon glyphicon-remove">
+					</span> Remove
+				</button>
+			</td>
+		</tr>
+	</table>
+</div>

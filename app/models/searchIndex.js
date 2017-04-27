@@ -21,7 +21,18 @@ var SearchIndexSchema = new Schema({
 	orcish: {
 		type: String,
 		required: true
-	}
+	},
+	affix: {
+		type: String,
+		required: true,
+		enum: [
+			'none',
+			'prefix',
+			'suffix'
+		],
+		default: 'none'
+	},
+	affixLimits: [String]
 });
 
 SearchIndexSchema.statics.getMatches = function(str, callback) {
@@ -52,10 +63,10 @@ SearchIndexSchema.statics.getMatches = function(str, callback) {
 	.exec(callback);
 };
 
-SearchIndexSchema.statics.getMatchesWithMessage = function(msg, callback) {
+SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
 	return this.aggregate()
 	.match({
-		message: msg
+		affix: affix
 	})
 	.lookup({
 		from: 'words',
@@ -68,6 +79,8 @@ SearchIndexSchema.statics.getMatchesWithMessage = function(msg, callback) {
 		keyword: 1,
 		priority: 1,
 		message: 1,
+		affix: 1,
+		affixLimits: 1,
 		word: {
 			orcish: 1,
 			english: 1,

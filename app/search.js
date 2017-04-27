@@ -52,7 +52,7 @@ function getSearchIndexes(searchString) {
 function getPrefixMatches(str) {
 	var prefixWords;
 	var affixlessStrs;
-	return SearchIndex.getMatchesWithMessage('prefix')
+	return SearchIndex.getMatchesWithAffix('prefix')
 	.then(function(results) {
 		prefixWords = results.filter(function(prefixWord) {
 			return str.startsWith(prefixWord.word.orcish.replace(/\W/g, ''));
@@ -66,9 +66,19 @@ function getPrefixMatches(str) {
 	})
 	.then(function(matches) {
 		var results = [];
+		function filterFun(limits) {
+			return function(match) {
+				return (limits.indexOf(match.word.PoS) !== -1);
+			};
+		}
 		for (let i = 0; i < matches.length; i++) {
 			let prefixWord = prefixWords[i];
 			let matchesForPrefix = matches[i];
+			if (prefixWord.affixLimits.length > 0) {
+				matchesForPrefix = matchesForPrefix.filter(
+					filterFun(prefixWord.affixLimits)
+				);
+			}
 			if (matchesForPrefix.length > 0) {
 				results.push(prefixWord);
 				for (let j = 0; j < matchesForPrefix.length; j++) {
@@ -87,7 +97,7 @@ function getPrefixMatches(str) {
 function getSuffixMatches(str) {
 	var suffixWords;
 	var affixlessStrs;
-	return SearchIndex.getMatchesWithMessage('suffix')
+	return SearchIndex.getMatchesWithAffix('suffix')
 	.then(function(results) {
 		suffixWords = results.filter(function(suffixWord) {
 			return str.endsWith(suffixWord.word.orcish.replace(/\W/g, ''));
@@ -101,9 +111,19 @@ function getSuffixMatches(str) {
 	})
 	.then(function(matches) {
 		var results = [];
+		function filterFun(limits) {
+			return function(match) {
+				return (limits.indexOf(match.word.PoS) !== -1);
+			};
+		}
 		for (let i = 0; i < matches.length; i++) {
 			let suffixWord = suffixWords[i];
 			let matchesForSuffix = matches[i];
+			if (suffixWord.affixLimits.length > 0) {
+				matchesForSuffix = matchesForSuffix.filter(
+					filterFun(suffixWord.affixLimits)
+				);
+			}
 			if (matchesForSuffix.length > 0) {
 				results.push(suffixWord);
 				for (let j = 0; j < matchesForSuffix.length; j++) {
@@ -386,20 +406,32 @@ function addRelativeCase(word, searchIndexes, gender, relativeCase) {
 }
 
 function addPrefix(word, searchIndexes) {
+	var affixLimits = [];
+	word.affix.limits.forEach(function(limit) {
+		affixLimits.push(limit.PoS);
+	});
 	searchIndexes.push({
 		keyword: word.orcish.replace(/\W/g, ''),
 		priority: 4,
 		message: 'prefix',
-		orcish: word.orcish
+		orcish: word.orcish,
+		affix: 'prefix',
+		affixLimits: affixLimits
 	});
 }
 
 function addSuffix(word, searchIndexes) {
+	var affixLimits = [];
+	word.affix.limits.forEach(function(limit) {
+		affixLimits.push(limit.PoS);
+	});
 	searchIndexes.push({
 		keyword: word.orcish.replace(/\W/g, ''),
 		priority: 4,
 		message: 'suffix',
-		orcish: word.orcish
+		orcish: word.orcish,
+		affix: 'suffix',
+		affixLimits: affixLimits
 	});
 }
 

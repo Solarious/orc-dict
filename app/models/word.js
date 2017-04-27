@@ -254,6 +254,32 @@ var KeywordSchema = new Schema({
 	}
 }, { _id: false });
 
+var LimitSchema = new Schema({
+	PoS: {
+		type: String,
+		enum: [
+			'adjective',
+			'adverb',
+			'cardinal',
+			'conjunction',
+			'demonstrative',
+			'exclamation',
+			'interjection',
+			'noun',
+			'possessive',
+			'preposition',
+			'pronoun',
+			'relative',
+			'verb',
+		],
+		required: true
+	}
+}, { _id: false });
+
+var AffixSchema = new Schema({
+	limits: [LimitSchema]
+}, { _id: false });
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -298,7 +324,8 @@ var WordSchema = new Schema({
 	pronoun: CasesSchema,
 	possessive: CasesSchema,
 	demonstrative: CasesSchema,
-	relative: RelativeSchema
+	relative: RelativeSchema,
+	affix: AffixSchema,
 });
 
 WordSchema.pre('validate', function(next) {
@@ -322,6 +349,17 @@ WordSchema.pre('validate', function(next) {
 	}
 	if (this.relative !== undefined && this.PoS !== 'relative') {
 		this.relative = undefined;
+	}
+	if (this.affix !== undefined &&
+	(this.PoS !== 'prefix' && this.PoS !== 'suffix')) {
+		this.affix = undefined;
+	}
+	if (this.PoS === 'prefix' || this.PoS === 'suffix') {
+		if (this.affix === undefined) {
+			this.affix = {
+				limits: []
+			};
+		}
 	}
 	next();
 });
@@ -403,6 +441,12 @@ WordSchema.pre('save', function(next) {
 		if (!this.relative) {
 			return next(new Error(
 				'Word has PoS=="relative" but relative is undefined'
+			));
+		}
+	} else if (this.PoS === 'prefix' || this.PoS == 'suffix') {
+		if (!this.affix) {
+			return next(new Error(
+				'Word has PoS=="' + this.PoS + '" but affix is undefined'
 			));
 		}
 	}

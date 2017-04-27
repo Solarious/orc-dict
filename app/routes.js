@@ -24,6 +24,7 @@ function updateWordFromReq(word, req) {
 	addIfExists(word, req, 'possessive');
 	addIfExists(word, req, 'demonstrative');
 	addIfExists(word, req, 'relative');
+	addIfExists(word, req, 'affix');
 }
 
 function addIfExists(word, req, property) {

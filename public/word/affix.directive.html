@@ -1,0 +1,16 @@
+<div class="col-md-6">
+	<table class="table table-condensed">
+		<tr>
+			<th ng-if="affix.limits.length > 0">
+				Limited to the Following Parts of Speech
+			</th>
+			<th ng-if="affix.limits.length === 0">
+				Has no Part of Speech limits
+			</th>
+		</tr>
+		<tr ng-repeat="limit in affix.limits">
+			<td class="capitalize">{{limit.PoS}}</td>
+		</tr>
+	</table>
+</div>
+
