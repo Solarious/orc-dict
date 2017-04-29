@@ -2,7 +2,9 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
+if (process.env.NODE_ENV === 'dev') {
+	var jshint = require('gulp-jshint');
+}
 
 var jsPublicFiles = [
 	'public/app.module.js',
