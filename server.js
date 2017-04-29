@@ -16,6 +16,16 @@ var dburl = process.env.MONGODB_URI;
 
 mongoose.connect(dburl);
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(function(req, res, next) {
+		if (req.headers['x-forwarded-proto'] !== 'https') {
+			return res.redirect('https://' + req.headers.host + req.url);
+		} else {
+			return next();
+		}
+	});
+	console.log('Using https redirect');
+}
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
