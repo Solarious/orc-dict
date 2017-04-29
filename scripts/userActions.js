@@ -22,6 +22,7 @@ if (action === 'createUser') {
 
 function createUser() {
 	var username = readlineSync.question('Username: ');
+	var email = readlineSync.question('Email: ');
 	var password = readlineSync.question('Password: ', {
 		hideEchoBack: true,
 		mask: ''
@@ -38,6 +39,7 @@ function createUser() {
 
 	var user = new User({
 		username: username,
+		email: email,
 		password: password
 	});
 
@@ -107,13 +109,13 @@ function changePassword() {
 }
 
 function listUsers() {
-	User.find({}, 'username', function(err, users) {
+	User.find({}, 'username email', function(err, users) {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log('Users:');
 			for (var i = 0; i < users.length; i++) {
-				console.log(users[i].username);
+				console.log(users[i].username + ', ' + users[i].email);
 			}
 		}
 		process.exit();

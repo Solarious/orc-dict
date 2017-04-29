@@ -31,6 +31,18 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
+	.when('/forgot', {
+		templateUrl: 'admin/forgot.html',
+		controller: 'ForgotController',
+		controllerAs: 'vm',
+		restricted: false
+	})
+	.when('/reset/:token', {
+		templateUrl: 'admin/reset.html',
+		controller: 'ResetController',
+		controllerAs: 'vm',
+		restricted: false
+	})
 	.when('/admin', {
 		templateUrl: 'admin/admin.html',
 		controller: 'AdminController',

@@ -16,7 +16,9 @@ function authService($q, $timeout, $http) {
 		getUserStatus: getUserStatus,
 		login: login,
 		logout: logout,
-		getUserName: getUserName
+		getUserName: getUserName,
+		forgotPassword: forgotPassword,
+		resetPassword: resetPassword
 	};
 
 	return service;
@@ -51,14 +53,9 @@ function authService($q, $timeout, $http) {
 			password: password
 		})
 		.then(function(response) {
-			if (response.status === 200) {
-				user = true;
-				name = username;
-				deferred.resolve(response.data);
-			} else {
-				user = false;
-				deferred.reject(response.data);
-			}
+			user = true;
+			name = username;
+			deferred.resolve(response.data);
 		}, function(response) {
 			user = false;
 			deferred.reject(response.data);
@@ -84,6 +81,31 @@ function authService($q, $timeout, $http) {
 
 	function getUserName() {
 		return name;
+	}
+
+	function forgotPassword(email) {
+		return $http.post('/api/user/forgot', {
+			email: email
+		})
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
+
+	function resetPassword(token, password) {
+		return $http.post('/api/user/reset', {
+			token: token,
+			password: password
+		})
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
 	}
 }
 

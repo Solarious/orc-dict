@@ -1,0 +1,11 @@
+<form ng-submit="vm.forgot()">
+	<legend>Reset Password</legend>
+	<div class="form-group">
+		<label for="email">Email</label>
+		<input type="text" class="form-control" id="email"
+		name="email" placeholder="email" ng-model="vm.email"/>
+	</div>
+	<button type="submit" class="btn btn-primary" ng-disabled="vm.disabled">
+		Reset Password
+	</button>
+</form>
