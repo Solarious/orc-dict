@@ -5,16 +5,20 @@ angular.
 	module('orcDictApp').
 	controller('LoginController', LoginController);
 
-LoginController.$inject = ['$location', 'AuthService'];
+LoginController.$inject = ['$location', 'AuthService', 'AlertService'];
 
-function LoginController($location, AuthService) {
+function LoginController($location, AuthService, AlertService) {
 	var vm = this;
 
 	vm.login = login;
 
+	activate();
+
+	function activate() {
+		vm.disabled = false;
+	}
+
 	function login() {
-		vm.login = login;
-		vm.error = false;
 		vm.disabled = true;
 
 		AuthService.login(vm.username, vm.password)
@@ -23,10 +27,11 @@ function LoginController($location, AuthService) {
 			vm.disabled = false;
 			vm.username = '';
 			vm.password = '';
-		}, function(data) {
-			vm.error = true;
-			var defaultErrorMessage = 'Invalid username and/or password';
-			vm.errorMessage = data.err.message || defaultErrorMessage;
+		}, function(error) {
+			console.log(error);
+			AlertService.error(
+				error || 'Invalid username and/or password'
+			);
 			vm.disabled = false;
 			vm.username = '';
 			vm.password = '';
@@ -35,4 +40,3 @@ function LoginController($location, AuthService) {
 }
 
 })();
-
