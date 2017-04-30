@@ -11,6 +11,7 @@ function BulkAddController(WordsService, $location, AlertService) {
 	var vm = this;
 
 	vm.submit = submit;
+	vm.onload = onload;
 
 	activate();
 
@@ -29,6 +30,10 @@ function BulkAddController(WordsService, $location, AlertService) {
 			AlertService.error(error || 'Unknown error');
 			vm.submitDisabled = false;
 		});
+	}
+
+	function onload(data) {
+		vm.data = data;
 	}
 }
 

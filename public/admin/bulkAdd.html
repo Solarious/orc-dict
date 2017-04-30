@@ -8,7 +8,8 @@
 	<option value="true">Replace Existing Words</option>
 	<option value="false">Send error upon duplicate</option>
 </select>
-<textarea class="form-control" spellcheck="false" rows="20" ng-model="vm.data">
+<textarea class="form-control" spellcheck="false" rows="20" ng-model="vm.data"
+orc-dict-file-drop orc-dict-on-load="vm.onload($fileContent)">
 </textarea>
 <button type="button" class="btn btn-primary" ng-click="vm.submit()"
 ng-disabled="vm.submitDisabled">
