@@ -29,6 +29,10 @@ module.exports = function(orcish, PoS, callback) {
 		callback(null, {});
 	} else if (PoS === 'relative') {
 		callback(null, {});
+	} else if (PoS === 'prefix') {
+		callback(null, {});
+	} else if (PoS === 'suffix') {
+		callback(null, {});
 	} else {
 		return callback(new Error('Invalid PoS: ' + PoS));
 	}
