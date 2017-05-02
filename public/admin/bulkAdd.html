@@ -8,9 +8,10 @@
 		<option value="csv">Comma Separated Values (CSV)</option>
 		<option value="tsv">Tab Separated Values (TSV)</option>
 	</select>
-	<select ng-model="vm.remove">
-		<option value="true">Replace Existing Words</option>
-		<option value="false">Send error upon duplicate</option>
+	<select ng-model="vm.updateMethod">
+		<option value="unique">Don't add if already exists</option>
+		<option value="remove">Replace Existing Words</option>
+		<option value="error">Send error upon duplicate</option>
 	</select>
 </div>
 <div class="form-group">

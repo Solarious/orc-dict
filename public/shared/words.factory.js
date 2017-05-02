@@ -96,11 +96,11 @@ function wordsService($http, $q) {
 		});
 	}
 
-	function bulkAdd(data, encoding, remove) {
+	function bulkAdd(data, encoding, updateMethod) {
 		return $http.post('/api/bulkadd', {
 			data: data,
 			encoding: encoding,
-			remove: remove
+			updateMethod: updateMethod
 		})
 		.then(function(response) {
 			return response.data;

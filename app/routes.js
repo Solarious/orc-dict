@@ -310,14 +310,15 @@ app.post('/api/bulkadd', function(req, res) {
 	} else {
 		var data = req.body.data;
 		var encoding = req.body.encoding;
-		var remove = (req.body.remove === 'true');
-		bulkAdd(data, encoding, remove, function(err, results) {
-			if (err) {
-				res.status(404).send(err.message);
-			} else {
-				res.json(results);
-				rebuild();
-			}
+		var updateMethod = req.body.updateMethod;
+		bulkAdd(data, encoding, updateMethod)
+		.then(function(results) {
+			res.json(results);
+			rebuild();
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.status(404).send(error.message);
 		});
 	}
 });

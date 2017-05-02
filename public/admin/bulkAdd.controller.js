@@ -19,14 +19,23 @@ function BulkAddController(WordsService, $location, AlertService) {
 	function activate() {
 		vm.submitDisabled = false;
 		vm.encoding = 'csv';
-		vm.remove = 'true';
+		vm.updateMethod = 'unique';
 	}
 
 	function submit() {
 		vm.submitDisabled = true;
-		WordsService.bulkAdd(vm.data, vm.encoding, vm.remove)
-		.then(function() {
+		WordsService.bulkAdd(vm.data, vm.encoding, vm.updateMethod)
+		.then(function(results) {
 			$location.path('/admin');
+			results = results || [];
+			var num = results.length;
+			if (num === 0) {
+				AlertService.successDeferred('No words added');
+			} else if (num === 1) {
+				AlertService.successDeferred('One word added');
+			} else {
+				AlertService.successDeferred(num + ' Words added');
+			}
 		}, function(error) {
 			AlertService.error(error || 'Unknown error');
 			vm.submitDisabled = false;
