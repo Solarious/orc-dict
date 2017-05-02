@@ -12,6 +12,7 @@ function BulkAddController(WordsService, $location, AlertService) {
 
 	vm.submit = submit;
 	vm.onload = onload;
+	vm.showHelpModal = showHelpModal;
 
 	activate();
 
@@ -34,6 +35,10 @@ function BulkAddController(WordsService, $location, AlertService) {
 
 	function onload(data) {
 		vm.data = data;
+	}
+
+	function showHelpModal() {
+		$('#helpModal').modal('show');
 	}
 }
 

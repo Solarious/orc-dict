@@ -1,17 +1,32 @@
+<orc-dict-bulk-add-help-modal modal-id="helpModal">
+</orc-dict-bulk-add-help-modal>
+
 <h1>Bulk Add</h1>
 
-<select ng-model="vm.encoding">
-	<option value="csv">Comma Separated Values (CSV)</option>
-	<option value="tsv">Tab Separated Values (TSV)</option>
-</select>
-<select ng-model="vm.remove">
-	<option value="true">Replace Existing Words</option>
-	<option value="false">Send error upon duplicate</option>
-</select>
-<textarea class="form-control" spellcheck="false" rows="20" ng-model="vm.data"
-orc-dict-file-drop orc-dict-on-load="vm.onload($fileContent)">
-</textarea>
-<button type="button" class="btn btn-primary" ng-click="vm.submit()"
-ng-disabled="vm.submitDisabled">
-	Submit
-</button>
+<div class="form-group">
+	<select ng-model="vm.encoding">
+		<option value="csv">Comma Separated Values (CSV)</option>
+		<option value="tsv">Tab Separated Values (TSV)</option>
+	</select>
+	<select ng-model="vm.remove">
+		<option value="true">Replace Existing Words</option>
+		<option value="false">Send error upon duplicate</option>
+	</select>
+</div>
+<div class="form-group">
+	<textarea class="form-control" spellcheck="false" rows="20"
+	ng-model="vm.data" orc-dict-file-drop
+	orc-dict-on-load="vm.onload($fileContent)">
+	</textarea>
+</div>
+<div class="form-group">
+	<button type="button" class="btn btn-primary" ng-click="vm.submit()"
+	ng-disabled="vm.submitDisabled">
+		Submit
+	</button>
+	<button type="button" class="btn btn-success"
+	ng-click="vm.showHelpModal()">
+		<span class="glyphicon glyphicon-question-sign">
+		</span> Help
+	</button>
+</div>
