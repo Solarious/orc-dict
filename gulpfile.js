@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 if (process.env.NODE_ENV !== 'production') {
 	var jshint = require('gulp-jshint');
+	var using = require('gulp-using');
 }
 
 var jsPublicFiles = [
@@ -23,7 +24,7 @@ var jsPublicProductionFiles = jsPublicFiles.concat([
 
 var jsAppFiles = [
 	'server.js',
-	'app/*.js'
+	'app/**/*.js'
 ];
 
 gulp.task('js', function() {
@@ -52,6 +53,11 @@ gulp.task('lintApp', function() {
 		esversion: 6
 	}))
 	.pipe(jshint.reporter('jshint-stylish'))
+});
+
+gulp.task('using', function() {
+	return gulp.src(jsAppFiles.concat(jsPublicProductionFiles))
+	.pipe(using());
 });
 
 gulp.task('lint', ['lintPublic', 'lintApp'], function() {});
