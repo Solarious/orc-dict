@@ -88,6 +88,6 @@ SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
 		}
 	})
 	.exec(callback);
-}
+};
 
 module.exports = mongoose.model('SeachIndex', SearchIndexSchema);

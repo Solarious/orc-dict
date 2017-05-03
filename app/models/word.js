@@ -371,7 +371,7 @@ WordSchema.pre('save', function(next) {
 			return;
 		}
 	} else if (this.PoS === 'noun') {
-		var noun = this.noun
+		var noun = this.noun;
 		if (!noun) {
 			next(new Error('Word has PoS==noun but noun is undefined'));
 			return;
