@@ -12,7 +12,12 @@ var csurf = require('csurf');
 var MongoStore = require('connect-mongo')(session);
 
 var port = process.env.PORT;
-var dburl = process.env.MONGODB_URI;
+var dburl;
+if (process.env.NODE_ENV === 'test') {
+	dburl = process.env.MONGODB_TESTING_URI;
+} else {
+	dburl = process.env.MONGODB_URI;
+}
 
 mongoose.connect(dburl);
 
@@ -30,7 +35,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'test') {
+	app.use(morgan('dev'));
+}
 app.disable('etag');
 app.use(session({
 	secret: process.env.SECRET_KEY,
@@ -59,6 +66,7 @@ app.use(function(err, req, res, next) {
 
 require('./app/routes')(app);
 require('./app/authentication')();
+console.log('NODE_ENV: ' + process.env.NODE_ENV);
 app.listen(port);
 console.log('Server started on port ' + port);
 
