@@ -27,6 +27,10 @@ var jsAppFiles = [
 	'app/**/*.js'
 ];
 
+var jsTestFiles = [
+	'test/**/*.js'
+];
+
 gulp.task('js', function() {
 	return gulp.src(jsPublicProductionFiles)
 	.pipe(concat('app.min.js'))
@@ -55,12 +59,22 @@ gulp.task('lintApp', function() {
 	.pipe(jshint.reporter('jshint-stylish'))
 });
 
+gulp.task('lintTest', function() {
+	return gulp.src(jsTestFiles)
+	.pipe(jshint({
+		node: true,
+		mocha: true,
+		esversion: 6
+	}))
+	.pipe(jshint.reporter('jshint-stylish'));
+})
+
 gulp.task('using', function() {
 	return gulp.src(jsAppFiles.concat(jsPublicProductionFiles))
 	.pipe(using());
 });
 
-gulp.task('lint', ['lintPublic', 'lintApp'], function() {});
+gulp.task('lint', ['lintPublic', 'lintApp', 'lintTest'], function() {});
 
 gulp.task('watch', ['js'], function() {
 	gulp.watch(jsPublicFiles, ['js']);
