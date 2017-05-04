@@ -41,3 +41,7 @@ dd {
 dd:before {
 	content: "- ";
 }
+
+.btn-link.navbar-btn:hover, .btn-link.navbar-btn:focus {
+	text-decoration: none;
+}

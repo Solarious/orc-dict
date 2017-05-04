@@ -67,7 +67,7 @@ function authService($q, $timeout, $http) {
 	function logout() {
 		var deferred = $q.defer();
 
-		$http.get('/api/user/logout')
+		$http.post('/api/user/logout')
 		.then(function(response) {
 			user = false;
 			deferred.resolve(response.data);

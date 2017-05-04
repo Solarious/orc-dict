@@ -171,7 +171,7 @@ describe('authentication', function() {
 					status: 'Login successful'
 				});
 				return agent
-				.get('/api/user/logout')
+				.post('/api/user/logout')
 				.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN']);
 			})
 			.then(function(res) {

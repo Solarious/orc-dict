@@ -211,7 +211,7 @@ app.post('/api/user/login', function(req, res, next) {
 	})(req, res, next);
 });
 
-app.get('/api/user/logout', function(req, res) {
+app.post('/api/user/logout', function(req, res) {
 	req.logout();
 	res.json({
 		status: 'Logout success'

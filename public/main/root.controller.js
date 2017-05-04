@@ -5,9 +5,9 @@ angular.
 	module('orcDictApp').
 	controller('RootController', RootController);
 
-RootController.$inject = ['AuthService', '$location'];
+RootController.$inject = ['AuthService', '$location', 'AlertService'];
 
-function RootController(AuthService, $location) {
+function RootController(AuthService, $location, AlertService) {
 	var vm = this;
 
 	vm.isLoggedIn = isLoggedIn;
@@ -26,6 +26,11 @@ function RootController(AuthService, $location) {
 	function logout() {
 		AuthService.logout()
 		.then(function() {
+			if ($location.path() === '/') {
+				AlertService.success('Logged out');
+			} else {
+				AlertService.successDeferred('Logged out');
+			}
 			$location.path('/');
 		});
 	}
