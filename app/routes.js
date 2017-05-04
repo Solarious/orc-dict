@@ -136,7 +136,7 @@ app.get('/api/words/:word_orcish', function(req, res) {
 
 app.put('/api/words/:word_orcish', function(req, res) {
 	if (!req.isAuthenticated()) {
-		res.status(401).send({ error: 'Unauthorized' });
+		res.status(401).send('Unauthorized');
 	} else {
 		Word.findOne({
 			'orcish': req.params.word_orcish
@@ -161,7 +161,7 @@ app.put('/api/words/:word_orcish', function(req, res) {
 
 app.delete('/api/words/:word_orcish', function(req, res) {
 	if (!req.isAuthenticated()) {
-		res.status(401).send({ error: 'Unauthorized' });
+		res.status(401).send('Unauthorized');
 	} else {
 		Word.findOneAndRemove({
 			'orcish': req.params.word_orcish
