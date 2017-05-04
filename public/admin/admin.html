@@ -1,20 +1,8 @@
 <h1>Admin</h1>
 
 <div class="btn-toolbar form-group">
-	<button type="button" class="btn btn-default" ng-click="vm.csrftest()">
-		Test CSRF
-	</button>
 	<a class="btn btn-primary" href="/admin/newword/">New Word</a>
 	<a class="btn btn-primary" href="/admin/bulkadd/">Bulk Add</a>
-	<button type="button" class="btn btn-default" ng-click="vm.alertTest()">
-		Test Alert
-	</button>
-	<button type="button" class="btn btn-default" ng-click="vm.successTest()">
-		Test Success
-	</button>
-	<button type="button" class="btn btn-default" ng-click="vm.alertLinkTest()">
-		Test Link
-	</button>
 </div>
 
 <orc-dict-words-table is-admin="true">
