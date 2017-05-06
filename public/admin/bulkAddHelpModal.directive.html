@@ -2,5 +2,75 @@
 	<dl>
 		<dt>Bulk Add</dt>
 		<dd>Used to add large amounts of new words at the same time</dd>
+		<dt>Options</dt>
+		<dd>"Comma Separated Values(CSV)", "Tab Separated Values (TSV)"</dd>
+		<dd>
+			"Don't add if already exists",
+			"Replace Existing Words",
+			"Send error upon duplicate"
+		</dd>
+		<dt>Nouns, Verbs and Adjectives</dt>
+		<dd>
+			Words of these types have their conjugations/cases generated
+			automatically
+		</dd>
+		<dt>Pronouns, Possessives, Demonstratives and Relatives</dt>
+		<dd>
+			Since words of these types cannot have their cases generated
+			automatically, an error will occur if you try to add them using
+			bulk add
+		</dd>
+		<dd>
+			Instead please use the New Word function on the admin page
+		</dd>
+		<dt>Comma Separated Values CSV</dt>
+		<dd>
+			Each word is stored on a single line in the format
+			<code>"english","orcish","part of speech"</code>
+		</dd>
+		<dd>
+			Quotes are optional if the value doesn't contain any commas, e.g.
+			<code>kill,ka,verb</code> is valid, but<br/>
+			<code>active,"sistrad, -ul",adjective</code> requires quotes around
+			"sistrad, -ul" because it has a comma
+		</dd>
+		<dd>Most spreadsheet software can save their data in CSV format</dd>
+		<dd>
+			If you have a CSV file, you can drag the file onto the text area
+			or manually copy and paste its content
+		</dd>
+		<dt>Tab Separated Values (TSV)</dt>
+		<dd>
+			Each word is stored on a single line in the format with a tab
+			character sepataring each value<br/>
+			<code>
+				<span class="tab-right">english</span>
+				<span class="tab-right">orcish</span>
+				<span>part of speech</span>
+			</code>
+		</dd>
+		<dd>
+			When you copy cells from excel or a similar spreadsheet software
+			and paste them into the text area, the resulting text is in TSV
+			format
+		</dd>
+		<dd>
+			Since manually inserting tab characters is difficult, use CSV when
+			manually inserting data, and only use TSV when copying directly
+			from excel
+		</dd>
+		<dt>Don't add if already exists</dt>
+		<dd>
+			If a word already exists, it will not be added. The existing word
+			will stay the same as it was
+		</dd>
+		<dt>Replace existing words</dt>
+		<dd>
+			If a word already exists, it is removed then added again. This will
+			result in information such as "Extra Info" and "Related Words"
+			being lost if the word has them
+		</dd>
+		<dt>Send error upon duplicate</dt>
+		<dd>If a word already exists, an error is sent</dd>
 	</dl>
 </orc-dict-modal>

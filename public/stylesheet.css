@@ -45,3 +45,7 @@ dd:before {
 .btn-link.navbar-btn:hover, .btn-link.navbar-btn:focus {
 	text-decoration: none;
 }
+
+.tab-right {
+	margin-right: 5em;
+}
