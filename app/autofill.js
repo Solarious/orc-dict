@@ -10,29 +10,29 @@ module.exports = function(orcish, PoS, callback) {
 	} else if (PoS === 'adjective') {
 		getAdjective(orcish, callback);
 	} else if (PoS === 'adverb') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: adverb'));
 	} else if (PoS === 'cardinal') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: cardinal'));
 	} else if (PoS === 'conjunction') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: conjunction'));
 	} else if (PoS === 'demonstrative') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: demonstrative'));
 	} else if (PoS === 'exclamation') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: exclamation'));
 	} else if (PoS === 'interjection') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: interjection'));
 	} else if (PoS === 'possessive') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: possessive'));
 	} else if (PoS === 'preposition') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: preposition'));
 	} else if (PoS === 'pronoun') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: pronoun'));
 	} else if (PoS === 'relative') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: relative'));
 	} else if (PoS === 'prefix') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: prefix'));
 	} else if (PoS === 'suffix') {
-		callback(null, {});
+		callback(new Error('Can not use autofill with PoS: suffix'));
 	} else {
 		return callback(new Error('Invalid PoS: ' + PoS));
 	}
