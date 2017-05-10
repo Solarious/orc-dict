@@ -384,7 +384,7 @@ WordSchema.pre('save', function(next) {
 				return;
 			}
 		} else if (noun.declension === 'second') {
-			if (noun.gender === 'neutral' ) {
+			if (noun.gender === 'feminine' ) {
 				next(new Error(
 					'1st declention noun must have gender masculine or neutral'
 				));
