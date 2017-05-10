@@ -41,6 +41,8 @@ function EditableWordController() {
 	vm.getNumKeywords = getNumKeywords;
 	vm.canAutofill = canAutofill;
 	vm.showHelpModal = showHelpModal;
+	vm.onChangeOrcish = onChangeOrcish;
+	vm.autofill = autofill;
 
 	activate();
 
@@ -151,6 +153,20 @@ function EditableWordController() {
 
 	function showHelpModal() {
 		$('#helpModal').modal('show');
+	}
+
+	function onChangeOrcish() {
+		vm.showForgetMessage = (
+			(vm.word.PoS === 'noun' && vm.word.noun) ||
+			(vm.word.PoS === 'adjective' && vm.word.adjective) ||
+			(vm.word.PoS === 'verb' && vm.word.verb &&
+			vm.word.verb.conjugation !== 'irregular')
+		);
+	}
+
+	function autofill() {
+		vm.showForgetMessage = false;
+		vm.autofillFunction();
 	}
 }
 
