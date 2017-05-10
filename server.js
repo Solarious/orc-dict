@@ -11,11 +11,13 @@ var session = require('express-session');
 var csurf = require('csurf');
 var MongoStore = require('connect-mongo')(session);
 
-var port = process.env.PORT;
 var dburl;
+var port;
 if (process.env.NODE_ENV === 'test') {
+	port = process.env.PORT_TESTING;
 	dburl = process.env.MONGODB_TESTING_URI;
 } else {
+	port = process.env.PORT;
 	dburl = process.env.MONGODB_URI;
 }
 
