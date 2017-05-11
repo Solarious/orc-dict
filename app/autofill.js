@@ -532,6 +532,7 @@ function firstDeclNoun(orcish, ending) {
 function secondDeclNoun(orcish, ending, gender) {
 	var base = orcish.slice(0, -(ending.length));
 	var lastLetterOfBase = base[base.length - 1];
+	var nominativePlural = (gender === 'masculine') ? 'ulz' : 'idz';
 	var dativeVocativePlural = (gender === 'masculine') ? 'ors' : 'aes';
 
 	if (ending === 'k') {
@@ -550,7 +551,7 @@ function secondDeclNoun(orcish, ending, gender) {
 		gender: gender,
 		nominative: {
 			singular: orcish,
-			plural: base + 'ulz'
+			plural: base + nominativePlural
 		},
 		genitive: {
 			singular: base + 'u',
