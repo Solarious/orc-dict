@@ -5,10 +5,13 @@ angular
 	.module('orcDictApp')
 	.controller('WordController', WordController);
 
-WordController.$inject = ['$routeParams', 'WordsService', 'AlertService'];
+WordController.$inject = ['$routeParams', 'WordsService', 'AlertService',
+'AuthService'];
 
-function WordController($routeParams, WordsService, AlertService) {
+function WordController($routeParams, WordsService, AlertService, AuthService) {
 	var vm = this;
+
+	vm.isLoggedIn = isLoggedIn;
 
 	activate();
 
@@ -22,6 +25,10 @@ function WordController($routeParams, WordsService, AlertService) {
 		}, function(error) {
 			AlertService.error(error);
 		});
+	}
+
+	function isLoggedIn() {
+		return AuthService.isLoggedIn();
 	}
 }
 
