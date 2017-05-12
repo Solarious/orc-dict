@@ -18,6 +18,7 @@ function run($rootScope, $location, $route, AuthService, AlertService) {
 				$route.reload();
 			}
 		});
+		$('#navbar').collapse('hide');
 	});
 
 	$rootScope.$on('$routeChangeError',
@@ -27,4 +28,3 @@ function run($rootScope, $location, $route, AuthService, AlertService) {
 }
 
 })();
-
