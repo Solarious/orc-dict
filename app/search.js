@@ -6,8 +6,6 @@ var Word = require('./models/word');
 module.exports = {
 	getMatches: getMatches,
 	getSearchIndexes: getSearchIndexes,
-	getPrefixMatches: getPrefixMatches,
-	getSuffixMatches: getSuffixMatches,
 	rebuild: rebuild,
 	getAll: getAll
 };
@@ -27,7 +25,7 @@ function getMatches(text) {
 
 	var promises = [];
 	for (var i = 0; i < searches.length; i++) {
-		promises.push(getSearchIndexes(searches[i]));
+		promises.push(getTransformedSearchIndexes(searches[i]));
 	}
 	return Promise.all(promises)
 	.then(function(data) {
@@ -42,29 +40,87 @@ function getMatches(text) {
 	});
 }
 
+function getTransformedSearchIndexes(searchString) {
+	function sortFun(a, b) {
+		var aHasDash = a && (a[0] === '-');
+		var bHasDash = b && (b[0] === '-');
+		if (aHasDash && bHasDash) {
+			return sortFun(a.slice(1), b.slice(1));
+		}
+		if (aHasDash) {
+			return 1;
+		}
+		if (bHasDash) {
+			return -1;
+		}
+		return a.localeCompare(b);
+	}
+
+	return getSearchIndexes(searchString)
+	.then(function(matches) {
+		var usedAffixes = [];
+		var dictOfUsedAffixes = {};
+		matches.forEach(function(match) {
+			if (match.withAffixes && (match.withAffixes.length > 0)) {
+				let afs = match.withAffixes.map(function(affix) {
+					return affix.word.orcish;
+				});
+				afs.sort(sortFun);
+				match.withAffixes.forEach(function(affix) {
+					if (!dictOfUsedAffixes[affix.word.orcish]) {
+						usedAffixes.push(affix);
+						dictOfUsedAffixes[affix.word.orcish] = true;
+					}
+				});
+				var n = '(with ' + afs.join(', ') + ') ' + match.message;
+				match.message = n;
+				delete match.withAffixes;
+			}
+		});
+		var found = {};
+		var filteredMatches = matches.filter(function(match) {
+			if (found[match.word.orcish] === match.message) {
+				return false;
+			} else {
+				found[match.word.orcish] = match.message;
+				return true;
+			}
+		});
+		usedAffixes.sort(function(a, b) {
+			return sortFun(a.word.orcish, b.word.orcish);
+		});
+		return usedAffixes.concat(filteredMatches);
+	});
+}
+
 function getSearchIndexes(searchString) {
 	return Promise.all([
 		SearchIndex.getMatches(searchString),
-		getPrefixMatches(searchString),
-		getSuffixMatches(searchString)
+		getAffixMatches(searchString)
 	])
 	.then(function(data) {
-		return data[0].concat(data[1], data[2]);
+		return data[0].concat(data[1]);
 	});
 }
 
-function getPrefixMatches(str) {
-	var prefixWords;
-	var affixlessStrs;
-	return SearchIndex.getMatchesWithAffix('prefix')
+function getAffixMatches(str) {
+	var affixWords;
+	return SearchIndex.getMatchesWithAffix('all')
 	.then(function(results) {
-		prefixWords = results.filter(function(prefixWord) {
-			return str.startsWith(prefixWord.word.orcish.replace(/\W/g, ''));
+		affixWords = results.filter(function(affixWord) {
+			if (affixWord.affix === 'prefix') {
+				return str.startsWith(affixWord.word.orcish.replace(/\W/g, ''));
+			} else {
+				return str.endsWith(affixWord.word.orcish.replace(/\W/g, ''));
+			}
 		});
-		var promises = prefixWords.map(function(prefixWord) {
-			var prefix = prefixWord.word.orcish.replace(/\W/g, '');
-			var affixless = str.slice(prefix.length);
-			return SearchIndex.getMatches(affixless);
+		var promises = affixWords.map(function(affixWord) {
+			var affix = affixWord.word.orcish.replace(/\W/g, '');
+			if (affixWord.affix === 'prefix') {
+				return getSearchIndexes(str.slice(affix.length));
+			} else {
+				return getSearchIndexes(str.slice(0, -affix.length));
+			}
 		});
 		return Promise.all(promises);
 	})
@@ -76,65 +132,18 @@ function getPrefixMatches(str) {
 			};
 		}
 		for (let i = 0; i < matches.length; i++) {
-			let prefixWord = prefixWords[i];
-			let matchesForPrefix = matches[i];
-			if (prefixWord.affixLimits.length > 0) {
-				matchesForPrefix = matchesForPrefix.filter(
-					filterFun(prefixWord.affixLimits)
+			let affixWord = affixWords[i];
+			let matchesForAffix = matches[i];
+			if (affixWord.affixLimits.length > 0) {
+				matchesForAffix = matchesForAffix.filter(
+					filterFun(affixWord.affixLimits)
 				);
 			}
-			if (matchesForPrefix.length > 0) {
-				results.push(prefixWord);
-				for (let j = 0; j < matchesForPrefix.length; j++) {
-					let match = matchesForPrefix[j];
-					let start = '(with prefix ' + prefixWord.keyword + ') ';
-					match.message = start + match.message;
-					match.priority += prefixWord.priority;
-					results.push(match);
-				}
-			}
-		}
-		return results;
-	});
-}
-
-function getSuffixMatches(str) {
-	var suffixWords;
-	var affixlessStrs;
-	return SearchIndex.getMatchesWithAffix('suffix')
-	.then(function(results) {
-		suffixWords = results.filter(function(suffixWord) {
-			return str.endsWith(suffixWord.word.orcish.replace(/\W/g, ''));
-		});
-		var promises = suffixWords.map(function(suffixWord) {
-			var suffix = suffixWord.word.orcish.replace(/\W/g, '');
-			var affixless = str.slice(0, -suffix.length);
-			return SearchIndex.getMatches(affixless);
-		});
-		return Promise.all(promises);
-	})
-	.then(function(matches) {
-		var results = [];
-		function filterFun(limits) {
-			return function(match) {
-				return (limits.indexOf(match.word.PoS) !== -1);
-			};
-		}
-		for (let i = 0; i < matches.length; i++) {
-			let suffixWord = suffixWords[i];
-			let matchesForSuffix = matches[i];
-			if (suffixWord.affixLimits.length > 0) {
-				matchesForSuffix = matchesForSuffix.filter(
-					filterFun(suffixWord.affixLimits)
-				);
-			}
-			if (matchesForSuffix.length > 0) {
-				results.push(suffixWord);
-				for (let j = 0; j < matchesForSuffix.length; j++) {
-					let match = matchesForSuffix[j];
-					let start = '(with suffix ' + suffixWord.keyword + ') ';
-					match.message = start + match.message;
-					match.priority += suffixWord.priority;
+			if (matchesForAffix.length > 0) {
+				for (let j = 0; j < matchesForAffix.length; j++) {
+					let match = matchesForAffix[j];
+					match.withAffixes = match.withAffixes || [];
+					match.withAffixes.push(affixWord);
 					results.push(match);
 				}
 			}

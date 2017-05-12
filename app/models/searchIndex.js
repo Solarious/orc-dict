@@ -64,6 +64,11 @@ SearchIndexSchema.statics.getMatches = function(str, callback) {
 };
 
 SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
+	if (affix === 'all') {
+		affix = {
+			$ne: 'none'
+		};
+	}
 	return this.aggregate()
 	.match({
 		affix: affix
