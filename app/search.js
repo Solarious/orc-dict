@@ -79,10 +79,12 @@ function getTransformedSearchIndexes(searchString) {
 		});
 		var found = {};
 		var filteredMatches = matches.filter(function(match) {
-			if (found[match.word.orcish] === match.message) {
+			var f = found[match.word.orcish];
+			if (f && (f.indexOf(match.message) !== -1)) {
 				return false;
 			} else {
-				found[match.word.orcish] = match.message;
+				found[match.word.orcish] = found[match.word.orcish] || [];
+				found[match.word.orcish].push(match.message);
 				return true;
 			}
 		});
