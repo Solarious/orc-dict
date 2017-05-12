@@ -18,7 +18,11 @@ function getMatches(text) {
 	var searches = [];
 	while ((match = regex.exec(text.toLowerCase()))) {
 		var s = match[1] ? match[1] : match[0];
-		searches.push(s);
+		s = s.replace(/^[\.\,]/, '');
+		s = s.replace(/[\.\,]$/, '');
+		if (s) {
+			searches.push(s);
+		}
 	}
 
 	var promises = [];
