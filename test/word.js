@@ -146,5 +146,24 @@ describe('Words', function() {
 				confirmWord(res, 'gudz', 'zero', 'cardinal');
 			});
 		});
+
+		it('it should convert orcish to lower case', function() {
+			return agent
+			.post('/api/words')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				orcish: 'Roi',
+				english: 'eight',
+				PoS: 'cardinal'
+			})
+			.then(function(res) {
+				confirmWord(res, 'roi', 'eight', 'cardinal');
+				return agent
+				.get('/api/words/roi');
+			})
+			.then(function(res) {
+				confirmWord(res, 'roi', 'eight', 'cardinal');
+			});
+		});
 	});
 });
