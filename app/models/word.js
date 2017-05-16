@@ -285,7 +285,8 @@ var WordSchema = new Schema({
 		type: String,
 		required: true,
 		unique: true,
-		index: true
+		index: true,
+		lowercase: true
 	},
 	english: {
 		type: String,
