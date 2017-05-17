@@ -13,6 +13,10 @@
 		<option value="remove">Replace existing words</option>
 		<option value="error">Send error upon duplicate</option>
 	</select>
+	<select ng-model="vm.order">
+		<option value="e-o-p">"English","Orcish","Part Of Speech"</option>
+		<option value="o-p-e">"Orcish","Part Of Speech","English"</option>
+	</select>
 </div>
 <div class="form-group">
 	<textarea class="form-control" spellcheck="false" rows="20"

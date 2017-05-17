@@ -20,11 +20,12 @@ function BulkAddController(WordsService, $location, AlertService) {
 		vm.submitDisabled = false;
 		vm.encoding = 'csv';
 		vm.updateMethod = 'unique';
+		vm.order = 'e-o-p';
 	}
 
 	function submit() {
 		vm.submitDisabled = true;
-		WordsService.bulkAdd(vm.data, vm.encoding, vm.updateMethod)
+		WordsService.bulkAdd(vm.data, vm.encoding, vm.updateMethod, vm.order)
 		.then(function(results) {
 			$location.path('/admin');
 			results = results || [];

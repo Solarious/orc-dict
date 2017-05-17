@@ -322,7 +322,8 @@ app.post('/api/bulkadd', function(req, res) {
 		var data = req.body.data;
 		var encoding = req.body.encoding;
 		var updateMethod = req.body.updateMethod;
-		bulkAdd(data, encoding, updateMethod)
+		var order = req.body.order;
+		bulkAdd(data, encoding, updateMethod, order)
 		.then(function(results) {
 			res.json(results);
 			rebuild();
