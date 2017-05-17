@@ -497,5 +497,326 @@ function getWords() {
 				}
 			}
 		},
+		{
+			orcish: 'bennathed',
+			english: 'spear',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'bennathed',
+					plural: 'bennathidz'
+				},
+				genitive: {
+					singular: 'bennathu',
+					plural: 'bennathurru'
+				},
+				dative: {
+					singular: 'bennatho',
+					plural: 'bennathaes'
+				},
+				accusative: {
+					singular: 'bennathudz',
+					plural: 'bennathuluz'
+				},
+				vocative: {
+					singular: 'bennatho',
+					plural: 'bennathaes'
+				}
+			}
+		},
+		{
+			orcish: 'alankaed',
+			english: 'window',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'alankaed',
+					plural: 'alankaidz'
+				},
+				genitive: {
+					singular: 'alankau',
+					plural: 'alankaurru'
+				},
+				dative: {
+					singular: 'alankao',
+					plural: 'alankaaes'
+				},
+				accusative: {
+					singular: 'alankaudz',
+					plural: 'alankauluz'
+				},
+				vocative: {
+					singular: 'alankao',
+					plural: 'alankaaes'
+				}
+			}
+		},
+		{
+			orcish: 'tud',
+			english: 'pet',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'tud',
+					plural: 'tidz'
+				},
+				genitive: {
+					singular: 'tu',
+					plural: 'turru'
+				},
+				dative: {
+					singular: 'to',
+					plural: 'taes'
+				},
+				accusative: {
+					singular: 'tudz',
+					plural: 'tuluz'
+				},
+				vocative: {
+					singular: 'to',
+					plural: 'taes'
+				}
+			}
+		},
+		{
+			orcish: 'keld',
+			english: 'camel',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'keld',
+					plural: 'kelidz'
+				},
+				genitive: {
+					singular: 'kelu',
+					plural: 'kelurru'
+				},
+				dative: {
+					singular: 'kelo',
+					plural: 'kelaes'
+				},
+				accusative: {
+					singular: 'keludz',
+					plural: 'keluluz'
+				},
+				vocative: {
+					singular: 'kelo',
+					plural: 'kelaes'
+				}
+			}
+		},
+		{
+			orcish: 'kanukz',
+			english: 'hockey',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'kanukz',
+					plural: 'kanukidz'
+				},
+				genitive: {
+					singular: 'kanuku',
+					plural: 'kanukurru'
+				},
+				dative: {
+					singular: 'kanuko',
+					plural: 'kanukaes'
+				},
+				accusative: {
+					singular: 'kanukudz',
+					plural: 'kanukuluz'
+				},
+				vocative: {
+					singular: 'kanuko',
+					plural: 'kanukaes'
+				}
+			}
+		},
+		{
+			orcish: 'wurmadj',
+			english: 'wyrmbrood',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'wurmadj',
+					plural: 'wurmadjidz'
+				},
+				genitive: {
+					singular: 'wurmadju',
+					plural: 'wurmadjurru'
+				},
+				dative: {
+					singular: 'wurmadjo',
+					plural: 'wurmadjaes'
+				},
+				accusative: {
+					singular: 'wurmadjudz',
+					plural: 'wurmadjuluz'
+				},
+				vocative: {
+					singular: 'wurmadjo',
+					plural: 'wurmadjaes'
+				}
+			}
+		},
+		{
+			orcish: 'orgash',
+			english: 'coast',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'orgash',
+					plural: 'orgalz'
+				},
+				genitive: {
+					singular: 'orgarn',
+					plural: 'orgarnu'
+				},
+				dative: {
+					singular: 'organ',
+					plural: 'orgahan'
+				},
+				accusative: {
+					singular: 'orgach',
+					plural: 'orgarach'
+				},
+				vocative: {
+					singular: 'organo',
+					plural: 'organosh'
+				}
+			}
+		},
+		{
+			orcish: 'haliash',
+			english: 'eagle',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'haliash',
+					plural: 'halialz'
+				},
+				genitive: {
+					singular: 'haliarn',
+					plural: 'haliarnu'
+				},
+				dative: {
+					singular: 'halian',
+					plural: 'haliahan'
+				},
+				accusative: {
+					singular: 'haliach',
+					plural: 'haliarach'
+				},
+				vocative: {
+					singular: 'haliano',
+					plural: 'halianosh'
+				}
+			}
+		},
+		{
+			orcish: 'tigard',
+			english: 'tiger',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'tigard',
+					plural: 'tigalz'
+				},
+				genitive: {
+					singular: 'tigarn',
+					plural: 'tigarnu'
+				},
+				dative: {
+					singular: 'tigan',
+					plural: 'tigahan'
+				},
+				accusative: {
+					singular: 'tigach',
+					plural: 'tigarach'
+				},
+				vocative: {
+					singular: 'tigano',
+					plural: 'tiganosh'
+				}
+			}
+		},
+		{
+			orcish: 'lopeard',
+			english: 'onyx',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'lopeard',
+					plural: 'lopealz'
+				},
+				genitive: {
+					singular: 'lopearn',
+					plural: 'lopearnu'
+				},
+				dative: {
+					singular: 'lopean',
+					plural: 'lopeahan'
+				},
+				accusative: {
+					singular: 'lopeach',
+					plural: 'lopearach'
+				},
+				vocative: {
+					singular: 'lopeano',
+					plural: 'lopeanosh'
+				}
+			}
+		},
+		{
+			orcish: 'ord',
+			english: 'the Ord',
+			PoS: 'noun',
+			noun: {
+				declension: 'second',
+				gender: 'neutral',
+				nominative: {
+					singular: 'ord',
+					plural: 'oridz'
+				},
+				genitive: {
+					singular: 'oru',
+					plural: 'orurru'
+				},
+				dative: {
+					singular: 'oro',
+					plural: 'oraes'
+				},
+				accusative: {
+					singular: 'orudz',
+					plural: 'oruluz'
+				},
+				vocative: {
+					singular: 'oro',
+					plural: 'oraes'
+				}
+			}
+		},
 	];
 }
+
+//zsagord
