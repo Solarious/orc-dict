@@ -59,7 +59,8 @@ function getVerb(orcish, callback) {
 function getNoun(orcish, callback) {
 	var endings;
 
-	endings = ['ad', 'am', 'ag', 'aed'];
+	// aed has been removed to avoid conflicting with neutral 2nd decl.
+	endings = ['ad', 'am', 'ag'];
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
@@ -77,14 +78,8 @@ function getNoun(orcish, callback) {
 		}
 	}
 
-	endings = ['id', 'ed', 'd', 'z', 'dj'];
-	for (let i = 0; i < endings.length; i++) {
-		let ending = endings[i];
-		if (orcish.endsWith(ending)) {
-			return callback(
-				null, secondDeclNoun(orcish, ending, 'neutral')
-			);
-		}
+	if (orcish === 'ord') {
+		return callback(null, secondDeclNoun(orcish, 'd', 'neutral'));
 	}
 
 	endings = ['ash', 'ard', 'rd'];
@@ -92,6 +87,16 @@ function getNoun(orcish, callback) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
 			return callback(null, thirdDeclNoun(orcish, ending));
+		}
+	}
+
+	endings = ['id', 'ed', 'd', 'z', 'dj'];
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
+		if (orcish.endsWith(ending)) {
+			return callback(
+				null, secondDeclNoun(orcish, ending, 'neutral')
+			);
 		}
 	}
 
