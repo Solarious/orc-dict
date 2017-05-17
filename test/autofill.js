@@ -73,7 +73,7 @@ describe('Autofill', function() {
 		exampleWords.forEach(function(word) {
 			if (word.PoS === 'noun') {
 				var str = word.orcish + ', ' + word.PoS + ', ' + word.english;
-				it('it should handle ' + str + ' correctly', function() {
+				it('it should handle "' + str + '" correctly', function() {
 					return chai.request(server)
 					.get('/api/autofillword/' + word.PoS + '/' + word.orcish)
 					.then(function(res) {
