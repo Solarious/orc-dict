@@ -36,6 +36,17 @@ function addIfExists(word, req, property) {
 	}
 }
 
+function getBetterErrorMessage(error) {
+	var msg = error.message + ': ';
+	if (error.errors) {
+		for (let errorPart in error.errors) {
+			let partMsg = error.errors[errorPart].message;
+			msg += partMsg + ' ';
+		}
+	}
+	return msg;
+}
+
 function rebuild() {
 	var start = process.hrtime();
 	search.rebuild(function(error, data) {
@@ -106,7 +117,7 @@ app.post('/api/words', function(req, res) {
 		updateWordFromReq(newWord, req);
 		newWord.save(function(err) {
 			if (err) {
-				res.status(500).send(err.message);
+				res.status(500).send(getBetterErrorMessage(err));
 			} else {
 				res.json(newWord);
 				rebuild();
@@ -148,7 +159,7 @@ app.put('/api/words/:word_orcish', function(req, res) {
 				updateWordFromReq(word, req);
 				word.save(function(err) {
 					if (err) {
-						res.status(500).send(err.message);
+						res.status(500).send(getBetterErrorMessage(err));
 					} else {
 						res.json(word);
 						rebuild();
