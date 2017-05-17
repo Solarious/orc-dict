@@ -176,7 +176,10 @@ function nounToAdjectivePart(noun) {
 function firstConjVerb(orcish) {
 	return {
 		conjugation: 'first',
-		infinitive: orcish,
+		infinitive: {
+			active: orcish,
+			passive: orcish + 're'
+		},
 		active: {
 			present: {
 				first: {
@@ -342,7 +345,10 @@ function secondConjVerb(orcish) {
 	var base = orcish.slice(0, -2);
 	return {
 		conjugation: 'second',
-		infinitive: orcish,
+		infinitive: {
+			active: orcish,
+			passive: base + 'ae'
+		},
 		active: {
 			present: {
 				first: {

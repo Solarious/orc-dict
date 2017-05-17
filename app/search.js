@@ -235,9 +235,15 @@ function addNounCase(word, searchIndexes, nounCase) {
 
 function addVerb(word, searchIndexes) {
 	searchIndexes.push({
-		keyword: word.verb.infinitive,
+		keyword: word.verb.infinitive.active,
 		priority: 2,
-		message: 'infinitive',
+		message: 'infinitive active',
+		orcish: word.orcish
+	});
+	searchIndexes.push({
+		keyword: word.verb.infinitive.passive,
+		priority: 2,
+		message: 'infinitive passive',
 		orcish: word.orcish
 	});
 	addVerbVoice(word, searchIndexes, 'active');
@@ -252,6 +258,12 @@ function addVerb(word, searchIndexes) {
 		keyword: word.verb.imperative.plural,
 		priority: 2,
 		message: 'inperative plural',
+		orcish: word.orcish
+	});
+	searchIndexes.push({
+		keyword: word.verb.gerund,
+		priority: 3,
+		message: 'gerund',
 		orcish: word.orcish
 	});
 	searchIndexes.push({

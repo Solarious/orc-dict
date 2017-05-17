@@ -1,16 +1,28 @@
 <div class="col-md-6">
-	<table class="table table-condensed min-first-col">
+	<table class="table table-condensed table-bordered min-first-col">
 		<tr>
-			<th>Infinitive:</th>
-			<td>{{verb.infinitive}}</td>
-		</tr>
-		<tr>
-			<th>Conjugation:</th>
+			<th>Conjugation</th>
 			<td class="capitalize">{{verb.conjugation}}</td>
 		</tr>
 		<tr>
-			<th>Gerund:</th>
+			<th>Gerund</th>
 			<td>{{verb.gerund}}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-6">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="2" class="text-center">Infinitive</th>
+		</tr>
+		<tr>
+			<th>Active</th>
+			<th>Passive</th>
+		</tr>
+		<tr>
+			<td>{{verb.infinitive.active}}</td>
+			<td>{{verb.infinitive.passive}}</td>
 		</tr>
 	</table>
 </div>

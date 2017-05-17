@@ -80,6 +80,17 @@ var VerbVoiceSchema = new Schema({
 	}
 }, { _id: false });
 
+var VerbInfinitiveSchema = new Schema({
+	active: {
+		type: String,
+		required: true
+	},
+	passive: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
 var VerbSchema = new Schema({
 	conjugation: {
 		type: String,
@@ -87,7 +98,7 @@ var VerbSchema = new Schema({
 		required: true
 	},
 	infinitive: {
-		type: String,
+		type: VerbInfinitiveSchema,
 		required: true
 	},
 	active: {
