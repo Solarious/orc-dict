@@ -135,10 +135,10 @@
 </div>
 
 <div class="col-md-8" ng-show="vm.showExamples">
-	<table class="table table-condensed">
+	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="2">Example Sentences</th>
-			<td>
+			<td class="minimize-width">
 				<button type="button" class="btn btn-default"
 				ng-click="vm.addExample()">
 					New Example
@@ -172,10 +172,10 @@
 </div>
 
 <div class="col-md-8" ng-show="vm.showRelatedWords">
-	<table class="table table-condensed">
+	<table class="table table-condensed table-bordered">
 		<tr>
 			<th>Related Words</th>
-			<td>
+			<td class="minimize-width">
 				<button type="button" class="btn btn-default"
 				ng-click="vm.addRelatedWord()">
 					New Related Word
@@ -199,10 +199,10 @@
 </div>
 
 <div class="col-md-8" ng-show="vm.showKeywords">
-	<table class="table table-condensed">
+	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="3">Extra Keywords</th>
-			<td>
+			<td class="minimize-width">
 				<button type="button" class="btn btn-default"
 				ng-click="vm.addKeyword()">
 					New Keyword

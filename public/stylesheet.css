@@ -7,6 +7,10 @@ body {
 	width: 100%;
 }
 
+.minimize-width {
+	width: 1%;
+}
+
 .capitalize {
 	text-transform: capitalize;
 }
