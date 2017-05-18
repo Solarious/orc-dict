@@ -8,19 +8,15 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var jsPublicFiles = [
-	'public/app.module.js',
-	'public/app.config.js',
-	'public/app.run.js',
-	'public/main/*.js',
-	'public/admin/*.js',
-	'public/shared/*.js',
-	'public/word/*.js',
-	'public/editable/*.js',
+	'public/src/app.module.js',
+	'public/src/**/*.js',
+	'!public/src/app.production.js'
 ];
 
-var jsPublicProductionFiles = jsPublicFiles.concat([
-	'public/app.production.js'
-]);
+var jsPublicProductionFiles = [
+	'public/src/app.module.js',
+	'public/src/**/*.js'
+];
 
 var jsAppFiles = [
 	'server.js',
@@ -71,6 +67,11 @@ gulp.task('lintTest', function() {
 
 gulp.task('using', function() {
 	return gulp.src(jsAppFiles.concat(jsPublicProductionFiles))
+	.pipe(using());
+});
+
+gulp.task('using-no-prod', function() {
+	return gulp.src(jsAppFiles.concat(jsPublicFiles))
 	.pipe(using());
 });
 
