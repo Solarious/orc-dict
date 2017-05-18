@@ -31,9 +31,9 @@ describe('authentication', function() {
 			});
 		});
 
-		it('PUT /api/words/:orcish should send a 403', function(done) {
+		it('PUT /api/words/:orcish/:num should send a 403', function(done) {
 			chai.request(server)
-			.put('/api/words/ka')
+			.put('/api/words/ka/1')
 			.send(wordObj)
 			.end(function(error, res) {
 				res.should.have.status(403);
@@ -43,9 +43,9 @@ describe('authentication', function() {
 			});
 		});
 
-		it('DELETE /api/words/:orcish should send a 403', function(done) {
+		it('DELETE /api/words/:orcish/:num should send a 403', function(done) {
 			chai.request(server)
-			.delete('/api/words/ka')
+			.delete('/api/words/ka/1')
 			.end(function(error, res) {
 				res.should.have.status(403);
 				res.text.should.be.a('string');
@@ -205,9 +205,9 @@ describe('authentication', function() {
 			});
 		});
 
-		it('PUT /api/words/:orcish should send a 401', function(done) {
+		it('PUT /api/words/:orcish/:num should send a 401', function(done) {
 			agent
-			.put('/api/words/ka')
+			.put('/api/words/ka/1')
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
 			.send(wordObj)
 			.end(function(error, res) {
@@ -218,9 +218,9 @@ describe('authentication', function() {
 			});
 		});
 
-		it('DELETE /api/words/:orcish should send a 401', function(done) {
+		it('DELETE /api/words/:orcish/:num should send a 401', function(done) {
 			agent
-			.delete('/api/words/ka')
+			.delete('/api/words/ka/1')
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
 			.end(function(error, res) {
 				res.should.have.status(401);

@@ -100,7 +100,7 @@ function WordsTableController(WordsService, AlertService) {
 	}
 
 	function removeModalAction() {
-		WordsService.remove(vm.wordToRemove.orcish)
+		WordsService.remove(vm.wordToRemove.orcish, vm.wordToRemove.num)
 		.then(function() {
 			vm.loadWords();
 		});

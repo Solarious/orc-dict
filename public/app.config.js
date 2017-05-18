@@ -19,7 +19,7 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
-	.when('/words/:orcish', {
+	.when('/words/:orcish/:num', {
 		templateUrl: 'main/word.html',
 		controller: 'WordController',
 		controllerAs: 'vm',
@@ -61,7 +61,7 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
-	.when('/admin/words/:orcish', {
+	.when('/admin/words/:orcish/:num', {
 		templateUrl: 'admin/editWord.html',
 		controller: 'EditWordController',
 		controllerAs: 'vm',

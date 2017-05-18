@@ -17,8 +17,9 @@ function WordController($routeParams, WordsService, AlertService, AuthService) {
 
 	function activate() {
 		vm.orcish = $routeParams.orcish;
+		vm.num = $routeParams.num;
 
-		return WordsService.get(vm.orcish)
+		return WordsService.get(vm.orcish, vm.num)
 		.then(function(data) {
 			vm.word = data;
 			return vm.word;

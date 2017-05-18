@@ -295,8 +295,6 @@ var WordSchema = new Schema({
 	orcish: {
 		type: String,
 		required: true,
-		unique: true,
-		index: true,
 		lowercase: true
 	},
 	english: {
@@ -324,6 +322,9 @@ var WordSchema = new Schema({
 			'verb',
 		]
 	},
+	num: {
+		type: Number
+	},
 	extraInfo: String,
 	coinedBy: String,
 	namedAfter: String,
@@ -338,6 +339,13 @@ var WordSchema = new Schema({
 	demonstrative: CasesSchema,
 	relative: RelativeSchema,
 	affix: AffixSchema,
+});
+
+WordSchema.index({
+	orcish: 1,
+	num: 1
+}, {
+	unique: true
 });
 
 WordSchema.pre('validate', function(next) {
@@ -462,12 +470,73 @@ WordSchema.pre('save', function(next) {
 			));
 		}
 	}
-	next();
+
+	if (this.num) {
+		return next();
+	}
+
+	var self = this;
+	var Word = self.constructor;
+	Word.find({
+		'orcish': self.orcish
+	})
+	.select({
+		orcish: 1,
+		num: 1
+	})
+	.exec()
+	.then(function(words) {
+		var invalidNums = words.map(function(word) {
+			return word.num;
+		});
+		var num = 1;
+		while (invalidNums.indexOf(num) !== -1) {
+			num++;
+		}
+		self.num = num;
+		next();
+	})
+	.catch(function(error) {
+		next(error);
+	});
+});
+
+WordSchema.statics.getOrcishNums = function(cb) {
+	return this.aggregate()
+	.group({
+		_id: '$orcish',
+		nums: {
+			$push: '$num'
+		}
+	})
+	.exec(cb);
+};
+
+WordSchema.pre('insertMany', function(next, docs) {
+	var Word = mongoose.models.Word;
+	Word.getOrcishNums()
+	.then(function(results) {
+		var obj = results.reduce(function(acc, results) {
+			acc[results.orcish] = results.nums;
+			return acc;
+		}, {});
+		docs.forEach(function(doc) {
+			var invalidNums = obj[doc.orcish] || [];
+			var num = 1;
+			while (invalidNums.indexOf(num) !== -1) {
+				num++;
+			}
+			doc.num = num;
+			invalidNums.push(num);
+			obj[doc.orcish] = invalidNums;
+		});
+		next();
+	});
 });
 
 WordSchema.post('save', function(error, doc, next) {
 	if (error.name === 'MongoError' && error.code === 11000) {
-		next(new Error('A word with the same orcish already exists'));
+		next(new Error('A word with the same orcish and num already exists'));
 	} else {
 		next(error);
 	}
@@ -475,10 +544,13 @@ WordSchema.post('save', function(error, doc, next) {
 
 WordSchema.post('insertMany', function(error, doc, next) {
 	if (error.name === 'MongoError' && error.code === 11000) {
-		var msg = error.message;
+		/*var msg = error.message;
 		var pos = msg.search('dup key');
 		msg = msg.slice(pos + 14, -3);
-		next(new Error('Word with orcish ' + msg + ' already exists'));
+		next(new Error(
+			'Word with orcish ' + msg + ' and num ' + num + ' already exists'
+		));*/
+		next(error);
 	} else {
 		next(error);
 	}
@@ -486,7 +558,7 @@ WordSchema.post('insertMany', function(error, doc, next) {
 
 WordSchema.post('update', function(error, res, next) {
 	if (error.name === 'MongoError' && error.code === 11000) {
-		next(new Error('A word with the same orcish already exists'));
+		next(new Error('A word with the same orcish and num already exists'));
 	} else {
 		next(error);
 	}

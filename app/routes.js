@@ -56,7 +56,9 @@ function rebuild() {
 		}
 		var total = process.hrtime(start);
 		var ms = total[1] / 1000000;
-		console.log('Search.rebuild took ' + ms + ' ms');
+		if (process.env.NODE_ENV !== 'test') {
+			console.log('Search.rebuild took ' + ms + ' ms');
+		}
 	});
 }
 
@@ -72,7 +74,8 @@ app.get('/api/words', function(req, res) {
 	var query = Word.find({}).select({
 		orcish: 1,
 		english: 1,
-		PoS: 1
+		PoS: 1,
+		num: 1
 	});
 	if (sort) {
 		query = query.sort(sort);
@@ -126,16 +129,18 @@ app.post('/api/words', function(req, res) {
 	}
 });
 
-app.get('/api/words/:word_orcish', function(req, res) {
+app.get('/api/words/:orcish/:num', function(req, res) {
 	Word.findOne({
-		'orcish': req.params.word_orcish
+		'orcish': req.params.orcish,
+		'num': req.params.num
 	}, function(err, word) {
 		if (err) {
 			res.status(500).send(err.message);
 		} else {
 			if (!word) {
+				var wordStr = req.params.orcish + ' ' + req.params.num;
 				res.status(404).send(
-					'cannot find word: ' + req.params.word_orcish
+					'cannot find word: ' + wordStr
 				);
 			} else {
 				res.setHeader('Cache-Control', 'no-cache');
@@ -145,44 +150,47 @@ app.get('/api/words/:word_orcish', function(req, res) {
 	});
 });
 
-app.put('/api/words/:word_orcish', function(req, res) {
+app.put('/api/words/:orcish/:num', function(req, res) {
 	if (!req.isAuthenticated()) {
-		res.status(401).send('Unauthorized');
+		return res.status(401).send('Unauthorized');
 	} else {
 		Word.findOne({
-			'orcish': req.params.word_orcish
+			'orcish': req.params.orcish,
+			'num': req.params.num
 		}, function(err, word) {
 			if (err) {
-				res.status(500).send(err.message);
-			} else {
-				word = word || new Word();
-				updateWordFromReq(word, req);
-				word.save(function(err) {
-					if (err) {
-						res.status(500).send(getBetterErrorMessage(err));
-					} else {
-						res.json(word);
-						rebuild();
-					}
-				});
+				return res.status(500).send(err.message);
 			}
+			word = word || new Word();
+			updateWordFromReq(word, req);
+			if (req.params.orcish !== word.orcish) {
+				word.num = undefined;
+			}
+			word.save(function(err) {
+				if (err) {
+					res.status(500).send(getBetterErrorMessage(err));
+				} else {
+					res.json(word);
+					rebuild();
+				}
+			});
 		});
 	}
 });
 
-app.delete('/api/words/:word_orcish', function(req, res) {
+app.delete('/api/words/:orcish/:num', function(req, res) {
 	if (!req.isAuthenticated()) {
 		res.status(401).send('Unauthorized');
 	} else {
 		Word.findOneAndRemove({
-			'orcish': req.params.word_orcish
+			'orcish': req.params.orcish,
+			'num': req.params.num
 		}, function (err, word) {
 			if (err) {
 				res.status(500).send(err.message);
 			} else if (!word) {
-				res.status(404).send(
-					'word ' + req.params.word_orcish + ' does not exist'
-				);
+				var wordStr = req.params.orcish + ' ' + req.params.num;
+				res.status(404).send('word ' + wordStr + ' does not exits');
 			} else {
 				res.json(word);
 				rebuild();

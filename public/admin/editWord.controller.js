@@ -19,9 +19,10 @@ AlertService) {
 
 	function activate() {
 		vm.orcish = $routeParams.orcish;
+		vm.num = $routeParams.num;
 		vm.submitDisabled = true;
 
-		return WordsService.get(vm.orcish)
+		return WordsService.get(vm.orcish, vm.num)
 		.then(function(data) {
 			vm.word = data;
 			vm.submitDisabled = false;
@@ -47,7 +48,7 @@ AlertService) {
 
 	function update() {
 		vm.submitDisabled = true;
-		WordsService.update(vm.orcish, vm.word)
+		WordsService.update(vm.orcish, vm.num, vm.word)
 		.then(function() {
 			$location.path('/admin');
 			var w = [vm.word.orcish, vm.word.PoS, vm.word.english].join(', ');

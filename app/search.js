@@ -79,14 +79,19 @@ function getTransformedSearchIndexes(searchString) {
 		});
 		var found = {};
 		var filteredMatches = matches.filter(function(match) {
-			var f = found[match.word.orcish];
-			if (f && (f.indexOf(match.message) !== -1)) {
-				return false;
-			} else {
-				found[match.word.orcish] = found[match.word.orcish] || [];
-				found[match.word.orcish].push(match.message);
-				return true;
+			var f = found[match.word.orcish] || [];
+			for (let i = 0; i < f.length; i++) {
+				let fi = f[i];
+				if (fi.num === match.word.num && fi.message === match.message) {
+					return false;
+				}
 			}
+			found[match.word.orcish] = f;
+			found[match.word.orcish].push({
+				message: match.message,
+				num: match.word.num
+			});
+			return true;
 		});
 		usedAffixes.sort(function(a, b) {
 			return sortFun(a.word.orcish, b.word.orcish);
@@ -167,13 +172,23 @@ function rebuild(callback) {
 				keyword: word.orcish,
 				priority: 1,
 				message: 'orcish',
-				orcish: word.orcish
+				word: {
+					orcish: word.orcish,
+					english: word.english,
+					PoS: word.PoS,
+					num: word.num
+				}
 			});
 			searchIndexes.push({
 				keyword: word.english,
 				priority: 1,
 				message: 'english',
-				orcish: word.orcish
+				word: {
+					orcish: word.orcish,
+					english: word.english,
+					PoS: word.PoS,
+					num: word.num
+				}
 			});
 			if (word.PoS === 'noun') {
 				addNoun(word, searchIndexes);
@@ -223,13 +238,23 @@ function addNounCase(word, searchIndexes, nounCase) {
 		keyword: word.noun[nounCase].singular,
 		priority: 2,
 		message: nounCase + ' singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.noun[nounCase].plural,
 		priority: 2,
 		message: nounCase + ' plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -238,13 +263,23 @@ function addVerb(word, searchIndexes) {
 		keyword: word.verb.infinitive.active,
 		priority: 2,
 		message: 'infinitive active',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.infinitive.passive,
 		priority: 2,
 		message: 'infinitive passive',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	addVerbVoice(word, searchIndexes, 'active');
 	addVerbVoice(word, searchIndexes, 'passive');
@@ -252,49 +287,89 @@ function addVerb(word, searchIndexes) {
 		keyword: word.verb.imperative.singular,
 		priority: 2,
 		message: 'inperative singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.imperative.plural,
 		priority: 2,
 		message: 'inperative plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.gerund,
 		priority: 3,
 		message: 'gerund',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.participle.feminine,
 		priority: 3,
 		message: 'participle feminine',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.participle.masculine,
 		priority: 3,
 		message: 'participle masculine',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.agent.feminine,
 		priority: 3,
 		message: 'agent feminine',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.agent.masculine,
 		priority: 3,
 		message: 'agent masculine',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.verb.agent.dishonorable,
 		priority: 3,
 		message: 'agent dishonorable',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -313,37 +388,67 @@ function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 		keyword: tense.first.singular,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 1st person singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: tense.first.plural,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 1st person plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: tense.second.singular,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 2nd person singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: tense.second.plural,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 2nd person plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: tense.third.singular,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 3rd person singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: tense.third.plural,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 3rd person plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -366,13 +471,23 @@ function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
 		keyword: word.adjective[gender][adjectiveCase].singular,
 		priority: 2,
 		message: gender + ' ' + caseStr + ' singular',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 	searchIndexes.push({
 		keyword: word.adjective[gender][adjectiveCase].plural,
 		priority: 2,
 		message: gender + ' ' + caseStr + ' plural',
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -405,7 +520,12 @@ function addCase(word, searchIndexes, PoS, caseName) {
 		keyword: word[PoS][caseName],
 		priority: 2,
 		message: caseName,
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -428,7 +548,12 @@ function addRelativeCase(word, searchIndexes, gender, relativeCase) {
 		keyword: word.relative[gender][relativeCase],
 		priority: 2,
 		message: relativeCase,
-		orcish: word.orcish
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
@@ -441,7 +566,12 @@ function addPrefix(word, searchIndexes) {
 		keyword: word.orcish.replace(/\W/g, ''),
 		priority: 4,
 		message: 'prefix',
-		orcish: word.orcish,
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		},
 		affix: 'prefix',
 		affixLimits: affixLimits
 	});
@@ -456,7 +586,12 @@ function addSuffix(word, searchIndexes) {
 		keyword: word.orcish.replace(/\W/g, ''),
 		priority: 4,
 		message: 'suffix',
-		orcish: word.orcish,
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		},
 		affix: 'suffix',
 		affixLimits: affixLimits
 	});
@@ -469,7 +604,12 @@ function addKeywords(word, searchIndexes) {
 			keyword: keyword.keyword,
 			priority: keyword.priority,
 			message: keyword.message,
-			orcish: word.orcish
+			word: {
+				orcish: word.orcish,
+				english: word.english,
+				PoS: word.PoS,
+				num: word.num
+			}
 		});
 	}
 }

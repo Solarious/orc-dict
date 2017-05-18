@@ -5,6 +5,25 @@ var Schema = mongoose.Schema;
 // Use mative ES6 promises
 mongoose.Promise = global.Promise;
 
+var WordSchema = new Schema({
+	orcish: {
+		type: String,
+		required: true
+	},
+	english: {
+		type: String,
+		required: true
+	},
+	PoS: {
+		type: String,
+		required: true,
+	},
+	num: {
+		type: Number,
+		required: true
+	}
+}, { _id: false });
+
 var SearchIndexSchema = new Schema({
 	keyword: {
 		type: String,
@@ -18,8 +37,8 @@ var SearchIndexSchema = new Schema({
 		type: String,
 		required: true
 	},
-	orcish: {
-		type: String,
+	word: {
+		type: WordSchema,
 		required: true
 	},
 	affix: {
@@ -36,26 +55,14 @@ var SearchIndexSchema = new Schema({
 });
 
 SearchIndexSchema.statics.getMatches = function(str, callback) {
-	return this.aggregate()
-	.match({
+	return this.find({
 		keyword: str
 	})
-	.lookup({
-		from: 'words',
-		localField: 'orcish',
-		foreignField: 'orcish',
-		as: 'word'
-	})
-	.unwind('word')
-	.project({
+	.select({
 		keyword: 1,
 		priority: 1,
 		message: 1,
-		word: {
-			orcish: 1,
-			english: 1,
-			PoS: 1
-		}
+		word: 1
 	})
 	.sort({
 		priority: 1
@@ -69,28 +76,9 @@ SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
 			$ne: 'none'
 		};
 	}
-	return this.aggregate()
-	.match({
+
+	return this.find({
 		affix: affix
-	})
-	.lookup({
-		from: 'words',
-		localField: 'orcish',
-		foreignField: 'orcish',
-		as: 'word'
-	})
-	.unwind('word')
-	.project({
-		keyword: 1,
-		priority: 1,
-		message: 1,
-		affix: 1,
-		affixLimits: 1,
-		word: {
-			orcish: 1,
-			english: 1,
-			PoS: 1
-		}
 	})
 	.exec(callback);
 };

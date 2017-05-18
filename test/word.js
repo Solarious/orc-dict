@@ -12,12 +12,13 @@ var User = require('../app/models/user');
 chai.use(chaiHttp);
 
 describe('Words', function() {
-	function confirmWord(res, orcish, english, PoS) {
+	function confirmWord(res, orcish, english, PoS, num) {
 		res.should.have.status(200);
 		res.body.should.be.an('object');
 		res.body.should.have.property('orcish', orcish);
 		res.body.should.have.property('english', english);
 		res.body.should.have.property('PoS', PoS);
+		res.body.should.have.property('num', num);
 		res.body.relatedWords.should.eql([]);
 		res.body.exampleSentences.should.eql([]);
 		res.body.keywords.should.eql([]);
@@ -49,6 +50,11 @@ describe('Words', function() {
 					PoS: 'cardinal'
 				},
 				{
+					orcish: 'solu',
+					english: 'two',
+					PoS: 'cardinal'
+				},
+				{
 					orcish: 'thaen',
 					english: 'three',
 					PoS: 'cardinal'
@@ -64,26 +70,36 @@ describe('Words', function() {
 			res.should.have.status(200);
 			res.body.should.be.an('object');
 			res.body.words.should.be.an('array');
-			res.body.words.length.should.eql(3);
+			res.body.words.length.should.eql(4);
 			done();
 		});
 	});
 
 	it('it should GET a word', function() {
 		return chai.request(server)
-		.get('/api/words/solu')
+		.get('/api/words/solu/1')
 		.then(function(res) {
-			confirmWord(res, 'solu', 'two', 'cardinal');
+			confirmWord(res, 'solu', 'two', 'cardinal', 1);
 		});
 	});
 
 	it('it should not GET a word that does not exist', function() {
 		return chai.request(server)
-		.get('/api/words/notaword')
+		.get('/api/words/notaword/1')
 		.catch(function(error) {
 			error.response.should.have.status(404);
 			error.response.text.should.be.a('string');
-			error.response.text.should.eql('cannot find word: notaword');
+			error.response.text.should.eql('cannot find word: notaword 1');
+		});
+	});
+
+	it('it should not GET a word with using an incorrect num', function() {
+		return chai.request(server)
+		.get('/api/words/solu/2')
+		.catch(function(error) {
+			error.response.should.have.status(404);
+			error.response.text.should.be.a('string');
+			error.response.text.should.eql('cannot find word: solu 2');
 		});
 	});
 
@@ -127,7 +143,6 @@ describe('Words', function() {
 			});
 		});
 
-
 		it('it should POST a word', function() {
 			return agent
 			.post('/api/words')
@@ -138,12 +153,31 @@ describe('Words', function() {
 				PoS: 'cardinal'
 			})
 			.then(function(res) {
-				confirmWord(res, 'gudz', 'zero', 'cardinal');
+				confirmWord(res, 'gudz', 'zero', 'cardinal', 1);
 				return agent
-				.get('/api/words/gudz');
+				.get('/api/words/gudz/1');
 			})
 			.then(function(res) {
-				confirmWord(res, 'gudz', 'zero', 'cardinal');
+				confirmWord(res, 'gudz', 'zero', 'cardinal', 1);
+			});
+		});
+
+		it('it should POST an already inserted word', function() {
+			return agent
+			.post('/api/words')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				orcish: 'thaen',
+				english: 'three',
+				PoS: 'cardinal'
+			})
+			.then(function(res) {
+				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
+				return agent
+				.get('/api/words/thaen/2');
+			})
+			.then(function(res) {
+				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
 			});
 		});
 
@@ -157,12 +191,50 @@ describe('Words', function() {
 				PoS: 'cardinal'
 			})
 			.then(function(res) {
-				confirmWord(res, 'roi', 'eight', 'cardinal');
+				confirmWord(res, 'roi', 'eight', 'cardinal', 1);
 				return agent
-				.get('/api/words/roi');
+				.get('/api/words/roi/1');
 			})
 			.then(function(res) {
-				confirmWord(res, 'roi', 'eight', 'cardinal');
+				confirmWord(res, 'roi', 'eight', 'cardinal', 1);
+			});
+		});
+
+		it('it should update(PUT) a word', function() {
+			return agent
+			.put('/api/words/thaen/1')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				orcish: 'roi',
+				english: 'eight',
+				PoS: 'cardinal'
+			})
+			.then(function(res) {
+				confirmWord(res, 'roi', 'eight', 'cardinal', 1);
+				return agent
+				.get('/api/words/roi/1');
+			})
+			.then(function(res) {
+				confirmWord(res, 'roi', 'eight', 'cardinal', 1);
+			});
+		});
+
+		it('it should update(PUT) a word to one that exists', function() {
+			return agent
+			.put('/api/words/nul/1')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				orcish: 'thaen',
+				english: 'three',
+				PoS: 'cardinal'
+			})
+			.then(function(res) {
+				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
+				return agent
+				.get('/api/words/thaen/2');
+			})
+			.then(function(res) {
+				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
 			});
 		});
 	});

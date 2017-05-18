@@ -14,7 +14,7 @@
 		<th>Type</th>
 	</tr>
 	<tr ng-repeat="match in vm.activeMatches">
-		<td><a ng-href="/words/{{match.word.orcish}}">
+		<td><a ng-href="/words/{{match.word.orcish}}/{{match.word.num}}">
 			<strong>{{match.word.orcish}}</strong>
 			, {{match.word.PoS}}, {{match.word.english}}.
 		</a></td>

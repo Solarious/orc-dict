@@ -83,7 +83,7 @@ close-text="Cancel" modal-id="removeModal">
 	</tr>
 	<tr ng-repeat="word in vm.words">
 		<td>
-			<a href="/words/{{word.orcish}}">{{word.orcish}}</a>
+			<a href="/words/{{word.orcish}}/{{word.num}}">{{word.orcish}}</a>
 		</td>
 		<td>{{word.english}}</td>
 		<td>{{word.PoS}}</td>
@@ -102,7 +102,8 @@ close-text="Cancel" modal-id="removeModal">
 		<td>{{word.english}}</td>
 		<td>{{word.PoS}}</td>
 		<td>
-			<a class="btn btn-primary" ng-href="/admin/words/{{word.orcish}}">
+			<a class="btn btn-primary"
+			ng-href="/admin/words/{{word.orcish}}/{{word.num}}">
 				<span class="glyphicon glyphicon-edit"></span> Edit
 			</a>
 		</td>

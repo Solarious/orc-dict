@@ -21,7 +21,7 @@ function wordsService($http, $q) {
 
 	return service;
 
-	function get(orcish) {
+	function get(orcish, num) {
 		if (!orcish) {
 			return $http.get('/api/words')
 			.then(function(response) {
@@ -31,7 +31,10 @@ function wordsService($http, $q) {
 				return $q.reject(error.data);
 			});
 		} else {
-			return $http.get('/api/words/' + orcish)
+			if (!num) {
+				return $q.reject('invalid value for num: ' + num);
+			}
+			return $http.get('/api/words/' + orcish + '/' + num)
 			.then(function(response) {
 				return response.data;
 			})
@@ -63,8 +66,8 @@ function wordsService($http, $q) {
 		});
 	}
 
-	function update(orcish, word) {
-		return $http.put('/api/words/' + orcish, word)
+	function update(orcish, num, word) {
+		return $http.put('/api/words/' + orcish + '/' + num, word)
 		.then(function(response) {
 			return response.data;
 		})
@@ -73,8 +76,8 @@ function wordsService($http, $q) {
 		});
 	}
 
-	function remove(orcish) {
-		return $http.delete('/api/words/' + orcish)
+	function remove(orcish, num) {
+		return $http.delete('/api/words/' + orcish + '/' + num)
 		.then(function(response) {
 			return response.data;
 		})
