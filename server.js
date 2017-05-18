@@ -33,13 +33,16 @@ if (process.env.NODE_ENV === 'production') {
 	});
 	console.log('Using https redirect');
 }
+
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+
 if (process.env.NODE_ENV !== 'test') {
 	app.use(morgan('dev'));
 }
+
 app.disable('etag');
 app.use(session({
 	secret: process.env.SECRET_KEY,
