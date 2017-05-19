@@ -15,7 +15,8 @@
     "changePassword": "node scripts/userActions.js changePassword",
     "listUsers": "node scripts/userActions.js listUsers",
     "rebuildSearchIndexes": "node scripts/rebuild.js",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "testNyan": "mocha --reporter nyan"
   },
   "author": "Nathan Aplin",
   "dependencies": {
