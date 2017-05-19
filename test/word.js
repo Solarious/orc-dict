@@ -64,15 +64,14 @@ describe('Words', function() {
 	});
 
 	describe('Without needing to login', function() {
-		it('it should GET all the words', function(done) {
-			chai.request(server)
+		it('it should GET all the words', function() {
+			return chai.request(server)
 			.get('/api/words')
-			.end(function(error, res) {
+			.then(function(res) {
 				res.should.have.status(200);
 				res.body.should.be.an('object');
 				res.body.words.should.be.an('array');
 				res.body.words.length.should.eql(4);
-				done();
 			});
 		});
 
