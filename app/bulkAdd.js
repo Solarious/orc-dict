@@ -6,15 +6,26 @@ var autofill = require('./autofill');
 
 module.exports = bulkAdd;
 
+function print(str) {
+	if (process.env.NODE_ENV !== 'test') {
+		console.log(str);
+	}
+}
+
 function bulkAdd(data, encoding, method, order) {
 	return new Promise(function(resolve, reject) {
-		console.log('Bulk Add: Started');
+		print('Bulk Add: Started');
 		if (encoding !== 'csv' && encoding !== 'tsv') {
 			return reject(new Error('encoding has invalid value ' + encoding));
 		}
 
 		if (order !== 'e-o-p' && order !== 'o-p-e') {
 			return reject(new Error('order has invalid value ' + order));
+		}
+
+		if (method !== 'remove' && method !== 'duplicate'
+		&& method !== 'unique')	{
+			return reject(new Error('method has invalid value ' + method));
 		}
 
 		var parseOptions = {
@@ -33,7 +44,7 @@ function bulkAdd(data, encoding, method, order) {
 		});
 	})
 	.then(function(records) {
-		console.log('Bulk Add: parse done');
+		print('Bulk Add: parse done');
 		return records.map(function(record) {
 			if (order === 'e-o-p') {
 				return {
@@ -52,20 +63,21 @@ function bulkAdd(data, encoding, method, order) {
 		});
 	})
 	.then(function(records) {
-		console.log('Bulk Add: mapping done');
+		print('Bulk Add: mapping done');
 		if (method === 'remove') {
 			var opts = records.map(function(record) {
 				return {
-					deleteOne: {
+					deleteMany: {
 						filter: {
-							orcish: record.orcish
+							orcish: record.orcish,
+							PoS: record.PoS
 						}
 					}
 				};
 			});
 			return Word.bulkWrite(opts)
 			.then(function(data) {
-				console.log('Bulk Add: remove done');
+				print('Bulk Add: remove done');
 				return records;
 			});
 		}
@@ -73,26 +85,32 @@ function bulkAdd(data, encoding, method, order) {
 	})
 	.then(function(records) {
 		if (method === 'unique') {
-			console.log('Bulk Add: getting words list for unique');
-			return Word.find({}).exec()
-			.then(function(words) {
-				var listOfOrcish = {};
-				for (let i = 0; i < words.length; i++) {
-					listOfOrcish[words[i].orcish] = true;
-				}
-				return listOfOrcish;
+			print('Bulk Add: getting words list for unique');
+			return Word.find({})
+			.select({
+				orcish: 1,
+				PoS: 1
 			})
-			.then(function(orcish) {
-				console.log('Bulk Add: filtering out for unique');
+			.exec()
+			.then(function(words) {
+				return words.reduce(function(acc, word) {
+					acc[word.orcish] = acc[word.orcish] || {};
+					acc[word.orcish][word.PoS] = true;
+					return acc;
+				}, {});
+			})
+			.then(function(orcishValues) {
+				print('Bulk Add: filtering out for unique');
 				return records.filter(function(record) {
-					return !(record.orcish in orcish);
+					var a = orcishValues[record.orcish];
+					return !(a && a[record.PoS]);
 				});
 			});
 		}
 		return records;
 	})
 	.then(function(records) {
-		console.log('Bulk Add: creating words');
+		print('Bulk Add: creating words');
 		return records.map(function(record) {
 			if (record.length < 3) {
 				throw ('Record ' + record + ' has less than 3 values');
@@ -124,7 +142,7 @@ function bulkAdd(data, encoding, method, order) {
 		});
 	})
 	.then(function(words) {
-		console.log('Bulk Add: inserting words');
+		print('Bulk Add: inserting words');
 		return Word.insertMany(words);
 	});
 }
