@@ -63,46 +63,47 @@ describe('Words', function() {
 		});
 	});
 
-	it('it should GET all the words', function(done) {
-		chai.request(server)
-		.get('/api/words')
-		.end(function(error, res) {
-			res.should.have.status(200);
-			res.body.should.be.an('object');
-			res.body.words.should.be.an('array');
-			res.body.words.length.should.eql(4);
-			done();
+	describe('Without needing to login', function() {
+		it('it should GET all the words', function(done) {
+			chai.request(server)
+			.get('/api/words')
+			.end(function(error, res) {
+				res.should.have.status(200);
+				res.body.should.be.an('object');
+				res.body.words.should.be.an('array');
+				res.body.words.length.should.eql(4);
+				done();
+			});
+		});
+
+		it('it should GET a word', function() {
+			return chai.request(server)
+			.get('/api/words/solu/1')
+			.then(function(res) {
+				confirmWord(res, 'solu', 'two', 'cardinal', 1);
+			});
+		});
+
+		it('it should not GET a word that does not exist', function() {
+			return chai.request(server)
+			.get('/api/words/notaword/1')
+			.catch(function(error) {
+				error.response.should.have.status(404);
+				error.response.text.should.be.a('string');
+				error.response.text.should.eql('cannot find word: notaword 1');
+			});
+		});
+
+		it('it should not GET a word with using an incorrect num', function() {
+			return chai.request(server)
+			.get('/api/words/solu/2')
+			.catch(function(error) {
+				error.response.should.have.status(404);
+				error.response.text.should.be.a('string');
+				error.response.text.should.eql('cannot find word: solu 2');
+			});
 		});
 	});
-
-	it('it should GET a word', function() {
-		return chai.request(server)
-		.get('/api/words/solu/1')
-		.then(function(res) {
-			confirmWord(res, 'solu', 'two', 'cardinal', 1);
-		});
-	});
-
-	it('it should not GET a word that does not exist', function() {
-		return chai.request(server)
-		.get('/api/words/notaword/1')
-		.catch(function(error) {
-			error.response.should.have.status(404);
-			error.response.text.should.be.a('string');
-			error.response.text.should.eql('cannot find word: notaword 1');
-		});
-	});
-
-	it('it should not GET a word with using an incorrect num', function() {
-		return chai.request(server)
-		.get('/api/words/solu/2')
-		.catch(function(error) {
-			error.response.should.have.status(404);
-			error.response.text.should.be.a('string');
-			error.response.text.should.eql('cannot find word: solu 2');
-		});
-	});
-
 
 	describe('After logging in', function() {
 		var agent;
