@@ -32,11 +32,13 @@ describe('Autofill', function() {
 		cannotUsePoS.forEach(function(PoS) {
 			it('it should return an error for PoS ' + PoS, function() {
 				return chai.request(server)
-				.get('/api/autofill/' + PoS + '/thaen')
-				.catch(function(error) {
-					error.res.should.have.status(404);
-					error.res.text.should.be.a('string');
-					error.res.text.should.eql(
+				.get('/api/autofillword/' + PoS + '/thaen')
+				.then(function(res) {
+					res.should.have.status(404);
+				}, function(error) {
+					error.response.should.have.status(404);
+					error.response.text.should.be.a('string');
+					error.response.text.should.eql(
 						'Can not use autofill with PoS: ' + PoS
 					);
 				});
@@ -57,11 +59,13 @@ describe('Autofill', function() {
 		invalidPoS.forEach(function(PoS) {
 			it('it should return an error for PoS ' + PoS, function() {
 				return chai.request(server)
-				.get('/api/autofill/' + PoS + '/thaen')
-				.catch(function(error) {
-					error.res.should.have.status(404);
-					error.res.text.should.be.a('string');
-					error.res.text.should.eql(
+				.get('/api/autofillword/' + PoS + '/thaen')
+				.then(function(res) {
+					res.should.have.status(404);
+				}, function(error) {
+					error.response.should.have.status(404);
+					error.response.text.should.be.a('string');
+					error.response.text.should.eql(
 						'Invalid PoS: ' + PoS
 					);
 				});

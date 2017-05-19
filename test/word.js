@@ -87,7 +87,9 @@ describe('Words', function() {
 		it('it should not GET a word that does not exist', function() {
 			return chai.request(server)
 			.get('/api/words/notaword/1')
-			.catch(function(error) {
+			.then(function(res) {
+				res.should.have.status(404);
+			}, function(error) {
 				error.response.should.have.status(404);
 				error.response.text.should.be.a('string');
 				error.response.text.should.eql('cannot find word: notaword 1');
@@ -96,11 +98,13 @@ describe('Words', function() {
 
 		it('it should not GET a word with using an incorrect num', function() {
 			return chai.request(server)
-			.get('/api/words/solu/2')
-			.catch(function(error) {
+			.get('/api/words/nul/2')
+			.then(function(res) {
+				res.should.have.status(404);
+			}, function(error) {
 				error.response.should.have.status(404);
 				error.response.text.should.be.a('string');
-				error.response.text.should.eql('cannot find word: solu 2');
+				error.response.text.should.eql('cannot find word: nul 2');
 			});
 		});
 	});

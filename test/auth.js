@@ -185,7 +185,9 @@ describe('authentication', function() {
 				.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
 				.send(wordObj);
 			})
-			.catch(function(error) {
+			.then(function(res) {
+				res.should.have.status(401);
+			}, function(error) {
 				error.response.should.have.status(401);
 				error.response.text.should.be.a('string');
 				error.response.text.should.eql('Unauthorized');
