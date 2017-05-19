@@ -517,7 +517,7 @@ WordSchema.pre('insertMany', function(next, docs) {
 	Word.getOrcishNums()
 	.then(function(results) {
 		var obj = results.reduce(function(acc, results) {
-			acc[results.orcish] = results.nums;
+			acc[results._id] = results.nums;
 			return acc;
 		}, {});
 		docs.forEach(function(doc) {
