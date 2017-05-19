@@ -264,7 +264,6 @@ app.post('/api/user/forgot', function(req, res) {
 	})
 	.then(function(data) {
 		token = data;
-		console.log(req.body);
 		return User.findOne({
 			email: req.body.email
 		}).exec();
@@ -337,7 +336,6 @@ app.post('/api/bulkadd', function(req, res) {
 			rebuild();
 		})
 		.catch(function(error) {
-			console.log(error);
 			res.status(404).send(error.message);
 		});
 	}
