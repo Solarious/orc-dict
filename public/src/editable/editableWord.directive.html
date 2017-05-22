@@ -174,7 +174,7 @@
 <div class="col-md-8" ng-show="vm.showRelatedWords">
 	<table class="table table-condensed table-bordered">
 		<tr>
-			<th>Related Words</th>
+			<th colspan="2">Related Words</th>
 			<td class="minimize-width">
 				<button type="button" class="btn btn-default"
 				ng-click="vm.addRelatedWord()">
@@ -182,10 +182,19 @@
 				</button>
 			</td>
 		</tr>
+		<tr>
+			<th class="width-larger">Orcish</th>
+			<th class="min-width-visible">Num</th>
+			<td></td>
+		</tr>
 		<tr ng-repeat="relatedWord in vm.word.relatedWords track by $index">
 			<td>
 				<input class="form-control" type="text"
 				ng-model="relatedWord.orcish"/>
+			</td>
+			<td>
+				<input class="form-control" type="number" min="1"
+				ng-model="relatedWord.num"/>
 			</td>
 			<td>
 				<button type="button" class="btn btn-danger"

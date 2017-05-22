@@ -247,6 +247,10 @@ var RelatedWordSchema = new Schema({
 	orcish: {
 		type: String,
 		required: true
+	},
+	num: {
+		type: Number,
+		required: true
 	}
 }, { _id: false });
 

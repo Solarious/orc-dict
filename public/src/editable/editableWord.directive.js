@@ -93,7 +93,8 @@ function EditableWordController() {
 	function addRelatedWord() {
 		vm.word.relatedWords = vm.word.relatedWords || [];
 		vm.word.relatedWords.push({
-			orcish: ''
+			orcish: '',
+			num: 1
 		});
 	}
 

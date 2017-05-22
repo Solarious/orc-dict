@@ -11,6 +11,14 @@ body {
 	width: 1%;
 }
 
+.width-larger {
+	width: 60%
+}
+
+.min-width-visible {
+	min-width: 5em;
+}
+
 .capitalize {
 	text-transform: capitalize;
 }
