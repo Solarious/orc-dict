@@ -169,6 +169,6 @@ describe('Bulk Add', function() {
 			return testError('csv', 'delete', 'p-o-e',
 			'order has invalid value p-o-e');
 		});
-	})
+	});
 
 });

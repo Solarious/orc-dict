@@ -23,8 +23,8 @@ function bulkAdd(data, encoding, method, order) {
 			return reject(new Error('order has invalid value ' + order));
 		}
 
-		if (method !== 'remove' && method !== 'duplicate'
-		&& method !== 'unique')	{
+		if (method !== 'remove' && method !== 'duplicate' &&
+		method !== 'unique')	{
 			return reject(new Error('method has invalid value ' + method));
 		}
 
