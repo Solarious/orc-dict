@@ -123,8 +123,8 @@ function getAdjective(orcish, callback) {
 	var parts = orcish.split(', ');
 	if (parts.length !== 2) {
 		return callback(new Error(
-			'Word ' + orcish + ' must have format feminine, masculine or' +
-			' feminine, -masculineEnding'
+			'Word ' + orcish + ' must have format "feminine, masculine" or' +
+			' "feminine, -masculineEnding"'
 		));
 	}
 	var feminineOrcish = parts[0];
