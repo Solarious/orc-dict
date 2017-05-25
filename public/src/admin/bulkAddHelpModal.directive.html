@@ -9,6 +9,8 @@
 			"Replace Existing Words",
 			"Send error upon duplicate"
 		</dd>
+		<dd>"English","Orcish","Part Of Speech"</dd>
+		<dd>"Orcish","Part Of Speech","English"</dd>
 		<dt>Nouns, Verbs and Adjectives</dt>
 		<dd>
 			Words of these types have their conjugations/cases generated
@@ -25,8 +27,10 @@
 		</dd>
 		<dt>Comma Separated Values CSV</dt>
 		<dd>
-			Each word is stored on a single line in the format
-			<code>"english","orcish","part of speech"</code>
+			Each word is stored on a single line in the selected format. The
+			available formats are:<br/>
+			<code>"English","Orcish","Part of Speech"</code><br/>
+			<code>"Orcish","Part Of Speech","English"</code>
 		</dd>
 		<dd>
 			Quotes are optional if the value doesn't contain any commas, e.g.
@@ -41,8 +45,8 @@
 		</dd>
 		<dt>Tab Separated Values (TSV)</dt>
 		<dd>
-			Each word is stored on a single line in the format with a tab
-			character sepataring each value<br/>
+			Each word is stored on a single line with a tab character
+			sepataring each value<br/>e.g.
 			<code>
 				<span class="tab-right">english</span>
 				<span class="tab-right">orcish</span>
@@ -61,16 +65,21 @@
 		</dd>
 		<dt>Don't add if already exists</dt>
 		<dd>
-			If a word already exists, it will not be added. The existing word
-			will stay the same as it was
+			If a word with the same <em>Orcish</em> and <em>Part of Speech</em>
+			already exists, it will not be added.
 		</dd>
 		<dt>Replace existing words</dt>
 		<dd>
-			If a word already exists, it is removed then added again. This will
-			result in information such as "Extra Info" and "Related Words"
-			being lost if the word has them
+			All words with the same <em>Orcish</em> and <em>Part of Speech</em>
+			as a word to be added is first removed. This will result in
+			information such as <em>Extra Info</em> and <em>Related Words</em>
+			being lost for the replaced words
 		</dd>
-		<dt>Send error upon duplicate</dt>
-		<dd>If a word already exists, an error is sent</dd>
+		<dt>Allow duplication</dt>
+		<dd>
+			All words are added, regardless of if a word with the same
+			<em>Orcish</em> and <em>Part of Speech</em> exists. Can result in
+			unwanted duplication of words
+		</dd>
 	</dl>
 </orc-dict-modal>
