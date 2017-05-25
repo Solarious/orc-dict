@@ -121,6 +121,9 @@ function getNoun(orcish, callback) {
 
 function getAdjective(orcish, callback) {
 	var parts = orcish.split(', ');
+	if (parts.length === 1) {
+		return callback(null, getIrregularAdjective(orcish));
+	}
 	if (parts.length !== 2) {
 		return callback(new Error(
 			'Word ' + orcish + ' must have format "feminine, masculine" or' +
@@ -170,6 +173,55 @@ function nounToAdjectivePart(noun) {
 		dative: noun.dative,
 		accusative: noun.accusative,
 		vocative: noun.vocative
+	};
+}
+
+function getIrregularAdjective(orcish) {
+	return {
+		feminine: {
+			nominative: {
+				singular: orcish,
+				plural: orcish
+			},
+			genitive: {
+				singular: orcish,
+				plural: orcish
+			},
+			dative: {
+				singular: orcish,
+				plural: orcish
+			},
+			accusative: {
+				singular: orcish,
+				plural: orcish
+			},
+			vocative: {
+				singular: orcish,
+				plural: orcish
+			}
+		},
+		masculineNeutral: {
+			nominative: {
+				singular: orcish,
+				plural: orcish
+			},
+			genitive: {
+				singular: orcish,
+				plural: orcish
+			},
+			dative: {
+				singular: orcish,
+				plural: orcish
+			},
+			accusative: {
+				singular: orcish,
+				plural: orcish
+			},
+			vocative: {
+				singular: orcish,
+				plural: orcish
+			}
+		}
 	};
 }
 
