@@ -130,7 +130,7 @@ var VerbSchema = new Schema({
 var NounSchema = new Schema({
 	declension: {
 		type: String,
-		enum: ['first', 'second', 'third', 'fourth', 'fifth'],
+		enum: ['first', 'second', 'third', 'fourth', 'fifth', 'irregular'],
 		required: true
 	},
 	gender: {

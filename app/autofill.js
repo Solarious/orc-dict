@@ -116,7 +116,7 @@ function getNoun(orcish, callback) {
 		}
 	}
 
-	return callback(new Error(orcish + ' has no valid declension'));
+	return callback(null, irregularNoun(orcish));
 }
 
 function getAdjective(orcish, callback) {
@@ -669,6 +669,33 @@ function fifthDeclNoun(orcish, ending) {
 		vocative: {
 			singular: base + 'ordo',
 			plural: base + 'onosh'
+		}
+	};
+}
+
+function irregularNoun(orcish) {
+	return {
+		declension: 'irregular',
+		gender: 'neutral',
+		nominative: {
+			singular: orcish,
+			plural: orcish
+		},
+		genitive: {
+			singular: orcish,
+			plural: orcish
+		},
+		dative: {
+			singular: orcish,
+			plural: orcish
+		},
+		accusative: {
+			singular: orcish,
+			plural: orcish
+		},
+		vocative: {
+			singular: orcish,
+			plural: orcish
 		}
 	};
 }
