@@ -34,7 +34,9 @@ if (process.env.NODE_ENV === 'production') {
 	console.log('Using https redirect');
 }
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+	limit: '200kb'
+}));
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
