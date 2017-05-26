@@ -159,66 +159,87 @@ function getAffixMatches(str) {
 	});
 }
 
-function rebuild(callback) {
-	SearchIndex.remove({})
+function rebuild() {
+	return SearchIndex.remove({})
 	.then(function() {
 		return Word.find({});
 	})
 	.then(function(words) {
-		var searchIndexes = [];
-		for (var i = 0; i < words.length; i++) {
-			var word = words[i];
-			searchIndexes.push({
-				keyword: word.orcish,
-				priority: 1,
-				message: 'orcish',
-				word: {
-					orcish: word.orcish,
-					english: word.english,
-					PoS: word.PoS,
-					num: word.num
-				}
-			});
-			searchIndexes.push({
-				keyword: word.english,
-				priority: 1,
-				message: 'english',
-				word: {
-					orcish: word.orcish,
-					english: word.english,
-					PoS: word.PoS,
-					num: word.num
-				}
-			});
-			if (word.PoS === 'noun') {
-				addNoun(word, searchIndexes);
-			} else if (word.PoS === 'verb') {
-				addVerb(word, searchIndexes);
-			} else if (word.PoS === 'adjective') {
-				addAdjective(word, searchIndexes);
-			} else if (word.PoS === 'pronoun') {
-				addPronoun(word, searchIndexes);
-			} else if (word.PoS === 'possessive') {
-				addPossessive(word, searchIndexes);
-			} else if (word.PoS === 'demonstrative') {
-				addDemonstrative(word, searchIndexes);
-			} else if (word.PoS === 'relative') {
-				addRelative(word, searchIndexes);
-			} else if (word.PoS === 'prefix') {
-				addPrefix(word, searchIndexes);
-			} else if (word.PoS === 'suffix') {
-				addSuffix(word, searchIndexes);
-			}
-
-			addKeywords(word, searchIndexes);
+		const numPerPart = 200;
+		var arrays = [];
+		for (let i = 0; i < words.length; i += numPerPart) {
+			arrays.push(words.slice(i, i + numPerPart));
 		}
-		return SearchIndex.insertMany(searchIndexes, callback);
+		return arrays;
 	})
-	.catch(function(error) {
-		console.log(error);
-		console.log(error.stack);
-		callback(error);
+	.then(function(arrays) {
+		var p = Promise.resolve();
+		arrays.forEach(function(part) {
+			p = p.then(function() {
+				console.log('rebuilding part');
+				return rebuildPart(part);
+			});
+		});
+		return p;
 	});
+}
+
+function rebuildPart(words) {
+	var searchIndexes = [];
+	for (var i = 0; i < words.length; i++) {
+		var word = words[i];
+		searchIndexes = searchIndexes.concat(getForWord(word));
+	}
+	return SearchIndex.insertMany(searchIndexes);
+}
+
+function getForWord(word) {
+	var searchIndexes = [];
+	searchIndexes.push({
+		keyword: word.orcish,
+		priority: 1,
+		message: 'orcish',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.english,
+		priority: 1,
+		message: 'english',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	if (word.PoS === 'noun') {
+		addNoun(word, searchIndexes);
+	} else if (word.PoS === 'verb') {
+		addVerb(word, searchIndexes);
+	} else if (word.PoS === 'adjective') {
+		addAdjective(word, searchIndexes);
+	} else if (word.PoS === 'pronoun') {
+		addPronoun(word, searchIndexes);
+	} else if (word.PoS === 'possessive') {
+		addPossessive(word, searchIndexes);
+	} else if (word.PoS === 'demonstrative') {
+		addDemonstrative(word, searchIndexes);
+	} else if (word.PoS === 'relative') {
+		addRelative(word, searchIndexes);
+	} else if (word.PoS === 'prefix') {
+		addPrefix(word, searchIndexes);
+	} else if (word.PoS === 'suffix') {
+		addSuffix(word, searchIndexes);
+	}
+
+	addKeywords(word, searchIndexes);
+
+	return searchIndexes;
 }
 
 function getAll(callback) {

@@ -49,16 +49,17 @@ function getBetterErrorMessage(error) {
 
 function rebuild() {
 	var start = process.hrtime();
-	search.rebuild(function(error, data) {
-		if (error) {
-			console.log('Error with search.rebuild:');
-			console.log(error.message);
-		}
+	search.rebuild()
+	.then(function(data) {
 		var total = process.hrtime(start);
 		var ms = total[1] / 1000000;
 		if (process.env.NODE_ENV !== 'test') {
 			console.log('Search.rebuild took ' + ms + ' ms');
 		}
+	})
+	.catch(function(error) {
+		console.log('Error with search.rebuild:');
+		console.log(error.message);
 	});
 }
 
