@@ -36,7 +36,7 @@ function WordsTableController(WordsService, AlertService) {
 	activate();
 
 	function activate() {
-		vm.numPerPage = "10";
+		vm.numPerPage = "50";
 		vm.page = 1;
 		vm.numOfPages = 0;
 		vm.nums = [];
