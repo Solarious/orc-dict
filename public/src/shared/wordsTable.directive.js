@@ -102,6 +102,8 @@ function WordsTableController(WordsService, AlertService) {
 		WordsService.remove(vm.wordToRemove.orcish, vm.wordToRemove.num)
 		.then(function() {
 			vm.loadWords();
+		}, function(error) {
+			AlertService.error(error || 'Unknown error removing word');
 		});
 		$('#removeModal').modal('hide');
 	}
