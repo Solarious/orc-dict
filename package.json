@@ -15,6 +15,7 @@
     "changePassword": "node scripts/userActions.js changePassword",
     "listUsers": "node scripts/userActions.js listUsers",
     "rebuildSearchIndexes": "node scripts/rebuild.js",
+    "removeAllWords": "node scripts/removeAllWords.js",
     "gulp": "gulp",
     "testNyan": "mocha --reporter nyan"
   },
