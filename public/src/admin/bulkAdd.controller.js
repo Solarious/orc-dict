@@ -19,8 +19,8 @@ function BulkAddController(WordsService, $location, AlertService) {
 	function activate() {
 		vm.submitDisabled = false;
 		vm.encoding = 'csv';
-		vm.updateMethod = 'unique';
-		vm.order = 'e-o-p';
+		vm.updateMethod = 'duplicate';
+		vm.order = 'o-p-e';
 	}
 
 	function submit() {

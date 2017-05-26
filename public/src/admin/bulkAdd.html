@@ -9,13 +9,13 @@
 		<option value="tsv">Tab Separated Values (TSV)</option>
 	</select>
 	<select ng-model="vm.updateMethod">
+		<option value="duplicate">Allow duplication</option>
 		<option value="unique">Don't add if already exists</option>
 		<option value="remove">Replace existing words</option>
-		<option value="duplicate">Allow duplication</option>
 	</select>
 	<select ng-model="vm.order">
-		<option value="e-o-p">"English","Orcish","Part Of Speech"</option>
 		<option value="o-p-e">"Orcish","Part Of Speech","English"</option>
+		<option value="e-o-p">"English","Orcish","Part Of Speech"</option>
 	</select>
 </div>
 <div class="form-group">

@@ -5,12 +5,12 @@
 		<dt>Options</dt>
 		<dd>"Comma Separated Values(CSV)", "Tab Separated Values (TSV)"</dd>
 		<dd>
+			"Allow duplication",
 			"Don't add if already exists",
-			"Replace Existing Words",
-			"Send error upon duplicate"
+			"Replace Existing Words"
 		</dd>
-		<dd>"English","Orcish","Part Of Speech"</dd>
 		<dd>"Orcish","Part Of Speech","English"</dd>
+		<dd>"English","Orcish","Part Of Speech"</dd>
 		<dt>Nouns, Verbs and Adjectives</dt>
 		<dd>
 			Words of these types have their conjugations/cases generated
@@ -29,8 +29,8 @@
 		<dd>
 			Each word is stored on a single line in the selected format. The
 			available formats are:<br/>
-			<code>"English","Orcish","Part of Speech"</code><br/>
 			<code>"Orcish","Part Of Speech","English"</code>
+			<code>"English","Orcish","Part of Speech"</code><br/>
 		</dd>
 		<dd>
 			Quotes are optional if the value doesn't contain any commas, e.g.
@@ -63,6 +63,12 @@
 			manually inserting data, and only use TSV when copying directly
 			from excel
 		</dd>
+		<dt>Allow duplication</dt>
+		<dd>
+			All words are added, regardless of if a word with the same
+			<em>Orcish</em> and <em>Part of Speech</em> exists. Can result in
+			unwanted duplication of words
+		</dd>
 		<dt>Don't add if already exists</dt>
 		<dd>
 			If a word with the same <em>Orcish</em> and <em>Part of Speech</em>
@@ -74,12 +80,6 @@
 			as a word to be added is first removed. This will result in
 			information such as <em>Extra Info</em> and <em>Related Words</em>
 			being lost for the replaced words
-		</dd>
-		<dt>Allow duplication</dt>
-		<dd>
-			All words are added, regardless of if a word with the same
-			<em>Orcish</em> and <em>Part of Speech</em> exists. Can result in
-			unwanted duplication of words
 		</dd>
 	</dl>
 </orc-dict-modal>
