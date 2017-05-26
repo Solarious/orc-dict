@@ -7,7 +7,10 @@ module.exports = {
 	getMatches: getMatches,
 	getSearchIndexes: getSearchIndexes,
 	rebuild: rebuild,
-	getAll: getAll
+	getAll: getAll,
+	forCreate: forCreate,
+	forUpdate: forUpdate,
+	forRemove: forRemove
 };
 
 function getMatches(text) {
@@ -244,6 +247,28 @@ function getForWord(word) {
 
 function getAll(callback) {
 	SearchIndex.find({}, callback);
+}
+
+function forCreate(word) {
+	var searchIndexes = getForWord(word);
+	return SearchIndex.insertMany(searchIndexes);
+}
+
+function forUpdate(prevOrcish, prevNum, word) {
+	return SearchIndex.remove({
+		'word.orcish': prevOrcish,
+		'word.num': prevNum
+	})
+	.then(function() {
+		return forCreate(word);
+	});
+}
+
+function forRemove(word) {
+	return SearchIndex.remove({
+		'word.orcish': word.orcish,
+		'word.num': word.num
+	});
 }
 
 function addNoun(word, searchIndexes) {

@@ -124,7 +124,11 @@ app.post('/api/words', function(req, res) {
 				res.status(500).send(getBetterErrorMessage(err));
 			} else {
 				res.json(newWord);
-				rebuild();
+				search.forCreate(newWord)
+				.catch(function(error) {
+					console.log('error with search.forCreate:');
+					console.log(error);
+				});
 			}
 		});
 	}
@@ -172,7 +176,11 @@ app.put('/api/words/:orcish/:num', function(req, res) {
 					res.status(500).send(getBetterErrorMessage(err));
 				} else {
 					res.json(word);
-					rebuild();
+					search.forUpdate(req.params.orcish, req.params.num, word)
+					.catch(function(error) {
+						console.log('error with search.forUpdate:');
+						console.log(error);
+					});
 				}
 			});
 		});
@@ -194,7 +202,11 @@ app.delete('/api/words/:orcish/:num', function(req, res) {
 				res.status(404).send('word ' + wordStr + ' does not exits');
 			} else {
 				res.json(word);
-				rebuild();
+				search.forRemove(word)
+				.catch(function(error) {
+					console.log('error with search.forRemove:');
+					console.log(error);
+				});
 			}
 		});
 	}

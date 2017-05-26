@@ -8,7 +8,8 @@ mongoose.Promise = global.Promise;
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
-		required: true
+		required: true,
+		index: true
 	},
 	english: {
 		type: String,
