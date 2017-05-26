@@ -27,7 +27,8 @@ var WordSchema = new Schema({
 var SearchIndexSchema = new Schema({
 	keyword: {
 		type: String,
-		required: true
+		required: true,
+		index: true
 	},
 	priority: {
 		type: Number,
@@ -83,4 +84,4 @@ SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
 	.exec(callback);
 };
 
-module.exports = mongoose.model('SeachIndex', SearchIndexSchema);
+module.exports = mongoose.model('SearchIndex', SearchIndexSchema);
