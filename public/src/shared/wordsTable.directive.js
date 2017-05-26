@@ -9,8 +9,7 @@ function wordsTable() {
 	var directive = {
 		restrict: 'E',
 		scope: {
-			isAdmin: '@',
-			removeAction: '&'
+			isAdmin: '@'
 		},
 		templateUrl: 'src/shared/wordsTable.directive.html',
 		controller: WordsTableController,
