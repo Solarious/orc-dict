@@ -346,7 +346,6 @@ app.post('/api/bulkadd', function(req, res) {
 		bulkAdd(data, encoding, updateMethod, order)
 		.then(function(results) {
 			res.json(results);
-			rebuild();
 		})
 		.catch(function(error) {
 			res.status(404).send(error.message);

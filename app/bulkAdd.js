@@ -3,6 +3,7 @@
 var parse = require('csv-parse');
 var Word = require('./models/word');
 var autofill = require('./autofill');
+var search = require('./search');
 
 module.exports = bulkAdd;
 
@@ -144,5 +145,14 @@ function bulkAdd(data, encoding, method, order) {
 	.then(function(words) {
 		print('Bulk Add: inserting words');
 		return Word.insertMany(words);
+	})
+	.then(function(result) {
+		if (method === 'unique' || method === 'duplicate') {
+			search.forInsertMany(result);
+		}
+		if (method === 'remove') {
+			search.forReplaceMany(result);
+		}
+		return result;
 	});
 }

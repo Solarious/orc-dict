@@ -10,7 +10,9 @@ module.exports = {
 	getAll: getAll,
 	forCreate: forCreate,
 	forUpdate: forUpdate,
-	forRemove: forRemove
+	forRemove: forRemove,
+	forInsertMany: forInsertMany,
+	forReplaceMany: forReplaceMany
 };
 
 function getMatches(text) {
@@ -168,22 +170,7 @@ function rebuild() {
 		return Word.find({});
 	})
 	.then(function(words) {
-		const numPerPart = 200;
-		var arrays = [];
-		for (let i = 0; i < words.length; i += numPerPart) {
-			arrays.push(words.slice(i, i + numPerPart));
-		}
-		return arrays;
-	})
-	.then(function(arrays) {
-		var p = Promise.resolve();
-		arrays.forEach(function(part) {
-			p = p.then(function() {
-				console.log('rebuilding part');
-				return rebuildPart(part);
-			});
-		});
-		return p;
+		return forInsertMany;
 	});
 }
 
@@ -268,6 +255,43 @@ function forRemove(word) {
 	return SearchIndex.remove({
 		'word.orcish': word.orcish,
 		'word.num': word.num
+	});
+}
+
+function forInsertMany(words) {
+	const numPerPart = 200;
+	var arrays = [];
+	var p = Promise.resolve();
+
+	for (let i = 0; i < words.length; i += numPerPart) {
+		arrays.push(words.slice(i, i + numPerPart));
+	}
+
+	arrays.forEach(function(part) {
+		p = p.then(function() {
+			if (process.env.NODE_ENV !== 'test') {
+				console.log('rebuilding part');
+			}
+			return rebuildPart(part);
+		});
+	});
+	return p;
+}
+
+function forReplaceMany(words) {
+	var opts = words.map(function(word) {
+		return {
+			deleteMany: {
+				filter: {
+					'word.orcish': word.orcish,
+					'word.num': word.num
+				}
+			}
+		};
+	});
+	return SearchIndex.bulkWrite(opts)
+	.then(function() {
+		return forInsertMany(words);
 	});
 }
 
