@@ -259,7 +259,7 @@ function forRemove(word) {
 }
 
 function forInsertMany(words) {
-	const numPerPart = 200;
+	const numPerPart = 100;
 	var arrays = [];
 	var p = Promise.resolve();
 
