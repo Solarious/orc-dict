@@ -8,6 +8,8 @@ module.exports = {
 	cardinalWords: cardinalWords,
 	cardinalWordsDuplicate: cardinalWordsDuplicate,
 	cardinalWordsUnique: cardinalWordsUnique,
+	cardinalMinDataCsvEop: cardinalMinDataCsvEop,
+	cardinalMinYayDataCsvEop: cardinalMinYayDataCsvEop
 };
 
 function cardinalDataCsvEop() {
@@ -367,4 +369,20 @@ function cardinalWordsUnique() {
 			num: 1
 		},
 	];
+}
+
+function cardinalMinDataCsvEop() {
+	var a = '';
+	a += '"three","thaen","cardinal"\n';
+	a += '"four","lex","cardinal"\n';
+	a += '"five","stel","cardinal"\n';
+	return a;
+}
+
+function cardinalMinYayDataCsvEop() {
+	var a = '';
+	a += '"three yay","thaen","cardinal"\n';
+	a += '"four","lex","cardinal"\n';
+	a += '"five","stel","cardinal"\n';
+	return a;
 }
