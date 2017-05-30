@@ -170,7 +170,7 @@ function rebuild() {
 		return Word.find({});
 	})
 	.then(function(words) {
-		return forInsertMany;
+		return forInsertMany(words);
 	});
 }
 
