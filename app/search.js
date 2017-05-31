@@ -267,10 +267,18 @@ function forInsertMany(words) {
 		arrays.push(words.slice(i, i + numPerPart));
 	}
 
-	arrays.forEach(function(part) {
+	if (process.env.NODE_ENV !== 'test') {
+		if (arrays.length === 1) {
+			console.log('There is 1 part to rebuild');
+		} else {
+			console.log('There are ' + arrays.length + ' parts to rebuild');
+		}
+	}
+
+	arrays.forEach(function(part, i) {
 		p = p.then(function() {
 			if (process.env.NODE_ENV !== 'test') {
-				console.log('rebuilding part');
+				console.log('rebuilding part ' + (i + 1));
 			}
 			return rebuildPart(part);
 		});
