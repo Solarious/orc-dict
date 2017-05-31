@@ -65,26 +65,6 @@ function bulkAdd(data, encoding, method, order) {
 	})
 	.then(function(records) {
 		print('Bulk Add: mapping done');
-		if (method === 'remove') {
-			var opts = records.map(function(record) {
-				return {
-					deleteMany: {
-						filter: {
-							orcish: record.orcish,
-							PoS: record.PoS
-						}
-					}
-				};
-			});
-			return Word.bulkWrite(opts)
-			.then(function(data) {
-				print('Bulk Add: remove done');
-				return records;
-			});
-		}
-		return records;
-	})
-	.then(function(records) {
 		if (method === 'unique') {
 			print('Bulk Add: getting words list for unique');
 			return Word.find({})
@@ -141,6 +121,33 @@ function bulkAdd(data, encoding, method, order) {
 
 			return word;
 		});
+	})
+	.then(function(words) {
+		if (method === 'remove') {
+			var promises = words.map(function(word) {
+				var wordModel = new Word(word);
+				return wordModel.validate();
+			});
+			return Promise.all(promises)
+			.then(function() {
+				var opts = words.map(function(word) {
+					return {
+						deleteMany: {
+							filter: {
+								orcish: word.orcish,
+								PoS: word.PoS
+							}
+						}
+					};
+				});
+				return Word.bulkWrite(opts)
+				.then(function(data) {
+					print('Bulk Add: remove done');
+					return words;
+				});
+			});
+		}
+		return words;
 	})
 	.then(function(words) {
 		print('Bulk Add: inserting words');

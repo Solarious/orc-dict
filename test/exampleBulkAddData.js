@@ -8,8 +8,10 @@ module.exports = {
 	cardinalWords: cardinalWords,
 	cardinalWordsDuplicate: cardinalWordsDuplicate,
 	cardinalWordsUnique: cardinalWordsUnique,
+	cardinalWordsError: cardinalWordsError,
 	cardinalMinDataCsvEop: cardinalMinDataCsvEop,
-	cardinalMinYayDataCsvEop: cardinalMinYayDataCsvEop
+	cardinalMinYayDataCsvEop: cardinalMinYayDataCsvEop,
+	errorDataCsvEop: errorDataCsvEop
 };
 
 function cardinalDataCsvEop() {
@@ -371,6 +373,17 @@ function cardinalWordsUnique() {
 	];
 }
 
+function cardinalWordsError() {
+	return [
+		{
+			orcish: 'nul',
+			english: 'one',
+			PoS: 'cardinal',
+			num: 1
+		}
+	];
+}
+
 function cardinalMinDataCsvEop() {
 	var a = '';
 	a += '"three","thaen","cardinal"\n';
@@ -384,5 +397,26 @@ function cardinalMinYayDataCsvEop() {
 	a += '"three yay","thaen","cardinal"\n';
 	a += '"four","lex","cardinal"\n';
 	a += '"five","stel","cardinal"\n';
+	return a;
+}
+
+function errorDataCsvEop() {
+	var a = '';
+	a += '"one","nul","cardinal"\n';
+	a += '"two","solu","cardinal"\n';
+	a += '"three","thaen","cardinal"\n';
+	a += '"four","lex","cardinal"\n';
+	a += '"five","stel","cardinal"\n';
+	a += '"six","grae","cardinal"\n';
+	a += '"seven","milz","cardinal"\n';
+	a += '"eight","roi","cardinal"\n';
+	a += '"me","nudz","pronoun"\n';
+	a += '"nine","gluk","cardinal"\n';
+	a += '"ten","lotta","cardinal"\n';
+	a += '"eleven","ked","cardinal"\n';
+	a += '"twelve","zwek","cardinal"\n';
+	a += '"hundred","tuhu","cardinal"\n';
+	a += '"thousand","yonda","cardinal"\n';
+	a += '"million","alegin","cardinal"\n';
 	return a;
 }

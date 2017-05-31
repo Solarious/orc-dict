@@ -365,6 +365,30 @@ describe('Search', function() {
 					rebuildSpy.called.should.eql(false);
 				});
 			});
+
+			it('it should be the same after an error with bulkadd', function() {
+				return agent
+				.post('/api/bulkadd')
+				.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+				.send({
+					data: bulkAddData.errorDataCsvEop(),
+					encoding: 'csv',
+					updateMethod: 'remove',
+					order: 'e-o-p'
+				})
+				.then(function(res) {
+					res.should.have.status(404);
+				}, function(error) {
+					error.response.should.have.status(404);
+					return agent
+					.get('/api/list-search-indexes');
+				})
+				.then(function(res) {
+					res.should.have.status(200);
+					test(searchData.with123(), res.body);
+					rebuildSpy.called.should.eql(false);
+				});
+			});
 		});
 	});
 });

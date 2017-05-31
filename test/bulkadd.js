@@ -131,6 +131,28 @@ describe('Bulk Add', function() {
 		superTest(exampleData.cardinalWordsDuplicate(), 'duplicate');
 		superTest(exampleData.cardinalWordsUnique(), 'unique');
 
+		it('should not cause any changes if a word is invalid', function() {
+			return agent
+			.post('/api/bulkadd')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				data: exampleData.errorDataCsvEop(),
+				encoding: 'csv',
+				updateMethod: 'remove',
+				order: 'e-o-p'
+			})
+			.then(function(res) {
+				res.should.have.status(404);
+			}, function(error) {
+				error.response.should.have.status(404);
+				return agent
+				.get('/api/words');
+			})
+			.then(function(res) {
+				res.should.have.status(200);
+				arrayCompare(exampleData.cardinalWordsError(), res.body.words);
+			});
+		});
 	});
 
 	describe('when using invalid parameters', function() {
