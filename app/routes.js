@@ -9,6 +9,7 @@ var autofill = require('./autofill');
 var bulkAdd = require('./bulkAdd');
 var search = require('./search');
 var email = require('./email');
+var stats = require('./stats');
 
 function updateWordFromReq(word, req) {
 	word.orcish = req.body.orcish;
@@ -379,6 +380,20 @@ app.get('/api/list-search-indexes', function(req, res) {
 			res.send(data);
 		}
 	});
+});
+
+app.post('/api/stats', function(req, res) {
+	if (!req.isAuthenticated()) {
+		res.status(401).send('Unauthorized');
+	} else {
+		stats.get()
+		.then(function(stats) {
+			res.json(stats);
+		})
+		.catch(function(error) {
+			res.status(500).send(error.message);
+		});
+	}
 });
 
 app.get('*', function(req, res) {

@@ -16,7 +16,8 @@ function wordsService($http, $q) {
 		remove: remove,
 		autofill: autofill,
 		bulkAdd: bulkAdd,
-		search: search
+		search: search,
+		stats: stats
 	};
 
 	return service;
@@ -120,6 +121,16 @@ function wordsService($http, $q) {
 				q: str
 			}
 		})
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
+
+	function stats() {
+		return $http.post('api/stats')
 		.then(function(response) {
 			return response.data;
 		})

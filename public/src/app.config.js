@@ -67,6 +67,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/admin/statistics', {
+		templateUrl: 'src/admin/stats.html',
+		controller: 'StatsController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.when('/search', {
 		templateUrl: 'src/main/search.html',
 		controller: 'SearchController',
