@@ -1,0 +1,59 @@
+<h1>Extra Operations</h1>
+
+<orc-dict-modal action-function="vm.removeAllModalAction()" action-text="Delete"
+close-text="Cancel" modal-id="removeAllModal">
+	<h4>
+		Are you sure you want to remove <strong>every single word</strong>
+		<span ng-show="vm.PoS !=='all'">
+			that is {{vm.getCorrectArticle()}}
+			<span class="capitalize"><em>{{vm.PoS}}</em></span>?
+		</span>
+	</h4>
+</orc-dict-modal>
+
+<orc-dict-modal action-function="vm.rebuildModalAction()"
+action-text="Rebuild Search Indexes" close-text="Cancel"
+modal-id="rebuildModal" btn-type="warning">
+	<h4>
+		Are you sure you want to rebuild all the search indexes?
+	</h4>
+</orc-dict-modal>
+
+<div class="col-md-6">
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-btn">
+				<button type="button" class="btn btn-danger"
+				ng-click="vm.showRemoveAllModal()">
+					<span class="glyphicon glyphicon-remove"></span>
+					Delete words by Part of Speech
+				</button>
+			</div>
+			<select class="form-control" ng-model="vm.PoS">
+				<option value="all">--All--</option>
+				<option value="adjective">Adjective</option>
+				<option value="adverb">Adverb</option>
+				<option value="cardinal">Cardinal</option>
+				<option value="conjection">Conjection</option>
+				<option value="demonstrative">Demonstrative</option>
+				<option value="exclamation">Exclamation</option>
+				<option value="interjection">Interjection</option>
+				<option value="noun">Noun</option>
+				<option value="possessive">Possessive</option>
+				<option value="prefix">Prefix</option>
+				<option value="preposition">Preposition</option>
+				<option value="pronoun">Pronoun</option>
+				<option value="relative">Relative</option>
+				<option value="suffix">Suffix</option>
+				<option value="verb">Verb</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="button" class="btn btn-warning"
+		ng-click="vm.showRebuildModal()">
+			<span class="glyphicon glyphicon-refresh"></span>
+			Rebuild Search Indexes
+		</button>
+	</div>
+</div>

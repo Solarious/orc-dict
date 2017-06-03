@@ -73,6 +73,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/admin/extra', {
+		templateUrl: 'src/admin/extra.html',
+		controller: 'ExtraController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.when('/search', {
 		templateUrl: 'src/main/search.html',
 		controller: 'SearchController',
