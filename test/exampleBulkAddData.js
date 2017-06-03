@@ -22,11 +22,11 @@ function cardinalDataCsvEop() {
 	a += '"four","lex","cardinal"\n';
 	a += '"five","stel","cardinal"\n';
 	a += '"six","grae","cardinal"\n';
-	a += '"seven","milz","cardinal"\n';
-	a += '"eight","roi","cardinal"\n';
-	a += '"nine","gluk","cardinal"\n';
-	a += '"ten","lotta","cardinal"\n';
-	a += '"eleven","ked","cardinal"\n';
+	a += '"seven","milz","cardinal","n.a.","Mills"\n';
+	a += '"eight","roi","cardinal","c.b.","Jim Wrench"\n';
+	a += '"nine","gluk","cardinal","n.a.","Glook","c.b.","Michael Delaune"\n';
+	a += '"ten","lotta","cardinal","n.a.c.b.","Lotta Djerf"\n';
+	a += '"eleven","ked","cardinal","d.f.","Test Value"\n';
 	a += '"twelve","zwek","cardinal"\n';
 	a += '"hundred","tuhu","cardinal"\n';
 	a += '"thousand","yonda","cardinal"\n';
@@ -42,11 +42,11 @@ function cardinalDataTsvEop() {
 	a += 'four\tlex\tcardinal\n';
 	a += 'five\tstel\tcardinal\n';
 	a += 'six\tgrae\tcardinal\n';
-	a += 'seven\tmilz\tcardinal\n';
-	a += 'eight\troi\tcardinal\n';
-	a += 'nine\tgluk\tcardinal\n';
-	a += 'ten\tlotta\tcardinal\n';
-	a += 'eleven\tked\tcardinal\n';
+	a += 'seven\tmilz\tcardinal\tn.a.\tMills\n';
+	a += 'eight\troi\tcardinal\tc.b.\tJim Wrench\n';
+	a += 'nine\tgluk\tcardinal\tn.a.\tGlook\tc.b.\tMichael Delaune\n';
+	a += 'ten\tlotta\tcardinal\tn.a.c.b.\tLotta Djerf\n';
+	a += 'eleven\tked\tcardinal\td.f.\tTest Value\n';
 	a += 'twelve\tzwek\tcardinal\n';
 	a += 'hundred\ttuhu\tcardinal\n';
 	a += 'thousand\tyonda\tcardinal\n';
@@ -62,11 +62,11 @@ function cardinalDataCsvOpe() {
 	a += '"lex","cardinal","four"\n';
 	a += '"stel","cardinal","five"\n';
 	a += '"grae","cardinal","six"\n';
-	a += '"milz","cardinal","seven"\n';
-	a += '"roi","cardinal","eight"\n';
-	a += '"gluk","cardinal","nine"\n';
-	a += '"lotta","cardinal","ten"\n';
-	a += '"ked","cardinal","eleven"\n';
+	a += '"milz","cardinal","seven","n.a.","Mills"\n';
+	a += '"roi","cardinal","eight","c.b.","Jim Wrench"\n';
+	a += '"gluk","cardinal","nine","n.a.","Glook","c.b.","Michael Delaune"\n';
+	a += '"lotta","cardinal","ten","n.a.c.b.","Lotta Djerf"\n';
+	a += '"ked","cardinal","eleven","d.f.","Test Value"\n';
 	a += '"zwek","cardinal","twelve"\n';
 	a += '"tuhu","cardinal","hundred"\n';
 	a += '"yonda","cardinal","thousand"\n';
@@ -82,11 +82,11 @@ function cardinalDataTsvOpe() {
 	a += 'lex\tcardinal\tfour\n';
 	a += 'stel\tcardinal\tfive\n';
 	a += 'grae\tcardinal\tsix\n';
-	a += 'milz\tcardinal\tseven\n';
-	a += 'roi\tcardinal\teight\n';
-	a += 'gluk\tcardinal\tnine\n';
-	a += 'lotta\tcardinal\tten\n';
-	a += 'ked\tcardinal\televen\n';
+	a += 'milz\tcardinal\tseven\tn.a.\tMills\n';
+	a += 'roi\tcardinal\teight\tc.b.\tJim Wrench\n';
+	a += 'gluk\tcardinal\tnine\tn.a.\tGlook\tc.b.\tMichael Delaune\n';
+	a += 'lotta\tcardinal\tten\tn.a.c.b.\tLotta Djerf\n';
+	a += 'ked\tcardinal\televen\td.f.\tTest Value\n';
 	a += 'zwek\tcardinal\ttwelve\n';
 	a += 'tuhu\tcardinal\thundred\n';
 	a += 'yonda\tcardinal\tthousand\n';
@@ -136,31 +136,38 @@ function cardinalWords() {
 			orcish: 'milz',
 			english: 'seven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Mills'
 		},
 		{
 			orcish: 'roi',
 			english: 'eight',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			coinedBy: 'Jim Wrench'
 		},
 		{
 			orcish: 'gluk',
 			english: 'nine',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Glook',
+			coinedBy: 'Michael Delaune'
 		},
 		{
 			orcish: 'lotta',
 			english: 'ten',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Lotta Djerf',
+			coinedBy: 'Lotta Djerf'
 		},
 		{
 			orcish: 'ked',
 			english: 'eleven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			extraInfo: 'Defined for: Test Value'
 		},
 		{
 			orcish: 'zwek',
@@ -231,31 +238,38 @@ function cardinalWordsDuplicate() {
 			orcish: 'milz',
 			english: 'seven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Mills'
 		},
 		{
 			orcish: 'roi',
 			english: 'eight',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			coinedBy: 'Jim Wrench'
 		},
 		{
 			orcish: 'gluk',
 			english: 'nine',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Glook',
+			coinedBy: 'Michael Delaune'
 		},
 		{
 			orcish: 'lotta',
 			english: 'ten',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Lotta Djerf',
+			coinedBy: 'Lotta Djerf'
 		},
 		{
 			orcish: 'ked',
 			english: 'eleven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			extraInfo: 'Defined for: Test Value'
 		},
 		{
 			orcish: 'zwek',
@@ -320,31 +334,38 @@ function cardinalWordsUnique() {
 			orcish: 'milz',
 			english: 'seven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Mills'
 		},
 		{
 			orcish: 'roi',
 			english: 'eight',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			coinedBy: 'Jim Wrench'
 		},
 		{
 			orcish: 'gluk',
 			english: 'nine',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Glook',
+			coinedBy: 'Michael Delaune'
 		},
 		{
 			orcish: 'lotta',
 			english: 'ten',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			namedAfter: 'Lotta Djerf',
+			coinedBy: 'Lotta Djerf'
 		},
 		{
 			orcish: 'ked',
 			english: 'eleven',
 			PoS: 'cardinal',
-			num: 1
+			num: 1,
+			extraInfo: 'Defined for: Test Value'
 		},
 		{
 			orcish: 'zwek',

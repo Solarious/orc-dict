@@ -46,22 +46,26 @@ function bulkAdd(data, encoding, method, order) {
 	})
 	.then(function(records) {
 		print('Bulk Add: parse done');
-		return records.map(function(record) {
+		var words = records.map(function(record) {
+			var word;
 			if (order === 'e-o-p') {
-				return {
+				word = {
 					english: record[0],
 					orcish: record[1],
 					PoS: record[2]
 				};
 			}
 			if (order === 'o-p-e') {
-				return {
+				word = {
 					english: record[2],
 					orcish: record[0],
 					PoS: record[1]
 				};
 			}
+			handleExtras(word, record.slice(3));
+			return word;
 		});
+		return words;
 	})
 	.then(function(records) {
 		print('Bulk Add: mapping done');
@@ -162,4 +166,33 @@ function bulkAdd(data, encoding, method, order) {
 		}
 		return result;
 	});
+}
+
+function handleExtras(word, extra) {
+	while (true) {
+		let operation = extra.shift();
+		let value = extra.shift();
+		if (operation && value) {
+			if (operation === 'd.f.') {
+				if (word.extraInfo) {
+					word.extraInfo += '\n';
+				} else {
+					word.extraInfo = '';
+				}
+				word.extraInfo += 'Defined for: ' + value;
+			}
+			if (operation === 'c.b.') {
+				word.coinedBy = value;
+			}
+			if (operation === 'n.a.') {
+				word.namedAfter = value;
+			}
+			if (operation === 'n.a.c.b.') {
+				word.coinedBy = value;
+				word.namedAfter = value;
+			}
+		} else {
+			return word;
+		}
+	}
 }
