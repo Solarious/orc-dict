@@ -396,6 +396,30 @@ app.post('/api/stats', function(req, res) {
 	}
 });
 
+app.delete('/api/words-by-pos/:pos', function(req, res) {
+	var PoS = req.params.pos;
+	var query;
+	if (PoS === 'all') {
+		query = Word.remove({});
+	} else {
+		let enums = Word.schema.path('PoS').enumValues;
+		if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
+			query = Word.remove({
+				PoS: PoS
+			});
+		} else {
+			return res.status(400).send('Invalid PoS ' + PoS);
+		}
+	}
+	query.exec()
+	.then(function(result) {
+		return res.json(result);
+	})
+	.catch(function(error) {
+		res.status(500).send(error.message);
+	});
+});
+
 app.get('(?!/api/)*', function(req, res) {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });

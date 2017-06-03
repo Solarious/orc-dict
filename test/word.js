@@ -59,6 +59,26 @@ describe('Words', function() {
 					english: 'three',
 					PoS: 'cardinal'
 				},
+				{
+					orcish: 'enyet',
+					english: 'still',
+					PoS: 'adverb'
+				},
+				{
+					orcish: 'gadz',
+					english: 'not',
+					PoS: 'adverb'
+				},
+				{
+					orcish: 'ek',
+					english: 'and',
+					PoS: 'conjunction'
+				},
+				{
+					orcish: 'quiz',
+					english: 'while',
+					PoS: 'conjunction'
+				},
 			]);
 		});
 	});
@@ -70,8 +90,9 @@ describe('Words', function() {
 			.then(function(res) {
 				res.should.have.status(200);
 				res.body.should.be.an('object');
+				res.body.should.have.property('words');
 				res.body.words.should.be.an('array');
-				res.body.words.length.should.eql(4);
+				res.body.words.length.should.eql(8);
 			});
 		});
 
@@ -239,6 +260,42 @@ describe('Words', function() {
 			})
 			.then(function(res) {
 				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
+			});
+		});
+
+		it('it should not DELETE words by PoS with an invalid PoS', function() {
+			return agent
+			.delete('/api/words-by-pos/nul')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.then(function(res) {
+				res.should.have.status(400);
+			}, function(error) {
+				error.response.should.have.status(400);
+				error.response.text.should.be.a('string');
+				error.response.text.should.eql('Invalid PoS nul');
+			});
+		});
+
+		it('it should DELETE words by PoS', function() {
+			return agent
+			.delete('/api/words-by-pos/cardinal')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.then(function(res) {
+				res.should.have.status(200);
+				res.body.should.be.an('object');
+				res.body.should.have.property('n', 4);
+				return agent
+				.get('/api/words');
+			})
+			.then(function(res) {
+				res.should.have.status(200);
+				res.body.should.be.an('object');
+				res.body.should.have.property('words');
+				res.body.words.should.be.an('array');
+				res.body.words.length.should.eql(4);
+				res.body.words.forEach(function(word) {
+					word.should.not.have.property('PoS', 'cardinal');
+				});
 			});
 		});
 	});
