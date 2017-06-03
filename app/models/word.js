@@ -217,7 +217,7 @@ var CasesSchema = new Schema({
 	},
 }, { _id: false });
 
-var RelativeSchema = new Schema({
+var GenderCasesSchema = new Schema({
 	masculine: {
 		type: CasesSchema,
 		required: true
@@ -340,8 +340,8 @@ var WordSchema = new Schema({
 	adjective: AdjectiveSchema,
 	pronoun: CasesSchema,
 	possessive: CasesSchema,
-	demonstrative: CasesSchema,
-	relative: RelativeSchema,
+	demonstrative: GenderCasesSchema,
+	relative: GenderCasesSchema,
 	affix: AffixSchema,
 });
 
