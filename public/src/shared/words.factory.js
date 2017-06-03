@@ -16,8 +16,8 @@ function wordsService($http, $q) {
 		remove: remove,
 		autofill: autofill,
 		bulkAdd: bulkAdd,
-		search: search,
-		stats: stats
+		stats: stats,
+		removeByPoS: removeByPoS
 	};
 
 	return service;
@@ -46,7 +46,7 @@ function wordsService($http, $q) {
 	}
 
 	function list(options) {
-		return $http.get('api/words', {
+		return $http.get('/api/words', {
 			params: options
 		})
 		.then(function(response) {
@@ -115,12 +115,8 @@ function wordsService($http, $q) {
 		});
 	}
 
-	function search(str) {
-		return $http.get('api/search', {
-			params: {
-				q: str
-			}
-		})
+	function stats() {
+		return $http.post('/api/stats')
 		.then(function(response) {
 			return response.data;
 		})
@@ -129,8 +125,8 @@ function wordsService($http, $q) {
 		});
 	}
 
-	function stats() {
-		return $http.post('api/stats')
+	function removeByPoS(PoS) {
+		return $http.delete('/api/words-by-pos/' + PoS)
 		.then(function(response) {
 			return response.data;
 		})

@@ -5,9 +5,9 @@ angular.
 	module('orcDictApp').
 	controller('SearchController', SearchController);
 
-SearchController.$inject = ['WordsService', '$location', 'AlertService'];
+SearchController.$inject = ['SearchService', '$location', 'AlertService'];
 
-function SearchController(WordsService, $location, AlertService) {
+function SearchController(SearchService, $location, AlertService) {
 	var vm = this;
 
 	activate();
@@ -15,7 +15,7 @@ function SearchController(WordsService, $location, AlertService) {
 	vm.setActive = setActive;
 
 	function activate() {
-		WordsService.search($location.search().q)
+		SearchService.search($location.search().q)
 		.then(function(data) {
 			vm.results = data.results;
 			setActive(0);
