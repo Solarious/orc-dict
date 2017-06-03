@@ -14,10 +14,19 @@ function modal() {
 			actionText: '@',
 			closeText: '@',
 			modalId: '@',
-			classes: '@'
+			classes: '@',
+			btnType: '@'
 		},
+		compile: compileModal,
 		templateUrl: 'src/shared/modal.directive.html'
+
 	};
+
+	function compileModal(element, attr) {
+		if (!attr.btnType) {
+			attr.btnType = 'danger';
+		}
+	}
 
 	return directive;
 }

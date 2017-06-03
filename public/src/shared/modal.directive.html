@@ -12,7 +12,7 @@
 				data-dismiss="modal">
 					{{closeText}}
 				</button>
-				<button type="button" class="btn btn-danger"
+				<button type="button" ng-class="'btn btn-' + btnType"
 				ng-if="actionText" ng-click="actionFunction()">
 					{{actionText}}
 				</button>
