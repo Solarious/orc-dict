@@ -10,35 +10,35 @@ config.$inject = ['$locationProvider', '$routeProvider'];
 function config($locationProvider, $routeProvider) {
 	$routeProvider
 	.when('/', {
-		templateUrl: 'src/main/home.html',
+		templateUrl: 'src/layout/home.html',
 		restricted: false
 	})
 	.when('/words', {
-		templateUrl: 'src/main/wordsIndex.html',
+		templateUrl: 'src/viewing/wordsIndex.html',
 		controller: 'WordsIndexController',
 		controllerAs: 'vm',
 		restricted: false
 	})
 	.when('/words/:orcish/:num', {
-		templateUrl: 'src/main/word.html',
+		templateUrl: 'src/viewing/word.html',
 		controller: 'WordController',
 		controllerAs: 'vm',
 		restricted: false
 	})
 	.when('/login', {
-		templateUrl: 'src/admin/login.html',
+		templateUrl: 'src/account/login.html',
 		controller: 'LoginController',
 		controllerAs: 'vm',
 		restricted: false
 	})
 	.when('/forgot', {
-		templateUrl: 'src/admin/forgot.html',
+		templateUrl: 'src/accout/forgot.html',
 		controller: 'ForgotController',
 		controllerAs: 'vm',
 		restricted: false
 	})
 	.when('/reset/:token', {
-		templateUrl: 'src/admin/reset.html',
+		templateUrl: 'src/account/reset.html',
 		controller: 'ResetController',
 		controllerAs: 'vm',
 		restricted: false
@@ -50,37 +50,37 @@ function config($locationProvider, $routeProvider) {
 		restricted: true
 	})
 	.when('/admin/newword', {
-		templateUrl: 'src/admin/newWord.html',
+		templateUrl: 'src/admin/new/newWord.html',
 		controller: 'NewWordController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/admin/bulkadd', {
-		templateUrl: 'src/admin/bulkAdd.html',
+		templateUrl: 'src/admin/bulkAdd/bulkAdd.html',
 		controller: 'BulkAddController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/admin/words/:orcish/:num', {
-		templateUrl: 'src/admin/editWord.html',
+		templateUrl: 'src/admin/edit/editWord.html',
 		controller: 'EditWordController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/admin/statistics', {
-		templateUrl: 'src/admin/stats.html',
+		templateUrl: 'src/admin/stats/stats.html',
 		controller: 'StatsController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/admin/extra', {
-		templateUrl: 'src/admin/extra.html',
+		templateUrl: 'src/admin/extra/extra.html',
 		controller: 'ExtraController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/search', {
-		templateUrl: 'src/main/search.html',
+		templateUrl: 'src/viewing/search.html',
 		controller: 'SearchController',
 		controllerAs: 'vm',
 		restricted: false
