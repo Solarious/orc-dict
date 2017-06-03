@@ -10,6 +10,7 @@ var passport = require('passport');
 var session = require('express-session');
 var csurf = require('csurf');
 var MongoStore = require('connect-mongo')(session);
+var sanitize = require('./app/sanitize');
 
 var dburl;
 var port;
@@ -44,6 +45,8 @@ app.use(express.static(__dirname + '/public'));
 if (process.env.NODE_ENV !== 'test') {
 	app.use(morgan('dev'));
 }
+
+app.use(sanitize);
 
 app.disable('etag');
 app.use(session({
