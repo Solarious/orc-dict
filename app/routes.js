@@ -372,6 +372,15 @@ app.get('/api/search', function(req, res) {
 	});
 });
 
+app.post('/api/search/rebuild', function(req, res) {
+	search.rebuild()
+	.catch(function(error) {
+		console.log('error with search.rebuild');
+		console.log(error);
+	});
+	res.send('Search Indexes are now being rebuilt');
+});
+
 app.get('/api/list-search-indexes', function(req, res) {
 	search.getAll(function(error, data) {
 		if (error) {
