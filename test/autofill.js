@@ -7,7 +7,7 @@ var chaiHttp = require('chai-http');
 var should = chai.should();
 var server = require('../server');
 var autofill = require('../app/autofill');
-var exampleWords = require('./exampleWords')();
+var exampleWords = require('./exampleWords');
 
 chai.use(chaiHttp);
 
@@ -74,7 +74,7 @@ describe('Autofill', function() {
 	});
 
 	describe('nouns', function() {
-		exampleWords.forEach(function(word) {
+		exampleWords.getNouns().forEach(function(word) {
 			if (word.PoS === 'noun') {
 				var str = word.orcish + ', ' + word.PoS + ', ' + word.english;
 				it('it should handle "' + str + '" correctly', function() {

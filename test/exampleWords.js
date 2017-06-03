@@ -1,8 +1,10 @@
 'use strict';
 
-module.exports = getWords;
+module.exports = {
+	getNouns: getNouns
+};
 
-function getWords() {
+function getNouns() {
 	return [
 		{
 			orcish: 'ork',
