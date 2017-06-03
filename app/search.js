@@ -178,12 +178,12 @@ function rebuildPart(words) {
 	var searchIndexes = [];
 	for (var i = 0; i < words.length; i++) {
 		var word = words[i];
-		searchIndexes = searchIndexes.concat(getForWord(word));
+		searchIndexes = searchIndexes.concat(createIndexesForWord(word));
 	}
 	return SearchIndex.insertMany(searchIndexes);
 }
 
-function getForWord(word) {
+function createIndexesForWord(word) {
 	var searchIndexes = [];
 	searchIndexes.push({
 		keyword: word.orcish,
@@ -237,7 +237,7 @@ function getAll(callback) {
 }
 
 function forCreate(word) {
-	var searchIndexes = getForWord(word);
+	var searchIndexes = createIndexesForWord(word);
 	return SearchIndex.insertMany(searchIndexes);
 }
 
