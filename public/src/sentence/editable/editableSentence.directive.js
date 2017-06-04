@@ -14,7 +14,7 @@ function editableSentence() {
 			submitText: '@',
 			submitDisabled: '=',
 		},
-		templateUrl: 'src/sentence/editableSentence.directive.html',
+		templateUrl: 'src/sentence/editable/editableSentence.directive.html',
 		controller: EditableSentenceController,
 		controllerAs: 'vm',
 		bindToController: true

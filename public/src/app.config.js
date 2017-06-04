@@ -92,13 +92,13 @@ function config($locationProvider, $routeProvider) {
 		restricted: false
 	})
 	.when('/sentences/new', {
-		templateUrl: 'src/sentence/newSentence.html',
+		templateUrl: 'src/sentence/new/newSentence.html',
 		controller: 'NewSentenceController',
 		controllerAs: 'vm',
 		restricted: true
 	})
 	.when('/sentences/edit/:id', {
-		templateUrl: 'src/sentence/editSentence.html',
+		templateUrl: 'src/sentence/edit/editSentence.html',
 		controller: 'EditSentenceController',
 		controllerAs: 'vm',
 		restricted: true
