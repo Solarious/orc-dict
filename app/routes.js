@@ -35,7 +35,6 @@ function updateWordFromReq(word, req) {
 	addIfExists(word, req, 'coinedBy');
 	addIfExists(word, req, 'namedAfter');
 	addIfExists(word, req, 'relatedWords');
-	addIfExists(word, req, 'exampleSentences');
 	addIfExists(word, req, 'keywords');
 	addIfExists(word, req, 'adjective');
 	addIfExists(word, req, 'noun');

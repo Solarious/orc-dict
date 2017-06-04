@@ -81,21 +81,6 @@
 		</tr>
 		<tr>
 			<th>
-				<ng-pluralize count="vm.getNumExamples()"
-				when="{'0': 'There are no examples',
-				'one': 'There is 1 example',
-				'other': 'There are {} examples'}">
-				</ng-pluralize>
-			</th>
-			<td>
-				<button type="button" class="btn btn-default form-control"
-				ng-click="vm.toggleExamples()">
-					{{vm.showExamplesText}}
-				</button>
-			</td>
-		</tr>
-		<tr>
-			<th>
 				<ng-pluralize count="vm.getNumKeywords()"
 				when="{'0': 'There are no extra keywords',
 				'one': 'There is 1 extra keyword',
@@ -128,43 +113,6 @@
 				ng-click="vm.showHelpModal()">
 					<span class="glyphicon glyphicon-question-sign">
 					</span> Help
-				</button>
-			</td>
-		</tr>
-	</table>
-</div>
-
-<div class="col-md-8" ng-show="vm.showExamples">
-	<table class="table table-condensed table-bordered">
-		<tr>
-			<th colspan="2">Example Sentences</th>
-			<td class="minimize-width">
-				<button type="button" class="btn btn-default"
-				ng-click="vm.addExample()">
-					New Example
-				</button>
-			</td>
-		</tr>
-		<tr>
-			<th>Orcish</th>
-			<th>English</th>
-			<td></td>
-		</tr>
-		<tr ng-repeat="example in vm.word.exampleSentences">
-			<td>
-				<textarea class="form-control" spellcheck="false"
-				ng-model="example.orcish">
-				</textarea>
-			</td>
-			<td>
-				<textarea class="form-control" ng-model="example.english">
-				</textarea>
-			</td>
-			<td>
-				<button type="button" class="btn btn-danger"
-				ng-click="vm.removeExample($index)">
-					<span class="glyphicon glyphicon-remove">
-					</span> Remove
 				</button>
 			</td>
 		</tr>

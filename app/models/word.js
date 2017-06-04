@@ -232,17 +232,6 @@ var GenderCasesSchema = new Schema({
 	},
 }, { _id: false });
 
-var ExampleSentenceSchema = new Schema({
-	orcish: {
-		type: String,
-		required: true
-	},
-	english: {
-		type: String,
-		required: true
-	}
-}, { _id: false });
-
 var RelatedWordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -333,7 +322,6 @@ var WordSchema = new Schema({
 	coinedBy: String,
 	namedAfter: String,
 	relatedWords: [RelatedWordSchema],
-	exampleSentences: [ExampleSentenceSchema],
 	keywords: [KeywordSchema],
 	verb: VerbSchema,
 	noun: NounSchema,

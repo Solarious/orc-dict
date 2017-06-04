@@ -36,20 +36,6 @@
 			</a></td>
 		</tr>
 	</table>
-	<table class="table table-condensed"
-	ng-if="word.exampleSentences.length > 0">
-		<tr>
-			<th colspan="2">Example Sentences</th>
-		</tr>
-		<tr>
-			<th>Orcish</th>
-			<th>English<th>
-		</tr>
-		<tr ng-repeat="example in word.exampleSentences">
-			<td>{{example.orcish}}</td>
-			<td>{{example.english}}</td>
-		</tr>
-	</table>
 </div>
 
 <orc-dict-verb ng-if="word.PoS==='verb'" verb="word.verb">
