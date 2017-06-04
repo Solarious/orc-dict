@@ -1,0 +1,48 @@
+<div class="col-md-4">
+	<table class="table table-condensed">
+		<tr>
+			<th>Category</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="vm.sentence.category"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Submitted By (optional)</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="vm.sentence.submittedBy"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="button" class="btn btn-primary"
+				ng-click="vm.submitFunction()">
+					<span class="glyphicon glyphicon-edit"></span>
+					{{vm.submitText}}
+				</button>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<div class="col-md-8">
+	<table class="table table-condensed">
+		<tr>
+			<th>English</th>
+			<th>Orcish</th>
+		</tr>
+		<tr>
+			<td>
+				<textarea class="form-control" ng-model="vm.sentence.english">
+				</textarea>
+			</td>
+			<td>
+				<textarea class="form-control" spellcheck="false"
+				ng-model="vm.sentence.orcish">
+				</textarea>
+			</td>
+		</tr>
+	</table>
+</div>

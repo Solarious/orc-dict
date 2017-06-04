@@ -85,6 +85,24 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
+	.when('/sentences', {
+		templateUrl: 'src/sentence/sentence.html',
+		controller: 'SentenceController',
+		controllerAs: 'vm',
+		restricted: false
+	})
+	.when('/sentences/new', {
+		templateUrl: 'src/sentence/newSentence.html',
+		controller: 'NewSentenceController',
+		controllerAs: 'vm',
+		restricted: true
+	})
+	.when('/sentences/edit/:id', {
+		templateUrl: 'src/sentence/editSentence.html',
+		controller: 'EditSentenceController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

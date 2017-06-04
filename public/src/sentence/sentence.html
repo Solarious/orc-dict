@@ -1,0 +1,118 @@
+<h1>Sentences</h1>
+
+<orc-dict-modal action-function="vm.removeModalAction()" action-text="Delete"
+close-text="Cancel" modal-id="removeModal" classes="modal-lg">
+	<h4>Are you sure you want to remove this sentence?</h4>
+	<table class="table table-bordered">
+		<tr>
+			<th>Category</th>
+			<th>English</th>
+			<th>Orcish</th>
+			<th>Submitted By</th>
+		</tr>
+		<tr>
+			<td>{{vm.sentenceToRemove.category}}</td>
+			<td>{{vm.sentenceToRemove.english}}</td>
+			<td>{{vm.sentenceToRemove.orcish}}</td>
+			<td>{{vm.sentenceToRemove.submittedBy}}</td>
+		</tr>
+	</table>
+</orc-dict-modal>
+
+<div class="btn-toolbar form-group" ng-if="vm.isLoggedIn()">
+	<a class="btn btn-primary" href="/sentences/new">
+		<span class="glyphicon glyphicon-pencil"></span> New Sentence
+	</a>
+</div>
+
+<form class="form-horizontal col-md-6">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Sentences per Page</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.numPerPage"
+			ng-change="vm.resetPageAndLoadSentences()">
+				<option value="1">1</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="25">25</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-4">Category</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.category"
+			ng-change="vm.resetPageAndLoadSentences()">
+				<option value="">--All--</option>
+				<option ng-repeat="category in vm.categories"
+				value="{{category}}">
+					{{category}}
+				</option>
+				</div>
+			</select>
+		</div>
+	</div>
+</form>
+
+<div class="clearfix"></div>
+
+<div class="loader" ng-if="!vm.sentences"></div>
+
+<div ng-if="vm.sentences">
+	<nav>
+		<ul class="pagination">
+			<li ng-class="{disabled: vm.goBackDisabled}">
+				<a href="#" ng-click="vm.goBack()">&laquo;</a>
+			</li>
+			<li ng-repeat="num in vm.nums" ng-class="{active: num.selected}">
+				<a href="#" ng-click="vm.changePage(num.num)">{{num.num}}</a>
+			</li>
+			<li ng-class="{disabled: vm.goForwardDisabled}">
+				<a href="#" ng-click="vm.goForward()">&raquo;</a>
+			</li>
+		</ul>
+	</nav>
+
+	<table class="table table-bordered" ng-if="!vm.isLoggedIn()">
+		<tr>
+			<th>Category</th>
+			<th>English</th>
+			<th>Orcish</th>
+			<th>Submitted By</th>
+		</tr>
+		<tr ng-repeat="sentence in vm.sentences">
+			<td>{{sentence.category}}</td>
+			<td>{{sentence.english}}</td>
+			<td>{{sentence.orcish}}</td>
+			<td>{{sentence.submittedBy}}</td>
+		</tr>
+	</table>
+
+	<table class="table table-bordered" ng-if="vm.isLoggedIn()">
+		<tr>
+			<th>Category</th>
+			<th>English</th>
+			<th>Orcish</th>
+			<th>Submitted By</th>
+			<th colspan="2">Actions</th>
+		</tr>
+		<tr ng-repeat="sentence in vm.sentences">
+			<td>{{sentence.category}}</td>
+			<td>{{sentence.english}}</td>
+			<td>{{sentence.orcish}}</td>
+			<td>{{sentence.submittedBy}}</td>
+			<td class="minimize-width">
+				<a class="btn btn-primary"
+				ng-href="/sentences/edit/{{sentence._id}}">
+					<span class="glyphicon glyphicon-edit"></span> Edit
+				</a>
+			</td>
+			<td class="minimize-width">
+				<button type="button" class="btn btn-danger"
+				ng-click="vm.showRemoveModal(sentence)">
+					<span class="glyphicon glyphicon-remove"></span> Delete
+				</button>
+			</td>
+		</tr>
+	</table>
+</div>
