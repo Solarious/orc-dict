@@ -38,7 +38,8 @@ function get() {
 					count: 0,
 					ad: 0,
 					am: 0,
-					ag: 0
+					ag: 0,
+					aed: 0
 				},
 				secondMasculine: {
 					count: 0,
@@ -116,7 +117,7 @@ function reduceWord(stats, word) {
 		}
 		stats[word.PoS][declStr].count += 1;
 		if (declStr === 'first') {
-			addNounEnding(stats, word, declStr, ['ad', 'am', 'ag']);
+			addNounEnding(stats, word, declStr, ['ad', 'am', 'ag', 'aed']);
 		}
 		if (declStr === 'secondMasculine') {
 			addNounEnding(stats, word, declStr, ['ul', 'or', 'k', 'x']);
