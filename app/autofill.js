@@ -15,20 +15,14 @@ module.exports = function(orcish, PoS, callback) {
 		callback(new Error('Can not use autofill with PoS: cardinal'));
 	} else if (PoS === 'conjunction') {
 		callback(new Error('Can not use autofill with PoS: conjunction'));
-	} else if (PoS === 'demonstrative') {
-		callback(new Error('Can not use autofill with PoS: demonstrative'));
 	} else if (PoS === 'exclamation') {
 		callback(new Error('Can not use autofill with PoS: exclamation'));
 	} else if (PoS === 'interjection') {
 		callback(new Error('Can not use autofill with PoS: interjection'));
-	} else if (PoS === 'possessive') {
-		callback(new Error('Can not use autofill with PoS: possessive'));
 	} else if (PoS === 'preposition') {
 		callback(new Error('Can not use autofill with PoS: preposition'));
 	} else if (PoS === 'pronoun') {
 		callback(new Error('Can not use autofill with PoS: pronoun'));
-	} else if (PoS === 'relative') {
-		callback(new Error('Can not use autofill with PoS: relative'));
 	} else if (PoS === 'prefix') {
 		callback(new Error('Can not use autofill with PoS: prefix'));
 	} else if (PoS === 'suffix') {

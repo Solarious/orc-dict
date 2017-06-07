@@ -111,16 +111,8 @@ function bulkAdd(data, encoding, method, order) {
 				});
 			}
 
-			var hasOtherPart = [
-				'pronoun',
-				'possessive',
-				'demonstrative',
-				'relative'
-			];
-			if (hasOtherPart.indexOf(word.PoS) !== -1) {
-				throw new Error(
-					'Cannot use bulkadd with words with PoS ' + word.PoS
-				);
+			if (word.PoS === 'pronoun') {
+				throw new Error('Cannot use bulkadd with pronouns');
 			}
 
 			return word;

@@ -29,15 +29,12 @@
 					<option value="adverb">Adverb</option>
 					<option value="cardinal">Cardinal</option>
 					<option value="conjunction">Conjunction</option>
-					<option value="demonstrative">Demonstrative</option>
 					<option value="exclamation">Exclamation</option>
 					<option value="interjection">Interjection</option>
 					<option value="noun">Noun</option>
-					<option value="possessive">Possessive</option>
 					<option value="prefix">Prefix</option>
 					<option value="preposition">Preposition</option>
 					<option value="pronoun">Pronoun</option>
-					<option value="relative">Relative</option>
 					<option value="suffix">Suffix</option>
 					<option value="verb">Verb</option>
 				</select>
@@ -209,18 +206,6 @@ ng-if="vm.word.PoS==='adjective'">
 <orc-dict-editable-pronoun pronoun="vm.word.pronoun"
 ng-if="vm.word.PoS==='pronoun'">
 </orc-dict-editable-pronoun>
-
-<orc-dict-editable-possessive possessive="vm.word.possessive"
-ng-if="vm.word.PoS==='possessive'">
-</orc-dict-editable-possessive>
-
-<orc-dict-editable-demonstrative demonstrative="vm.word.demonstrative"
-ng-if="vm.word.PoS==='demonstrative'">
-</orc-dict-editable-demonstrative>
-
-<orc-dict-editable-relative relative="vm.word.relative"
-ng-if="vm.word.PoS==='relative'">
-</orc-dict-editable-relative>
 
 <orc-dict-editable-affix affix="vm.word.affix"
 ng-if="vm.word.PoS==='prefix' || vm.word.PoS==='suffix'">

@@ -215,12 +215,6 @@ function createIndexesForWord(word) {
 		addAdjective(word, searchIndexes);
 	} else if (word.PoS === 'pronoun') {
 		addPronoun(word, searchIndexes);
-	} else if (word.PoS === 'possessive') {
-		addPossessive(word, searchIndexes);
-	} else if (word.PoS === 'demonstrative') {
-		addDemonstrative(word, searchIndexes);
-	} else if (word.PoS === 'relative') {
-		addRelative(word, searchIndexes);
 	} else if (word.PoS === 'prefix') {
 		addPrefix(word, searchIndexes);
 	} else if (word.PoS === 'suffix') {
@@ -570,60 +564,18 @@ function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
 }
 
 function addPronoun(word, searchIndexes) {
-	addCase(word, searchIndexes, 'pronoun', 'nominative');
-	addCase(word, searchIndexes, 'pronoun', 'genitive');
-	addCase(word, searchIndexes, 'pronoun', 'dative');
-	addCase(word, searchIndexes, 'pronoun', 'accusative');
-	addCase(word, searchIndexes, 'pronoun', 'vocative');
+	addCase(word, searchIndexes, 'nominative');
+	addCase(word, searchIndexes, 'genitive');
+	addCase(word, searchIndexes, 'dative');
+	addCase(word, searchIndexes, 'accusative');
+	addCase(word, searchIndexes, 'vocative');
 }
 
-function addPossessive(word, searchIndexes) {
-	addCase(word, searchIndexes, 'possessive', 'nominative');
-	addCase(word, searchIndexes, 'possessive', 'genitive');
-	addCase(word, searchIndexes, 'possessive', 'dative');
-	addCase(word, searchIndexes, 'possessive', 'accusative');
-	addCase(word, searchIndexes, 'possessive', 'vocative');
-}
-
-function addCase(word, searchIndexes, PoS, caseName) {
+function addCase(word, searchIndexes, caseName) {
 	searchIndexes.push({
-		keyword: word[PoS][caseName],
+		keyword: word.pronoun[caseName],
 		priority: 2,
 		message: caseName,
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-}
-
-function addDemonstrative(word, searchIndexes) {
-	addGender(word, searchIndexes, 'demonstrative', 'masculine');
-	addGender(word, searchIndexes, 'demonstrative', 'feminine');
-	addGender(word, searchIndexes, 'demonstrative', 'neutral');
-}
-
-function addRelative(word, searchIndexes) {
-	addGender(word, searchIndexes, 'relative', 'masculine');
-	addGender(word, searchIndexes, 'relative', 'feminine');
-	addGender(word, searchIndexes, 'relative', 'neutral');
-}
-
-function addGender(word, searchIndexes, PoS, gender) {
-	addGenderedCase(word, searchIndexes, PoS, gender, 'nominative');
-	addGenderedCase(word, searchIndexes, PoS, gender, 'genitive');
-	addGenderedCase(word, searchIndexes, PoS, gender, 'dative');
-	addGenderedCase(word, searchIndexes, PoS, gender, 'accusative');
-	addGenderedCase(word, searchIndexes, PoS, gender, 'vocative');
-}
-
-function addGenderedCase(word, searchIndexes, PoS, gender, caseName) {
-	searchIndexes.push({
-		keyword: word[PoS][gender][caseName],
-		priority: 2,
-		message: gender + ' ' + caseName,
 		word: {
 			orcish: word.orcish,
 			english: word.english,

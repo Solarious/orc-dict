@@ -194,7 +194,25 @@ var AdjectiveSchema = new Schema({
 	}
 }, { _id: false});
 
-var CasesSchema = new Schema({
+var PronounSchema = new Schema({
+	type: {
+		type: String,
+		required: true,
+		enum: [
+			'pronoun',
+			'possessive',
+			'demonstrative',
+			'relative'
+		]
+	},
+	number: {
+		type: String,
+		required: true,
+		enum: [
+			'singular',
+			'plural'
+		]
+	},
 	nominative: {
 		type: String,
 		required: true
@@ -214,22 +232,8 @@ var CasesSchema = new Schema({
 	vocative: {
 		type: String,
 		required: true
-	},
-}, { _id: false });
-
-var GenderCasesSchema = new Schema({
-	masculine: {
-		type: CasesSchema,
-		required: true
-	},
-	feminine: {
-		type: CasesSchema,
-		required: true
-	},
-	neutral: {
-		type: CasesSchema,
-		required: true
-	},
+	}
+	
 }, { _id: false });
 
 var RelatedWordSchema = new Schema({
@@ -266,14 +270,11 @@ var LimitSchema = new Schema({
 			'adverb',
 			'cardinal',
 			'conjunction',
-			'demonstrative',
 			'exclamation',
 			'interjection',
 			'noun',
-			'possessive',
 			'preposition',
 			'pronoun',
-			'relative',
 			'verb',
 		],
 		required: true
@@ -302,15 +303,12 @@ var WordSchema = new Schema({
 			'adverb',
 			'cardinal',
 			'conjunction',
-			'demonstrative',
 			'exclamation',
 			'interjection',
 			'noun',
-			'possessive',
 			'prefix',
 			'preposition',
 			'pronoun',
-			'relative',
 			'suffix',
 			'verb',
 		]
@@ -326,10 +324,7 @@ var WordSchema = new Schema({
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema,
-	pronoun: CasesSchema,
-	possessive: CasesSchema,
-	demonstrative: GenderCasesSchema,
-	relative: GenderCasesSchema,
+	pronoun: PronounSchema,
 	affix: AffixSchema,
 });
 
@@ -352,15 +347,6 @@ WordSchema.pre('validate', function(next) {
 	}
 	if (this.pronoun !== undefined && this.PoS !== 'pronoun') {
 		this.pronoun = undefined;
-	}
-	if (this.possessive !== undefined && this.PoS !== 'possessive') {
-		this.possessive = undefined;
-	}
-	if (this.demonstrative !== undefined && this.PoS !== 'demonstrative') {
-		this.demonstrative = undefined;
-	}
-	if (this.relative !== undefined && this.PoS !== 'relative') {
-		this.relative = undefined;
 	}
 	if (this.affix !== undefined &&
 	(this.PoS !== 'prefix' && this.PoS !== 'suffix')) {
@@ -435,24 +421,6 @@ WordSchema.pre('save', function(next) {
 		if (!this.pronoun) {
 			return next(new Error(
 				'Word has PoS=="pronoun" but pronoun is undefined'
-			));
-		}
-	} else if (this.PoS === 'possessive') {
-		if (!this.possessive) {
-			return next(new Error(
-				'Word has PoS=="possessive" but possessive is undefined'
-			));
-		}
-	} else if (this.PoS === 'demonstrative') {
-		if (!this.demonstrative) {
-			return next(new Error(
-				'Word has PoS=="demonstrative" but demonstrative is undefined'
-			));
-		}
-	} else if (this.PoS === 'relative') {
-		if (!this.relative) {
-			return next(new Error(
-				'Word has PoS=="relative" but relative is undefined'
 			));
 		}
 	} else if (this.PoS === 'prefix' || this.PoS == 'suffix') {

@@ -23,9 +23,6 @@ function get() {
 			conjunction: {
 				count: 0
 			},
-			demonstrative: {
-				count: 0
-			},
 			exclamation: {
 				count: 0
 			},
@@ -77,9 +74,6 @@ function get() {
 					count: 0
 				}
 			},
-			possessive: {
-				count: 0
-			},
 			prefix: {
 				count: 0
 			},
@@ -87,10 +81,27 @@ function get() {
 				count: 0
 			},
 			pronoun: {
-				count: 0
-			},
-			relative: {
-				count: 0
+				count: 0,
+				pronoun: {
+					count: 0,
+					singular: 0,
+					plural: 0
+				},
+				possessive: {
+					count: 0,
+					singular: 0,
+					plural: 0
+				},
+				demonstrative: {
+					count: 0,
+					singular: 0,
+					plural: 0
+				},
+				relative: {
+					count: 0,
+					singular: 0,
+					plural: 0
+				}
 			},
 			suffix: {
 				count: 0
@@ -137,6 +148,12 @@ function reduceWord(stats, word) {
 	}
 	if (word.PoS === 'verb') {
 		stats[word.PoS][word.verb.conjugation] += 1;
+	}
+	if (word.PoS === 'pronoun') {
+		var type = word.pronoun.type;
+		var number = word.pronoun.number;
+		stats[word.PoS][type].count += 1;
+		stats[word.PoS][type][number] += 1;
 	}
 
 	return stats;

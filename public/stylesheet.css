@@ -19,6 +19,10 @@ body {
 	min-width: 5em;
 }
 
+.small-width {
+	width: 25%;
+}
+
 .capitalize {
 	text-transform: capitalize;
 }

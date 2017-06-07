@@ -3,7 +3,7 @@
 <div class="loader" ng-if="!vm.stats"></div>
 
 <div ng-if="vm.stats">
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<table class="table">
 			<tr>
 				<th>Part of Speech</th>
@@ -26,10 +26,6 @@
 				<td>{{vm.stats.conjunction.count}}</td>
 			</tr>
 			<tr>
-				<td>Demonstrative</td>
-				<td>{{vm.stats.demonstrative.count}}</td>
-			</tr>
-			<tr>
 				<td>Exclamation</td>
 				<td>{{vm.stats.exclamation.count}}</td>
 			</tr>
@@ -40,10 +36,6 @@
 			<tr>
 				<td>Noun</td>
 				<td>{{vm.stats.noun.count}}</td>
-			</tr>
-			<tr>
-				<td>Possessive</td>
-				<td>{{vm.stats.possessive.count}}</td>
 			</tr>
 			<tr>
 				<td>Prefix</td>
@@ -58,10 +50,6 @@
 				<td>{{vm.stats.pronoun.count}}</td>
 			</tr>
 			<tr>
-				<td>Relative</td>
-				<td>{{vm.stats.relative.count}}</td>
-			</tr>
-			<tr>
 				<td>Suffix</td>
 				<td>{{vm.stats.suffix.count}}</td>
 			</tr>
@@ -74,29 +62,8 @@
 				<td><strong>{{vm.stats.total}}</td>
 			</tr>
 		</table>
-		<table class="table">
-			<tr>
-				<th colspan="2">Verb</th>
-			</tr>
-			<tr>
-				<th>Conjugation</th>
-				<th>Total</th>
-			</tr>
-			<tr>
-				<td>First</td>
-				<td>{{vm.stats.verb.first}}</td>
-			</tr>
-			<tr>
-				<td>Second</td>
-				<td>{{vm.stats.verb.second}}</td>
-			</tr>
-			<tr>
-				<td>Irregular</td>
-				<td>{{vm.stats.verb.irregular}}</td>
-			</tr>
-		</table>
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-5">
 		<table class="table">
 			<tr>
 				<th colspan="4">Noun</th>
@@ -202,6 +169,54 @@
 			<tr>
 				<td>-at</td>
 				<td>{{vm.stats.noun.fifth.at}}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<table class="table">
+			<tr>
+				<th colspan="2">Verb</th>
+			</tr>
+			<tr>
+				<th>Conjugation</th>
+				<th>Total</th>
+			</tr>
+			<tr>
+				<td>First</td>
+				<td>{{vm.stats.verb.first}}</td>
+			</tr>
+			<tr>
+				<td>Second</td>
+				<td>{{vm.stats.verb.second}}</td>
+			</tr>
+			<tr>
+				<td>Irregular</td>
+				<td>{{vm.stats.verb.irregular}}</td>
+			</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<th colspan="4">Pronoun</th>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<th>Total</th>
+			</tr>
+			<tr>
+				<td>Pronoun</td>
+				<td>{{vm.stats.pronoun.pronoun.count}}</td>
+			</tr>
+			<tr>
+				<td>Possessive</td>
+				<td>{{vm.stats.pronoun.possessive.count}}</td>
+			</tr>
+			<tr>
+				<td>Demonstrative</td>
+				<td>{{vm.stats.pronoun.demonstrative.count}}</td>
+			</tr>
+			<tr>
+				<td>Relative</td>
+				<td>{{vm.stats.pronoun.relative.count}}</td>
 			</tr>
 		</table>
 	</div>

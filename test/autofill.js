@@ -18,13 +18,10 @@ describe('Autofill', function() {
 			'adverb',
 			'cardinal',
 			'conjunction',
-			'demonstrative',
 			'exclamation',
 			'interjection',
-			'possessive',
 			'preposition',
 			'pronoun',
-			'relative',
 			'prefix',
 			'suffix'
 		];
@@ -51,7 +48,7 @@ describe('Autofill', function() {
 			'qea',
 			'piqx',
 			'14hcva',
-			'demonstratives',
+			'demonstrative',
 			'affix',
 			'notapos'
 		];
