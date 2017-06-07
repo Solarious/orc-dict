@@ -433,7 +433,7 @@ function addRoutesForBulkAdd(app) {
 				res.json(results);
 			})
 			.catch(function(error) {
-				res.status(404).send(error.message);
+				res.status(404).send(getBetterErrorMessage(error));
 			});
 		}
 	});
