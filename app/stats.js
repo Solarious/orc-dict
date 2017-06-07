@@ -119,6 +119,9 @@ function get() {
 
 function reduceWord(stats, word) {
 	stats.total += 1;
+	if (!stats[word.PoS]) {
+		throw new Error('Invalid PoS: ' + word.PoS);
+	}
 	stats[word.PoS].count += 1;
 	if (word.PoS === 'noun') {
 		var declStr = word.noun.declension;
