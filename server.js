@@ -11,6 +11,7 @@ var session = require('express-session');
 var csurf = require('csurf');
 var MongoStore = require('connect-mongo')(session);
 var sanitize = require('./app/sanitize');
+var stats = require('./app/stats');
 
 var dburl;
 var port;
@@ -73,6 +74,9 @@ app.use(function(err, req, res, next) {
 		res.status(403).send('Invalid/Missing csrf token');
 	}
 });
+
+// Tells stats to prepare the its cache
+stats.get();
 
 require('./app/routes')(app);
 require('./app/authentication')();

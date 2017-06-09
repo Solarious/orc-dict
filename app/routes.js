@@ -144,6 +144,7 @@ function addRoutesForWords(app) {
 						console.log('error with search.forCreate:');
 						console.log(error);
 					});
+					stats.setNeedsUpdate();
 				}
 			});
 		}
@@ -199,6 +200,7 @@ function addRoutesForWords(app) {
 							console.log('error with search.forUpdate:');
 							console.log(error);
 						});
+						stats.setNeedsUpdate();
 					}
 				});
 			});
@@ -225,6 +227,7 @@ function addRoutesForWords(app) {
 						console.log('error with search.forRemove:');
 						console.log(error);
 					});
+					stats.setNeedsUpdate();
 				}
 			});
 		}
@@ -253,6 +256,7 @@ function addRoutesForWords(app) {
 				console.log('error with search.forRemoveByPoS:');
 				console.log(error);
 			});
+			stats.setNeedsUpdate();
 		})
 		.catch(function(error) {
 			res.status(500).send(error.message);
@@ -438,6 +442,7 @@ function addRoutesForBulkAdd(app) {
 			bulkAdd(data, encoding, updateMethod, order)
 			.then(function(results) {
 				res.json(results);
+				stats.setNeedsUpdate();
 			})
 			.catch(function(error) {
 				res.status(404).send(getBetterErrorMessage(error));

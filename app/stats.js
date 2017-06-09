@@ -3,10 +3,28 @@
 var Word = require('./models/word');
 
 module.exports = {
-	get: get
+	get: get,
+	setNeedsUpdate: setNeedsUpdate
 };
 
+var statsStore = {};
+var timeOfLastChange = new Date(1);
+var timeOfLastUpdate = new Date(0);
+
 function get() {
+	if (timeOfLastUpdate < timeOfLastChange) {
+		return build();
+	} else {
+		return Promise.resolve(statsStore);
+	}
+}
+
+function setNeedsUpdate() {
+	timeOfLastChange = new Date();
+}
+
+function build() {
+	var startTime = new Date();
 	return Word.find({})
 	.exec()
 	.then(function(words) {
@@ -114,6 +132,13 @@ function get() {
 			},
 			total: 0
 		});
+	})
+	.then(function(stats) {
+		statsStore = stats;
+		if (startTime > timeOfLastUpdate) {
+			timeOfLastUpdate = startTime;
+		}
+		return stats;
 	});
 }
 
