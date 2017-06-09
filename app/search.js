@@ -11,6 +11,7 @@ module.exports = {
 	forCreate: forCreate,
 	forUpdate: forUpdate,
 	forRemove: forRemove,
+	forRemoveByPoS: forRemoveByPoS,
 	forInsertMany: forInsertMany,
 	forReplaceMany: forReplaceMany
 };
@@ -250,6 +251,16 @@ function forRemove(word) {
 		'word.orcish': word.orcish,
 		'word.num': word.num
 	});
+}
+
+function forRemoveByPoS(PoS) {
+	if (PoS === 'all') {
+		return SearchIndex.remove({});
+	} else {
+		return SearchIndex.remove({
+			'word.PoS': PoS
+		});
+	}
 }
 
 function forInsertMany(words) {

@@ -247,7 +247,12 @@ function addRoutesForWords(app) {
 		}
 		query.exec()
 		.then(function(result) {
-			return res.json(result);
+			res.json(result);
+			search.forRemoveByPoS(PoS)
+			.catch(function(error) {
+				console.log('error with search.forRemoveByPoS:');
+				console.log(error);
+			});
 		})
 		.catch(function(error) {
 			res.status(500).send(error.message);
