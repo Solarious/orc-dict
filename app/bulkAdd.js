@@ -183,6 +183,21 @@ function handleExtras(word, extra) {
 				word.coinedBy = value;
 				word.namedAfter = value;
 			}
+			if (operation === 'e.i.') {
+				if (word.extraInfo) {
+					word.extraInfo = value + '\n' + word.extraInfo;
+				} else {
+					word.extraInfo = value;
+				}
+			}
+			if (operation === 'a.e.k.') {
+				word.keywords = word.keywords || [];
+				word.keywords.push({
+					keyword: value,
+					priority: 1,
+					message: 'english'
+				});
+			}
 		} else {
 			return word;
 		}
