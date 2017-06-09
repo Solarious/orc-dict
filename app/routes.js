@@ -51,14 +51,16 @@ function addIfExists(word, req, property) {
 }
 
 function getBetterErrorMessage(error) {
-	var msg = error.message + ': ';
 	if (error.errors) {
+		var msg = error.message + ': ';
 		for (let errorPart in error.errors) {
 			let partMsg = error.errors[errorPart].message;
 			msg += partMsg + ' ';
 		}
+		return msg;
+	} else {
+		return error.message;
 	}
-	return msg;
 }
 
 function rebuild() {
