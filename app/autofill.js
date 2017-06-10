@@ -389,6 +389,7 @@ function firstConjVerb(orcish) {
 
 function secondConjVerb(orcish) {
 	var base = orcish.slice(0, -2);
+	var pronBase = getPronounceableBase(base);
 	return {
 		conjugation: 'second',
 		infinitive: {
@@ -471,71 +472,71 @@ function secondConjVerb(orcish) {
 			present: {
 				first: {
 					singular: base + 'aeg',
-					plural: base + 'belas'
+					plural: pronBase + 'belas'
 				},
 				second: {
 					singular: base + 'esh',
-					plural: base + 'behas'
+					plural: pronBase + 'behas'
 				},
 				third: {
 					singular: base + 'aek',
-					plural: base + 'barrak'
+					plural: pronBase + 'barrak'
 				}
 			},
 			past: {
 				first: {
 					singular: 'zsa' + base + 'aeg',
-					plural: 'zsa' + base + 'belas'
+					plural: 'zsa' + pronBase + 'belas'
 				},
 				second: {
 					singular: 'zsa' + base + 'esh',
-					plural: 'zsa' + base + 'behas'
+					plural: 'zsa' + pronBase + 'behas'
 				},
 				third: {
 					singular: 'zsa' + base + 'aek',
-					plural: 'zsa' + base + 'barrak'
+					plural: 'zsa' + pronBase + 'barrak'
 				}
 			},
 			future: {
 				first: {
 					singular: 'zsur' + base + 'aeg',
-					plural: 'zsur' + base + 'belas'
+					plural: 'zsur' + pronBase + 'belas'
 				},
 				second: {
 					singular: 'zsur' + base + 'esh',
-					plural: 'zsur' + base + 'behas'
+					plural: 'zsur' + pronBase + 'behas'
 				},
 				third: {
 					singular: 'zsur' + base + 'aek',
-					plural: 'zsur' + base + 'barrak'
+					plural: 'zsur' + pronBase + 'barrak'
 				}
 			},
 			pastPerfect: {
 				first: {
 					singular: 'huzs' + base + 'aeg',
-					plural: 'huzs' + base + 'belas'
+					plural: 'huzs' + pronBase + 'belas'
 				},
 				second: {
 					singular: 'huzs' + base + 'esh',
-					plural: 'huzs' + base + 'behas'
+					plural: 'huzs' + pronBase + 'behas'
 				},
 				third: {
 					singular: 'huzs' + base + 'aek',
-					plural: 'huzs' + base + 'barrak'
+					plural: 'huzs' + pronBase + 'barrak'
 				}
 			},
 			futurePerfect: {
 				first: {
 					singular: 'azsur' + base + 'aeg',
-					plural: 'azsur' + base + 'belas'
+					plural: 'azsur' + pronBase + 'belas'
 				},
 				second: {
 					singular: 'azsur' + base + 'esh',
-					plural: 'azsur' + base + 'behas'
+					plural: 'azsur' + pronBase + 'behas'
 				},
 				third: {
 					singular: 'azsur' + base + 'aek',
-					plural: 'azsur' + base + 'barrak'
+					plural: 'azsur' + pronBase + 'barrak'
 				}
 			},
 		},
@@ -554,6 +555,68 @@ function secondConjVerb(orcish) {
 			dishonorable: orcish + 'dj'
 		}
 	};
+}
+
+function getPronounceableBase(base) {
+	console.log(base + ':');
+	var singleConsonants = [
+		'b', 'd', 'f', 'g', 'h', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't',
+		'v', 'w', 'x', 'z'
+	];
+	var doubleConsonants = ['dj', 'sh', 'th', 'ch', 'zs'];
+	var ending;
+	var middle;
+	var twoLetter = base.slice(-2);
+	var oneLetter = base.slice(-1);
+	if (doubleConsonants.indexOf(twoLetter) !== -1) {
+		ending = twoLetter;
+	} else if (singleConsonants.indexOf(oneLetter) !== -1) {
+		ending = oneLetter;
+	} else {
+		return base;
+	}
+	var baseNoEnding = base.slice(0, -(ending.length));
+	twoLetter = baseNoEnding.slice(-2);
+	oneLetter = baseNoEnding.slice(-1);
+	if (doubleConsonants.indexOf(twoLetter) !== -1) {
+		middle = twoLetter;
+	} else if (singleConsonants.indexOf(oneLetter) !== -1) {
+		middle = oneLetter;
+	} else {
+		return base;
+	}
+
+	var alwaysUnpron = ['b', 'h', 'dj', 'l', 'p', 'r', 'w'];
+	var onlyWithHLRW = [
+		'ch', 'd', 'f', 'g', 'k', 'm', 'n', 'th', 'v', 'x', 'y', 'z'
+	];
+	var HLRW = ['h', 'l', 'r', 'w'];
+
+	if (ending === middle) {
+		return baseNoEnding;
+	}
+	if (alwaysUnpron.indexOf(ending) !== -1) {
+		return baseNoEnding;
+	}
+	if (onlyWithHLRW.indexOf(ending) !== -1 && HLRW.indexOf(middle) !== -1) {
+		return base;
+	}
+
+	if (ending === 's') {
+		if (['ch', 's', 'sh', 'z', 'zs'].indexOf(middle) !== -1) {
+			return baseNoEnding;
+		} else {
+			return base;
+		}
+	}
+	if (ending === 'sh' && middle === 'n') {
+		return base;
+	}
+	if (ending === 't' && middle === 'n') {
+		return base;
+	}
+
+	return baseNoEnding;
 }
 
 function firstDeclNoun(orcish, ending) {
