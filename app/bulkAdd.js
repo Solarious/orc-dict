@@ -2,7 +2,7 @@
 
 var parse = require('csv-parse');
 var Word = require('./models/word');
-var autofill = require('./autofill');
+var autofill = require('./autofill').autofill;
 var search = require('./search');
 
 module.exports = bulkAdd;
@@ -103,12 +103,7 @@ function bulkAdd(data, encoding, method, order) {
 			var word = record;
 			var hasPart = ['adjective', 'noun', 'verb'];
 			if (hasPart.indexOf(word.PoS) !== -1) {
-				autofill(word.orcish, word.PoS, function(error, data) {
-					if (error) {
-						throw error;
-					}
-					word[word.PoS] = data;
-				});
+				word[word.PoS] = autofill(word.orcish, word.PoS);
 			}
 
 			if (word.PoS === 'pronoun') {

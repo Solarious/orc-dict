@@ -6,7 +6,7 @@ var crypto = require('crypto');
 var Word = require('./models/word');
 var User = require('./models/user');
 var Sentence = require('./models/sentence');
-var autofill = require('./autofill');
+var autofillAsync = require('./autofill').autofillAsync;
 var bulkAdd = require('./bulkAdd');
 var search = require('./search');
 var email = require('./email');
@@ -420,12 +420,12 @@ function addRoutesForAutofill(app) {
 	app.get('/api/autofillword/:PoS/:orcish', function(req, res) {
 		var PoS = req.params.PoS;
 		var orcish = req.params.orcish;
-		autofill(orcish, PoS, function(err, wordPart) {
-			if (err) {
-				res.status(404).send(err.message);
-			} else {
-				res.json(wordPart);
-			}
+		autofillAsync(orcish, PoS)
+		.then(function(wordPart) {
+			res.json(wordPart);
+		})
+		.catch(function(error) {
+			res.status(404).send(error.message);
 		});
 	});
 }

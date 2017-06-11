@@ -2,35 +2,51 @@
 
 var Word = require('./models/word');
 
-module.exports = function(orcish, PoS, callback) {
+module.exports = {
+	autofillAsync,
+	autofill
+};
+
+function autofillAsync(orcish, PoS) {
+	return new Promise(function(resolve, reject) {
+		try {
+			var result = autofill(orcish, PoS);
+			resolve(result);
+		} catch (e) {
+			reject(e);
+		}
+	});
+}
+
+function autofill(orcish, PoS) {
 	if (PoS === 'verb') {
-		getVerb(orcish, callback);
+		return getVerb(orcish);
 	} else if (PoS === 'noun') {
-		getNoun(orcish, callback);
+		return getNoun(orcish);
 	} else if (PoS === 'adjective') {
-		getAdjective(orcish, callback);
+		return getAdjective(orcish);
 	} else if (PoS === 'adverb') {
-		callback(new Error('Can not use autofill with PoS: adverb'));
+		throw new Error('Can not use autofill with PoS: adverb');
 	} else if (PoS === 'cardinal') {
-		callback(new Error('Can not use autofill with PoS: cardinal'));
+		throw new Error('Can not use autofill with PoS: cardinal');
 	} else if (PoS === 'conjunction') {
-		callback(new Error('Can not use autofill with PoS: conjunction'));
+		throw new Error('Can not use autofill with PoS: conjunction');
 	} else if (PoS === 'exclamation') {
-		callback(new Error('Can not use autofill with PoS: exclamation'));
+		throw new Error('Can not use autofill with PoS: exclamation');
 	} else if (PoS === 'interjection') {
-		callback(new Error('Can not use autofill with PoS: interjection'));
+		throw new Error('Can not use autofill with PoS: interjection');
 	} else if (PoS === 'preposition') {
-		callback(new Error('Can not use autofill with PoS: preposition'));
+		throw new Error('Can not use autofill with PoS: preposition');
 	} else if (PoS === 'pronoun') {
-		callback(new Error('Can not use autofill with PoS: pronoun'));
+		throw new Error('Can not use autofill with PoS: pronoun');
 	} else if (PoS === 'prefix') {
-		callback(new Error('Can not use autofill with PoS: prefix'));
+		throw new Error('Can not use autofill with PoS: prefix');
 	} else if (PoS === 'suffix') {
-		callback(new Error('Can not use autofill with PoS: suffix'));
+		throw new Error('Can not use autofill with PoS: suffix');
 	} else {
-		return callback(new Error('Invalid PoS: ' + PoS));
+		throw new Error('Invalid PoS: ' + PoS);
 	}
-};// module.exports
+}
 
 var vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
 
@@ -38,19 +54,17 @@ function isVowel(letter) {
 	return (vowels.indexOf(letter) !== -1);
 }
 
-function getVerb(orcish, callback) {
+function getVerb(orcish) {
 	if (orcish.endsWith('a')) {
-		return callback(null, firstConjVerb(orcish));
+		return firstConjVerb(orcish);
 	} else if (orcish.endsWith('ai')) {
-		return callback(null, secondConjVerb(orcish));
+		return secondConjVerb(orcish);
 	} else {
-		return callback(
-			new Error('Word ' + orcish + ' has no valid conjugation')
-		);
+		throw new Error('Word ' + orcish + ' has no valid conjugation');
 	}
 }
 
-function getNoun(orcish, callback) {
+function getNoun(orcish) {
 	var endings;
 
 	// aed has been removed to avoid conflicting with neutral 2nd decl.
@@ -58,7 +72,7 @@ function getNoun(orcish, callback) {
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(null, firstDeclNoun(orcish, ending));
+			return firstDeclNoun(orcish, ending);
 		}
 	}
 
@@ -66,31 +80,27 @@ function getNoun(orcish, callback) {
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(
-				null, secondDeclNoun(orcish, ending, 'masculine')
-			);
+			return secondDeclNoun(orcish, ending, 'masculine');
 		}
 	}
 
 	if (orcish === 'ord') {
-		return callback(null, secondDeclNoun(orcish, 'd', 'neutral'));
+		return secondDeclNoun(orcish, 'd', 'neutral');
 	}
 
 	endings = ['ash', 'ard', 'rd'];
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(null, thirdDeclNoun(orcish, ending));
+			return thirdDeclNoun(orcish, ending);
 		}
 	}
 
-	endings = ['id', 'ed', 'd', 'z', 'dj'];
+	endings = ['id', 'ed', 'd', 'z', 'dj', 'on'];
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(
-				null, secondDeclNoun(orcish, ending, 'neutral')
-			);
+			return secondDeclNoun(orcish, ending, 'neutral');
 		}
 	}
 
@@ -98,7 +108,7 @@ function getNoun(orcish, callback) {
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(null, fourthDeclNoun(orcish, ending));
+			return fourthDeclNoun(orcish, ending);
 		}
 	}
 
@@ -106,23 +116,23 @@ function getNoun(orcish, callback) {
 	for (let i = 0; i < endings.length; i++) {
 		let ending = endings[i];
 		if (orcish.endsWith(ending)) {
-			return callback(null, fifthDeclNoun(orcish, ending));
+			return fifthDeclNoun(orcish, ending);
 		}
 	}
 
-	return callback(null, irregularNoun(orcish));
+	return irregularNoun(orcish);
 }
 
-function getAdjective(orcish, callback) {
+function getAdjective(orcish) {
 	var parts = orcish.split(', ');
 	if (parts.length === 1) {
-		return callback(null, getIrregularAdjective(orcish));
+		return getIrregularAdjective(orcish);
 	}
 	if (parts.length !== 2) {
-		return callback(new Error(
+		throw new Error(
 			'Word ' + orcish + ' must have format "feminine, masculine" or' +
 			' "feminine, -masculineEnding"'
-		));
+		);
 	}
 	var feminineOrcish = parts[0];
 	var mascNeutOrcish = parts[1];
@@ -134,30 +144,26 @@ function getAdjective(orcish, callback) {
 	var error;
 	var feminineData;
 	var mascNeutData;
-	getNoun(feminineOrcish, function(err, data) {
-		err = error;
-		feminineData = data;
-	});
-	if (error) {
-		return callback(new Error(
+	try {
+		feminineData = getNoun(feminineOrcish);
+	} catch (error) {
+		throw new Error(
 			'Word ' + orcish + ' feminine part had error ' + error.message
-		));
+		);
 	}
-	getNoun(mascNeutOrcish, function(err, data) {
-		error = err;
-		mascNeutData = data;
-	});
-	if (error) {
-		return callback(new Error(
+	try {
+		mascNeutData = getNoun(mascNeutOrcish);
+	} catch (error) {
+		throw new Error(
 			'Word ' + orcish + ' masculine/neutral part had error ' +
 			error.message
-		));
+		);
 	}
 
-	callback(null, {
+	return {
 		feminine: nounToAdjectivePart(feminineData),
 		masculineNeutral: nounToAdjectivePart(mascNeutData)
-	});
+	};
 }
 
 function nounToAdjectivePart(noun) {
