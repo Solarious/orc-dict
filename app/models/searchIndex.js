@@ -46,6 +46,7 @@ var SearchIndexSchema = new Schema({
 	affix: {
 		type: String,
 		required: true,
+		index: true,
 		enum: [
 			'none',
 			'prefix',
