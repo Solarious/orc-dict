@@ -56,6 +56,56 @@ close-text="Cancel" modal-id="removeModal">
 	</div>
 </form>
 
+<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'noun'">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Declension</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.declension"
+			ng-change="vm.resetPageAndLoadWords()">
+				<option value="">--All--</option>
+				<option value="first">First</option>
+				<option value="secondMasculine">Second (masculine)</option>
+				<option value="secondNeutral">Second (neutral)</option>
+				<option value="third">Third</option>
+				<option value="fourth">Fourth</option>
+				<option value="fifth">Fifth</option>
+				<option value="irregular">Irregular</option>
+			</select>
+		</div>
+	</div>
+</form>
+
+<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'verb'">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Conjugation</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.conjugation"
+			ng-change="vm.resetPageAndLoadWords()">
+				<option value="">--All--</option>
+				<option value="first">First</option>
+				<option value="second">Second</option>
+				<option value="irregular">Irregular</option>
+			</select>
+		</div>
+	</div>
+</form>
+
+<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'pronoun'">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Type</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.pronounType"
+			ng-change="vm.resetPageAndLoadWords()">
+				<option value="">--All--</option>
+				<option value="pronoun">Pronoun</option>
+				<option value="possessive">Possessive</option>
+				<option value="demonstrative">Demonstrative</option>
+				<option value="relative">Relative</option>
+			</select>
+		</div>
+	</div>
+</form>
+
 <div class="clearfix"></div>
 
 <div class="loader" ng-if="!vm.words"></div>

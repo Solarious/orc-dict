@@ -87,12 +87,23 @@ function addRoutesForWords(app) {
 		var limit = Number(resQuery.limit);
 		var getcount = resQuery.getcount;
 		var pos = resQuery.pos;
+		var declension = resQuery.declension;
+		var gender;
+		var conjugation = resQuery.conjugation;
+		var pronounType = resQuery.pronountype;
+		if (declension && declension.startsWith('second')) {
+			gender = declension.endsWith('Masculine') ?
+			'masculine' : 'neutral';
+			declension = 'second';
+		}
+
 		var query = Word.find({}).select({
 			orcish: 1,
 			english: 1,
 			PoS: 1,
 			num: 1
 		});
+		var countQuery = Word.count();
 		if (sort) {
 			query = query.sort(sort);
 		}
@@ -104,14 +115,28 @@ function addRoutesForWords(app) {
 		}
 		if (pos) {
 			query = query.where('PoS', pos);
+			countQuery = countQuery.where('PoS', pos);
 		}
+		if (declension) {
+			query = query.where('noun.declension', declension);
+			countQuery = countQuery.where('noun.declension', declension);
+		}
+		if (gender) {
+			query = query.where('noun.gender', gender);
+			countQuery = countQuery.where('noun.gender', gender);
+		}
+		if (conjugation) {
+			query = query.where('verb.conjugation', conjugation);
+			countQuery = countQuery.where('verb.conjugation', conjugation);
+		}
+		if (pronounType) {
+			query = query.where('pronoun.type', pronounType);
+			countQuery = countQuery.where('pronoun.type', pronounType);
+		}
+
 		var promises = [query.exec()];
 		if (getcount) {
-			if (pos) {
-				promises.push(Word.count().where('PoS', pos).exec());
-			} else {
-				promises.push(Word.count({}).exec());
-			}
+			promises.push(countQuery.exec());
 		}
 		Promise.all(promises)
 		.then(function(values) {

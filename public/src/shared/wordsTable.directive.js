@@ -44,6 +44,11 @@ function WordsTableController(WordsService, AlertService) {
 		vm.goForwardDisabled = false;
 		vm.order = 'orcish';
 
+		vm.PoS = "";
+		vm.declension = "";
+		vm.conjugation = "";
+		vm.pronounType = "";
+
 		vm.loadWords();
 	}
 
@@ -54,9 +59,19 @@ function WordsTableController(WordsService, AlertService) {
 			skip: vm.numPerPage * (vm.page - 1),
 			getcount: true
 		};
-		if (vm.PoS !== "") {
+		if (vm.PoS) {
 			options.pos = vm.PoS;
 		}
+		if (vm.declension) {
+			options.declension = vm.declension;
+		}
+		if (vm.conjugation) {
+			options.conjugation = vm.conjugation;
+		}
+		if (vm.pronounType) {
+			options.pronountype = vm.pronounType;
+		}
+
 		return WordsService.list(options)
 		.then(function(data) {
 			vm.words = data.words;
