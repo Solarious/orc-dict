@@ -558,7 +558,6 @@ function secondConjVerb(orcish) {
 }
 
 function getPronounceableBase(base) {
-	console.log(base + ':');
 	var singleConsonants = [
 		'b', 'd', 'f', 'g', 'h', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't',
 		'v', 'w', 'x', 'z'
