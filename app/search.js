@@ -175,15 +175,6 @@ function rebuild() {
 	});
 }
 
-function rebuildPart(words) {
-	var searchIndexes = [];
-	for (var i = 0; i < words.length; i++) {
-		var word = words[i];
-		searchIndexes = searchIndexes.concat(createIndexesForWord(word));
-	}
-	return SearchIndex.insertMany(searchIndexes);
-}
-
 function createIndexesForWord(word) {
 	var searchIndexes = [];
 	searchIndexes.push({
@@ -264,12 +255,30 @@ function forRemoveByPoS(PoS) {
 }
 
 function forInsertMany(words) {
-	const numPerPart = 100;
+	const sizePerPart = 1000;
 	var arrays = [];
-	var p = Promise.resolve();
+	var part = [];
+	var partSize = 0;
+	var promise = Promise.resolve();
 
-	for (let i = 0; i < words.length; i += numPerPart) {
-		arrays.push(words.slice(i, i + numPerPart));
+	for (let i = 0; i < words.length; i++) {
+		let word = words[i];
+		let size = 2;
+		if (word.PoS === 'noun') { size += 10; }
+		if (word.PoS === 'adjective') { size += 20; }
+		if (word.PoS === 'verb') { size += 124; }
+		if (word.PoS === 'pronoun') { size += 5; }
+		size += word.keywords.length;
+		part.push(word);
+		partSize += size;
+		if (partSize > sizePerPart) {
+			arrays.push(part);
+			part = [];
+			partSize = 0;
+		}
+	}
+	if (part.length > 0) {
+		arrays.push(part);
 	}
 
 	if (process.env.NODE_ENV !== 'test') {
@@ -281,14 +290,25 @@ function forInsertMany(words) {
 	}
 
 	arrays.forEach(function(part, i) {
-		p = p.then(function() {
+		promise = promise.then(function() {
 			if (process.env.NODE_ENV !== 'test') {
 				console.log('rebuilding part ' + (i + 1));
 			}
-			return rebuildPart(part);
+			return insertPart(part);
 		});
 	});
-	return p;
+	return promise.then(function() {
+		console.log('rebuilding done');
+	});
+}
+
+function insertPart(words) {
+	var searchIndexes = [];
+	for (var i = 0; i < words.length; i++) {
+		var word = words[i];
+		searchIndexes = searchIndexes.concat(createIndexesForWord(word));
+	}
+	return SearchIndex.insertMany(searchIndexes);
 }
 
 function forReplaceMany(words) {
