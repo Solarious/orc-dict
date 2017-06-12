@@ -75,6 +75,11 @@ app.use(function(err, req, res, next) {
 	}
 });
 
+app.use(function(err, req, res, next) {
+	console.log(err);
+	res.status(500).send('Internal error');
+});
+
 // Tells stats to prepare the its cache
 stats.get();
 
