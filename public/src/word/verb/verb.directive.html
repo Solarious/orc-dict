@@ -4,10 +4,6 @@
 			<th>Conjugation</th>
 			<td class="capitalize">{{verb.conjugation}}</td>
 		</tr>
-		<tr>
-			<th>Gerund</th>
-			<td>{{verb.gerund}}</td>
-		</tr>
 	</table>
 </div>
 
@@ -43,41 +39,30 @@
 	</table>
 </div>
 
-<div class="col-md-6">
-	<table class="table table-condensed table-bordered">
-		<tr>
-			<th colspan="2" class="text-center">Participle</th>
-		</tr>
-		<tr>
-			<th>Feminine</th>
-			<th>Masculine</th>
-		</tr>
-		<tr>
-			<td>{{verb.participle.feminine}}</td>
-			<td>{{verb.participle.masculine}}</td>
-		</tr>
-	</table>
-</div>
-
-<div class="col-md-6">
-	<table class="table table-condensed table-bordered">
-		<tr>
-			<th colspan="3" class="text-center">Agent</th>
-		</tr>
-		<tr>
-			<th>Feminine</th>
-			<th>Masculine</th>
-			<th>Dishonorable</th>
-		</tr>
-		<tr>
-			<td>{{verb.agent.feminine}}</td>
-			<td>{{verb.agent.masculine}}</td>
-			<td>{{verb.agent.dishonorable}}</td>
-		</tr>
-	</table>
-</div>
-
 <div class="clearfix"></div>
 
 <orc-dict-verb-voices active="verb.active"
 passive="verb.passive"></orc-dict-verb-voices>
+
+<orc-dict-adjective-case-table case-group="verb.participle.feminine"
+title="Participle (feminine)">
+</orc-dict-adjective-case-table>
+
+<orc-dict-adjective-case-table case-group="verb.participle.masculineNeutral"
+title="Participle (masculine/neutral)">
+</orc-dict-adjective-case-table>
+
+<orc-dict-verb-noun-table noun="verb.gerund" title="Gerund">
+</orc-dict-verb-noun-table>
+
+<orc-dict-verb-noun-table noun="verb.agent.feminine"
+title="Agent (feminine)">
+</orc-dict-verb-noun-table>
+
+<orc-dict-verb-noun-table noun="verb.agent.masculine"
+title="Agent (masculine)">
+</orc-dict-verb-noun-table>
+
+<orc-dict-verb-noun-table noun="verb.agent.dishonorable"
+title="Agent (dishonorable)">
+</orc-dict-verb-noun-table>

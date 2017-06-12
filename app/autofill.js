@@ -380,15 +380,12 @@ function firstConjVerb(orcish) {
 			singular: orcish + 'rt',
 			plural: orcish + 'rit'
 		},
-		gerund: orcish.slice(0, -1) + 'on',
-		participle: {
-			feminine: orcish.slice(0, -1) + 'onad',
-			masculine: orcish.slice(0, -1) + 'onul'
-		},
+		gerund: getNoun(orcish.slice(0, -1) + 'on'),
+		participle: getAdjective(orcish.slice(0, -1) + 'onad, -ul'),
 		agent: {
-			feminine: orcish + 'g',
-			masculine: orcish + 'k',
-			dishonorable: orcish + 'dj'
+			feminine: getNoun(orcish + 'g'),
+			masculine: getNoun(orcish + 'k'),
+			dishonorable: getNoun(orcish + 'dj')
 		}
 	};
 }
@@ -550,15 +547,12 @@ function secondConjVerb(orcish) {
 			singular: base + 'ort',
 			plural: base + 'orot'
 		},
-		gerund: orcish + 'on',
-		participle: {
-			feminine: orcish + 'onad',
-			masculine: orcish + 'onul'
-		},
+		gerund: getNoun(orcish + 'on'),
+		participle: getAdjective(orcish + 'onad, -ul'),
 		agent: {
-			feminine: base + 'ag',
-			masculine: base + 'ak',
-			dishonorable: orcish + 'dj'
+			feminine: getNoun(orcish + 'ag'),
+			masculine: getNoun(orcish + 'ak'),
+			dishonorable: getNoun(orcish + 'dj')
 		}
 	};
 }

@@ -16,117 +16,6 @@ var SingularPluralSchema = new Schema({
 	}
 }, { _id: false });
 
-var VerbConjGroupSchema = new Schema({
-	first: {
-		type: SingularPluralSchema,
-		required: true
-	},
-	second: {
-		type: SingularPluralSchema,
-		required: true
-	},
-	third: {
-		type: SingularPluralSchema,
-		required: true
-	}
-}, { _id: false });
-
-var VerbParticipleSchema = new Schema({
-	feminine: {
-		type: String,
-		required: true
-	},
-	masculine: {
-		type: String,
-		required: true
-	}
-}, { _id: false });
-
-var VerbAgentSchema = new Schema({
-	feminine: {
-		type: String,
-		required: true
-	},
-	masculine: {
-		type: String,
-		required: true
-	},
-	dishonorable: {
-		type: String,
-		required: true
-	},
-}, { _id: false });
-
-var VerbVoiceSchema = new Schema({
-	present: {
-		type: VerbConjGroupSchema,
-		required: true
-	},
-	past: {
-		type: VerbConjGroupSchema,
-		required: true
-	},
-	future: {
-		type: VerbConjGroupSchema,
-		required: true
-	},
-	pastPerfect: {
-		type: VerbConjGroupSchema,
-		required: true
-	},
-	futurePerfect: {
-		type: VerbConjGroupSchema,
-		required: true
-	}
-}, { _id: false });
-
-var VerbInfinitiveSchema = new Schema({
-	active: {
-		type: String,
-		required: true
-	},
-	passive: {
-		type: String,
-		required: true
-	}
-}, { _id: false });
-
-var VerbSchema = new Schema({
-	conjugation: {
-		type: String,
-		enum: ['first', 'second', 'irregular'],
-		required: true
-	},
-	infinitive: {
-		type: VerbInfinitiveSchema,
-		required: true
-	},
-	active: {
-		type: VerbVoiceSchema,
-		required: true
-	},
-	passive: {
-		type: VerbVoiceSchema,
-		required: true
-	},
-	imperative: {
-		type: SingularPluralSchema,
-		required: true
-	},
-	gerund: {
-		type: String,
-		required: true
-	},
-	participle: {
-		type: VerbParticipleSchema,
-		required: true
-	},
-	agent: {
-		type: VerbAgentSchema,
-		required: true
-	}
-}, { _id: false });
-
 var NounSchema = new Schema({
 	declension: {
 		type: String,
@@ -194,6 +83,106 @@ var AdjectiveSchema = new Schema({
 	}
 }, { _id: false});
 
+var VerbConjGroupSchema = new Schema({
+	first: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	second: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	third: {
+		type: SingularPluralSchema,
+		required: true
+	}
+}, { _id: false });
+
+var VerbAgentSchema = new Schema({
+	feminine: {
+		type: NounSchema,
+		required: true
+	},
+	masculine: {
+		type: NounSchema,
+		required: true
+	},
+	dishonorable: {
+		type: NounSchema,
+		required: true
+	},
+}, { _id: false });
+
+var VerbVoiceSchema = new Schema({
+	present: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	past: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	future: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	pastPerfect: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	futurePerfect: {
+		type: VerbConjGroupSchema,
+		required: true
+	}
+}, { _id: false });
+
+var VerbInfinitiveSchema = new Schema({
+	active: {
+		type: String,
+		required: true
+	},
+	passive: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
+var VerbSchema = new Schema({
+	conjugation: {
+		type: String,
+		enum: ['first', 'second', 'irregular'],
+		required: true
+	},
+	infinitive: {
+		type: VerbInfinitiveSchema,
+		required: true
+	},
+	active: {
+		type: VerbVoiceSchema,
+		required: true
+	},
+	passive: {
+		type: VerbVoiceSchema,
+		required: true
+	},
+	imperative: {
+		type: SingularPluralSchema,
+		required: true
+	},
+	gerund: {
+		type: NounSchema,
+		required: true
+	},
+	participle: {
+		type: AdjectiveSchema,
+		required: true
+	},
+	agent: {
+		type: VerbAgentSchema,
+		required: true
+	}
+}, { _id: false });
+
 var PronounSchema = new Schema({
 	type: {
 		type: String,
@@ -233,7 +222,6 @@ var PronounSchema = new Schema({
 		type: String,
 		required: true
 	}
-	
 }, { _id: false });
 
 var RelatedWordSchema = new Schema({

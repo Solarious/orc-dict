@@ -1,0 +1,92 @@
+<div class="col-md-6">
+	<table class="table table-condensed table-bordered">
+		<tr>
+			<th colspan="3" class="text-center">{{title}}</th>
+		</tr>
+		<tr>
+			<th>Declension</th>
+			<td colspan="2">
+				<select class="form-control" ng-model="noun.declension">
+					<option value="">--Please Select--</option>
+					<option value="first">First</option>
+					<option value="second">Second</option>
+					<option value="second">Third</option>
+					<option value="fourth">Fourth</option>
+					<option value="fifth">Fifth</option>
+					<option value="irregular">Irregular</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Gender</th>
+			<td colspan="2">
+				<select class="form-control" ng-model="noun.gender">
+					<option value="">--Please Select--</option>
+					<option value="feminine">Feminine</option>
+					<option value="masculine">Masculine</option>
+					<option value="neutral">Neutral</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>Case</th>
+			<th>Singular</th>
+			<th>Plural</th>
+		<tr>
+		<tr>
+			<th>Nominative</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.nominative.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.nominative.plural"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Genitive</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.genitive.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.genitive.plural"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Dative</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.dative.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.dative.plural"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Accusative</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.accusative.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.accusative.plural"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Vocative</th>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.vocative.singular"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="noun.vocative.plural"/>
+			</td>
+		</tr>
+	</table>
+</div>
