@@ -7,7 +7,7 @@ var chaiHttp = require('chai-http');
 var should = chai.should();
 var sinon = require('sinon');
 var server = require('../server');
-var search = require('../app/search');
+var indexes = require('../app/indexes');
 var Word = require('../app/models/word');
 var User = require('../app/models/user');
 var SearchIndex = require('../app/models/searchIndex');
@@ -105,7 +105,7 @@ describe('Search', function() {
 	var rebuildSpy;
 
 	beforeEach(function() {
-		rebuildSpy = sinon.spy(search, 'rebuild');
+		rebuildSpy = sinon.spy(indexes, 'rebuild');
 		agent = chai.request.agent(server);
 		return agent
 		.get('/api/words')
@@ -147,7 +147,7 @@ describe('Search', function() {
 	});
 
 	afterEach(function() {
-		rebuildSpy.restore(search);
+		rebuildSpy.restore(indexes);
 	});
 
 	describe('Creating and removing SearchIndexes', function() {
@@ -198,7 +198,7 @@ describe('Search', function() {
 				res.should.have.status(200);
 				test(searchData.with1(), res.body);
 				rebuildSpy.called.should.eql(false);
-				return search.rebuild();
+				return indexes.rebuild();
 			})
 			.then(function() {
 				rebuildSpy.called.should.eql(true);

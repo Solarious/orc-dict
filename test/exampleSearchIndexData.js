@@ -25,19 +25,6 @@ function with1() {
 				PoS: 'cardinal',
 				num: 1
 			}
-		},
-		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
 		}
 	];
 }
@@ -48,19 +35,6 @@ function with123() {
 			keyword: 'nul',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -84,35 +58,9 @@ function with123() {
 			}
 		},
 		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'thaen',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'three',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -141,35 +89,9 @@ function with1234() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -193,35 +115,9 @@ function with1234() {
 			}
 		},
 		{
-			keyword: 'three',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'lex',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'lex',
-				english: 'four',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'four',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -250,19 +146,6 @@ function with124() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
@@ -276,35 +159,9 @@ function with124() {
 			}
 		},
 		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'lex',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'lex',
-				english: 'four',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'four',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -333,35 +190,9 @@ function with12() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -390,35 +221,9 @@ function with12345() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -442,19 +247,6 @@ function with12345() {
 			}
 		},
 		{
-			keyword: 'three',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'lex',
 			priority: 1,
 			message: 'orcish',
@@ -468,35 +260,9 @@ function with12345() {
 			}
 		},
 		{
-			keyword: 'four',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'lex',
-				english: 'four',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'stel',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'stel',
-				english: 'five',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'five',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -525,35 +291,9 @@ function with123yay45() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -577,19 +317,6 @@ function with123yay45() {
 			}
 		},
 		{
-			keyword: 'three yay',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three yay',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'lex',
 			priority: 1,
 			message: 'orcish',
@@ -603,35 +330,9 @@ function with123yay45() {
 			}
 		},
 		{
-			keyword: 'four',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'lex',
-				english: 'four',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'stel',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'stel',
-				english: 'five',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'five',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -660,19 +361,6 @@ function with1233yay45() {
 			}
 		},
 		{
-			keyword: 'one',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'solu',
 			priority: 1,
 			message: 'orcish',
@@ -686,19 +374,6 @@ function with1233yay45() {
 			}
 		},
 		{
-			keyword: 'two',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'solu',
-				english: 'two',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'thaen',
 			priority: 1,
 			message: 'orcish',
@@ -712,35 +387,9 @@ function with1233yay45() {
 			}
 		},
 		{
-			keyword: 'three',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'thaen',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'thaen',
-				english: 'three yay',
-				PoS: 'cardinal',
-				num: 2
-			}
-		},
-		{
-			keyword: 'three yay',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {
@@ -764,35 +413,9 @@ function with1233yay45() {
 			}
 		},
 		{
-			keyword: 'four',
-			priority: 1,
-			message: 'english',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'lex',
-				english: 'four',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
 			keyword: 'stel',
 			priority: 1,
 			message: 'orcish',
-			affix: 'none',
-			affixLimits: [],
-			word: {
-				orcish: 'stel',
-				english: 'five',
-				PoS: 'cardinal',
-				num: 1
-			}
-		},
-		{
-			keyword: 'five',
-			priority: 1,
-			message: 'english',
 			affix: 'none',
 			affixLimits: [],
 			word: {

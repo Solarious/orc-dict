@@ -9,6 +9,7 @@ var Sentence = require('./models/sentence');
 var autofillAsync = require('./autofill').autofillAsync;
 var bulkAdd = require('./bulkAdd');
 var search = require('./search');
+var indexes = require('./indexes');
 var email = require('./email');
 var stats = require('./stats');
 
@@ -65,7 +66,7 @@ function getBetterErrorMessage(error) {
 
 function rebuild() {
 	var start = process.hrtime();
-	search.rebuild()
+	indexes.rebuild()
 	.then(function(data) {
 		var total = process.hrtime(start);
 		var ms = total[1] / 1000000;
@@ -74,7 +75,7 @@ function rebuild() {
 		}
 	})
 	.catch(function(error) {
-		console.log('Error with search.rebuild:');
+		console.log('Error with indexes.rebuild:');
 		console.log(error.message);
 	});
 }
@@ -164,9 +165,9 @@ function addRoutesForWords(app) {
 					res.status(500).send(getBetterErrorMessage(err));
 				} else {
 					res.json(newWord);
-					search.forCreate(newWord)
+					indexes.forCreate(newWord)
 					.catch(function(error) {
-						console.log('error with search.forCreate:');
+						console.log('error with indexes.forCreate:');
 						console.log(error);
 					});
 					stats.setNeedsUpdate();
@@ -217,12 +218,12 @@ function addRoutesForWords(app) {
 						res.status(500).send(getBetterErrorMessage(err));
 					} else {
 						res.json(word);
-						search.forUpdate(
+						indexes.forUpdate(
 							req.params.orcish,
 							req.params.num,
 							word
 						).catch(function(error) {
-							console.log('error with search.forUpdate:');
+							console.log('error with indexes.forUpdate:');
 							console.log(error);
 						});
 						stats.setNeedsUpdate();
@@ -247,9 +248,9 @@ function addRoutesForWords(app) {
 					res.status(404).send('word ' + wordStr + ' does not exits');
 				} else {
 					res.json(word);
-					search.forRemove(word)
+					indexes.forRemove(word)
 					.catch(function(error) {
-						console.log('error with search.forRemove:');
+						console.log('error with indexes.forRemove:');
 						console.log(error);
 					});
 					stats.setNeedsUpdate();
@@ -276,9 +277,9 @@ function addRoutesForWords(app) {
 		query.exec()
 		.then(function(result) {
 			res.json(result);
-			search.forRemoveByPoS(PoS)
+			indexes.forRemoveByPoS(PoS)
 			.catch(function(error) {
-				console.log('error with search.forRemoveByPoS:');
+				console.log('error with indexes.forRemoveByPoS:');
 				console.log(error);
 			});
 			stats.setNeedsUpdate();
@@ -426,9 +427,9 @@ function addRoutesForSearch(app) {
 	});
 
 	app.post('/api/search/rebuild', function(req, res) {
-		search.rebuild()
+		indexes.rebuild()
 		.catch(function(error) {
-			console.log('error with search.rebuild');
+			console.log('error with indexes.rebuild');
 			console.log(error);
 		});
 		res.send('Search Indexes are now being rebuilt');
