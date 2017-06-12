@@ -388,72 +388,12 @@ function addVerb(word, searchIndexes) {
 			num: word.num
 		}
 	});
-	searchIndexes.push({
-		keyword: word.verb.gerund,
-		priority: 3,
-		message: 'gerund',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.participle.feminine,
-		priority: 3,
-		message: 'participle feminine',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.participle.masculine,
-		priority: 3,
-		message: 'participle masculine',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.agent.feminine,
-		priority: 3,
-		message: 'agent feminine',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.agent.masculine,
-		priority: 3,
-		message: 'agent masculine',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.agent.dishonorable,
-		priority: 3,
-		message: 'agent dishonorable',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	addVerbGerund(word, searchIndexes);
+	addVerbParticiple(word, searchIndexes, 'feminine');
+	addVerbParticiple(word, searchIndexes, 'masculineNeutral');
+	addVerbAgent(word, searchIndexes, 'feminine');
+	addVerbAgent(word, searchIndexes, 'masculine');
+	addVerbAgent(word, searchIndexes, 'dishonorable');
 }
 
 function addVerbVoice(word, searchIndexes, verbVoice) {
@@ -526,6 +466,106 @@ function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 		keyword: tense.third.plural,
 		priority: 2,
 		message: tenseStr + ' ' + verbVoice + ' 3rd person plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+}
+
+function addVerbGerund(word, searchIndexes) {
+	addVerbGerundCase(word, searchIndexes, 'nominative');
+	addVerbGerundCase(word, searchIndexes, 'genitive');
+	addVerbGerundCase(word, searchIndexes, 'dative');
+	addVerbGerundCase(word, searchIndexes, 'accusative');
+	addVerbGerundCase(word, searchIndexes, 'vocative');
+}
+
+function addVerbGerundCase(word, searchIndexes, gerundCase) {
+	searchIndexes.push({
+		keyword: word.verb.gerund[gerundCase].singular,
+		priority: 3,
+		message: 'gerund ' + gerundCase + ' singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.verb.gerund[gerundCase].plural,
+		priority: 3,
+		message: 'gerund ' + gerundCase + ' plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+}
+
+function addVerbParticiple(word, searchIndexes, gender) {
+	addVerbParticipleCase(word, searchIndexes, gender, 'nominative');
+	addVerbParticipleCase(word, searchIndexes, gender, 'genitive');
+	addVerbParticipleCase(word, searchIndexes, gender, 'dative');
+	addVerbParticipleCase(word, searchIndexes, gender, 'accusative');
+	addVerbParticipleCase(word, searchIndexes, gender, 'vocative');
+}
+
+function addVerbParticipleCase(word, searchIndexes, gender, pCase) {
+	var caseStr = pCase.replace(/([A-Z])/g, '/$1').toLowerCase();
+	searchIndexes.push({
+		keyword: word.verb.participle[gender][pCase].singular,
+		priority: 3,
+		message: 'participle ' + gender + ' ' + caseStr + ' singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.verb.participle[gender][pCase].plural,
+		priority: 3,
+		message: 'participle ' + gender + ' ' + caseStr + ' plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+}
+
+function addVerbAgent(word, searchIndexes, type) {
+	addVerbAgentCase(word, searchIndexes, type, 'nominative');
+	addVerbAgentCase(word, searchIndexes, type, 'genitive');
+	addVerbAgentCase(word, searchIndexes, type, 'dative');
+	addVerbAgentCase(word, searchIndexes, type, 'accusative');
+	addVerbAgentCase(word, searchIndexes, type, 'vocative');
+}
+
+function addVerbAgentCase(word, searchIndexes, type, agentCase) {
+	searchIndexes.push({
+		keyword: word.verb.agent[type][agentCase].singular,
+		priority: 3,
+		message: 'agent ' + type + ' ' + agentCase + ' singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.verb.agent[type][agentCase].plural,
+		priority: 3,
+		message: 'agent ' + type + ' ' + agentCase + ' plural',
 		word: {
 			orcish: word.orcish,
 			english: word.english,
