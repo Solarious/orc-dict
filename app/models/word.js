@@ -323,6 +323,13 @@ WordSchema.index({
 	unique: true
 });
 
+WordSchema.index({
+	english: 'text',
+	extraInfo: 'text',
+	coinedBy: 'text',
+	namedAfter: 'text'
+});
+
 WordSchema.pre('validate', function(next) {
 	if (this.verb !== undefined && this.PoS !== 'verb') {
 		this.verb = undefined;

@@ -410,10 +410,14 @@ function addRoutesForSearch(app) {
 			return res.status(400).send('missing query paramerter q');
 		}
 
-		search.getMatches(q)
+		Promise.all([
+			search.getMatches(q),
+			search.getTextMatches(q)
+		])
 		.then(function(data) {
 			res.json({
-				results: data
+				results: data[0],
+				textResults: data[1]
 			});
 		})
 		.catch(function(error) {

@@ -26,3 +26,17 @@
 		</tr>
 	</table>
 </div>
+
+<div ng-if="vm.textResults">
+	<table class="table table-condensed">
+		<tr>
+			<th>English Results</th>
+		</tr>
+		<tr ng-repeat="word in vm.textResults">
+			<td><a ng-href="/words/{{word.orcish}}/{{word.num}}">
+				<strong>{{word.orcish}}</strong>
+				, {{word.PoS}}, {{word.english}}.
+			</a></td>
+		</tr>
+	</table>
+</div>

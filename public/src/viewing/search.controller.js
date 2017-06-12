@@ -18,6 +18,7 @@ function SearchController(SearchService, $location, AlertService) {
 		SearchService.search($location.search().q)
 		.then(function(data) {
 			vm.results = data.results;
+			vm.textResults = data.textResults;
 			setActive(0);
 		}, function(error) {
 			AlertService.error(error);

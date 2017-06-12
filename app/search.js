@@ -5,6 +5,7 @@ var Word = require('./models/word');
 
 module.exports = {
 	getMatches: getMatches,
+	getTextMatches: getTextMatches,
 	getSearchIndexes: getSearchIndexes,
 	rebuild: rebuild,
 	getAll: getAll,
@@ -44,6 +45,28 @@ function getMatches(text) {
 		}
 		return results;
 	});
+}
+
+function getTextMatches(text) {
+	return Word.find({
+		$text: {
+			$search: text
+		}
+	}, {
+		orcish: 1,
+		english: 1,
+		PoS: 1,
+		num: 1,
+		score: {
+			$meta: 'textScore'
+		}
+	})
+	.sort({
+		score: {
+			$meta: 'textScore'
+		}
+	})
+	.exec();
 }
 
 function getTransformedSearchIndexes(searchString) {
@@ -188,17 +211,6 @@ function createIndexesForWord(word) {
 			num: word.num
 		}
 	});
-	searchIndexes.push({
-		keyword: word.english,
-		priority: 1,
-		message: 'english',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
 	if (word.PoS === 'noun') {
 		addNoun(word, searchIndexes);
 	} else if (word.PoS === 'verb') {
@@ -263,7 +275,7 @@ function forInsertMany(words) {
 
 	for (let i = 0; i < words.length; i++) {
 		let word = words[i];
-		let size = 2;
+		let size = 1;
 		if (word.PoS === 'noun') { size += 10; }
 		if (word.PoS === 'adjective') { size += 20; }
 		if (word.PoS === 'verb') { size += 124; }
@@ -281,25 +293,17 @@ function forInsertMany(words) {
 		arrays.push(part);
 	}
 
-	if (process.env.NODE_ENV !== 'test') {
-		if (arrays.length === 1) {
-			console.log('There is 1 part to rebuild');
-		} else {
-			console.log('There are ' + arrays.length + ' parts to rebuild');
-		}
-	}
+	var numOfParts = arrays.length;
 
 	arrays.forEach(function(part, i) {
 		promise = promise.then(function() {
 			if (process.env.NODE_ENV !== 'test') {
-				console.log('rebuilding part ' + (i + 1));
+				console.log('rebuilding part ' + (i + 1) + '/' + numOfParts);
 			}
 			return insertPart(part);
 		});
 	});
-	return promise.then(function() {
-		console.log('rebuilding done');
-	});
+	return promise;
 }
 
 function insertPart(words) {
