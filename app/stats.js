@@ -69,7 +69,8 @@ function build() {
 					ed: 0,
 					d: 0,
 					z: 0,
-					dj: 0
+					dj: 0,
+					on: 0
 				},
 				third: {
 					count: 0,
@@ -154,7 +155,9 @@ function reduceWord(stats, word) {
 			let gender = word.noun.gender;
 			declStr += gender.charAt(0).toUpperCase() + gender.slice(1);
 		}
+
 		stats[word.PoS][declStr].count += 1;
+
 		if (declStr === 'first') {
 			addNounEnding(stats, word, declStr, ['ad', 'am', 'ag', 'aed']);
 		}
@@ -162,7 +165,9 @@ function reduceWord(stats, word) {
 			addNounEnding(stats, word, declStr, ['ul', 'or', 'k', 'x']);
 		}
 		if (declStr === 'secondNeutral') {
-			addNounEnding(stats, word, declStr, ['id', 'ed', 'd', 'z', 'dj']);
+			addNounEnding(
+				stats, word, declStr, ['id', 'ed', 'd', 'z', 'dj', 'on']
+			);
 		}
 		if (declStr === 'third') {
 			addNounEnding(stats, word, declStr, ['ash', 'ard', 'rd']);
@@ -188,16 +193,14 @@ function reduceWord(stats, word) {
 }
 
 function addNounEnding(stats, word, declStr, endings) {
-	var found = false;
-	endings.forEach(function(ending) {
+	for (let i = 0; i < endings.length; i++) {
+		let ending = endings[i];
 		if (word.orcish.endsWith(ending)) {
 			stats[word.PoS][declStr][ending] += 1;
-			found = true;
+			return;
 		}
-	});
-	if (!found) {
-		throw new Error(
-			'word ' + word.orcish + ' does not have any of the given endings'
-		);
 	}
+	throw new Error(
+		'word ' + word.orcish + ' does not have any of the given endings'
+	);
 }
