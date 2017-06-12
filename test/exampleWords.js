@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = {
-	getNouns: getNouns
+	getNouns: getNouns,
+	getVerbs: getVerbs
 };
 
 function getNouns() {
@@ -818,6 +819,315 @@ function getNouns() {
 				}
 			}
 		},
+	];
+}
+
+function getVerbs() {
+	return [
+		{
+			orcish: 'ka',
+			english: 'kill',
+			PoS: 'verb',
+			verb: {
+				conjugation: 'first',
+				infinitive: {
+					active: 'ka',
+					passive: 'kare'
+				},
+				active: {
+					present: {
+						first: {
+							singular: 'kag',
+							plural: 'kagax'
+						},
+						second: {
+							singular: 'kas',
+							plural: 'kagas'
+						},
+						third: {
+							singular: 'kak',
+							plural: 'kagek'
+						}
+					},
+					past: {
+						first: {
+							singular: 'ashkag',
+							plural: 'ashkagax'
+						},
+						second: {
+							singular: 'ashkas',
+							plural: 'ashkagas'
+						},
+						third: {
+							singular: 'ashkak',
+							plural: 'ashkagek'
+						}
+					},
+					future: {
+						first: {
+							singular: 'arkag',
+							plural: 'arkagax'
+						},
+						second: {
+							singular: 'arkas',
+							plural: 'arkagas'
+						},
+						third: {
+							singular: 'arkak',
+							plural: 'arkagek'
+						}
+					},
+					pastPerfect: {
+						first: {
+							singular: 'hushkag',
+							plural: 'hushkagax'
+						},
+						second: {
+							singular: 'hushkas',
+							plural: 'hushkagas'
+						},
+						third: {
+							singular: 'hushkak',
+							plural: 'hushkagek'
+						}
+					},
+					futurePerfect: {
+						first: {
+							singular: 'hurkag',
+							plural: 'hurkagax'
+						},
+						second: {
+							singular: 'hurkas',
+							plural: 'hurkagas'
+						},
+						third: {
+							singular: 'hurkak',
+							plural: 'hurkagek'
+						}
+					}
+				},
+				passive: {
+					present: {
+						first: {
+							singular: 'kareg',
+							plural: 'karegax'
+						},
+						second: {
+							singular: 'karas',
+							plural: 'karegas'
+						},
+						third: {
+							singular: 'karuk',
+							plural: 'karegek'
+						}
+					},
+					past: {
+						first: {
+							singular: 'ashkareg',
+							plural: 'ashkaregax'
+						},
+						second: {
+							singular: 'ashkaras',
+							plural: 'ashkaregas'
+						},
+						third: {
+							singular: 'ashkaruk',
+							plural: 'ashkaregek'
+						}
+					},
+					future: {
+						first: {
+							singular: 'arkareg',
+							plural: 'arkaregax'
+						},
+						second: {
+							singular: 'arkaras',
+							plural: 'arkaregas'
+						},
+						third: {
+							singular: 'arkaruk',
+							plural: 'arkaregek'
+						}
+					},
+					pastPerfect: {
+						first: {
+							singular: 'hushkareg',
+							plural: 'hushkaregax'
+						},
+						second: {
+							singular: 'hushkaras',
+							plural: 'hushkaregas'
+						},
+						third: {
+							singular: 'hushkaruk',
+							plural: 'hushkaregek'
+						}
+					},
+					futurePerfect: {
+						first: {
+							singular: 'hurkareg',
+							plural: 'hurkaregax'
+						},
+						second: {
+							singular: 'hurkaras',
+							plural: 'hurkaregas'
+						},
+						third: {
+							singular: 'hurkaruk',
+							plural: 'hurkaregek'
+						}
+					}
+				},
+				imperative: {
+					singular: 'kart',
+					plural: 'karit'
+				},
+				gerund: {
+					declension: 'second',
+					gender: 'neutral',
+					nominative: {
+						singular: 'kon',
+						plural: 'kidz'
+					},
+					genitive: {
+						singular: 'ku',
+						plural: 'kurru'
+					},
+					dative: {
+						singular: 'ko',
+						plural: 'kaes'
+					},
+					accusative: {
+						singular: 'kudz',
+						plural: 'kuluz'
+					},
+					vocative: {
+						singular: 'ko',
+						plural: 'kaes'
+					},
+				},
+				participle: {
+					feminine: {
+						nominative: {
+							singular: 'konad',
+							plural: 'konadz'
+						},
+						genitive: {
+							singular: 'konar',
+							plural: 'konarru'
+						},
+						dative: {
+							singular: 'konae',
+							plural: 'konaes'
+						},
+						accusative: {
+							singular: 'konaz',
+							plural: 'konaruz'
+						},
+						vocative: {
+							singular: 'konae',
+							plural: 'konaes'
+						}
+					},
+					masculineNeutral: {
+						nominative: {
+							singular: 'konul',
+							plural: 'konulz'
+						},
+						genitive: {
+							singular: 'konu',
+							plural: 'konurru'
+						},
+						dative: {
+							singular: 'kono',
+							plural: 'konors'
+						},
+						accusative: {
+							singular: 'konudz',
+							plural: 'konuluz'
+						},
+						vocative: {
+							singular: 'kono',
+							plural: 'konors'
+						}
+					},
+				},
+				agent: {
+					feminine: {
+						declension: 'first',
+						gender: 'feminine',
+						nominative: {
+							singular: 'kag',
+							plural: 'kadz'
+						},
+						genitive: {
+							singular: 'kar',
+							plural: 'karru'
+						},
+						dative: {
+							singular: 'kae',
+							plural: 'kaes'
+						},
+						accusative: {
+							singular: 'kaz',
+							plural: 'karuz'
+						},
+						vocative: {
+							singular: 'kae',
+							plural: 'kaes'
+						}
+					},
+					masculine: {
+						declension: 'second',
+						gender: 'masculine',
+						nominative: {
+							singular: 'kak',
+							plural: 'kulz'
+						},
+						genitive: {
+							singular: 'ku',
+							plural: 'kurru'
+						},
+						dative: {
+							singular: 'ko',
+							plural: 'kors'
+						},
+						accusative: {
+							singular: 'kudz',
+							plural: 'kuluz'
+						},
+						vocative: {
+							singular: 'ko',
+							plural: 'kors'
+						}
+					},
+					dishonorable: {
+						declension: 'second',
+						gender: 'neutral',
+						nominative: {
+							singular: 'kadj',
+							plural: 'kadjidz'
+						},
+						genitive: {
+							singular: 'kadju',
+							plural: 'kadjurru'
+						},
+						dative: {
+							singular: 'kadjo',
+							plural: 'kadjaes'
+						},
+						accusative: {
+							singular: 'kadjudz',
+							plural: 'kadjuluz'
+						},
+						vocative: {
+							singular: 'kadjo',
+							plural: 'kadjaes'
+						}
+					}
+				}
+			}
+		}
 	];
 }
 

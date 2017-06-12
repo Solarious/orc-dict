@@ -12,7 +12,6 @@ var exampleWords = require('./exampleWords');
 chai.use(chaiHttp);
 
 describe('Autofill', function() {
-
 	describe('other PoS', function() {
 		var cannotUsePoS = [
 			'adverb',
@@ -72,18 +71,31 @@ describe('Autofill', function() {
 
 	describe('nouns', function() {
 		exampleWords.getNouns().forEach(function(word) {
-			if (word.PoS === 'noun') {
-				var str = word.orcish + ', ' + word.PoS + ', ' + word.english;
-				it('it should handle "' + str + '" correctly', function() {
-					return chai.request(server)
-					.get('/api/autofillword/' + word.PoS + '/' + word.orcish)
-					.then(function(res) {
-						res.should.have.status(200);
-						res.body.should.be.an('object');
-						res.body.should.eql(word.noun);
-					});
+			var str = word.orcish + ', ' + word.PoS + ', ' + word.english;
+			it('it should handle "' + str + '" correctly', function() {
+				return chai.request(server)
+				.get('/api/autofillword/' + word.PoS + '/' + word.orcish)
+				.then(function(res) {
+					res.should.have.status(200);
+					res.body.should.be.an('object');
+					res.body.should.eql(word.noun);
 				});
-			}
+			});
+		});
+	});
+
+	describe('verbs', function() {
+		exampleWords.getVerbs().forEach(function(word) {
+			var str = word.orcish + ', ' + word.PoS + ', ' + word.english;
+			it('it should handle "' + str + '" correctly', function() {
+				return chai.request(server)
+				.get('/api/autofillword/' + word.PoS + '/' + word.orcish)
+				.then(function(res) {
+					res.should.have.status(200);
+					res.body.should.be.an('object');
+					res.body.should.eql(word.verb);
+				});
+			});
 		});
 	});
 });
