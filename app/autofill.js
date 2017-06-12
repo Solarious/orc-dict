@@ -65,6 +65,10 @@ function getVerb(orcish) {
 }
 
 function getNoun(orcish) {
+	if (orcish.indexOf(' ') !== -1) {
+		return irregularNoun(orcish);
+	}
+
 	var endings;
 
 	// aed has been removed to avoid conflicting with neutral 2nd decl.
