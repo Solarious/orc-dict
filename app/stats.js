@@ -41,6 +41,9 @@ function build() {
 			conjunction: {
 				count: 0
 			},
+			copula: {
+				count: 0
+			},
 			exclamation: {
 				count: 0
 			},
@@ -129,7 +132,6 @@ function build() {
 				count: 0,
 				first: 0,
 				second: 0,
-				irregular: 0
 			},
 			total: 0
 		});

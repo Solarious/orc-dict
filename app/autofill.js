@@ -43,6 +43,8 @@ function autofill(orcish, PoS) {
 		throw new Error('Can not use autofill with PoS: prefix');
 	} else if (PoS === 'suffix') {
 		throw new Error('Can not use autofill with PoS: suffix');
+	} else if (PoS === 'copula') {
+		throw new Error('Can not use autofill with PoS: copula');
 	} else {
 		throw new Error('Invalid PoS: ' + PoS);
 	}

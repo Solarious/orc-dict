@@ -231,6 +231,7 @@ function updateWordFromReq(word, req) {
 	addIfExists(word, req, 'verb');
 	addIfExists(word, req, 'pronoun');
 	addIfExists(word, req, 'affix');
+	addIfExists(word, req, 'copula');
 }
 
 function addIfExists(word, req, property) {

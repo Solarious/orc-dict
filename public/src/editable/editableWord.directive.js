@@ -123,10 +123,10 @@ function EditableWordController() {
 
 	function onChangeOrcish() {
 		vm.showForgetMessage = (
-			(vm.word.PoS === 'noun' && vm.word.noun) ||
+			(vm.word.PoS === 'noun' && vm.word.noun &&
+			vm.word.noun.declension !== 'irregular') ||
 			(vm.word.PoS === 'adjective' && vm.word.adjective) ||
-			(vm.word.PoS === 'verb' && vm.word.verb &&
-			vm.word.verb.conjugation !== 'irregular')
+			(vm.word.PoS === 'verb' && vm.word.verb)
 		);
 	}
 

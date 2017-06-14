@@ -15,6 +15,7 @@ function ExtraController(WordsService, SearchService, AlertService) {
 	vm.showRebuildModal = showRebuildModal;
 	vm.rebuildModalAction = rebuildModalAction;
 	vm.getCorrectArticle = getCorrectArticle;
+	vm.getFormattedPoS = getFormattedPoS;
 
 	activate();
 
@@ -59,6 +60,17 @@ function ExtraController(WordsService, SearchService, AlertService) {
 			return 'an';
 		} else {
 			return 'a';
+		}
+	}
+
+	function getFormattedPoS() {
+		if (vm.PoS === 'copula') {
+			return 'Copular Verb';
+		} else if (vm.PoS === '') {
+			return '';
+		}
+		else {
+			return vm.PoS.slice(0, 1).toUpperCase() + vm.PoS.slice(1);
 		}
 	}
 }

@@ -150,7 +150,7 @@ var VerbInfinitiveSchema = new Schema({
 var VerbSchema = new Schema({
 	conjugation: {
 		type: String,
-		enum: ['first', 'second', 'irregular'],
+		enum: ['first', 'second'],
 		required: true
 	},
 	infinitive: {
@@ -224,6 +224,29 @@ var PronounSchema = new Schema({
 	}
 }, { _id: false });
 
+var CopulaSchema = new Schema({
+	present: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	past: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	future: {
+		type: VerbConjGroupSchema,
+		required: true
+	},
+	infinitive: {
+		type: String,
+		required: true
+	},
+	gerund: {
+		type: NounSchema,
+		required: true
+	}
+}, { _id: false });
+
 var RelatedWordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -291,6 +314,7 @@ var WordSchema = new Schema({
 			'adverb',
 			'cardinal',
 			'conjunction',
+			'copula',
 			'exclamation',
 			'interjection',
 			'noun',
@@ -314,6 +338,7 @@ var WordSchema = new Schema({
 	adjective: AdjectiveSchema,
 	pronoun: PronounSchema,
 	affix: AffixSchema,
+	copula: CopulaSchema
 });
 
 WordSchema.index({
@@ -353,6 +378,9 @@ WordSchema.pre('validate', function(next) {
 				limits: []
 			};
 		}
+	}
+	if (this.copula !== undefined && this.PoS !== 'copula') {
+		this.copula = undefined;
 	}
 	next();
 });
@@ -423,6 +451,10 @@ WordSchema.pre('save', function(next) {
 			return next(new Error(
 				'Word has PoS=="' + this.PoS + '" but affix is undefined'
 			));
+		}
+	} else if (this.PoS === 'copula') {
+		if (!this.copula) {
+			next(new Error('Word has PoS=="copula" but copula is undefined'));
 		}
 	}
 

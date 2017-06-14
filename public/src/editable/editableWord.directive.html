@@ -29,6 +29,7 @@
 					<option value="adverb">Adverb</option>
 					<option value="cardinal">Cardinal</option>
 					<option value="conjunction">Conjunction</option>
+					<option value="copula">Copular Verb</option>
 					<option value="exclamation">Exclamation</option>
 					<option value="interjection">Interjection</option>
 					<option value="noun">Noun</option>
@@ -210,3 +211,7 @@ ng-if="vm.word.PoS==='pronoun'">
 <orc-dict-editable-affix affix="vm.word.affix"
 ng-if="vm.word.PoS==='prefix' || vm.word.PoS==='suffix'">
 </orc-dict-editable-affix>
+
+<orc-dict-editable-copula copula="vm.word.copula"
+ng-if="vm.word.PoS==='copula'">
+</orc-dict-editable-copula>

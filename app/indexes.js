@@ -129,6 +129,8 @@ function createIndexesForWord(word) {
 		addPrefix(word, searchIndexes);
 	} else if (word.PoS === 'suffix') {
 		addSuffix(word, searchIndexes);
+	} else if (word.PoS === 'copula') {
+		addCopula(word, searchIndexes);
 	}
 
 	addKeywords(word, searchIndexes);
@@ -518,6 +520,127 @@ function addSuffix(word, searchIndexes) {
 		},
 		affix: 'suffix',
 		affixLimits: affixLimits
+	});
+}
+
+function addCopula(word, searchIndexes) {
+	addCopulaConj(word, searchIndexes, 'present');
+	addCopulaConj(word, searchIndexes, 'past');
+	addCopulaConj(word, searchIndexes, 'future');
+	addCopulaGerund(word, searchIndexes);
+	searchIndexes.push({
+		keyword: word.copula.infinitive,
+		priority: 2,
+		message: 'infinitive',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+}
+
+function addCopulaConj(word, searchIndexes, verbTense) {
+	var tense = word.copula[verbTense];
+	searchIndexes.push({
+		keyword: tense.first.singular,
+		priority: 2,
+		message: verbTense + ' 1st person singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: tense.first.plural,
+		priority: 2,
+		message: verbTense + ' 1st person plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: tense.second.singular,
+		priority: 2,
+		message: verbTense + ' 2nd person singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: tense.second.plural,
+		priority: 2,
+		message: verbTense + ' 2nd person plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: tense.third.singular,
+		priority: 2,
+		message: verbTense + ' 3rd person singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: tense.third.plural,
+		priority: 2,
+		message: verbTense + ' 3rd person plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+}
+
+function addCopulaGerund(word, searchIndexes) {
+	addCopulaGerundCase(word, searchIndexes, 'nominative');
+	addCopulaGerundCase(word, searchIndexes, 'genitive');
+	addCopulaGerundCase(word, searchIndexes, 'dative');
+	addCopulaGerundCase(word, searchIndexes, 'accusative');
+	addCopulaGerundCase(word, searchIndexes, 'vocative');
+}
+
+function addCopulaGerundCase(word, searchIndexes, gerundCase) {
+	searchIndexes.push({
+		keyword: word.copula.gerund[gerundCase].singular,
+		priority: 3,
+		message: 'gerund ' + gerundCase + ' singular',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.copula.gerund[gerundCase].plural,
+		priority: 3,
+		message: 'gerund ' + gerundCase + ' plural',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
