@@ -20,7 +20,6 @@ describe('Words', function() {
 		res.body.should.have.property('PoS', PoS);
 		res.body.should.have.property('num', num);
 		res.body.relatedWords.should.eql([]);
-		res.body.keywords.should.eql([]);
 		res.body.should.not.have.property('extraInfo');
 		res.body.should.not.have.property('coinedBy');
 		res.body.should.not.have.property('namedAfter');

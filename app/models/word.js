@@ -269,21 +269,6 @@ var RelatedWordSchema = new Schema({
 	}
 }, { _id: false });
 
-var KeywordSchema = new Schema({
-	keyword: {
-		type: String,
-		required: true
-	},
-	priority: {
-		type: Number,
-		required: true
-	},
-	message: {
-		type: String,
-		required: true
-	}
-}, { _id: false });
-
 var LimitSchema = new Schema({
 	PoS: {
 		type: String,
@@ -343,7 +328,6 @@ var WordSchema = new Schema({
 	coinedBy: String,
 	namedAfter: String,
 	relatedWords: [RelatedWordSchema],
-	keywords: [KeywordSchema],
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema,

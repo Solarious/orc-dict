@@ -69,7 +69,6 @@ function forInsertMany(words) {
 		if (word.PoS === 'adjective') { size += 20; }
 		if (word.PoS === 'verb') { size += 124; }
 		if (word.PoS === 'pronoun') { size += 5; }
-		size += word.keywords.length;
 		part.push(word);
 		partSize += size;
 		if (partSize > sizePerPart) {
@@ -162,8 +161,6 @@ function createIndexesForWord(word) {
 	} else if (word.PoS === 'copular verb') {
 		addCopula(word, searchIndexes);
 	}
-
-	addKeywords(word, searchIndexes);
 
 	return searchIndexes;
 }
@@ -683,21 +680,4 @@ function addCopulaGerundCase(word, searchIndexes, gerundCase) {
 			num: word.num
 		}
 	});
-}
-
-function addKeywords(word, searchIndexes) {
-	for (let i = 0; i < word.keywords.length; i++) {
-		let keyword = word.keywords[i];
-		searchIndexes.push({
-			keyword: keyword.keyword,
-			priority: keyword.priority,
-			message: keyword.message,
-			word: {
-				orcish: word.orcish,
-				english: word.english,
-				PoS: word.PoS,
-				num: word.num
-			}
-		});
-	}
 }

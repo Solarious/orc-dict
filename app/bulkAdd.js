@@ -188,14 +188,6 @@ function handleExtras(word, extra) {
 					word.extraInfo = value;
 				}
 			}
-			if (operation === 'a.e.k.') {
-				word.keywords = word.keywords || [];
-				word.keywords.push({
-					keyword: value,
-					priority: 1,
-					message: 'english'
-				});
-			}
 		} else {
 			return word;
 		}

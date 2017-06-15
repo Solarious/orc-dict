@@ -28,13 +28,9 @@ function EditableWordController() {
 	var vm = this;
 
 	vm.toggleRelatedWords = toggleRelatedWords;
-	vm.toggleKeywords = toggleKeywords;
 	vm.addRelatedWord = addRelatedWord;
-	vm.addKeyword = addKeyword;
 	vm.removeRelatedWord = removeRelatedWord;
-	vm.removeKeyword = removeKeyword;
 	vm.getNumRelatedWords = getNumRelatedWords;
-	vm.getNumKeywords = getNumKeywords;
 	vm.canAutofill = canAutofill;
 	vm.showHelpModal = showHelpModal;
 	vm.onChangeOrcish = onChangeOrcish;
@@ -44,7 +40,6 @@ function EditableWordController() {
 
 	function activate() {
 		vm.toggleRelatedWords();
-		vm.toggleKeywords();
 	}
 
 	function toggleRelatedWords() {
@@ -57,16 +52,6 @@ function EditableWordController() {
 		}
 	}
 
-	function toggleKeywords() {
-		if (vm.showKeywords === undefined || vm.showKeywords) {
-			vm.showKeywords = false;
-			vm.showKeywordsText = 'Show Extra Keywords';
-		} else {
-			vm.showKeywords = true;
-			vm.showKeywordsText = 'Hide Extra Keywords';
-		}
-	}
-
 	function addRelatedWord() {
 		vm.word.relatedWords = vm.word.relatedWords || [];
 		vm.word.relatedWords.push({
@@ -75,34 +60,13 @@ function EditableWordController() {
 		});
 	}
 
-	function addKeyword() {
-		vm.word.keywords = vm.word.keywords || [];
-		vm.word.keywords.push({
-			keyword: '',
-			priority: 1,
-			message: ''
-		});
-	}
-
 	function removeRelatedWord(index) {
 		vm.word.relatedWords.splice(index, 1);
-	}
-
-	function removeKeyword(index) {
-		vm.word.keywords.splice(index, 1);
 	}
 
 	function getNumRelatedWords() {
 		if (vm.word && vm.word.relatedWords) {
 			return vm.word.relatedWords.length;
-		} else {
-			return 0;
-		}
-	}
-
-	function getNumKeywords() {
-		if (vm.word && vm.word.keywords) {
-			return vm.word.keywords.length;
 		} else {
 			return 0;
 		}

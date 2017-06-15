@@ -78,21 +78,6 @@
 			</td>
 		</tr>
 		<tr>
-			<th>
-				<ng-pluralize count="vm.getNumKeywords()"
-				when="{'0': 'There are no extra keywords',
-				'one': 'There is 1 extra keyword',
-				'other': 'There are {} extra keywords'}">
-				</ng-pluralize>
-			</th>
-			<td>
-				<button type="button" class="btn btn-default form-control"
-				ng-click="vm.toggleKeywords()">
-					{{vm.showKeywordsText}}
-				</button>
-			</td>
-		</tr>
-		<tr>
 			<td>
 				<button type="button" class="btn btn-primary"
 				ng-click="vm.submitFunction()">
@@ -145,47 +130,6 @@
 			<td>
 				<button type="button" class="btn btn-danger"
 				ng-click="vm.removeRelatedWord($index)">
-					<span class="glyphicon glyphicon-remove">
-					</span> Remove
-				</button>
-			</td>
-		</tr>
-	</table>
-</div>
-
-<div class="col-md-8" ng-show="vm.showKeywords">
-	<table class="table table-condensed table-bordered">
-		<tr>
-			<th colspan="3">Extra Keywords</th>
-			<td class="minimize-width">
-				<button type="button" class="btn btn-default"
-				ng-click="vm.addKeyword()">
-					New Keyword
-				</button>
-			</td>
-		</tr>
-		<tr>
-			<th>Keyword</th>
-			<th>Priority</th>
-			<th>Type</th>
-			<td></td>
-		</tr>
-		<tr ng-repeat="keyword in vm.word.keywords">
-			<td>
-				<input class="form-control" type="text"
-				ng-model="keyword.keyword"/>
-			</td>
-			<td>
-				<input class="form-control" type="number"
-				ng-model="keyword.priority"/>
-			</td>
-			<td>
-				<input class="form-control" type="text"
-				ng-model="keyword.message"/>
-			</td>
-			<td>
-				<button type="button" class="btn btn-danger"
-				ng-click="vm.removeKeyword($index)">
 					<span class="glyphicon glyphicon-remove">
 					</span> Remove
 				</button>
