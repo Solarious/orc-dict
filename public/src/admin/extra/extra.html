@@ -6,7 +6,7 @@ close-text="Cancel" modal-id="removeAllModal">
 		Are you sure you want to remove <strong>every single word</strong>
 		<span ng-show="vm.PoS !=='all'">
 			that is {{vm.getCorrectArticle()}}
-			<em>{{vm.getFormattedPoS()}}</em>?
+			<span class="capitalize"><em>{{vm.PoS}}</em></span>?
 		</span>
 	</h4>
 </orc-dict-modal>
@@ -35,7 +35,7 @@ modal-id="rebuildModal" btn-type="warning">
 				<option value="adverb">Adverb</option>
 				<option value="cardinal">Cardinal</option>
 				<option value="conjection">Conjection</option>
-				<option value="copula">Copular Verb</option>
+				<option value="copular verb">Copular Verb</option>
 				<option value="exclamation">Exclamation</option>
 				<option value="interjection">Interjection</option>
 				<option value="noun">Noun</option>

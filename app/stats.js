@@ -41,7 +41,7 @@ function build() {
 			conjunction: {
 				count: 0
 			},
-			copula: {
+			'copular verb': {
 				count: 0
 			},
 			exclamation: {

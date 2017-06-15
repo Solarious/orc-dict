@@ -314,7 +314,7 @@ var WordSchema = new Schema({
 			'adverb',
 			'cardinal',
 			'conjunction',
-			'copula',
+			'copular verb',
 			'exclamation',
 			'interjection',
 			'noun',
@@ -379,7 +379,7 @@ WordSchema.pre('validate', function(next) {
 			};
 		}
 	}
-	if (this.copula !== undefined && this.PoS !== 'copula') {
+	if (this.copula !== undefined && this.PoS !== 'copular verb') {
 		this.copula = undefined;
 	}
 	next();
@@ -452,9 +452,11 @@ WordSchema.pre('save', function(next) {
 				'Word has PoS=="' + this.PoS + '" but affix is undefined'
 			));
 		}
-	} else if (this.PoS === 'copula') {
+	} else if (this.PoS === 'copular verb') {
 		if (!this.copula) {
-			next(new Error('Word has PoS=="copula" but copula is undefined'));
+			next(new Error(
+				'Word has PoS=="copular verb" but copula is undefined'
+			));
 		}
 	}
 

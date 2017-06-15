@@ -129,7 +129,7 @@ function createIndexesForWord(word) {
 		addPrefix(word, searchIndexes);
 	} else if (word.PoS === 'suffix') {
 		addSuffix(word, searchIndexes);
-	} else if (word.PoS === 'copula') {
+	} else if (word.PoS === 'copular verb') {
 		addCopula(word, searchIndexes);
 	}
 

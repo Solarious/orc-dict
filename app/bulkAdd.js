@@ -109,8 +109,8 @@ function bulkAdd(data, encoding, method, order) {
 			if (word.PoS === 'pronoun') {
 				throw new Error('Cannot use bulkadd with pronouns');
 			}
-			if (word.PoS === 'copula') {
-				throw new Error('Cannot use bulkadd with copulas');
+			if (word.PoS === 'copular verb') {
+				throw new Error('Cannot use bulkadd with copular verbs');
 			}
 
 			return word;
