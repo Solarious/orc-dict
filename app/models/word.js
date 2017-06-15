@@ -224,6 +224,17 @@ var PronounSchema = new Schema({
 	}
 }, { _id: false });
 
+var CopulaInfinitiveSchema = new Schema({
+	present: {
+		type: String,
+		required: false
+	},
+	future: {
+		type: String,
+		required: false
+	}
+}, { _id: false });
+
 var CopulaSchema = new Schema({
 	present: {
 		type: VerbConjGroupSchema,
@@ -238,7 +249,7 @@ var CopulaSchema = new Schema({
 		required: true
 	},
 	infinitive: {
-		type: String,
+		type: CopulaInfinitiveSchema,
 		required: true
 	},
 	gerund: {

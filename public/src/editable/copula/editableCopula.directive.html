@@ -2,9 +2,19 @@
 	<table class="table table-condensed table-bordered">
 		<tr>
 			<th colspan="2" class="text-center">Infinitive</th>
+		</tr>
+		<tr>
+			<th>Present</th>
+			<th>Future</th>
+		</tr>
+		<tr>
 			<td>
 				<input type="text" class="form-control"
-				ng-model="copula.infinitive"/>
+				ng-model="copula.infinitive.present"/>
+			</td>
+			<td>
+				<input type="text" class="form-control"
+				ng-model="copula.infinitive.future"/>
 			</td>
 		</tr>
 	</table>
@@ -21,8 +31,6 @@ title="1st Conj. Past">
 <orc-dict-editable-verb-conj-table conj="copula.future"
 title="1st Conj. Future">
 </orc-dict-editable-verb-conj-table>
-
-<div class="clearfix"></div>
 
 <orc-dict-editable-verb-noun-table noun="copula.gerund" title="Gerund">
 </orc-dict-editable-verb-noun-table>

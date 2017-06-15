@@ -545,9 +545,20 @@ function addCopula(word, searchIndexes) {
 	addCopulaConj(word, searchIndexes, 'future');
 	addCopulaGerund(word, searchIndexes);
 	searchIndexes.push({
-		keyword: word.copula.infinitive,
+		keyword: word.copula.infinitive.present,
 		priority: 2,
-		message: 'infinitive',
+		message: 'present infinitive',
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
+	});
+	searchIndexes.push({
+		keyword: word.copula.infinitive.future,
+		priority: 2,
+		message: 'future infinitive',
 		word: {
 			orcish: word.orcish,
 			english: word.english,
