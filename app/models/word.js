@@ -396,53 +396,73 @@ WordSchema.pre('validate', function(next) {
 	next();
 });
 
+function validateNoun(noun, preStr) {
+	preStr = preStr || '';
+	if (noun.declension === 'first') {
+		if (noun.gender !== 'feminine') {
+			return preStr + 'First declension noun must have gender feminine';
+		}
+	} else if (noun.declension === 'second') {
+		if (noun.gender === 'feminine' ) {
+			return preStr + 'Second declension noun must have gender ' +
+			'masculine or neutral';
+		}
+	} else if (noun.declension === 'third') {
+		if (noun.gender !== 'feminine') {
+			return preStr + 'Third declension noun must have gender feminine';
+		}
+	} else if (noun.declension === 'fourth') {
+		if (noun.gender !== 'masculine') {
+			return preStr + 'Fourth declension noun must have gender masculine';
+		}
+	} else if (noun.declension === 'fifth') {
+		if (noun.gender !== 'neutral') {
+			return preStr + 'Fifth declension noun must have gender neutral';
+		}
+	}
+
+	return '';
+}
+
 WordSchema.pre('save', function(next) {
 	if (this.PoS === 'verb') {
-		if (!this.verb) {
+		let verb = this.verb;
+		if (!verb) {
 			next(new Error('Word has PoS=="verb" but verb is undefined'));
 			return;
 		}
+		let result = validateNoun(verb.gerund, 'Gerund as a ');
+		if (result) {
+			return next(new Error(result));
+		}
+		result = validateNoun(
+			verb.agent.feminine, 'Feminine Agent as a '
+		);
+		if (result) {
+			return next(new Error(result));
+		}
+		result = validateNoun(
+			verb.agent.masculine, 'Masculine Agent as a '
+		);
+		if (result) {
+			return next(new Error(result));
+		}
+		result = validateNoun(
+			verb.agent.dishonorable, 'Dishonorable Agent as a '
+		);
+		if (result) {
+			return next(new Error(result));
+		}
 	} else if (this.PoS === 'noun') {
-		var noun = this.noun;
+		let noun = this.noun;
 		if (!noun) {
 			next(new Error('Word has PoS==noun but noun is undefined'));
 			return;
 		}
-		if (noun.declension === 'first') {
-			if (noun.gender !== 'feminine') {
-				next(new Error(
-					'1st declention noun must have gender feminine'
-				));
-				return;
-			}
-		} else if (noun.declension === 'second') {
-			if (noun.gender === 'feminine' ) {
-				next(new Error(
-					'1st declention noun must have gender masculine or neutral'
-				));
-				return;
-			}
-		} else if (noun.declension === 'third') {
-			if (noun.gender !== 'feminine') {
-				next(new Error(
-					'1st declention noun must have gender feminine'
-				));
-				return;
-			}
-		} else if (noun.declension === 'fourth') {
-			if (noun.gender !== 'masculine') {
-				next(new Error(
-					'1st declention noun must have gender masculine'
-				));
-				return;
-			}
-		} else if (noun.declension === 'fifth') {
-			if (noun.gender !== 'neutral') {
-				next(new Error(
-					'1st declention noun must have gender neutral'
-				));
-				return;
-			}
+		let result = validateNoun(noun);
+		if (result) {
+			next(new Error(result));
+			return;
 		}
 	} else if (this.PoS === 'adjective') {
 		if (!this.adjective) {
@@ -468,6 +488,10 @@ WordSchema.pre('save', function(next) {
 			next(new Error(
 				'Word has PoS=="copular verb" but copula is undefined'
 			));
+		}
+		let result = validateNoun(this.copula.gerund, 'Gerund as a ');
+		if (result) {
+			return next(new Error(result));
 		}
 	}
 
