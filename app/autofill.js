@@ -141,15 +141,15 @@ function getAdjective(orcish) {
 		);
 	}
 	var feminineOrcish = parts[0];
-	var mascNeutOrcish = parts[1];
-	if (mascNeutOrcish[0] === '-') {
-		mascNeutOrcish = mascNeutOrcish.slice(1);
-		var endLen = mascNeutOrcish.length;
-		mascNeutOrcish = feminineOrcish.slice(0, -endLen) + mascNeutOrcish;
+	var masculineOrcish = parts[1];
+	if (masculineOrcish[0] === '-') {
+		masculineOrcish = masculineOrcish.slice(1);
+		var endLen = masculineOrcish.length;
+		masculineOrcish = feminineOrcish.slice(0, -endLen) + masculineOrcish;
 	}
 	var error;
 	var feminineData;
-	var mascNeutData;
+	var masculineData;
 	try {
 		feminineData = getNoun(feminineOrcish);
 	} catch (error) {
@@ -158,17 +158,17 @@ function getAdjective(orcish) {
 		);
 	}
 	try {
-		mascNeutData = getNoun(mascNeutOrcish);
+		masculineData = getNoun(masculineOrcish);
 	} catch (error) {
 		throw new Error(
-			'Word ' + orcish + ' masculine/neutral part had error ' +
+			'Word ' + orcish + ' masculine part had error ' +
 			error.message
 		);
 	}
 
 	return {
 		feminine: nounToAdjectivePart(feminineData),
-		masculineNeutral: nounToAdjectivePart(mascNeutData)
+		masculine: nounToAdjectivePart(masculineData)
 	};
 }
 
@@ -206,7 +206,7 @@ function getIrregularAdjective(orcish) {
 				plural: orcish
 			}
 		},
-		masculineNeutral: {
+		masculine: {
 			nominative: {
 				singular: orcish,
 				plural: orcish

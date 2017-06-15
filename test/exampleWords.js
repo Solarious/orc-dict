@@ -1029,7 +1029,7 @@ function getVerbs() {
 							plural: 'konaes'
 						}
 					},
-					masculineNeutral: {
+					masculine: {
 						nominative: {
 							singular: 'konul',
 							plural: 'konulz'

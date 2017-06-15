@@ -253,7 +253,7 @@ function addVerb(word, searchIndexes) {
 	});
 	addVerbGerund(word, searchIndexes);
 	addVerbParticiple(word, searchIndexes, 'feminine');
-	addVerbParticiple(word, searchIndexes, 'masculineNeutral');
+	addVerbParticiple(word, searchIndexes, 'masculine');
 	addVerbAgent(word, searchIndexes, 'feminine');
 	addVerbAgent(word, searchIndexes, 'masculine');
 	addVerbAgent(word, searchIndexes, 'dishonorable');
@@ -440,7 +440,7 @@ function addVerbAgentCase(word, searchIndexes, type, agentCase) {
 
 function addAdjective(word, searchIndexes) {
 	addAdjectiveGender(word, searchIndexes, 'feminine');
-	addAdjectiveGender(word, searchIndexes, 'masculineNeutral');
+	addAdjectiveGender(word, searchIndexes, 'masculine');
 }
 
 function addAdjectiveGender(word, searchIndexes, gender) {

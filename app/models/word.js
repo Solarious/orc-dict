@@ -77,7 +77,7 @@ var AdjectiveSchema = new Schema({
 		type: AdjectiveDeclensionSchema,
 		required: true
 	},
-	masculineNeutral: {
+	masculine: {
 		type: AdjectiveDeclensionSchema,
 		required: true
 	}
