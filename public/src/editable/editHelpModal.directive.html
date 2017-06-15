@@ -1,10 +1,15 @@
-<orc-dict-modal modal-id="{{modalId}}" close-text="Close" classes="modal-lg">
+<orc-dict-modal modal-id="{{vm.modalId}}" close-text="Close" classes="modal-lg">
 	<dl>
 		<dt>Orcish</dt>
 		<dd>Must be in lower case</dd>
 		<dd>
-			Adjective use the form "feminine, -masculinEnding" or
-			"feminine, masculine" e.g. "abriad, -ul" or "eduad, edul"
+			Adjective use the form <code>"feminine, -masculinEnding"</code> or
+			<code>"feminine, masculine"</code> e.g. <code>"abriad, -ul"</code>
+			or <code>"eduad, edul"</code>
+		</dd>
+		<dd>
+			Prefixes and suffixes use the forms <code>"orcish-"</code> or
+			<code>"-orcish"</code>
 		</dd>
 		<dt>English</dt>
 		<dd>
@@ -18,9 +23,14 @@
 		</dd>
 		<dt>Related Words</dt>
 		<dd>Insert the <em>exact orcish</em> for each word</dd>
+		<dd>
+			The <em>num</em> for a word can be found by checking the number at
+			the end of the url for the word's page
+			e.g. <code>{{vm.getHost()}}/word/ork/1</code>
+		</dd>
 		<dt>Autofill Button</dt>
 		<dd>
-			If the word is a noun, verb or adjective this button can be
+			If the word is a noun, verb or adjective the autofill button can be
 			used to automatically generate the cases, conjugations, participles,
 			and other parts of a word
 		</dd>
