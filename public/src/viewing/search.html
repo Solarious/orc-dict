@@ -18,8 +18,8 @@
 		</tr>
 		<tr ng-repeat="match in vm.activeMatches">
 			<td><a ng-href="/words/{{match.word.orcish}}/{{match.word.num}}">
-				<strong>{{match.word.orcish}}</strong>
-				, {{match.word.PoS}}, {{match.word.english}}.
+				<strong>{{match.word.orcish}}</strong>,
+				<em>{{match.word.PoS}}</em>, {{match.word.english}}.
 			</a></td>
 			<td>{{match.keyword}}</td>
 			<td>{{match.message}}</td>
@@ -34,8 +34,8 @@
 		</tr>
 		<tr ng-repeat="word in vm.textResults">
 			<td><a ng-href="/words/{{word.orcish}}/{{word.num}}">
-				<strong>{{word.orcish}}</strong>
-				, {{word.PoS}}, {{word.english}}.
+				<strong>{{word.orcish}}</strong>,
+				<em>{{word.PoS}}</em>, {{word.english}}.
 			</a></td>
 		</tr>
 	</table>
