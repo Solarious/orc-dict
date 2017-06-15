@@ -117,6 +117,22 @@ function createIndexesForWord(word) {
 			num: word.num
 		}
 	});
+	if (word.orcish.indexOf(' ') !== -1 && word.PoS !== 'adjective') {
+		let parts = word.orcish.split(' ');
+		for (let i = 0; i < parts.length; i++) {
+			searchIndexes.push({
+				keyword: parts[i],
+				priority: 1,
+				message: 'orcish',
+				word: {
+					orcish: word.orcish,
+					english: word.english,
+					PoS: word.PoS,
+					num: word.num
+				}
+			});
+		}
+	}
 	if (word.PoS === 'noun') {
 		addNoun(word, searchIndexes);
 	} else if (word.PoS === 'verb') {
