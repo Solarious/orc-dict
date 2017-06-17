@@ -567,7 +567,7 @@ WordSchema.statics.insertManyWithRetry = function(words, prevResults) {
 				acc.successes.push(result.word);
 			} else {
 				acc.failures.push({
-					error: result.error,
+					errorMessage: result.error.message,
 					word: result.word
 				});
 			}
@@ -577,7 +577,7 @@ WordSchema.statics.insertManyWithRetry = function(words, prevResults) {
 	.then(function(results) {
 		var wordsToRetry = [];
 		results.failures = results.failures.filter(function(failure) {
-			if (failure.error.message ===
+			if (failure.errorMessage ===
 			'A word with the same orcish and num already exists') {
 				delete failure.word.num;
 				wordsToRetry.push(failure.word);
