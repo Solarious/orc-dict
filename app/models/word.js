@@ -520,6 +520,80 @@ WordSchema.statics.getOrcishNums = function(cb) {
 	.exec(cb);
 };
 
+WordSchema.statics.insertManyWithRetry = function(words, prevResults) {
+	var Word = this;
+	prevResults = prevResults || {
+		successes: [],
+		failures: []
+	};
+	return Word.getOrcishNums()
+	.then(function(results) {
+		var obj = results.reduce(function(acc, results) {
+			acc[results._id] = results.nums;
+			return acc;
+		}, {});
+		words.forEach(function(word) {
+			if (!word.num) {
+				let invalidNums = obj[word.orcish] || [];
+				let num = 1;
+				while (invalidNums.indexOf(num) !== -1) {
+					num++;
+				}
+				word.num = num;
+				invalidNums.push(num);
+				obj[word.orcish] = invalidNums;
+			}
+		});
+		return Promise.all(words.map(function(word) {
+			return new Word(word).save()
+			.then(function(result) {
+				return {
+					success: true,
+					word: result
+				};
+			})
+			.catch(function(error) {
+				return {
+					success: false,
+					word: word,
+					error: error
+				};
+			});
+		}));
+	})
+	.then(function(results) {
+		return results.reduce(function(acc, result) {
+			if (result.success) {
+				acc.successes.push(result.word);
+			} else {
+				acc.failures.push({
+					error: result.error,
+					word: result.word
+				});
+			}
+			return acc;
+		}, prevResults);
+	})
+	.then(function(results) {
+		var wordsToRetry = [];
+		results.failures = results.failures.filter(function(failure) {
+			if (failure.error.message ===
+			'A word with the same orcish and num already exists') {
+				delete failure.word.num;
+				wordsToRetry.push(failure.word);
+				return false;
+			} else {
+				return true;
+			}
+		});
+		if (wordsToRetry.length > 0) {
+			return Word.insertManyWithRetry(wordsToRetry, results);
+		} else {
+			return results;
+		}
+	});
+};
+
 WordSchema.pre('insertMany', function(next, docs) {
 	var Word = mongoose.models.Word;
 	Word.getOrcishNums()
