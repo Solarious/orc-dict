@@ -145,14 +145,14 @@ function bulkAdd(data, encoding, method, order) {
 	})
 	.then(function(words) {
 		print('Bulk Add: inserting words');
-		return Word.insertMany(words);
+		return Word.insertManyWithRetry(words);
 	})
 	.then(function(result) {
 		if (method === 'unique' || method === 'duplicate') {
-			indexes.forInsertMany(result);
+			indexes.forInsertMany(result.successes);
 		}
 		if (method === 'remove') {
-			indexes.forReplaceMany(result);
+			indexes.forReplaceMany(result.successes);
 		}
 		return result;
 	});

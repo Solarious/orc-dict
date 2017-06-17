@@ -14,8 +14,10 @@ function alertService($q, $timeout, $http) {
 	var service = {
 		error: error,
 		success: success,
+		warning: warning,
 		errorDeferred: errorDeferred,
 		successDeferred: successDeferred,
+		warningDeferred: warningDeferred,
 		close: close,
 		get: get,
 		clear: clear,
@@ -39,6 +41,14 @@ function alertService($q, $timeout, $http) {
 		});
 	}
 
+	function warning(message) {
+		alerts.unshift({
+			message: message,
+			header: 'Warning!',
+			type: 'warning'
+		});
+	}
+
 	function errorDeferred(message) {
 		deferredAlerts.unshift({
 			message: message,
@@ -52,6 +62,14 @@ function alertService($q, $timeout, $http) {
 			message: message,
 			header: 'Success!',
 			type: 'success'
+		});
+	}
+
+	function warningDeferred(message) {
+		deferredAlerts.unshift({
+			message: message,
+			header: 'Warning!',
+			type: 'warning'
 		});
 	}
 

@@ -27,15 +27,31 @@ function BulkAddController(WordsService, $location, AlertService) {
 		vm.submitDisabled = true;
 		WordsService.bulkAdd(vm.data, vm.encoding, vm.updateMethod, vm.order)
 		.then(function(results) {
-			$location.path('/admin');
-			results = results || [];
-			var num = results.length;
-			if (num === 0) {
-				AlertService.successDeferred('No words added');
-			} else if (num === 1) {
-				AlertService.successDeferred('One word added');
+			if (results.failures.length > 0) {
+				var plural = (results.failures.length === 1) ? '' : 's';
+				var msg = 'While ' + results.successes.length + ' word';
+				msg += plural + ' have been successfully added, ';
+				msg += results.failures.length + ' have not been due to the';
+				msg += ' following error' + plural;
+				for (var i = results.failures.length - 1; i >= 0; i--) {
+					var failure = results.failures[i];
+					var word = failure.word;
+					var errMsg = '\n"' + word.orcish + ', ' + word.PoS + ', ';
+					errMsg += word.english + '": ' + failure.errorMessage;
+					AlertService.error(errMsg);
+				}
+				AlertService.warning(msg);
+				vm.submitDisabled = false;
 			} else {
-				AlertService.successDeferred(num + ' Words added');
+				var num = results.successes.length;
+				if (num === 0) {
+					AlertService.successDeferred('no words added');
+				} else if (num === 1) {
+					AlertService.successDeferred('1 word added');
+				} else {
+					AlertService.successDeferred(num + ' words added');
+				}
+				$location.path('/admin');
 			}
 		}, function(error) {
 			AlertService.error(error || 'Unknown error');

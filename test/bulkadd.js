@@ -22,6 +22,26 @@ function arrayCompare(expected, actual) {
 	}
 }
 
+function arraySortThenCompare(expected, actual) {
+	expected.should.be.an('array');
+	arrayCompare(expected.sort(quickCompare), actual.sort(quickCompare));
+}
+
+function quickCompare(a, b) {
+	if (a.orcish < b.orcish) {
+		return -1;
+	}
+	if (a.orcish > b.orcish) {
+		return 1;
+	}
+	if (a.num < b.num) {
+		return -1;
+	}
+	if (a.num > b.num) {
+		return 1;
+	}
+	return 0;
+}
 
 describe('Bulk Add', function() {
 	var agent;
@@ -80,7 +100,12 @@ describe('Bulk Add', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(200);
-				arrayCompare(words, res.body);
+				res.body.should.be.an('object');
+				res.body.should.have.property('successes');
+				res.body.should.have.property('failures');
+				res.body.failures.should.be.an('array');
+				res.body.failures.should.have.lengthOf(0);
+				arraySortThenCompare(words, res.body.successes);
 			});
 		});
 	}
