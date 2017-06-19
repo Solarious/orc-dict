@@ -70,6 +70,7 @@ SearchIndexSchema.statics.getMatches = function(str, callback) {
 	.sort({
 		priority: 1
 	})
+	.lean()
 	.exec(callback);
 };
 
@@ -83,6 +84,7 @@ SearchIndexSchema.statics.getMatchesWithAffix = function(affix, callback) {
 	return this.find({
 		affix: affix
 	})
+	.lean()
 	.exec(callback);
 };
 
