@@ -5,7 +5,6 @@ process.env.NODE_ENV = 'test';
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var should = chai.should();
-var sinon = require('sinon');
 var server = require('../server');
 var indexes = require('../app/indexes');
 var Word = require('../app/models/word');
@@ -102,10 +101,8 @@ function compare(a, b) {
 describe('Search', function() {
 	var agent;
 	var cookies;
-	var rebuildSpy;
 
 	beforeEach(function() {
-		rebuildSpy = sinon.spy(indexes, 'rebuild');
 		agent = chai.request.agent(server);
 		return agent
 		.get('/api/words')
@@ -146,10 +143,6 @@ describe('Search', function() {
 		});
 	});
 
-	afterEach(function() {
-		rebuildSpy.restore(indexes);
-	});
-
 	describe('Creating and removing SearchIndexes', function() {
 		it('it should start with no SearchIndexes', function() {
 			return chai.request(server)
@@ -177,31 +170,6 @@ describe('Search', function() {
 			.then(function(res) {
 				res.should.have.status(200);
 				test(searchData.with1(), res.body);
-				rebuildSpy.called.should.eql(false);
-			});
-		});
-
-		it('rebuild spy should work correctly', function() {
-			return agent
-			.post('/api/words')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.send({
-				orcish: 'nul',
-				english: 'one',
-				PoS: 'cardinal'
-			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
-			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with1(), res.body);
-				rebuildSpy.called.should.eql(false);
-				return indexes.rebuild();
-			})
-			.then(function() {
-				rebuildSpy.called.should.eql(true);
 			});
 		});
 
@@ -241,7 +209,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with123(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -261,7 +228,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with1234(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -281,7 +247,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with124(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -296,7 +261,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with12(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -318,7 +282,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with12345(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -340,7 +303,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with123yay45(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -362,7 +324,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with1233yay45(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 
@@ -386,7 +347,6 @@ describe('Search', function() {
 				.then(function(res) {
 					res.should.have.status(200);
 					test(searchData.with123(), res.body);
-					rebuildSpy.called.should.eql(false);
 				});
 			});
 		});
