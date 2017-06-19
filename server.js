@@ -60,6 +60,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+require('./app/authentication')();
 
 app.use(csurf());
 app.use(function(req, res, next) {
@@ -83,7 +84,6 @@ app.use(function(err, req, res, next) {
 stats.get();
 
 require('./app/routes')(app);
-require('./app/authentication')();
 console.log('NODE_ENV: ' + process.env.NODE_ENV);
 app.listen(port);
 console.log('Server started on port ' + port);
