@@ -221,9 +221,9 @@ function updateWordFromReq(word, req) {
 	word.orcish = req.body.orcish;
 	word.english = req.body.english;
 	word.PoS = req.body.PoS;
-	addIfExists(word, req, 'extraInfo');
-	addIfExists(word, req, 'coinedBy');
-	addIfExists(word, req, 'namedAfter');
+	add(word, req, 'extraInfo');
+	add(word, req, 'coinedBy');
+	add(word, req, 'namedAfter');
 	addIfExists(word, req, 'relatedWords');
 	addIfExists(word, req, 'adjective');
 	addIfExists(word, req, 'noun');
@@ -236,5 +236,13 @@ function updateWordFromReq(word, req) {
 function addIfExists(word, req, property) {
 	if (req.body[property]) {
 		word[property] = req.body[property];
+	}
+}
+
+function add(word, req, property) {
+	if (req.body[property]) {
+		word[property] = req.body[property];
+	} else {
+		word[property] = undefined;
 	}
 }

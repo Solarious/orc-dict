@@ -19,8 +19,30 @@ describe('Words', function() {
 		res.body.should.have.property('english', english);
 		res.body.should.have.property('PoS', PoS);
 		res.body.should.have.property('num', num);
+		res.body.should.have.property('relatedWords');
 		res.body.relatedWords.should.eql([]);
 		res.body.should.not.have.property('extraInfo');
+		res.body.should.not.have.property('coinedBy');
+		res.body.should.not.have.property('namedAfter');
+		res.body.should.not.have.property('verb');
+		res.body.should.not.have.property('noun');
+		res.body.should.not.have.property('adjective');
+		res.body.should.not.have.property('pronoun');
+		res.body.should.not.have.property('possessive');
+		res.body.should.not.have.property('demonstrative');
+		res.body.should.not.have.property('relative');
+		res.body.should.not.have.property('affix');
+	}
+
+	function confirmWordWithEI(res, orcish, english, PoS, num, extraInfo) {
+		res.should.have.status(200);
+		res.body.should.be.an('object');
+		res.body.should.have.property('orcish', orcish);
+		res.body.should.have.property('english', english);
+		res.body.should.have.property('PoS', PoS);
+		res.body.should.have.property('num', num);
+		res.body.relatedWords.should.eql([]);
+		res.body.should.have.property('extraInfo', extraInfo);
 		res.body.should.not.have.property('coinedBy');
 		res.body.should.not.have.property('namedAfter');
 		res.body.should.not.have.property('verb');
@@ -258,6 +280,35 @@ describe('Words', function() {
 			})
 			.then(function(res) {
 				confirmWord(res, 'thaen', 'three', 'cardinal', 2);
+			});
+		});
+
+		it('it should update(PUT) a word correctly if a value is undefined',
+		function() {
+			return agent
+			.post('/api/words')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				orcish: 'alegin',
+				english: 'million',
+				PoS: 'cardinal',
+				extraInfo: 'Yay'
+			})
+			.then(function(res) {
+				confirmWordWithEI(
+					res, 'alegin', 'million', 'cardinal', 1, 'Yay'
+				);
+				return agent
+				.put('/api/words/alegin/1')
+				.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+				.send({
+					orcish: 'alegin',
+					english: 'million',
+					PoS: 'cardinal'
+				});
+			})
+			.then(function(res) {
+				confirmWord(res, 'alegin', 'million', 'cardinal', 1);
 			});
 		});
 
