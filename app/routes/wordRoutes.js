@@ -62,7 +62,7 @@ function addRoutesForWords(app) {
 			countQuery = countQuery.where('pronoun.type', pronounType);
 		}
 
-		var promises = [query.exec()];
+		var promises = [query.lean().exec()];
 		if (getcount) {
 			promises.push(countQuery.exec());
 		}
@@ -85,77 +85,75 @@ function addRoutesForWords(app) {
 		if (!req.isAuthenticated()) {
 			res.status(401).send('Unauthorized');
 		} else {
-			var newWord = new Word();
-			updateWordFromReq(newWord, req);
-			newWord.save(function(err) {
-				if (err) {
-					res.status(500).send(getBetterErrorMessage(err));
-				} else {
-					res.json(newWord);
-					indexes.forCreate(newWord)
-					.catch(function(error) {
-						console.log('error with indexes.forCreate:');
-						console.log(error);
-					});
-					stats.setNeedsUpdate();
-				}
+			var word = new Word();
+			updateWordFromReq(word, req);
+			word.save()
+			.then(function() {
+				res.json(word);
+				indexes.forCreate(word)
+				.catch(function(error) {
+					console.log('error with indexes.forCreate:');
+					console.log(error);
+				});
+				stats.setNeedsUpdate();
+			})
+			.catch(function(error) {
+				res.status(500).send(getBetterErrorMessage(error));
 			});
 		}
 	});
 
 	app.get('/api/words/:orcish/:num', function(req, res) {
 		Word.findOne({
-			'orcish': req.params.orcish,
-			'num': req.params.num
-		}, function(err, word) {
-			if (err) {
-				res.status(500).send(err.message);
+			orcish: req.params.orcish,
+			num: req.params.num
+		})
+		.lean()
+		.exec()
+		.then(function(word) {
+			if (!word) {
+				res.status(404).send(
+					'cannot find word: ' + req.params.orcish + ' ' +
+					req.params.num
+				);
 			} else {
-				if (!word) {
-					var wordStr = req.params.orcish + ' ' + req.params.num;
-					res.status(404).send(
-						'cannot find word: ' + wordStr
-					);
-				} else {
-					res.setHeader('Cache-Control', 'no-cache');
-					res.json(word);
-				}
+				res.setHeader('Cache-Control', 'no-cache');
+				res.json(word);
 			}
+		})
+		.catch(function(error) {
+			res.status(500).send(error.message);
 		});
 	});
 
 	app.put('/api/words/:orcish/:num', function(req, res) {
 		if (!req.isAuthenticated()) {
-			return res.status(401).send('Unauthorized');
+			res.status(401).send('Unauthorized');
 		} else {
 			Word.findOne({
-				'orcish': req.params.orcish,
-				'num': req.params.num
-			}, function(err, word) {
-				if (err) {
-					return res.status(500).send(err.message);
-				}
+				orcish: req.params.orcish,
+				num: req.params.num
+			})
+			.exec()
+			.then(function(word) {
 				word = word || new Word();
 				updateWordFromReq(word, req);
 				if (req.params.orcish !== word.orcish) {
 					word.num = undefined;
 				}
-				word.save(function(err) {
-					if (err) {
-						res.status(500).send(getBetterErrorMessage(err));
-					} else {
-						res.json(word);
-						indexes.forUpdate(
-							req.params.orcish,
-							req.params.num,
-							word
-						).catch(function(error) {
-							console.log('error with indexes.forUpdate:');
-							console.log(error);
-						});
-						stats.setNeedsUpdate();
-					}
+				return word.save();
+			})
+			.then(function(word) {
+				res.json(word);
+				indexes.forUpdate(req.params.orcish, req.params.num, word)
+				.catch(function(error) {
+					console.log('error with indexes.forUpdate:');
+					console.log(error);
 				});
+			})
+			.catch(function(error) {
+				console.log(error);
+				res.status(400).send(getBetterErrorMessage(error));
 			});
 		}
 	});
@@ -167,10 +165,10 @@ function addRoutesForWords(app) {
 			Word.findOneAndRemove({
 				'orcish': req.params.orcish,
 				'num': req.params.num
-			}, function (err, word) {
-				if (err) {
-					res.status(500).send(err.message);
-				} else if (!word) {
+			})
+			.exec()
+			.then(function(word) {
+				if (!word) {
 					var wordStr = req.params.orcish + ' ' + req.params.num;
 					res.status(404).send('word ' + wordStr + ' does not exits');
 				} else {
@@ -182,6 +180,9 @@ function addRoutesForWords(app) {
 					});
 					stats.setNeedsUpdate();
 				}
+			})
+			.catch(function(error) {
+				res.status(500).send(error.message);
 			});
 		}
 	});
