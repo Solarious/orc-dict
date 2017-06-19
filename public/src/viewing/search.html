@@ -6,7 +6,9 @@
 	<ul class="nav nav-tabs">
 		<li ng-repeat="result in vm.results"
 		ng-class="{active: vm.activeResult === $index}">
-			<a href="#" ng-click="vm.setActive($index)">{{result.str}}</a>
+			<a href="#" draggable="false" ng-click="vm.setActive($index)">
+				{{result.str}}
+			</a>
 		</li>
 	</ul>
 
