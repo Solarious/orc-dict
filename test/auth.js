@@ -86,6 +86,17 @@ describe('authentication', function() {
 				done();
 			});
 		});
+
+		it('DELETE /api/words-by-pos/:pos should send a 403', function(done) {
+			chai.request(server)
+			.delete('/api/words-by-pos/verb')
+			.end(function(err, res) {
+				res.should.have.status(403);
+				res.text.should.be.a('string');
+				res.text.should.eql('Invalid/Missing csrf token');
+				done();
+			});
+		});
 	});
 
 	describe('with XSRF-TOKEN but without first logging in', function() {
@@ -243,6 +254,17 @@ describe('authentication', function() {
 				done();
 			});
 		});
-	});
 
+		it('DELETE /api/words-by-pos/:pos should send a 403', function(done) {
+			agent
+			.delete('/api/words-by-pos/verb')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.end(function(err, res) {
+				res.should.have.status(401);
+				res.text.should.be.a('string');
+				res.text.should.eql('Unauthorized');
+				done();
+			});
+		});
+	});
 });

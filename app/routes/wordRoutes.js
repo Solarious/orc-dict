@@ -187,33 +187,37 @@ function addRoutesForWords(app) {
 	});
 
 	app.delete('/api/words-by-pos/:pos', function(req, res) {
-		var PoS = req.params.pos;
-		var query;
-		if (PoS === 'all') {
-			query = Word.remove({});
+		if (!req.isAuthenticated()) {
+			res.status(401).send('Unauthorized');
 		} else {
-			let enums = Word.schema.path('PoS').enumValues;
-			if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
-				query = Word.remove({
-					PoS: PoS
-				});
+			var PoS = req.params.pos;
+			var query;
+			if (PoS === 'all') {
+				query = Word.remove({});
 			} else {
-				return res.status(400).send('Invalid PoS ' + PoS);
+				let enums = Word.schema.path('PoS').enumValues;
+				if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
+					query = Word.remove({
+						PoS: PoS
+					});
+				} else {
+					return res.status(400).send('Invalid PoS ' + PoS);
+				}
 			}
-		}
-		query.exec()
-		.then(function(result) {
-			res.json(result);
-			indexes.forRemoveByPoS(PoS)
+			query.exec()
+			.then(function(result) {
+				res.json(result);
+				indexes.forRemoveByPoS(PoS)
+				.catch(function(error) {
+					console.log('error with indexes.forRemoveByPoS:');
+					console.log(error);
+				});
+				stats.setNeedsUpdate();
+			})
 			.catch(function(error) {
-				console.log('error with indexes.forRemoveByPoS:');
-				console.log(error);
+				res.status(500).send(error.message);
 			});
-			stats.setNeedsUpdate();
-		})
-		.catch(function(error) {
-			res.status(500).send(error.message);
-		});
+		}
 	});
 }
 
