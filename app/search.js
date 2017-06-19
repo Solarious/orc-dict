@@ -133,25 +133,30 @@ function getSearchIndexes(searchString) {
 }
 
 function getAffixMatches(str) {
-	var affixWords;
+	var affixInfo = [];
 	return SearchIndex.getMatchesWithAffix('all')
 	.then(function(results) {
-		affixWords = results.filter(function(affixWord) {
-			if (affixWord.affix === 'prefix') {
-				return str.startsWith(affixWord.word.orcish.replace(/\W/g, ''));
+		results.forEach(function(affixSI) {
+			if (affixSI.affix === 'prefix') {
+				if (str.startsWith(affixSI.keyword)) {
+					affixInfo.push({
+						searchIndex: affixSI,
+						searchStr: str.slice(affixSI.keyword.length),
+					});
+				}
+				handleVerbs(str, affixSI, affixInfo);
 			} else {
-				return str.endsWith(affixWord.word.orcish.replace(/\W/g, ''));
+				if (str.endsWith(affixSI.keyword)) {
+					affixInfo.push({
+						searchIndex: affixSI,
+						searchStr: str.slice(0, -affixSI.keyword.length)
+					});
+				}
 			}
 		});
-		var promises = affixWords.map(function(affixWord) {
-			var affix = affixWord.word.orcish.replace(/\W/g, '');
-			if (affixWord.affix === 'prefix') {
-				return getSearchIndexes(str.slice(affix.length));
-			} else {
-				return getSearchIndexes(str.slice(0, -affix.length));
-			}
-		});
-		return Promise.all(promises);
+		return Promise.all(affixInfo.map(function(info) {
+			return getSearchIndexes(info.searchStr);
+		}));
 	})
 	.then(function(matches) {
 		var results = [];
@@ -160,25 +165,56 @@ function getAffixMatches(str) {
 				return (limits.indexOf(match.word.PoS) !== -1);
 			};
 		}
+		function getFilterVerbFun(affixInfoI) {
+			return function(match) {
+				return filterVerb(match, affixInfoI);
+			};
+		}
 		for (let i = 0; i < matches.length; i++) {
-			let affixWord = affixWords[i];
+			let affixSI = affixInfo[i].searchIndex;
 			let matchesForAffix = matches[i];
-			if (affixWord.affixLimits.length > 0) {
+			if (affixSI.affixLimits.length > 0) {
 				matchesForAffix = matchesForAffix.filter(
-					filterFun(affixWord.affixLimits)
+					filterFun(affixSI.affixLimits)
 				);
 			}
-			if (matchesForAffix.length > 0) {
-				for (let j = 0; j < matchesForAffix.length; j++) {
-					let match = matchesForAffix[j];
-					match.withAffixes = match.withAffixes || [];
-					match.withAffixes.push(affixWord);
-					results.push(match);
-				}
+			if (affixSI.conj) {
+				matchesForAffix = matchesForAffix.filter(
+					getFilterVerbFun(affixInfo[i])
+				);
+			}
+			for (let j = 0; j < matchesForAffix.length; j++) {
+				let match = matchesForAffix[j];
+				match.withAffixes = match.withAffix || [];
+				match.withAffixes.push(affixSI);
+				results.push(match);
 			}
 		}
 		return results;
 	});
+}
+
+function handleVerbs(str, affixSI, affixInfo) {
+	var tenses = ['ash', 'ar', 'hush', 'hur', 'zsa', 'zsur', 'huzs', 'azsur'];
+	for (let i = 0; i < tenses.length; i++) {
+		let tense = tenses[i];
+		let searchStr = str.slice(0, tense.length) +
+		str.slice(tense.length + affixSI.keyword.length);
+		if (str.startsWith(tense + affixSI.keyword)) {
+			affixInfo.push({
+				searchIndex: affixSI,
+				searchStr: searchStr,
+				conj: (i < 4) ? 'first' : 'second',
+				tenseLen: tense.length
+			});
+		}
+	}
+}
+
+function filterVerb(match, affixInfoI) {
+	return match.word.PoS === 'verb' &&
+	match.word.verb.conjugation === affixInfoI.conj &&
+	match.keyword.slice(affixInfoI.tenseLen).startsWith(match.word.orcish);
 }
 
 function getAll(callback) {
