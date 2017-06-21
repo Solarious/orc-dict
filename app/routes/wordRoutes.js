@@ -74,7 +74,6 @@ function addRoutesForWords(app) {
 			if (values[1]) {
 				data.count = values[1];
 			}
-			res.setHeader('Cache-Control', 'no-cache');
 			res.json(data);
 		}, function(error) {
 			res.status(500).send(error.message);
@@ -113,7 +112,6 @@ function addRoutesForWords(app) {
 					req.params.num
 				);
 			} else {
-				res.setHeader('Cache-Control', 'no-cache');
 				res.json(word);
 			}
 		})

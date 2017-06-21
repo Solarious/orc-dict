@@ -147,6 +147,20 @@ describe('Words', function() {
 				error.response.text.should.eql('cannot find word: nul 2');
 			});
 		});
+
+		it('GET requests should have the Cache-Control properly set',
+		function() {
+			return chai.request(server)
+			.get('/api/words')
+			.then(function(res) {
+				res.should.have.header('Cache-Control', 'no-cache');
+				return chai.request(server)
+				.get('/api/words/solu/1');
+			})
+			.then(function(res) {
+				res.should.have.header('Cache-Control', 'no-cache');
+			});
+		});
 	});
 
 	describe('After logging in', function() {

@@ -12,6 +12,11 @@ var sentenceRoutes = require('./sentenceRoutes.js');
 module.exports = addRoutes;
 
 function addRoutes(app) {
+	app.get('/api/*', function(req, res, next) {
+		res.setHeader('Cache-Control', 'no-cache');
+		next();
+	});
+
 	userRoutes(app);
 
 	app.post('/api/*', checkAuthenticated);
