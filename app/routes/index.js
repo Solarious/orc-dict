@@ -12,8 +12,13 @@ var sentenceRoutes = require('./sentenceRoutes.js');
 module.exports = addRoutes;
 
 function addRoutes(app) {
-	wordRoutes(app);
 	userRoutes(app);
+
+	app.post('/api/*', checkAuthenticated);
+	app.put('/api/*', checkAuthenticated);
+	app.delete('/api/*', checkAuthenticated);
+
+	wordRoutes(app);
 	searchRoutes(app);
 	autofillRoutes(app);
 	bulkAddRoutes(app);
@@ -23,4 +28,12 @@ function addRoutes(app) {
 	app.get('(?!/api/)*', function(req, res) {
 		res.sendFile(path.resolve(__dirname, '../../public/index.html'));
 	});
+}
+
+function checkAuthenticated(req, res, next) {
+	if (!req.isAuthenticated()) {
+		res.status(401).send('Unauthorized');
+	} else {
+		next();
+	}
 }

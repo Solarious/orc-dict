@@ -82,25 +82,21 @@ function addRoutesForWords(app) {
 	});
 
 	app.post('/api/words', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			var word = new Word();
-			updateWordFromReq(word, req);
-			word.save()
-			.then(function() {
-				res.json(word);
-				indexes.forCreate(word)
-				.catch(function(error) {
-					console.log('error with indexes.forCreate:');
-					console.log(error);
-				});
-				stats.setNeedsUpdate();
-			})
+		var word = new Word();
+		updateWordFromReq(word, req);
+		word.save()
+		.then(function() {
+			res.json(word);
+			indexes.forCreate(word)
 			.catch(function(error) {
-				res.status(500).send(getBetterErrorMessage(error));
+				console.log('error with indexes.forCreate:');
+				console.log(error);
 			});
-		}
+			stats.setNeedsUpdate();
+		})
+		.catch(function(error) {
+			res.status(500).send(getBetterErrorMessage(error));
+		});
 	});
 
 	app.get('/api/words/:orcish/:num', function(req, res) {
@@ -127,98 +123,86 @@ function addRoutesForWords(app) {
 	});
 
 	app.put('/api/words/:orcish/:num', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			Word.findOne({
-				orcish: req.params.orcish,
-				num: req.params.num
-			})
-			.exec()
-			.then(function(word) {
-				word = word || new Word();
-				updateWordFromReq(word, req);
-				if (req.params.orcish !== word.orcish) {
-					word.num = undefined;
-				}
-				return word.save();
-			})
-			.then(function(word) {
-				res.json(word);
-				indexes.forUpdate(req.params.orcish, req.params.num, word)
-				.catch(function(error) {
-					console.log('error with indexes.forUpdate:');
-					console.log(error);
-				});
-			})
+		Word.findOne({
+			orcish: req.params.orcish,
+			num: req.params.num
+		})
+		.exec()
+		.then(function(word) {
+			word = word || new Word();
+			updateWordFromReq(word, req);
+			if (req.params.orcish !== word.orcish) {
+				word.num = undefined;
+			}
+			return word.save();
+		})
+		.then(function(word) {
+			res.json(word);
+			indexes.forUpdate(req.params.orcish, req.params.num, word)
 			.catch(function(error) {
+				console.log('error with indexes.forUpdate:');
 				console.log(error);
-				res.status(400).send(getBetterErrorMessage(error));
 			});
-		}
+		})
+		.catch(function(error) {
+			console.log(error);
+			res.status(400).send(getBetterErrorMessage(error));
+		});
 	});
 
 	app.delete('/api/words/:orcish/:num', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			Word.findOneAndRemove({
-				'orcish': req.params.orcish,
-				'num': req.params.num
-			})
-			.exec()
-			.then(function(word) {
-				if (!word) {
-					var wordStr = req.params.orcish + ' ' + req.params.num;
-					res.status(404).send('word ' + wordStr + ' does not exits');
-				} else {
-					res.json(word);
-					indexes.forRemove(word)
-					.catch(function(error) {
-						console.log('error with indexes.forRemove:');
-						console.log(error);
-					});
-					stats.setNeedsUpdate();
-				}
-			})
-			.catch(function(error) {
-				res.status(500).send(error.message);
-			});
-		}
-	});
-
-	app.delete('/api/words-by-pos/:pos', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			var PoS = req.params.pos;
-			var query;
-			if (PoS === 'all') {
-				query = Word.remove({});
+		Word.findOneAndRemove({
+			'orcish': req.params.orcish,
+			'num': req.params.num
+		})
+		.exec()
+		.then(function(word) {
+			if (!word) {
+				var wordStr = req.params.orcish + ' ' + req.params.num;
+				res.status(404).send('word ' + wordStr + ' does not exits');
 			} else {
-				let enums = Word.schema.path('PoS').enumValues;
-				if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
-					query = Word.remove({
-						PoS: PoS
-					});
-				} else {
-					return res.status(400).send('Invalid PoS ' + PoS);
-				}
-			}
-			query.exec()
-			.then(function(result) {
-				res.json(result);
-				indexes.forRemoveByPoS(PoS)
+				res.json(word);
+				indexes.forRemove(word)
 				.catch(function(error) {
-					console.log('error with indexes.forRemoveByPoS:');
+					console.log('error with indexes.forRemove:');
 					console.log(error);
 				});
 				stats.setNeedsUpdate();
-			})
-			.catch(function(error) {
-				res.status(500).send(error.message);
-			});
+			}
+		})
+		.catch(function(error) {
+			res.status(500).send(error.message);
+		});
+	});
+
+	app.delete('/api/words-by-pos/:pos', function(req, res) {
+		var PoS = req.params.pos;
+		var query;
+		if (PoS === 'all') {
+			query = Word.remove({});
+		} else {
+			let enums = Word.schema.path('PoS').enumValues;
+			if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
+				query = Word.remove({
+					PoS: PoS
+				});
+			} else {
+				return res.status(400).send('Invalid PoS ' + PoS);
+			}
 		}
+		query.exec()
+		.then(function(result) {
+			res.json(result);
+			indexes.forRemoveByPoS(PoS)
+			.catch(function(error) {
+				console.log('error with indexes.forRemoveByPoS:');
+				console.log(error);
+			});
+			stats.setNeedsUpdate();
+		})
+		.catch(function(error) {
+			res.status(500).send(error.message);
+		});
 	});
 }
 

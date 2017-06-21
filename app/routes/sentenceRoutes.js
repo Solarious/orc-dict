@@ -87,64 +87,52 @@ function addRoutesForSentences(app) {
 	});
 
 	app.post('/api/sentences/', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			var sentence = new Sentence(req.body);
-			sentence.save(function(err) {
-				if (err) {
-					res.status(500).send(getBetterErrorMessage(err));
-				} else {
-					res.json(sentence);
-				}
-			});
-		}
+		var sentence = new Sentence(req.body);
+		sentence.save(function(err) {
+			if (err) {
+				res.status(500).send(getBetterErrorMessage(err));
+			} else {
+				res.json(sentence);
+			}
+		});
 	});
 
 	app.put('/api/sentences/:id', function(req, res) {
-		if (!req.isAuthenticated()) {
-			return res.status(401).send('Unauthorized');
-		} else {
-			Sentence.findOne({
-				_id: req.params.id
-			}, function(err, sentence) {
-				if (err) {
-					return res.status(500).send(err.message);
-				}
-				sentence = sentence || new Sentence();
-				sentence.orcish = req.body.orcish;
-				sentence.english = req.body.english;
-				sentence.category = req.body.category;
-				sentence.submittedBy = req.body.submittedBy;
+		Sentence.findOne({
+			_id: req.params.id
+		}, function(err, sentence) {
+			if (err) {
+				return res.status(500).send(err.message);
+			}
+			sentence = sentence || new Sentence();
+			sentence.orcish = req.body.orcish;
+			sentence.english = req.body.english;
+			sentence.category = req.body.category;
+			sentence.submittedBy = req.body.submittedBy;
 
-				sentence.save(function(error) {
-					if (error) {
-						res.status(500).send(getBetterErrorMessage(error));
-					} else {
-						res.json(sentence);
-					}
-				});
-			});
-		}
-	});
-
-	app.delete('/api/sentences/:id', function(req, res) {
-		if (!req.isAuthenticated()) {
-			res.status(401).send('Unauthorized');
-		} else {
-			Sentence.findOneAndRemove({
-				_id: req.params.id
-			}, function(err, sentence) {
-				if (err) {
-					res.status(500).send(err.message);
-				} else if (!sentence) {
-					res.status(404).send(
-						'sentence with id ' + req.params.id + ' does not exits'
-					);
+			sentence.save(function(error) {
+				if (error) {
+					res.status(500).send(getBetterErrorMessage(error));
 				} else {
 					res.json(sentence);
 				}
 			});
-		}
+		});
+	});
+
+	app.delete('/api/sentences/:id', function(req, res) {
+		Sentence.findOneAndRemove({
+			_id: req.params.id
+		}, function(err, sentence) {
+			if (err) {
+				res.status(500).send(err.message);
+			} else if (!sentence) {
+				res.status(404).send(
+					'sentence with id ' + req.params.id + ' does not exits'
+				);
+			} else {
+				res.json(sentence);
+			}
+		});
 	});
 }
