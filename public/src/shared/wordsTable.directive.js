@@ -85,7 +85,12 @@ function WordsTableController(WordsService, AlertService) {
 					selected: (i === vm.page)
 				});
 			}
-			return vm.words;
+			if (vm.page > vm.numOfPages && vm.numOfPages > 0) {
+				vm.page = vm.numOfPages;
+				return vm.loadWords();
+			} else {
+				return vm.words;
+			}
 		}, function(error) {
 			AlertService.error(error || 'Unknown error loading words');
 		});
