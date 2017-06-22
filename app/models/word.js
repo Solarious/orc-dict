@@ -5,6 +5,10 @@ var Schema = mongoose.Schema;
 // Use mative ES6 promises
 mongoose.Promise = global.Promise;
 
+// -------------
+// Sub-documents
+// -------------
+
 var SingularPluralSchema = new Schema({
 	singular: {
 		type: String,
@@ -292,6 +296,10 @@ var AffixSchema = new Schema({
 	limits: [LimitSchema]
 }, { _id: false });
 
+// ----------------------
+// The actual Word Schema
+// ----------------------
+
 var WordSchema = new Schema({
 	orcish: {
 		type: String,
@@ -349,6 +357,10 @@ WordSchema.index({
 	coinedBy: 'text',
 	namedAfter: 'text'
 });
+
+// -----------------
+// Hooks and statics
+// -----------------
 
 WordSchema.pre('validate', function(next) {
 	if (this.verb !== undefined && this.PoS !== 'verb') {
