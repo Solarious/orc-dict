@@ -177,14 +177,14 @@ function getAffixMatches(str) {
 					filterFun(affixSI.affixLimits)
 				);
 			}
-			if (affixSI.conj) {
+			if (affixInfo[i].conj) {
 				matchesForAffix = matchesForAffix.filter(
 					getFilterVerbFun(affixInfo[i])
 				);
 			}
 			for (let j = 0; j < matchesForAffix.length; j++) {
 				let match = matchesForAffix[j];
-				match.withAffixes = match.withAffix || [];
+				match.withAffixes = match.withAffixes || [];
 				match.withAffixes.push(affixSI);
 				results.push(match);
 			}
@@ -198,7 +198,7 @@ function handleVerbs(str, affixSI, affixInfo) {
 	for (let i = 0; i < tenses.length; i++) {
 		let tense = tenses[i];
 		let searchStr = str.slice(0, tense.length) +
-		str.slice(tense.length + affixSI.keyword.length);
+			str.slice(tense.length + affixSI.keyword.length);
 		if (str.startsWith(tense + affixSI.keyword)) {
 			affixInfo.push({
 				searchIndex: affixSI,
@@ -212,6 +212,5 @@ function handleVerbs(str, affixSI, affixInfo) {
 
 function filterVerb(match, affixInfoI) {
 	return match.word.PoS === 'verb' &&
-	match.word.verb.conjugation === affixInfoI.conj &&
 	match.keyword.slice(affixInfoI.tenseLen).startsWith(match.word.orcish);
 }
