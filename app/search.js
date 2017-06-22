@@ -93,8 +93,7 @@ function getTransformedSearchIndexes(searchString) {
 						dictOfUsedAffixes[affix.word.orcish] = true;
 					}
 				});
-				var n = '(with ' + afs.join(', ') + ') ' + match.message;
-				match.message = n;
+				match.keyword += ' (with ' + afs.join(', ') + ')';
 				delete match.withAffixes;
 			}
 		});
@@ -103,14 +102,17 @@ function getTransformedSearchIndexes(searchString) {
 			var f = found[match.word.orcish] || [];
 			for (let i = 0; i < f.length; i++) {
 				let fi = f[i];
-				if (fi.num === match.word.num && fi.message === match.message) {
+				if (fi.num === match.word.num &&
+				fi.message === match.message &&
+				fi.keyword === match.keyword) {
 					return false;
 				}
 			}
 			found[match.word.orcish] = f;
 			found[match.word.orcish].push({
 				message: match.message,
-				num: match.word.num
+				num: match.word.num,
+				keyword: match.keyword
 			});
 			return true;
 		});
