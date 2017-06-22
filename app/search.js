@@ -6,8 +6,7 @@ var Word = require('./models/word');
 module.exports = {
 	getMatches: getMatches,
 	getTextMatches: getTextMatches,
-	getSearchIndexes: getSearchIndexes,
-	getAll: getAll,
+	getSearchIndexes: getSearchIndexes
 };
 
 function getMatches(text) {
@@ -216,8 +215,3 @@ function filterVerb(match, affixInfoI) {
 	match.word.verb.conjugation === affixInfoI.conj &&
 	match.keyword.slice(affixInfoI.tenseLen).startsWith(match.word.orcish);
 }
-
-function getAll(callback) {
-	SearchIndex.find({}, callback);
-}
-

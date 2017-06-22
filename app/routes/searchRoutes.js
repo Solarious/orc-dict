@@ -36,14 +36,4 @@ function addRoutesForSearch(app) {
 		});
 		res.send('Search Indexes are now being rebuilt');
 	});
-
-	app.get('/api/list-search-indexes', function(req, res) {
-		search.getAll(function(error, data) {
-			if (error) {
-				res.status(500).send(error.message);
-			} else {
-				res.send(data);
-			}
-		});
-	});
 }

@@ -98,6 +98,14 @@ function compare(a, b) {
 	return 0;
 }
 
+function sleep(timeout) {
+	return function() {
+		return new Promise(function(resolve, reject) {
+			setTimeout(resolve, timeout);
+		});
+	};
+}
+
 describe('Indexes', function() {
 	var agent;
 	var cookies;
@@ -144,12 +152,10 @@ describe('Indexes', function() {
 	});
 
 	it('it should start with no SearchIndexes', function() {
-		return chai.request(server)
-		.get('/api/list-search-indexes')
-		.then(function(res) {
-			res.should.have.status(200);
-			res.body.should.be.an('array');
-			res.body.length.should.eql(0);
+		return SearchIndex.find({}).exec()
+		.then(function(searchIndexes) {
+			searchIndexes.should.be.an('array');
+			searchIndexes.length.should.eql(0);
 		});
 	});
 
@@ -162,13 +168,11 @@ describe('Indexes', function() {
 			english: 'one',
 			PoS: 'cardinal'
 		})
-		.then(function(res) {
-			return agent
-			.get('/api/list-search-indexes');
+		.then(function() {
+			return SearchIndex.find({}).exec();
 		})
-		.then(function(res) {
-			res.should.have.status(200);
-			test(searchData.with1(), res.body);
+		.then(function(searchIndexes) {
+			test(searchData.with1(), searchIndexes);
 		});
 	});
 
@@ -203,11 +207,9 @@ describe('Indexes', function() {
 		});
 
 		it('it should start with the correct SearchIndexes', function() {
-			return chai.request(server)
-			.get('/api/list-search-indexes')
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with123(), res.body);
+			return SearchIndex.find({}).exec()
+			.then(function(searchIndexes) {
+				test(searchData.with123(), searchIndexes);
 			});
 		});
 
@@ -220,13 +222,11 @@ describe('Indexes', function() {
 				english: 'four',
 				PoS: 'cardinal'
 			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with1234(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with1234(), searchIndexes);
 			});
 		});
 
@@ -239,13 +239,12 @@ describe('Indexes', function() {
 				english: 'four',
 				PoS: 'cardinal'
 			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(sleep(10))
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with124(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with124(), searchIndexes);
 			});
 		});
 
@@ -253,13 +252,11 @@ describe('Indexes', function() {
 			return agent
 			.delete('/api/words/thaen/1')
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with12(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with12(), searchIndexes);
 			});
 		});
 
@@ -274,13 +271,11 @@ describe('Indexes', function() {
 				updateMethod: 'unique',
 				order: 'e-o-p'
 			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with12345(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with12345(), searchIndexes);
 			});
 		});
 
@@ -295,13 +290,12 @@ describe('Indexes', function() {
 				updateMethod: 'remove',
 				order: 'e-o-p'
 			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(sleep(10))
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with123yay45(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with123yay45(), searchIndexes);
 			});
 		});
 
@@ -316,13 +310,11 @@ describe('Indexes', function() {
 				updateMethod: 'duplicate',
 				order: 'e-o-p'
 			})
-			.then(function(res) {
-				return agent
-				.get('/api/list-search-indexes');
+			.then(function() {
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with1233yay45(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with1233yay45(), searchIndexes);
 			});
 		});
 
@@ -340,12 +332,10 @@ describe('Indexes', function() {
 				res.should.have.status(404);
 			}, function(error) {
 				error.response.should.have.status(404);
-				return agent
-				.get('/api/list-search-indexes');
+				return SearchIndex.find({}).exec();
 			})
-			.then(function(res) {
-				res.should.have.status(200);
-				test(searchData.with123(), res.body);
+			.then(function(searchIndexes) {
+				test(searchData.with123(), searchIndexes);
 			});
 		});
 	});
