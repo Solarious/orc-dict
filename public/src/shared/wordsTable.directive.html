@@ -55,10 +55,7 @@ close-text="Cancel" modal-id="removeModal">
 			</select>
 		</div>
 	</div>
-</form>
-
-<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'noun'">
-	<div class="form-group">
+	<div class="form-group" ng-if="vm.PoS === 'noun'">
 		<label class="control-label col-sm-4">Declension</label>
 		<div class="col-sm-8">
 			<select class="form-control" ng-model="vm.declension"
@@ -74,10 +71,7 @@ close-text="Cancel" modal-id="removeModal">
 			</select>
 		</div>
 	</div>
-</form>
-
-<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'verb'">
-	<div class="form-group">
+	<div class="form-group" ng-if="vm.PoS === 'verb'">
 		<label class="control-label col-sm-4">Conjugation</label>
 		<div class="col-sm-8">
 			<select class="form-control" ng-model="vm.conjugation"
@@ -88,10 +82,7 @@ close-text="Cancel" modal-id="removeModal">
 			</select>
 		</div>
 	</div>
-</form>
-
-<form class="form-horizontal col-md-6" ng-if="vm.PoS === 'pronoun'">
-	<div class="form-group">
+	<div class="form-group" ng-if="vm.PoS === 'pronoun'">
 		<label class="control-label col-sm-4">Type</label>
 		<div class="col-sm-8">
 			<select class="form-control" ng-model="vm.pronounType"
