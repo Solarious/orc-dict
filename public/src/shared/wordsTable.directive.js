@@ -62,13 +62,13 @@ function WordsTableController(WordsService, AlertService) {
 		if (vm.PoS) {
 			options.pos = vm.PoS;
 		}
-		if (vm.declension) {
+		if (vm.PoS === 'noun' && vm.declension) {
 			options.declension = vm.declension;
 		}
-		if (vm.conjugation) {
+		if (vm.PoS === 'verb' && vm.conjugation) {
 			options.conjugation = vm.conjugation;
 		}
-		if (vm.pronounType) {
+		if (vm.PoS === 'pronoun' && vm.pronounType) {
 			options.pronountype = vm.pronounType;
 		}
 
