@@ -5,15 +5,21 @@ angular.
 	module('orcDictApp').
 	controller('RootController', RootController);
 
-RootController.$inject = ['AuthService', '$location', 'AlertService'];
+RootController.$inject = ['AuthService', '$location', 'AlertService', '$route'];
 
-function RootController(AuthService, $location, AlertService) {
+function RootController(AuthService, $location, AlertService, $route) {
 	var vm = this;
 
 	vm.isLoggedIn = isLoggedIn;
 	vm.getUserName = getUserName;
 	vm.logout = logout;
 	vm.search = search;
+
+	activate();
+
+	function activate() {
+		vm.searchText = $location.search().q;
+	}
 
 	function isLoggedIn() {
 		return AuthService.isLoggedIn();
@@ -40,6 +46,7 @@ function RootController(AuthService, $location, AlertService) {
 		.search({
 			q: vm.searchText
 		});
+		$route.reload();
 	}
 }
 
