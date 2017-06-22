@@ -120,8 +120,10 @@ function WordsTableController(WordsService, AlertService) {
 
 	function removeModalAction() {
 		WordsService.remove(vm.wordToRemove.orcish, vm.wordToRemove.num)
-		.then(function() {
+		.then(function(word) {
 			vm.loadWords();
+			var w = [word.orcish, word.PoS, word.english].join(', ');
+			AlertService.success('Word "' + w + '" removed');
 		}, function(error) {
 			AlertService.error(error || 'Unknown error removing word');
 		});
