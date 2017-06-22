@@ -52,7 +52,7 @@ describe('Words.insertManyWithRetry', function() {
 		});
 	});
 
-	it('it should send an error if 2 words have identical orcish and num',
+	it('it should work if 2 words have the same orcish and num',
 	function() {
 		return Word.insertManyWithRetry(exampleData.insertingWords())
 		.then(function(res) {
