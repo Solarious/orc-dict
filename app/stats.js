@@ -137,8 +137,8 @@ function build() {
 		});
 	})
 	.then(function(stats) {
-		statsStore = stats;
 		if (startTime > timeOfLastUpdate) {
+			statsStore = stats;
 			timeOfLastUpdate = startTime;
 		}
 		return stats;
