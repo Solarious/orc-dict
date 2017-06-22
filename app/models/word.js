@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // Use mative ES6 promises
 mongoose.Promise = global.Promise;
+var getBetterErrorMessage = require('../errorHelper').getBetterErrorMessage;
 
 // -------------
 // Sub-documents
@@ -579,7 +580,7 @@ WordSchema.statics.insertManyWithRetry = function(words, prevResults) {
 				acc.successes.push(result.word);
 			} else {
 				acc.failures.push({
-					errorMessage: result.error.message,
+					errorMessage: getBetterErrorMessage(result.error),
 					word: result.word
 				});
 			}
