@@ -1,7 +1,6 @@
 'use strict';
 
 var autofillAsync = require('../autofill').autofillAsync;
-var getBetterErrorMessage = require('../errorHelper').getBetterErrorMessage;
 
 module.exports = addRoutesForAutofill;
 
