@@ -3,11 +3,13 @@
 
 angular.
 	module('orcDictApp').
-	controller('RootController', RootController);
+	controller('NavbarController', NavbarController);
 
-RootController.$inject = ['AuthService', '$location', 'AlertService', '$route'];
+NavbarController.$inject = [
+	'AuthService', '$location', 'AlertService', '$route'
+];
 
-function RootController(AuthService, $location, AlertService, $route) {
+function NavbarController(AuthService, $location, AlertService, $route) {
 	var vm = this;
 
 	vm.isLoggedIn = isLoggedIn;

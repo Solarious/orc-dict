@@ -13,7 +13,7 @@
 	<script src="libs/angular-route/angular-route.min.js"></script>
 	<script src="dist/app.min.js"></script>
 </head>
-<body ng-app="orcDictApp" ng-controller="RootController as rootVM">
+<body ng-app="orcDictApp">
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -26,33 +26,35 @@
 			<a class="navbar-brand" href="/">Orcish Dictionary</a>
 		</div>
 
-		<div class="navbar-collapse collapse" id="navbar">
+		<div class="navbar-collapse collapse" id="navbar"
+		ng-controller="NavbarController as navbarVM">
 			<ul class="nav navbar-nav">
 				<li><a href="/words">Words List</a></li>
 			</ul>
 			<ul class="nav navbar-nav">
 				<li><a href="/sentences">Sentences</a></li>
 			</ul>
-			<ul class="nav navbar-nav" ng-if="!rootVM.isLoggedIn()" ng-cloak>
+			<ul class="nav navbar-nav" ng-if="!navbarVM.isLoggedIn()" ng-cloak>
 				<li><a href="/login">Login</a></li>
 			</ul>
-			<ul class="nav navbar-nav" ng-if="rootVM.isLoggedIn()" ng-cloak>
+			<ul class="nav navbar-nav" ng-if="navbarVM.isLoggedIn()" ng-cloak>
 				<li><p class="navbar-text">
-					Logged in as <em>{{ rootVM.getUserName() }}</em>
+					Logged in as <em>{{ navbarVM.getUserName() }}</em>
 				</p></li>
 				<li><a href="/admin">Admin</a></li>
 				<li>
 					<button type="button" class="btn btn-link navbar-btn"
-					ng-click="rootVM.logout()">
+					ng-click="navbarVM.logout()">
 						Logout
 					</button>
 				</li>
 			</ul>
 
-			<form class="navbar-form navbar-right" ng-submit="rootVM.search()">
+			<form class="navbar-form navbar-right"
+			ng-submit="navbarVM.search()">
 				<div class="form-group">
 					<input type="text" class="form-control"
-					placeholder="Search" ng-model="rootVM.searchText"/>
+					placeholder="Search" ng-model="navbarVM.searchText"/>
 				</div>
 				<button type="submit" class="btn btn-default">
 					Search
