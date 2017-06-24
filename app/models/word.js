@@ -353,6 +353,10 @@ WordSchema.index({
 });
 
 WordSchema.index({
+	english: true
+});
+
+WordSchema.index({
 	english: 'text',
 	extraInfo: 'text',
 	coinedBy: 'text',

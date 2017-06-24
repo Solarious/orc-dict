@@ -58,7 +58,22 @@ function getTextMatches(text) {
 			$meta: 'textScore'
 		}
 	})
-	.exec();
+	.exec()
+	.then(function(results) {
+		if (results.length === 0) {
+			return Word.find({
+				english: text
+			}, {
+				orcish: 1,
+				english: 1,
+				PoS: 1,
+				num: 1,
+			})
+			.exec();
+		} else {
+			return results;
+		}
+	});
 }
 
 function getTransformedSearchIndexes(searchString) {
