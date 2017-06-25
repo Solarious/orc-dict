@@ -19,8 +19,6 @@ describe('Words', function() {
 		res.body.should.have.property('english', english);
 		res.body.should.have.property('PoS', PoS);
 		res.body.should.have.property('num', num);
-		res.body.should.have.property('relatedWords');
-		res.body.relatedWords.should.eql([]);
 		res.body.should.not.have.property('extraInfo');
 		res.body.should.not.have.property('coinedBy');
 		res.body.should.not.have.property('namedAfter');
@@ -41,7 +39,6 @@ describe('Words', function() {
 		res.body.should.have.property('english', english);
 		res.body.should.have.property('PoS', PoS);
 		res.body.should.have.property('num', num);
-		res.body.relatedWords.should.eql([]);
 		res.body.should.have.property('extraInfo', extraInfo);
 		res.body.should.not.have.property('coinedBy');
 		res.body.should.not.have.property('namedAfter');

@@ -25,17 +25,6 @@
 			<td>{{word.namedAfter}}</td>
 		</tr>
 	</table>
-	<table class="table table-condensed"
-	ng-if="word.relatedWords.length > 0">
-		<tr>
-			<th>Related Words</th>
-		</tr>
-		<tr ng-repeat="relatedWord in word.relatedWords">
-			<td><a href="/words/{{relatedWord.orcish}}/{{relatedWord.num}}">
-				{{relatedWord.orcish}}
-			</a></td>
-		</tr>
-	</table>
 </div>
 
 <orc-dict-verb ng-if="word.PoS==='verb'" verb="word.verb">

@@ -27,50 +27,10 @@ function editableWord() {
 function EditableWordController() {
 	var vm = this;
 
-	vm.toggleRelatedWords = toggleRelatedWords;
-	vm.addRelatedWord = addRelatedWord;
-	vm.removeRelatedWord = removeRelatedWord;
-	vm.getNumRelatedWords = getNumRelatedWords;
 	vm.canAutofill = canAutofill;
 	vm.showHelpModal = showHelpModal;
 	vm.onChangeOrcish = onChangeOrcish;
 	vm.autofill = autofill;
-
-	activate();
-
-	function activate() {
-		vm.toggleRelatedWords();
-	}
-
-	function toggleRelatedWords() {
-		if (vm.showRelatedWords === undefined || vm.showRelatedWords) {
-			vm.showRelatedWords = false;
-			vm.showRelatedWordsText = 'Show Related Words Section';
-		} else {
-			vm.showRelatedWords = true;
-			vm.showRelatedWordsText = 'Hide Related Words Section';
-		}
-	}
-
-	function addRelatedWord() {
-		vm.word.relatedWords = vm.word.relatedWords || [];
-		vm.word.relatedWords.push({
-			orcish: '',
-			num: 1
-		});
-	}
-
-	function removeRelatedWord(index) {
-		vm.word.relatedWords.splice(index, 1);
-	}
-
-	function getNumRelatedWords() {
-		if (vm.word && vm.word.relatedWords) {
-			return vm.word.relatedWords.length;
-		} else {
-			return 0;
-		}
-	}
 
 	function canAutofill() {
 		var PoS = vm.word.PoS;

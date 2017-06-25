@@ -263,17 +263,6 @@ var CopulaSchema = new Schema({
 	}
 }, { _id: false });
 
-var RelatedWordSchema = new Schema({
-	orcish: {
-		type: String,
-		required: true
-	},
-	num: {
-		type: Number,
-		required: true
-	}
-}, { _id: false });
-
 var LimitSchema = new Schema({
 	PoS: {
 		type: String,
@@ -336,7 +325,6 @@ var WordSchema = new Schema({
 	extraInfo: String,
 	coinedBy: String,
 	namedAfter: String,
-	relatedWords: [RelatedWordSchema],
 	verb: VerbSchema,
 	noun: NounSchema,
 	adjective: AdjectiveSchema,

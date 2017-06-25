@@ -211,7 +211,6 @@ function updateWordFromReq(word, req) {
 	add(word, req, 'extraInfo');
 	add(word, req, 'coinedBy');
 	add(word, req, 'namedAfter');
-	addIfExists(word, req, 'relatedWords');
 	addIfExists(word, req, 'adjective');
 	addIfExists(word, req, 'noun');
 	addIfExists(word, req, 'verb');

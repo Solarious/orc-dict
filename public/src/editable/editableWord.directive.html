@@ -63,21 +63,6 @@
 			</td>
 		</tr>
 		<tr>
-			<th>
-				<ng-pluralize count="vm.getNumRelatedWords()"
-				when="{'0': 'There are no related words',
-				'one': 'There is 1 related word',
-				'other': 'There are {} related words'}">
-				</ng-pluralize>
-			</th>
-			<td>
-				<button type="button" class="btn btn-default form-control"
-				ng-click="vm.toggleRelatedWords()">
-					{{vm.showRelatedWordsText}}
-				</button>
-			</td>
-		</tr>
-		<tr>
 			<td>
 				<button type="button" class="btn btn-primary"
 				ng-click="vm.submitFunction()">
@@ -96,42 +81,6 @@
 				ng-click="vm.showHelpModal()">
 					<span class="glyphicon glyphicon-question-sign">
 					</span> Help
-				</button>
-			</td>
-		</tr>
-	</table>
-</div>
-
-<div class="col-md-8" ng-show="vm.showRelatedWords">
-	<table class="table table-condensed table-bordered">
-		<tr>
-			<th colspan="2">Related Words</th>
-			<td class="minimize-width">
-				<button type="button" class="btn btn-default"
-				ng-click="vm.addRelatedWord()">
-					New Related Word
-				</button>
-			</td>
-		</tr>
-		<tr>
-			<th class="width-larger">Orcish</th>
-			<th class="min-width-visible">Num</th>
-			<td></td>
-		</tr>
-		<tr ng-repeat="relatedWord in vm.word.relatedWords track by $index">
-			<td>
-				<input class="form-control" type="text"
-				ng-model="relatedWord.orcish"/>
-			</td>
-			<td>
-				<input class="form-control" type="number" min="1"
-				ng-model="relatedWord.num"/>
-			</td>
-			<td>
-				<button type="button" class="btn btn-danger"
-				ng-click="vm.removeRelatedWord($index)">
-					<span class="glyphicon glyphicon-remove">
-					</span> Remove
 				</button>
 			</td>
 		</tr>
