@@ -217,5 +217,4 @@ describe('Bulk Add', function() {
 			'order has invalid value p-o-e');
 		});
 	});
-
 });
