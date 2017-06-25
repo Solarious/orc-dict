@@ -37,9 +37,9 @@ function NewWordController(WordsService, $location, AlertService) {
 	function submit() {
 		vm.submitDisabled = true;
 		WordsService.create(vm.word)
-		.then(function() {
+		.then(function(word) {
 			$location.path('/admin');
-			var w = [vm.word.orcish, vm.word.PoS, vm.word.english].join(', ');
+			var w = [word.orcish, word.PoS, word.english].join(', ');
 			AlertService.successDeferred('Word "' + w + '" created');
 		}, function(error) {
 			AlertService.error(error || 'Unknown error creating word');

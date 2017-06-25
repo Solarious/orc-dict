@@ -49,9 +49,9 @@ AlertService) {
 	function update() {
 		vm.submitDisabled = true;
 		WordsService.update(vm.orcish, vm.num, vm.word)
-		.then(function() {
+		.then(function(word) {
 			$location.path('/admin');
-			var w = [vm.word.orcish, vm.word.PoS, vm.word.english].join(', ');
+			var w = [word.orcish, word.PoS, word.english].join(', ');
 			AlertService.successDeferred('Word "' + w + '" updated');
 		}, function(error) {
 			AlertService.error(error || 'Unknown error updating word');
