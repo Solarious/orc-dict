@@ -1,4 +1,4 @@
-<h1>Search Results</h1>
+<h2>Orcish Results</h2>
 
 <div class="loader" ng-if="!vm.results"></div>
 
@@ -29,11 +29,10 @@
 	</table>
 </div>
 
+<h2>English Results</h2>
+
 <div ng-if="vm.textResults">
 	<table class="table table-condensed">
-		<tr>
-			<th>English Results</th>
-		</tr>
 		<tr ng-repeat="word in vm.textResults">
 			<td><a ng-href="/words/{{word.orcish}}/{{word.num}}">
 				<strong>{{word.orcish}}</strong>,
