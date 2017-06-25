@@ -19,6 +19,7 @@ function autofillAsync(orcish, PoS) {
 }
 
 function autofill(orcish, PoS) {
+	orcish = orcish.toLowerCase();
 	if (PoS === 'verb') {
 		return getVerb(orcish);
 	} else if (PoS === 'noun') {
