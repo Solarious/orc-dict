@@ -556,9 +556,9 @@ function secondConjVerb(orcish) {
 		gerund: getNoun(orcish + 'on'),
 		participle: getAdjective(orcish + 'onad, -ul'),
 		agent: {
-			feminine: getNoun(orcish + 'ag'),
-			masculine: getNoun(orcish + 'ak'),
-			dishonorable: getNoun(orcish + 'dj')
+			feminine: getNoun(base + 'ag'),
+			masculine: getNoun(base + 'ak'),
+			dishonorable: getNoun(base + 'adj')
 		}
 	};
 }
