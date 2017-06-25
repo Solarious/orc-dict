@@ -1127,6 +1127,310 @@ function getVerbs() {
 					}
 				}
 			}
+		},
+		{
+			orcish: 'humai',
+			english: 'to sense, perceive',
+			PoS: 'verb',
+			verb: {
+				conjugation: 'second',
+				infinitive: {
+					active: 'humai',
+					passive: 'humae'
+				},
+				active: {
+					present: {
+						first: {
+							singular: 'humai',
+							plural: 'humalax'
+						},
+						second: {
+							singular: 'humash',
+							plural: 'humahas'
+						},
+						third: {
+							singular: 'humak',
+							plural: 'humahek'
+						}
+					},
+					past: {
+						first: {
+							singular: 'zsahumai',
+							plural: 'zsahumalax'
+						},
+						second: {
+							singular: 'zsahumash',
+							plural: 'zsahumahas'
+						},
+						third: {
+							singular: 'zsahumak',
+							plural: 'zsahumahek'
+						}
+					},
+					future: {
+						first: {
+							singular: 'zsurhumai',
+							plural: 'zsurhumalax'
+						},
+						second: {
+							singular: 'zsurhumash',
+							plural: 'zsurhumahas'
+						},
+						third: {
+							singular: 'zsurhumak',
+							plural: 'zsurhumahek'
+						}
+					},
+					pastPerfect: {
+						first: {
+							singular: 'huzshumai',
+							plural: 'huzshumalax'
+						},
+						second: {
+							singular: 'huzshumash',
+							plural: 'huzshumahas'
+						},
+						third: {
+							singular: 'huzshumak',
+							plural: 'huzshumahek'
+						}
+					},
+					futurePerfect: {
+						first: {
+							singular: 'azsurhumai',
+							plural: 'azsurhumalax'
+						},
+						second: {
+							singular: 'azsurhumash',
+							plural: 'azsurhumahas'
+						},
+						third: {
+							singular: 'azsurhumak',
+							plural: 'azsurhumahek'
+						}
+					}
+				},
+				passive: {
+					present: {
+						first: {
+							singular: 'humaeg',
+							plural: 'humbelas'
+						},
+						second: {
+							singular: 'humesh',
+							plural: 'humbehas'
+						},
+						third: {
+							singular: 'humaek',
+							plural: 'humbarrak'
+						}
+					},
+					past: {
+						first: {
+							singular: 'zsahumaeg',
+							plural: 'zsahumbelas'
+						},
+						second: {
+							singular: 'zsahumesh',
+							plural: 'zsahumbehas'
+						},
+						third: {
+							singular: 'zsahumaek',
+							plural: 'zsahumbarrak'
+						}
+					},
+					future: {
+						first: {
+							singular: 'zsurhumaeg',
+							plural: 'zsurhumbelas'
+						},
+						second: {
+							singular: 'zsurhumesh',
+							plural: 'zsurhumbehas'
+						},
+						third: {
+							singular: 'zsurhumaek',
+							plural: 'zsurhumbarrak'
+						}
+					},
+					pastPerfect: {
+						first: {
+							singular: 'huzshumaeg',
+							plural: 'huzshumbelas'
+						},
+						second: {
+							singular: 'huzshumesh',
+							plural: 'huzshumbehas'
+						},
+						third: {
+							singular: 'huzshumaek',
+							plural: 'huzshumbarrak'
+						}
+					},
+					futurePerfect: {
+						first: {
+							singular: 'azsurhumaeg',
+							plural: 'azsurhumbelas'
+						},
+						second: {
+							singular: 'azsurhumesh',
+							plural: 'azsurhumbehas'
+						},
+						third: {
+							singular: 'azsurhumaek',
+							plural: 'azsurhumbarrak'
+						}
+					}
+				},
+				imperative: {
+					singular: 'humort',
+					plural: 'humorot'
+				},
+				gerund: {
+					declension: 'second',
+					gender: 'neutral',
+					nominative: {
+						singular: 'humaion',
+						plural: 'humaiidz'
+					},
+					genitive: {
+						singular: 'humaiu',
+						plural: 'humaiurru'
+					},
+					dative: {
+						singular: 'humaio',
+						plural: 'humaiaes'
+					},
+					accusative: {
+						singular: 'humaiudz',
+						plural: 'humaiuluz'
+					},
+					vocative: {
+						singular: 'humaio',
+						plural: 'humaiaes'
+					},
+				},
+				participle: {
+					feminine: {
+						nominative: {
+							singular: 'humaionad',
+							plural: 'humaionadz'
+						},
+						genitive: {
+							singular: 'humaionar',
+							plural: 'humaionarru'
+						},
+						dative: {
+							singular: 'humaionae',
+							plural: 'humaionaes'
+						},
+						accusative: {
+							singular: 'humaionaz',
+							plural: 'humaionaruz'
+						},
+						vocative: {
+							singular: 'humaionae',
+							plural: 'humaionaes'
+						}
+					},
+					masculine: {
+						nominative: {
+							singular: 'humaionul',
+							plural: 'humaionulz'
+						},
+						genitive: {
+							singular: 'humaionu',
+							plural: 'humaionurru'
+						},
+						dative: {
+							singular: 'humaiono',
+							plural: 'humaionors'
+						},
+						accusative: {
+							singular: 'humaionudz',
+							plural: 'humaionuluz'
+						},
+						vocative: {
+							singular: 'humaiono',
+							plural: 'humaionors'
+						}
+					},
+				},
+				agent: {
+					feminine: {
+						declension: 'first',
+						gender: 'feminine',
+						nominative: {
+							singular: 'humag',
+							plural: 'humadz'
+						},
+						genitive: {
+							singular: 'humar',
+							plural: 'humarru'
+						},
+						dative: {
+							singular: 'humae',
+							plural: 'humaes'
+						},
+						accusative: {
+							singular: 'humaz',
+							plural: 'humaruz'
+						},
+						vocative: {
+							singular: 'humae',
+							plural: 'humaes'
+						}
+					},
+					masculine: {
+						declension: 'second',
+						gender: 'masculine',
+						nominative: {
+							singular: 'humak',
+							plural: 'humulz'
+						},
+						genitive: {
+							singular: 'humu',
+							plural: 'humurru'
+						},
+						dative: {
+							singular: 'humo',
+							plural: 'humors'
+						},
+						accusative: {
+							singular: 'humudz',
+							plural: 'humuluz'
+						},
+						vocative: {
+							singular: 'humo',
+							plural: 'humors'
+						}
+					},
+					dishonorable: {
+						declension: 'second',
+						gender: 'neutral',
+						nominative: {
+							singular: 'humadj',
+							plural: 'humadjidz'
+						},
+						genitive: {
+							singular: 'humadju',
+							plural: 'humadjurru'
+						},
+						dative: {
+							singular: 'humadjo',
+							plural: 'humadjaes'
+						},
+						accusative: {
+							singular: 'humadjudz',
+							plural: 'humadjuluz'
+						},
+						vocative: {
+							singular: 'humadjo',
+							plural: 'humadjaes'
+						}
+					}
+				}
+			}
 		}
 	];
 }
