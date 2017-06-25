@@ -44,11 +44,13 @@ function NavbarController(AuthService, $location, AlertService, $route) {
 	}
 
 	function search() {
-		$location.path('/search')
-		.search({
-			q: vm.searchText
-		});
-		$route.reload();
+		if (vm.searchText) {
+			$location.path('/search')
+			.search({
+				q: vm.searchText
+			});
+			$route.reload();
+		}
 	}
 }
 
