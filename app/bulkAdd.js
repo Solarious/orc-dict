@@ -30,7 +30,8 @@ function bulkAdd(data, encoding, method, order) {
 		}
 
 		var parseOptions = {
-			relax_column_count: true
+			relax_column_count: true,
+			skip_empty_lines: true
 		};
 		if (encoding === 'tsv') {
 			parseOptions.delimiter = '\t';
