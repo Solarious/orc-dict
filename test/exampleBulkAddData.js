@@ -431,7 +431,7 @@ function errorDataCsvEop() {
 	a += '"six","grae","cardinal"\n';
 	a += '"seven","milz","cardinal"\n';
 	a += '"eight","roi","cardinal"\n';
-	a += '"me","nudz","pronoun"\n';
+	a += '"me","nudz","copular verb"\n';
 	a += '"nine","gluk","cardinal"\n';
 	a += '"ten","lotta","cardinal"\n';
 	a += '"eleven","ked","cardinal"\n';

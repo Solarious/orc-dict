@@ -107,9 +107,6 @@ function bulkAdd(data, encoding, method, order) {
 				word[word.PoS] = autofill(word.orcish, word.PoS);
 			}
 
-			if (word.PoS === 'pronoun') {
-				throw new Error('Cannot use bulkadd with pronouns');
-			}
 			if (word.PoS === 'copular verb') {
 				throw new Error('Cannot use bulkadd with copular verbs');
 			}
@@ -192,8 +189,27 @@ function handleExtras(word, extra) {
 					word.extraInfo = value;
 				}
 			}
+			if (operation === 'p.i.') {
+				addPronounInfo(word, value);
+			}
 		} else {
 			return word;
 		}
 	}
+}
+
+function addPronounInfo(word, info) {
+	var values = info.split(' ');
+	if (values.length !== 7) {
+		throw new Error('Word ' + word.orcish + ' p.i. must have 7 values');
+	}
+	word.pronoun = {
+		type: values[0],
+		number: values[1],
+		nominative: values[2],
+		genitive: values[3],
+		dative: values[4],
+		accusative: values[5],
+		vocative: values[6],
+	};
 }
