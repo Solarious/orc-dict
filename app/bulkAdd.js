@@ -118,28 +118,31 @@ function bulkAdd(data, encoding, method, order) {
 		});
 	})
 	.then(function(words) {
+		return Promise.all(words.map(function(word) {
+			var wordModel = new Word(word);
+			return wordModel.validate();
+		}))
+		.then(function() {
+			print('Bulk Add: validation done');
+			return words;
+		});
+	})
+	.then(function(words) {
 		if (method === 'remove') {
-			var promises = words.map(function(word) {
-				var wordModel = new Word(word);
-				return wordModel.validate();
-			});
-			return Promise.all(promises)
-			.then(function() {
-				var opts = words.map(function(word) {
-					return {
-						deleteMany: {
-							filter: {
-								orcish: word.orcish,
-								PoS: word.PoS
-							}
+			var opts = words.map(function(word) {
+				return {
+					deleteMany: {
+						filter: {
+							orcish: word.orcish,
+							PoS: word.PoS
 						}
-					};
-				});
-				return Word.bulkWrite(opts)
-				.then(function(data) {
-					print('Bulk Add: remove done');
-					return words;
-				});
+					}
+				};
+			});
+			return Word.bulkWrite(opts)
+			.then(function(data) {
+				print('Bulk Add: remove done');
+				return words;
 			});
 		}
 		return words;
