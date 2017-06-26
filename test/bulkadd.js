@@ -217,4 +217,51 @@ describe('Bulk Add', function() {
 			'order has invalid value p-o-e');
 		});
 	});
+
+	describe('regarding data correctness', function() {
+		it('it should return an error if a record has less than 3 values',
+		function() {
+			return agent
+			.post('/api/bulkadd')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				data: exampleData.lessthan3DataCsvEop(),
+				encoding: 'csv',
+				updateMethod: 'duplicate',
+				order: 'e-o-p'
+			})
+			.then(function(res) {
+				res.should.have.status(404);
+			}, function(error) {
+				error.response.should.have.status(404);
+				error.response.text.should.be.a('string');
+				error.response.text.should.eql(
+					'Record me,nudz has less than 3 values'
+				);
+			});
+		});
+
+		it('it should handle empty lines correctly', function() {
+			return agent
+			.post('/api/bulkadd')
+			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+			.send({
+				data: exampleData.emptyLinesDataCsvEop(),
+				encoding: 'csv',
+				updateMethod: 'duplicate',
+				order: 'e-o-p'
+			})
+			.then(function(res) {
+				res.should.have.status(200);
+				res.body.should.be.an('object');
+				res.body.should.have.property('successes');
+				res.body.should.have.property('failures');
+				res.body.failures.should.be.an('array');
+				res.body.failures.should.have.lengthOf(0);
+				arraySortThenCompare(
+					exampleData.cardinalWords(), res.body.successes
+				);
+			});
+		});
+	});
 });

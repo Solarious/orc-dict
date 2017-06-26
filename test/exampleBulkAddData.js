@@ -11,7 +11,9 @@ module.exports = {
 	cardinalWordsError: cardinalWordsError,
 	cardinalMinDataCsvEop: cardinalMinDataCsvEop,
 	cardinalMinYayDataCsvEop: cardinalMinYayDataCsvEop,
-	errorDataCsvEop: errorDataCsvEop
+	errorDataCsvEop: errorDataCsvEop,
+	lessthan3DataCsvEop: lessthan3DataCsvEop,
+	emptyLinesDataCsvEop: emptyLinesDataCsvEop
 };
 
 function cardinalDataCsvEop() {
@@ -438,6 +440,50 @@ function errorDataCsvEop() {
 	a += '"twelve","zwek","cardinal"\n';
 	a += '"hundred","tuhu","cardinal"\n';
 	a += '"thousand","yonda","cardinal"\n';
+	a += '"million","alegin","cardinal"\n';
+	return a;
+}
+
+function lessthan3DataCsvEop() {
+	var a = '';
+	a += '"one","nul","cardinal"\n';
+	a += '"two","solu","cardinal"\n';
+	a += '"three","thaen","cardinal"\n';
+	a += '"four","lex","cardinal"\n';
+	a += '"five","stel","cardinal"\n';
+	a += '"six","grae","cardinal"\n';
+	a += '"seven","milz","cardinal"\n';
+	a += '"eight","roi","cardinal"\n';
+	a += '"me","nudz"\n';
+	a += '"nine","gluk","cardinal"\n';
+	a += '"ten","lotta","cardinal"\n';
+	a += '"eleven","ked","cardinal"\n';
+	a += '"twelve","zwek","cardinal"\n';
+	a += '"hundred","tuhu","cardinal"\n';
+	a += '"thousand","yonda","cardinal"\n';
+	a += '"million","alegin","cardinal"\n';
+	return a;
+}
+
+function emptyLinesDataCsvEop() {
+	var a = '';
+	a += '"one","nul","cardinal"\n';
+	a += '"two","solu","cardinal"\n';
+	a += '"three","thaen","cardinal"\n';
+	a += '"four","lex","cardinal"\n';
+	a += '\n';
+	a += '"five","stel","cardinal"\n';
+	a += '"six","grae","cardinal"\n';
+	a += '"seven","milz","cardinal","n.a.","Mills"\n';
+	a += '"eight","roi","cardinal","c.b.","Jim Wrench"\n';
+	a += '"nine","gluk","cardinal","n.a.","Glook","c.b.","Michael Delaune"\n';
+	a += '"ten","lotta","cardinal","n.a.c.b.","Lotta Djerf"\n';
+	a += '\n';
+	a += '"eleven","ked","cardinal","d.f.","Test Value"\n';
+	a += '"twelve","zwek","cardinal"\n';
+	a += '"hundred","tuhu","cardinal"\n';
+	a += '"thousand","yonda","cardinal"\n';
+	a += '\n';
 	a += '"million","alegin","cardinal"\n';
 	return a;
 }
