@@ -40,6 +40,27 @@ function getMatches(text) {
 }
 
 function getTextMatches(text) {
+	return Promise.all([
+		getNormalTextMatches(text),
+		getOtherTextMatches(text)
+	])
+	.then(function(results) {
+		var data = results[0];
+		var usedIds = {};
+		data.forEach(function(word) {
+			usedIds[word._id] = true;
+		});
+		results[1].forEach(function(word) {
+			if (!usedIds[word._id]) {
+				usedIds[word._id] = true;
+				data.push(word);
+			}
+		});
+		return data;
+	});
+}
+
+function getNormalTextMatches(text) {
 	return Word.find({
 		$text: {
 			$search: text
@@ -58,22 +79,30 @@ function getTextMatches(text) {
 			$meta: 'textScore'
 		}
 	})
-	.exec()
-	.then(function(results) {
-		if (results.length === 0) {
-			return Word.find({
-				english: text
-			}, {
-				orcish: 1,
-				english: 1,
-				PoS: 1,
-				num: 1,
-			})
-			.exec();
-		} else {
-			return results;
+	.exec();
+}
+
+function getOtherTextMatches(text) {
+	return Word.find({
+		$text: {
+			$search: text,
+			$language: 'none'
 		}
-	});
+	}, {
+		orcish: 1,
+		english: 1,
+		PoS: 1,
+		num: 1,
+		score: {
+			$meta: 'textScore'
+		}
+	})
+	.sort({
+		score: {
+			$meta: 'textScore'
+		}
+	})
+	.exec();
 }
 
 function getTransformedSearchIndexes(searchString) {

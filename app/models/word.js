@@ -286,6 +286,17 @@ var AffixSchema = new Schema({
 	limits: [LimitSchema]
 }, { _id: false });
 
+var TextIndexHelperSchema = new Schema({
+	english: {
+		type: String,
+		required: true
+	},
+	language: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
 // ----------------------
 // The actual Word Schema
 // ----------------------
@@ -330,7 +341,8 @@ var WordSchema = new Schema({
 	adjective: AdjectiveSchema,
 	pronoun: PronounSchema,
 	affix: AffixSchema,
-	copula: CopulaSchema
+	copula: CopulaSchema,
+	textIndexHelper: TextIndexHelperSchema
 });
 
 WordSchema.index({
@@ -341,14 +353,11 @@ WordSchema.index({
 });
 
 WordSchema.index({
-	english: true
-});
-
-WordSchema.index({
 	english: 'text',
 	extraInfo: 'text',
 	coinedBy: 'text',
-	namedAfter: 'text'
+	namedAfter: 'text',
+	'textIndexHelper.english': 'text'
 });
 
 // -----------------
@@ -482,6 +491,26 @@ WordSchema.pre('save', function(next) {
 		if (result) {
 			return next(new Error(result));
 		}
+	}
+
+	var useLangNone = [
+		'adverb',
+		'cardinal',
+		'conjunction',
+		'copular verb',
+		'exclamation',
+		'prefix',
+		'preposition',
+		'pronoun',
+		'suffix',
+	];
+	if (useLangNone.indexOf(this.PoS) !== -1) {
+		this.textIndexHelper = {
+			english: this.english,
+			language: 'none'
+		};
+	} else {
+		this.textIndexHelper = undefined;
 	}
 
 	if (this.num) {
