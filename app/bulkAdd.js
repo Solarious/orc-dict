@@ -47,6 +47,9 @@ function bulkAdd(data, encoding, method, order) {
 	.then(function(records) {
 		print('Bulk Add: parse done');
 		var words = records.map(function(record) {
+			if (record.length < 3) {
+				throw new Error('Record ' + record + ' has less than 3 values');
+			}
 			var word;
 			if (order === 'e-o-p') {
 				word = {
@@ -97,9 +100,6 @@ function bulkAdd(data, encoding, method, order) {
 	.then(function(records) {
 		print('Bulk Add: creating words');
 		return records.map(function(record) {
-			if (record.length < 3) {
-				throw ('Record ' + record + ' has less than 3 values');
-			}
 			var word = record;
 			var hasPart = ['adjective', 'noun', 'verb'];
 			if (hasPart.indexOf(word.PoS) !== -1) {
