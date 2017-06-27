@@ -5,8 +5,7 @@ var Word = require('./models/word');
 
 module.exports = {
 	getMatches: getMatches,
-	getTextMatches: getTextMatches,
-	getSearchIndexes: getSearchIndexes
+	getTextMatches: getTextMatches
 };
 
 function getMatches(text) {
