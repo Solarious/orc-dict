@@ -56,7 +56,7 @@ function forRemoveByPoS(PoS) {
 }
 
 function forInsertMany(words) {
-	const sizePerPart = 500;
+	const sizePerPart = Number(process.env.SIZE_PER_PART || 500);
 	var arrays = [];
 	var part = [];
 	var partSize = 0;
