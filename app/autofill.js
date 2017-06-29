@@ -32,6 +32,8 @@ function autofill(orcish, PoS) {
 		throw new Error('Can not use autofill with PoS: cardinal');
 	} else if (PoS === 'conjunction') {
 		throw new Error('Can not use autofill with PoS: conjunction');
+	} else if (PoS === 'contraction') {
+		throw new Error('Can not use autofill with PoS: contraction');
 	} else if (PoS === 'exclamation') {
 		throw new Error('Can not use autofill with PoS: exclamation');
 	} else if (PoS === 'interjection') {

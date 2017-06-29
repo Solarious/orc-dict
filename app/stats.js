@@ -41,6 +41,9 @@ function build() {
 			conjunction: {
 				count: 0
 			},
+			contraction: {
+				count: 0
+			},
 			'copular verb': {
 				count: 0
 			},
