@@ -358,6 +358,14 @@ WordSchema.index({
 	coinedBy: 'text',
 	namedAfter: 'text',
 	'textIndexHelper.english': 'text'
+}, {
+	weights: {
+		english: 20,
+		extraInfo: 5,
+		coinedBy: 1,
+		namedAfter: 1,
+		'textIndexHelper.english': 20
+	}
 });
 
 // -----------------
