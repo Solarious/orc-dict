@@ -171,7 +171,7 @@ function forReplaceMany(words) {
 			deleteMany: {
 				filter: {
 					'word.orcish': word.orcish,
-					'word.num': word.num
+					'word.PoS': word.PoS
 				}
 			}
 		};
