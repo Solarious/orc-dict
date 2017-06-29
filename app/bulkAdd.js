@@ -170,7 +170,7 @@ function handleExtras(word, extra) {
 				} else {
 					word.extraInfo = '';
 				}
-				word.extraInfo += 'Defined for: ' + value;
+				word.extraInfo += 'Derived from: ' + value;
 			}
 			if (operation === 'c.b.') {
 				word.coinedBy = value;
