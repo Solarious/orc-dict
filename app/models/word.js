@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 // Use mative ES6 promises
 mongoose.Promise = global.Promise;
 var getBetterErrorMessage = require('../errorHelper').getBetterErrorMessage;
+var getLangNone = require('../stopWords').getLangNone;
 
 // -------------
 // Sub-documents
@@ -293,7 +294,10 @@ var TextIndexHelperSchema = new Schema({
 	},
 	language: {
 		type: String,
-		required: true
+		required: true,
+		enum: [
+			'none'
+		]
 	}
 }, { _id: false });
 
@@ -502,21 +506,10 @@ WordSchema.pre('save', function(next) {
 		}
 	}
 
-	var useLangNone = [
-		'adverb',
-		'cardinal',
-		'conjunction',
-		'contraction',
-		'copular verb',
-		'exclamation',
-		'prefix',
-		'preposition',
-		'pronoun',
-		'suffix',
-	];
-	if (useLangNone.indexOf(this.PoS) !== -1) {
+	var langNone = getLangNone(this.english, this.PoS);
+	if (langNone) {
 		this.textIndexHelper = {
-			english: this.english,
+			english: langNone,
 			language: 'none'
 		};
 	} else {
