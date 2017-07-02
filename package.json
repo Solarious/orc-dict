@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A online dictionary for the Orcish language",
   "engines": {
-    "node": "4.2.6"
+    "node": "6.11.0"
   },
   "main": "server.js",
   "scripts": {
