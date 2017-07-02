@@ -105,17 +105,27 @@ function insertPart(words) {
 
 function createIndexesForWord(word) {
 	var searchIndexes = [];
-	searchIndexes.push({
-		keyword: word.orcish,
-		priority: 1,
-		message: 'orcish',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	
+	var noOrcishIndex = [
+		'copular verb',
+		'noun',
+		'pronoun',
+		'verb'
+	];
+	if (noOrcishIndex.indexOf(word.PoS) === -1) {
+		searchIndexes.push({
+			keyword: word.orcish,
+			priority: 1,
+			message: 'orcish',
+			word: {
+				orcish: word.orcish,
+				english: word.english,
+				PoS: word.PoS,
+				num: word.num
+			}
+		});
+	}
+
 	var exLessOrcish = word.orcish.replace('!', '');
 	if (word.orcish.indexOf('!') !== -1) {
 		searchIndexes.push({
