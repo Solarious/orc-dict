@@ -169,7 +169,7 @@ function cardinalWords() {
 			english: 'eleven',
 			PoS: 'cardinal',
 			num: 1,
-			extraInfo: 'Defined for: Test Value'
+			extraInfo: 'Derived from: Test Value'
 		},
 		{
 			orcish: 'zwek',
@@ -271,7 +271,7 @@ function cardinalWordsDuplicate() {
 			english: 'eleven',
 			PoS: 'cardinal',
 			num: 1,
-			extraInfo: 'Defined for: Test Value'
+			extraInfo: 'Derived from: Test Value'
 		},
 		{
 			orcish: 'zwek',
@@ -367,7 +367,7 @@ function cardinalWordsUnique() {
 			english: 'eleven',
 			PoS: 'cardinal',
 			num: 1,
-			extraInfo: 'Defined for: Test Value'
+			extraInfo: 'Derived from: Test Value'
 		},
 		{
 			orcish: 'zwek',
