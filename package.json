@@ -16,6 +16,7 @@
     "listUsers": "node scripts/userActions.js listUsers",
     "rebuildSearchIndexes": "node scripts/rebuild.js",
     "removeAllWords": "node scripts/removeAllWords.js",
+    "getDuplicateWords": "node scripts/getDuplicateWords.js",
     "gulp": "gulp",
     "testNyan": "mocha --reporter nyan"
   },
