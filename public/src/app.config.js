@@ -103,6 +103,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/sentences/bulkadd', {
+		templateUrl: 'src/sentence/bulkAdd/bulkAddSentence.html',
+		controller: 'BulkAddSentenceController',
+		controllerAs: 'vm',
+		restricted: true
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

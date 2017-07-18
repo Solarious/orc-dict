@@ -1,0 +1,22 @@
+<orc-dict-modal modal-id="{{modalId}}" close-text="Close" classes="modal-lg">
+	<dl>
+		<dt>Sentence Bulk Add</dt>
+		<dd>Used to add large amounts of new sentences at the same time</dd>
+		<dt>Format</dt>
+		<dd>Text must be in CSV format
+		<dd> Each line must use one of the following 2 formats:</dd>
+		<dd>
+			<code>"Category","English","Orcish"</code> e.g.
+			<code>
+				"About the Town","Where is the inn?","Quazaka gattapid?"
+			</code>
+		</dd>
+		<dd>
+			<code>"Category","English","Orcish","Submitted By"</code> e.g.
+			<code>
+				"At the Inn","But first, coffee.","Net kaskul, djeremid.",
+				"Kirst Kahler"
+			</code>
+		</dd>
+	</dl>
+</orc-dict-modal>

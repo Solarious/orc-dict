@@ -13,7 +13,8 @@ function sentencesService($http, $q) {
 		list: list,
 		create: create,
 		update: update,
-		remove: remove
+		remove: remove,
+		bulkAdd: bulkAdd,
 	};
 
 	return service;
@@ -69,6 +70,17 @@ function sentencesService($http, $q) {
 			return $q.reject(error.data);
 		});
 	}
+
+	function bulkAdd(data) {
+		return $http.post('/api/bulkaddsentences', {
+			data: data
+		})
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
 }
 
 })();

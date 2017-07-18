@@ -135,4 +135,14 @@ function addRoutesForSentences(app) {
 			}
 		});
 	});
+
+	app.post('/api/bulkaddsentences/', function(req, res) {
+		Sentence.bulkAdd(req.body.data)
+		.then(function(sentences) {
+			res.json({ sentences: sentences });
+		})
+		.catch(function(error) {
+			res.status(400).send(error.message);
+		});
+	});
 }
