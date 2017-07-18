@@ -1,3 +1,10 @@
+<orc-dict-modal action-function="vm.removeAllModalAction()" action-text="Delete"
+close-text="Cancel" modal-id="removeAllModal">
+	<h4>
+		Are you sure you want to remove <strong>every single sentence</strong>
+	</h4>
+</orc-dict-modal>
+
 <h1>Sentences</h1>
 
 <orc-dict-modal action-function="vm.removeModalAction()" action-text="Delete"
@@ -25,6 +32,9 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 	</a>
 	<a class="btn btn-success" href="/sentences/bulkadd">
 		<span class="glyphicon glyphicon-download-alt"></span> Bulk Add
+	</a>
+	<a class="btn btn-danger" ng-click="vm.showRemoveAllModal()">
+		<span class="glyphicon glyphicon-remove"></span> Remove all Sentences
 	</a>
 </div>
 

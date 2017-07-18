@@ -15,6 +15,7 @@ function sentencesService($http, $q) {
 		update: update,
 		remove: remove,
 		bulkAdd: bulkAdd,
+		removeAll: removeAll
 	};
 
 	return service;
@@ -81,6 +82,17 @@ function sentencesService($http, $q) {
 		.catch(function(error) {
 			return $q.reject(error.data);
 		});
+	}
+
+	function removeAll() {
+		return $http.delete('/api/allsentences')
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
 }
 
 })();

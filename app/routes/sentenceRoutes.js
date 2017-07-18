@@ -145,4 +145,14 @@ function addRoutesForSentences(app) {
 			res.status(400).send(error.message);
 		});
 	});
+
+	app.delete('/api/allsentences/', function(req, res) {
+		Sentence.remove({})
+		.then(function(result) {
+			res.json(result);
+		})
+		.catch(function(error) {
+			res.status(500).send(error.message);
+		});
+	});
 }

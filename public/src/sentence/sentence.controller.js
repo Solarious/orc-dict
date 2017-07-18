@@ -22,6 +22,8 @@ function SentenceController(SentencesService, AlertService, AuthService) {
 	vm.resetPageAndLoadSentences = resetPageAndLoadSentences;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
+	vm.showRemoveAllModal = showRemoveAllModal;
+	vm.removeAllModalAction = removeAllModalAction;
 
 	activate();
 
@@ -110,6 +112,24 @@ function SentenceController(SentencesService, AlertService, AuthService) {
 			AlertService.error(error || 'Unknown error removing sentence');
 		});
 		$('#removeModal').modal('hide');
+	}
+
+	function showRemoveAllModal() {
+		$('#removeAllModal').modal('show');
+	}
+
+	function removeAllModalAction() {
+		SentencesService.removeAll()
+		.then(function(response) {
+			var num = response.n;
+			var str = (num === 1) ? ' word removed' : ' words removed';
+			AlertService.success(num + str);
+			vm.loadSentences();
+		})
+		.catch(function(error) {
+			AlertService.success(error || 'Unknown error removing sentences');
+		});
+		$('#removeAllModal').modal('hide');
 	}
 }
 
