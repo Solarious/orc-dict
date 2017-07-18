@@ -96,7 +96,7 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 		<tr ng-repeat="sentence in vm.sentences">
 			<td>{{sentence.category}}</td>
 			<td>{{sentence.english}}</td>
-			<td>{{sentence.orcish}}</td>
+			<td><em>{{sentence.orcish}}</em></td>
 			<td>{{sentence.submittedBy}}</td>
 		</tr>
 	</table>
@@ -112,7 +112,7 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 		<tr ng-repeat="sentence in vm.sentences">
 			<td>{{sentence.category}}</td>
 			<td>{{sentence.english}}</td>
-			<td>{{sentence.orcish}}</td>
+			<td><em>{{sentence.orcish}}</em></td>
 			<td>{{sentence.submittedBy}}</td>
 			<td class="minimize-width">
 				<a class="btn btn-primary"
