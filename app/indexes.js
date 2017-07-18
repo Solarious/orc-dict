@@ -113,17 +113,20 @@ function createIndexesForWord(word) {
 		'verb'
 	];
 	if (noOrcishIndex.indexOf(word.PoS) === -1) {
-		searchIndexes.push({
-			keyword: word.orcish,
-			priority: 1,
-			message: 'orcish',
-			word: {
-				orcish: word.orcish,
-				english: word.english,
-				PoS: word.PoS,
-				num: word.num
-			}
-		});
+		// skip non declining adjectives
+		if (word.PoS !== 'adjective' || (word.orcish.indexOf(' ') !== -1)) {
+			searchIndexes.push({
+				keyword: word.orcish,
+				priority: 1,
+				message: 'orcish',
+				word: {
+					orcish: word.orcish,
+					english: word.english,
+					PoS: word.PoS,
+					num: word.num
+				}
+			});
+		}
 	}
 
 	var exLessOrcish = word.orcish.replace('!', '');
@@ -193,11 +196,38 @@ function forReplaceMany(words) {
 }
 
 function addNoun(word, searchIndexes) {
-	addNounCase(word, searchIndexes, 'nominative');
-	addNounCase(word, searchIndexes, 'genitive');
-	addNounCase(word, searchIndexes, 'dative');
-	addNounCase(word, searchIndexes, 'accusative');
-	addNounCase(word, searchIndexes, 'vocative');
+	if (nounDoesNotDecline(word)) {
+		searchIndexes.push({
+			keyword: word.orcish,
+			priority: 2,
+			message: 'all cases',
+			word: {
+				orcish: word.orcish,
+				english: word.english,
+				PoS: word.PoS,
+				num: word.num
+			}
+		});
+	} else {
+		addNounCase(word, searchIndexes, 'nominative');
+		addNounCase(word, searchIndexes, 'genitive');
+		addNounCase(word, searchIndexes, 'dative');
+		addNounCase(word, searchIndexes, 'accusative');
+		addNounCase(word, searchIndexes, 'vocative');
+	}
+}
+
+function nounDoesNotDecline(word) {
+	return (word.orcish === word.noun.nominative.singular &&
+	word.orcish === word.noun.nominative.plural &&
+	word.orcish === word.noun.genitive.singular &&
+	word.orcish === word.noun.genitive.plural &&
+	word.orcish === word.noun.dative.singular &&
+	word.orcish === word.noun.dative.plural &&
+	word.orcish === word.noun.accusative.singular &&
+	word.orcish === word.noun.accusative.plural &&
+	word.orcish === word.noun.vocative.singular &&
+	word.orcish === word.noun.vocative.plural);
 }
 
 function addNounCase(word, searchIndexes, nounCase) {
@@ -460,8 +490,26 @@ function addVerbAgentCase(word, searchIndexes, type, agentCase) {
 }
 
 function addAdjective(word, searchIndexes) {
-	addAdjectiveGender(word, searchIndexes, 'feminine');
-	addAdjectiveGender(word, searchIndexes, 'masculine');
+	if (adjectiveDoesNotDecline(word)) {
+		searchIndexes.push({
+			keyword: word.orcish,
+			priority: 2,
+			message: 'all cases and genders',
+			word: {
+				orcish: word.orcish,
+				english: word.english,
+				PoS: word.PoS,
+				num: word.num
+			}
+		});
+	} else {
+		addAdjectiveGender(word, searchIndexes, 'feminine');
+		addAdjectiveGender(word, searchIndexes, 'masculine');
+	}
+}
+
+function adjectiveDoesNotDecline(word) {
+	return (word.orcish.indexOf(' ') === -1);
 }
 
 function addAdjectiveGender(word, searchIndexes, gender) {

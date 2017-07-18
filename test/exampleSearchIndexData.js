@@ -8,7 +8,11 @@ module.exports = {
 	with12: with12,
 	with12345: with12345,
 	with123yay45: with123yay45,
-	with1233yay45: with1233yay45
+	with1233yay45: with1233yay45,
+	duliNoun: duliNoun,
+	duliAdjective: duliAdjective,
+	withDuliNoun: withDuliNoun,
+	withDuliAdjective: withDuliAdjective
 };
 
 function with1() {
@@ -422,6 +426,128 @@ function with1233yay45() {
 				orcish: 'stel',
 				english: 'five',
 				PoS: 'cardinal',
+				num: 1
+			}
+		}
+	];
+}
+
+function duliNoun() {
+	return {
+		orcish: 'duli',
+		english: 'duli: derogatory term for a dwarf (slang) (pej.)',
+		PoS: 'noun',
+		noun: {
+			declension: 'irregular',
+			gender: 'neutral',
+			nominative: {
+				singular: 'duli',
+				plural: 'duli'
+			},
+			genitive: {
+				singular: 'duli',
+				plural: 'duli'
+			},
+			dative: {
+				singular: 'duli',
+				plural: 'duli'
+			},
+			accusative: {
+				singular: 'duli',
+				plural: 'duli'
+			},
+			vocative: {
+				singular: 'duli',
+				plural: 'duli'
+			}
+		}
+	};
+}
+
+function duliAdjective() {
+	return {
+		orcish: 'duli',
+		english: 'duli (does not decline) (pej.)',
+		PoS: 'adjective',
+		adjective: {
+			feminine: {
+				nominative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				genitive: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				dative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				accusative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				vocative: {
+					singular: 'duli',
+					plural: 'duli'
+				}
+			},
+			masculine: {
+				nominative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				genitive: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				dative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				accusative: {
+					singular: 'duli',
+					plural: 'duli'
+				},
+				vocative: {
+					singular: 'duli',
+					plural: 'duli'
+				}
+			}
+		}
+	};
+}
+
+function withDuliNoun() {
+	return [
+		{
+			keyword: 'duli',
+			priority: 2,
+			message: 'all cases',
+			affix: 'none',
+			affixLimits: [],
+			word: {
+				orcish: 'duli',
+				english: 'duli: derogatory term for a dwarf (slang) (pej.)',
+				PoS: 'noun',
+				num: 1
+			}
+		}
+	];
+}
+
+function withDuliAdjective() {
+	return [
+		{
+			keyword: 'duli',
+			priority: 2,
+			message: 'all cases and genders',
+			affix: 'none',
+			affixLimits: [],
+			word: {
+				orcish: 'duli',
+				english: 'duli (does not decline) (pej.)',
+				PoS: 'adjective',
 				num: 1
 			}
 		}

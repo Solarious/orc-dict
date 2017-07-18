@@ -176,6 +176,34 @@ describe('Indexes', function() {
 		});
 	});
 
+	it('it should be correct with nouns that do not decline', function() {
+		return agent
+		.post('/api/words')
+		.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+		.send(searchData.duliNoun())
+		.then(function() {
+			return SearchIndex.find({}).exec();
+		}, function(error) {
+			console.log(error);
+		})
+		.then(function(searchIndexes) {
+			test(searchData.withDuliNoun(), searchIndexes);
+		});
+	});
+
+	it('it should be correct with adjectives that do not decline', function() {
+		return agent
+		.post('/api/words')
+		.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+		.send(searchData.duliAdjective())
+		.then(function() {
+			return SearchIndex.find({}).exec();
+		})
+		.then(function(searchIndexes) {
+			test(searchData.withDuliAdjective(), searchIndexes);
+		});
+	});
+
 	describe('with some Words and SearchIndexes already added', function() {
 		beforeEach(function() {
 			return Word.remove({})
