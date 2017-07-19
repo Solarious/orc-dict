@@ -81,5 +81,37 @@
 			information such as <em>Extra Info</em> and <em>Coined By</em>
 			being lost for the replaced words
 		</dd>
+		<dt>Additional value pairs</dt>
+		<dd>
+			Addition value pairs can be added to a line to specify additional
+			information for the word
+		</dd>
+		<dd>
+			e.g. <code>"zsuleard","noun","ruby","n.a.","Julaire","c.b.",
+			"Julaire Andelin"</code>
+		</dd>
+		<dt>Allowed value pairs</dt>
+		<dd>
+			"d.f.","<em>value</em>" - Sets/appends to extraInfo "Derived from:
+			<em>value</em>"
+		</dd>
+		<dd>"c.b.","<em>value</em>" - Sets coinedBy to <em>value</em></dd>
+		<dd>"n.a.","<em>value</em>" - Sets namedAfter to <em>value</em></dd>
+		<dd>
+			"n.a.c.b.","<em>value</em>" - Sets namedAfter and coinedBy to
+			<em>value</em>
+		</dd>
+		<dd>
+			"e.i.","<em>value</em>" - Sets/prepends <em>value</em> to extraInfo
+		</dd>
+		<dd>
+			"p.i.","<em>type number nominative gentitive dative accusative
+			vocative</em>" - Sets the values in word.pronoun to those given
+		</dd>
+		<dd>
+			c.i.","<em>values</em>" - Sets the the values in word.copula to
+			those given. Because the format for values is rather verbose,
+			please read the source code for the actual format
+		</dd>
 	</dl>
 </orc-dict-modal>
