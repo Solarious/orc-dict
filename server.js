@@ -9,6 +9,7 @@ var passport = require('passport');
 var session = require('express-session');
 var csurf = require('csurf');
 var MongoStore = require('connect-mongo')(session);
+var helmet = require('helmet');
 var sanitize = require('./app/sanitize');
 var stats = require('./app/stats');
 
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV === 'test') {
 
 mongoose.connect(dburl);
 
+app.enable('trust proxy');
+
 if (process.env.NODE_ENV === 'production') {
 	app.use(function(req, res, next) {
 		if (req.headers['x-forwarded-proto'] !== 'https') {
@@ -34,6 +37,10 @@ if (process.env.NODE_ENV === 'production') {
 	});
 	console.log('Using https redirect');
 }
+
+app.use(helmet({
+	hsts: (process.env.NODE_ENV === 'production')
+}));
 
 app.use(bodyParser.json({
 	limit: '200kb'
@@ -51,8 +58,13 @@ app.use(sanitize);
 app.disable('etag');
 app.use(session({
 	secret: process.env.SECRET_KEY,
+	name: 'sessionId',
 	resave: false,
 	saveUninitialized: false,
+	cookie: {
+		secure: (process.env.NODE_ENV === 'production'),
+		httpOnly: true
+	},
 	store: new MongoStore({
 		mongooseConnection: mongoose.connection,
 		touchAfter: 24 * 3600

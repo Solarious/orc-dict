@@ -33,6 +33,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^2.1.2",
+    "helmet": "^3.6.1",
     "mongoose": "~4.10.8",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
