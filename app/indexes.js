@@ -103,6 +103,23 @@ function insertPart(words) {
 	return SearchIndex.insertMany(searchIndexes);
 }
 
+function forReplaceMany(words) {
+	var opts = words.map(function(word) {
+		return {
+			deleteMany: {
+				filter: {
+					'word.orcish': word.orcish,
+					'word.PoS': word.PoS
+				}
+			}
+		};
+	});
+	return SearchIndex.bulkWrite(opts)
+	.then(function() {
+		return forInsertMany(words);
+	});
+}
+
 function createIndexesForWord(word) {
 	var searchIndexes = [];
 	
@@ -115,48 +132,27 @@ function createIndexesForWord(word) {
 	if (noOrcishIndex.indexOf(word.PoS) === -1) {
 		// skip non declining adjectives
 		if (word.PoS !== 'adjective' || (word.orcish.indexOf(' ') !== -1)) {
-			searchIndexes.push({
-				keyword: word.orcish,
-				priority: 1,
-				message: 'orcish',
-				word: {
-					orcish: word.orcish,
-					english: word.english,
-					PoS: word.PoS,
-					num: word.num
-				}
-			});
+			pushIndex(
+				searchIndexes, word.orcish, 1,
+				'orcish', word
+			);
 		}
 	}
 
 	var exLessOrcish = word.orcish.replace('!', '');
 	if (word.orcish.indexOf('!') !== -1) {
-		searchIndexes.push({
-			keyword: exLessOrcish,
-			priority: 1,
-			message: 'orcish',
-			word: {
-				orcish: word.orcish,
-				english: word.english,
-				PoS: word.PoS,
-				num: word.num
-			}
-		});
+		pushIndex(
+			searchIndexes, exLessOrcish, 1,
+			'orcish', word
+		);
 	}
 	if (exLessOrcish.indexOf(' ') !== -1 && word.PoS !== 'adjective') {
 		let parts = exLessOrcish.split(' ');
 		for (let i = 0; i < parts.length; i++) {
-			searchIndexes.push({
-				keyword: parts[i],
-				priority: 1,
-				message: 'orcish',
-				word: {
-					orcish: word.orcish,
-					english: word.english,
-					PoS: word.PoS,
-					num: word.num
-				}
-			});
+			pushIndex(
+				searchIndexes, parts[i], 1,
+				'orcish', word
+			);
 		}
 	}
 	if (word.PoS === 'noun') {
@@ -178,36 +174,31 @@ function createIndexesForWord(word) {
 	return searchIndexes;
 }
 
-function forReplaceMany(words) {
-	var opts = words.map(function(word) {
-		return {
-			deleteMany: {
-				filter: {
-					'word.orcish': word.orcish,
-					'word.PoS': word.PoS
-				}
-			}
-		};
-	});
-	return SearchIndex.bulkWrite(opts)
-	.then(function() {
-		return forInsertMany(words);
+// -----------------------------------------------------------------
+// Functions used by createIndexesForWord and their helper functions
+// -----------------------------------------------------------------
+
+function pushIndex(searchIndexes, keyword, priority, message, word) {
+	searchIndexes.push({
+		keyword: keyword,
+		priority: priority,
+		message: message,
+		word: {
+			orcish: word.orcish,
+			english: word.english,
+			PoS: word.PoS,
+			num: word.num
+		}
 	});
 }
 
+// -----
+// Nouns
+// -----
+
 function addNoun(word, searchIndexes) {
 	if (nounDoesNotDecline(word)) {
-		searchIndexes.push({
-			keyword: word.orcish,
-			priority: 2,
-			message: 'all cases',
-			word: {
-				orcish: word.orcish,
-				english: word.english,
-				PoS: word.PoS,
-				num: word.num
-			}
-		});
+		pushIndex(searchIndexes, word.orcish, 2, 'all cases', word);
 	} else {
 		addNounCase(word, searchIndexes, 'nominative');
 		addNounCase(word, searchIndexes, 'genitive');
@@ -231,77 +222,39 @@ function nounDoesNotDecline(word) {
 }
 
 function addNounCase(word, searchIndexes, nounCase) {
-	searchIndexes.push({
-		keyword: word.noun[nounCase].singular,
-		priority: 2,
-		message: nounCase + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.noun[nounCase].plural,
-		priority: 2,
-		message: nounCase + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.noun[nounCase].singular, 2,
+		nounCase + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.noun[nounCase].plural, 2,
+		nounCase + ' plural', word
+	);
 }
 
+// -----
+// Verbs
+// -----
+
 function addVerb(word, searchIndexes) {
-	searchIndexes.push({
-		keyword: word.verb.infinitive.active,
-		priority: 2,
-		message: 'infinitive active',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.infinitive.passive,
-		priority: 2,
-		message: 'infinitive passive',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.verb.infinitive.active, 2,
+		'infinitive active', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.infinitive.passive, 2,
+		'infinitive passive', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.imperative.singular, 2,
+		'inperative singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.imperative.plural, 2,
+		'inperative plural', word
+	);
 	addVerbVoice(word, searchIndexes, 'active');
 	addVerbVoice(word, searchIndexes, 'passive');
-	searchIndexes.push({
-		keyword: word.verb.imperative.singular,
-		priority: 2,
-		message: 'inperative singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.imperative.plural,
-		priority: 2,
-		message: 'inperative plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
 	addVerbGerund(word, searchIndexes);
 	addVerbParticiple(word, searchIndexes, 'feminine');
 	addVerbParticiple(word, searchIndexes, 'masculine');
@@ -321,72 +274,30 @@ function addVerbVoice(word, searchIndexes, verbVoice) {
 function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 	var tense = word.verb[verbVoice][verbTense];
 	var tenseStr = verbTense.replace(/([A-Z])/g, ' $1').toLowerCase();
-	searchIndexes.push({
-		keyword: tense.first.singular,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 1st person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.first.plural,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 1st person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.second.singular,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 2nd person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.second.plural,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 2nd person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.third.singular,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 3rd person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.third.plural,
-		priority: 2,
-		message: tenseStr + ' ' + verbVoice + ' 3rd person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, tense.first.singular, 2,
+		tenseStr + ' ' + verbVoice + ' 1st person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.first.plural, 2,
+		tenseStr + ' ' + verbVoice + ' 1st person plural', word
+	);
+	pushIndex(
+		searchIndexes, tense.second.singular, 2,
+		tenseStr + ' ' + verbVoice + ' 2nd person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.second.plural, 2,
+		tenseStr + ' ' + verbVoice + ' 2nd person plural', word
+	);
+	pushIndex(
+		searchIndexes, tense.third.singular, 2,
+		tenseStr + ' ' + verbVoice + ' 3rd person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.third.plural, 2,
+		tenseStr + ' ' + verbVoice + ' 3rd person plural', word
+	);
 }
 
 function addVerbGerund(word, searchIndexes) {
@@ -398,28 +309,14 @@ function addVerbGerund(word, searchIndexes) {
 }
 
 function addVerbGerundCase(word, searchIndexes, gerundCase) {
-	searchIndexes.push({
-		keyword: word.verb.gerund[gerundCase].singular,
-		priority: 3,
-		message: 'gerund ' + gerundCase + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.gerund[gerundCase].plural,
-		priority: 3,
-		message: 'gerund ' + gerundCase + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.verb.gerund[gerundCase].singular, 3,
+		'gerund ' + gerundCase + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.gerund[gerundCase].plural, 3,
+		'gerund ' + gerundCase + ' plural', word
+	);
 }
 
 function addVerbParticiple(word, searchIndexes, gender) {
@@ -432,28 +329,14 @@ function addVerbParticiple(word, searchIndexes, gender) {
 
 function addVerbParticipleCase(word, searchIndexes, gender, pCase) {
 	var caseStr = pCase.replace(/([A-Z])/g, '/$1').toLowerCase();
-	searchIndexes.push({
-		keyword: word.verb.participle[gender][pCase].singular,
-		priority: 3,
-		message: 'participle ' + gender + ' ' + caseStr + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.participle[gender][pCase].plural,
-		priority: 3,
-		message: 'participle ' + gender + ' ' + caseStr + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.verb.participle[gender][pCase].singular, 3,
+		'participle ' + gender + ' ' + caseStr + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.participle[gender][pCase].plural, 3,
+		'participle ' + gender + ' ' + caseStr + ' plural', word
+	);
 }
 
 function addVerbAgent(word, searchIndexes, type) {
@@ -465,43 +348,26 @@ function addVerbAgent(word, searchIndexes, type) {
 }
 
 function addVerbAgentCase(word, searchIndexes, type, agentCase) {
-	searchIndexes.push({
-		keyword: word.verb.agent[type][agentCase].singular,
-		priority: 3,
-		message: 'agent ' + type + ' ' + agentCase + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.verb.agent[type][agentCase].plural,
-		priority: 3,
-		message: 'agent ' + type + ' ' + agentCase + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.verb.agent[type][agentCase].singular, 3,
+		'agent ' + type + ' ' + agentCase + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.agent[type][agentCase].plural, 3,
+		'agent ' + type + ' ' + agentCase + ' plural', word
+	);
 }
+
+// ----------
+// Adjectives
+// ----------
 
 function addAdjective(word, searchIndexes) {
 	if (adjectiveDoesNotDecline(word)) {
-		searchIndexes.push({
-			keyword: word.orcish,
-			priority: 2,
-			message: 'all cases and genders',
-			word: {
-				orcish: word.orcish,
-				english: word.english,
-				PoS: word.PoS,
-				num: word.num
-			}
-		});
+		pushIndex(
+			searchIndexes, word.orcish, 2,
+			'all cases and genders', word
+		);
 	} else {
 		addAdjectiveGender(word, searchIndexes, 'feminine');
 		addAdjectiveGender(word, searchIndexes, 'masculine');
@@ -522,29 +388,19 @@ function addAdjectiveGender(word, searchIndexes, gender) {
 
 function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
 	var caseStr = adjectiveCase.replace(/([A-Z])/g, '/$1').toLowerCase();
-	searchIndexes.push({
-		keyword: word.adjective[gender][adjectiveCase].singular,
-		priority: 2,
-		message: gender + ' ' + caseStr + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.adjective[gender][adjectiveCase].plural,
-		priority: 2,
-		message: gender + ' ' + caseStr + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.adjective[gender][adjectiveCase].singular, 2,
+		gender + ' ' + caseStr + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.adjective[gender][adjectiveCase].plural, 2,
+		gender + ' ' + caseStr + ' plural', word
+	);
 }
+
+// --------
+// Pronouns
+// --------
 
 function addPronoun(word, searchIndexes) {
 	addCase(word, searchIndexes, 'nominative');
@@ -555,18 +411,15 @@ function addPronoun(word, searchIndexes) {
 }
 
 function addCase(word, searchIndexes, caseName) {
-	searchIndexes.push({
-		keyword: word.pronoun[caseName],
-		priority: 2,
-		message: caseName,
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.pronoun[caseName], 2,
+		caseName, word
+	);
 }
+
+// -------
+// Affixes
+// -------
 
 function addPrefix(word, searchIndexes) {
 	var affixLimits = [];
@@ -608,103 +461,51 @@ function addSuffix(word, searchIndexes) {
 	});
 }
 
+// -------------
+// Copular Verbs
+// -------------
+
 function addCopula(word, searchIndexes) {
 	addCopulaConj(word, searchIndexes, 'present');
 	addCopulaConj(word, searchIndexes, 'past');
 	addCopulaConj(word, searchIndexes, 'future');
 	addCopulaGerund(word, searchIndexes);
-	searchIndexes.push({
-		keyword: word.copula.infinitive.present,
-		priority: 0,
-		message: 'present infinitive',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.copula.infinitive.future,
-		priority: 0,
-		message: 'future infinitive',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.copula.infinitive.present, 0,
+		'present infinitive', word
+	);
+	pushIndex(
+		searchIndexes, word.copula.infinitive.future, 0,
+		'future infinitive', word
+	);
 }
 
 function addCopulaConj(word, searchIndexes, verbTense) {
 	var tense = word.copula[verbTense];
-	searchIndexes.push({
-		keyword: tense.first.singular,
-		priority: 0,
-		message: verbTense + ' 1st person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.first.plural,
-		priority: 0,
-		message: verbTense + ' 1st person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.second.singular,
-		priority: 0,
-		message: verbTense + ' 2nd person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.second.plural,
-		priority: 0,
-		message: verbTense + ' 2nd person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.third.singular,
-		priority: 0,
-		message: verbTense + ' 3rd person singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: tense.third.plural,
-		priority: 0,
-		message: verbTense + ' 3rd person plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, tense.first.singular, 0,
+		verbTense + ' 1st person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.first.plural, 0,
+		verbTense + ' 1st person plural', word
+	);
+	pushIndex(
+		searchIndexes, tense.second.singular, 0,
+		verbTense + ' 2nd person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.second.plural, 0,
+		verbTense + ' 2nd person plural', word
+	);
+	pushIndex(
+		searchIndexes, tense.third.singular, 0,
+		verbTense + ' 3rd person singular', word
+	);
+	pushIndex(
+		searchIndexes, tense.third.plural, 0,
+		verbTense + ' 3rd person plural', word
+	);
 }
 
 function addCopulaGerund(word, searchIndexes) {
@@ -716,26 +517,12 @@ function addCopulaGerund(word, searchIndexes) {
 }
 
 function addCopulaGerundCase(word, searchIndexes, gerundCase) {
-	searchIndexes.push({
-		keyword: word.copula.gerund[gerundCase].singular,
-		priority: 3,
-		message: 'gerund ' + gerundCase + ' singular',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
-	searchIndexes.push({
-		keyword: word.copula.gerund[gerundCase].plural,
-		priority: 3,
-		message: 'gerund ' + gerundCase + ' plural',
-		word: {
-			orcish: word.orcish,
-			english: word.english,
-			PoS: word.PoS,
-			num: word.num
-		}
-	});
+	pushIndex(
+		searchIndexes, word.copula.gerund[gerundCase].singular, 3,
+		'gerund ' + gerundCase + ' singular', word
+	);
+	pushIndex(
+		searchIndexes, word.copula.gerund[gerundCase].plural, 3,
+		'gerund ' + gerundCase + ' plural', word
+	);
 }
