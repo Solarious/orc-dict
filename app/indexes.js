@@ -200,11 +200,11 @@ function addNoun(word, searchIndexes) {
 	if (nounDoesNotDecline(word)) {
 		pushIndex(searchIndexes, word.orcish, 2, 'all cases', word);
 	} else {
-		addNounCase(word, searchIndexes, 'nominative');
-		addNounCase(word, searchIndexes, 'genitive');
-		addNounCase(word, searchIndexes, 'dative');
-		addNounCase(word, searchIndexes, 'accusative');
-		addNounCase(word, searchIndexes, 'vocative');
+		addNounCase(word, searchIndexes, 'nominative', 2);
+		addNounCase(word, searchIndexes, 'genitive', 2);
+		addNounCase(word, searchIndexes, 'dative', 2);
+		addNounCase(word, searchIndexes, 'accusative', 2);
+		addNounCase(word, searchIndexes, 'vocative', 2.5);
 	}
 }
 
@@ -221,13 +221,13 @@ function nounDoesNotDecline(word) {
 	word.orcish === word.noun.vocative.plural);
 }
 
-function addNounCase(word, searchIndexes, nounCase) {
+function addNounCase(word, searchIndexes, nounCase, priority) {
 	pushIndex(
-		searchIndexes, word.noun[nounCase].singular, 2,
+		searchIndexes, word.noun[nounCase].singular, priority,
 		nounCase + ' singular', word
 	);
 	pushIndex(
-		searchIndexes, word.noun[nounCase].plural, 2,
+		searchIndexes, word.noun[nounCase].plural, priority,
 		nounCase + ' plural', word
 	);
 }
@@ -301,20 +301,20 @@ function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 }
 
 function addVerbGerund(word, searchIndexes) {
-	addVerbGerundCase(word, searchIndexes, 'nominative');
-	addVerbGerundCase(word, searchIndexes, 'genitive');
-	addVerbGerundCase(word, searchIndexes, 'dative');
-	addVerbGerundCase(word, searchIndexes, 'accusative');
-	addVerbGerundCase(word, searchIndexes, 'vocative');
+	addVerbGerundCase(word, searchIndexes, 'nominative', 3);
+	addVerbGerundCase(word, searchIndexes, 'genitive', 3);
+	addVerbGerundCase(word, searchIndexes, 'dative', 3);
+	addVerbGerundCase(word, searchIndexes, 'accusative', 3);
+	addVerbGerundCase(word, searchIndexes, 'vocative', 3.5);
 }
 
-function addVerbGerundCase(word, searchIndexes, gerundCase) {
+function addVerbGerundCase(word, searchIndexes, gerundCase, priority) {
 	pushIndex(
-		searchIndexes, word.verb.gerund[gerundCase].singular, 3,
+		searchIndexes, word.verb.gerund[gerundCase].singular, priority,
 		'gerund ' + gerundCase + ' singular', word
 	);
 	pushIndex(
-		searchIndexes, word.verb.gerund[gerundCase].plural, 3,
+		searchIndexes, word.verb.gerund[gerundCase].plural, priority,
 		'gerund ' + gerundCase + ' plural', word
 	);
 }
@@ -340,20 +340,20 @@ function addVerbParticipleCase(word, searchIndexes, gender, pCase) {
 }
 
 function addVerbAgent(word, searchIndexes, type) {
-	addVerbAgentCase(word, searchIndexes, type, 'nominative');
-	addVerbAgentCase(word, searchIndexes, type, 'genitive');
-	addVerbAgentCase(word, searchIndexes, type, 'dative');
-	addVerbAgentCase(word, searchIndexes, type, 'accusative');
-	addVerbAgentCase(word, searchIndexes, type, 'vocative');
+	addVerbAgentCase(word, searchIndexes, type, 'nominative', 3);
+	addVerbAgentCase(word, searchIndexes, type, 'genitive', 3);
+	addVerbAgentCase(word, searchIndexes, type, 'dative', 3);
+	addVerbAgentCase(word, searchIndexes, type, 'accusative', 3);
+	addVerbAgentCase(word, searchIndexes, type, 'vocative', 3.5);
 }
 
-function addVerbAgentCase(word, searchIndexes, type, agentCase) {
+function addVerbAgentCase(word, searchIndexes, type, agentCase, priority) {
 	pushIndex(
-		searchIndexes, word.verb.agent[type][agentCase].singular, 3,
+		searchIndexes, word.verb.agent[type][agentCase].singular, priority,
 		'agent ' + type + ' ' + agentCase + ' singular', word
 	);
 	pushIndex(
-		searchIndexes, word.verb.agent[type][agentCase].plural, 3,
+		searchIndexes, word.verb.agent[type][agentCase].plural, priority,
 		'agent ' + type + ' ' + agentCase + ' plural', word
 	);
 }
@@ -379,21 +379,21 @@ function adjectiveDoesNotDecline(word) {
 }
 
 function addAdjectiveGender(word, searchIndexes, gender) {
-	addAdjectiveCase(word, searchIndexes, gender, 'nominative');
-	addAdjectiveCase(word, searchIndexes, gender, 'genitive');
-	addAdjectiveCase(word, searchIndexes, gender, 'dative');
-	addAdjectiveCase(word, searchIndexes, gender, 'accusative');
-	addAdjectiveCase(word, searchIndexes, gender, 'vocative');
+	addAdjectiveCase(word, searchIndexes, gender, 'nominative', 2);
+	addAdjectiveCase(word, searchIndexes, gender, 'genitive', 2);
+	addAdjectiveCase(word, searchIndexes, gender, 'dative', 2);
+	addAdjectiveCase(word, searchIndexes, gender, 'accusative', 2);
+	addAdjectiveCase(word, searchIndexes, gender, 'vocative', 2.5);
 }
 
-function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
-	var caseStr = adjectiveCase.replace(/([A-Z])/g, '/$1').toLowerCase();
+function addAdjectiveCase(word, searchIndexes, gender, adjCase, priority) {
+	var caseStr = adjCase.replace(/([A-Z])/g, '/$1').toLowerCase();
 	pushIndex(
-		searchIndexes, word.adjective[gender][adjectiveCase].singular, 2,
+		searchIndexes, word.adjective[gender][adjCase].singular, priority,
 		gender + ' ' + caseStr + ' singular', word
 	);
 	pushIndex(
-		searchIndexes, word.adjective[gender][adjectiveCase].plural, 2,
+		searchIndexes, word.adjective[gender][adjCase].plural, priority,
 		gender + ' ' + caseStr + ' plural', word
 	);
 }
@@ -403,16 +403,16 @@ function addAdjectiveCase(word, searchIndexes, gender, adjectiveCase) {
 // --------
 
 function addPronoun(word, searchIndexes) {
-	addCase(word, searchIndexes, 'nominative');
-	addCase(word, searchIndexes, 'genitive');
-	addCase(word, searchIndexes, 'dative');
-	addCase(word, searchIndexes, 'accusative');
-	addCase(word, searchIndexes, 'vocative');
+	addCase(word, searchIndexes, 'nominative', 2);
+	addCase(word, searchIndexes, 'genitive', 2);
+	addCase(word, searchIndexes, 'dative', 2);
+	addCase(word, searchIndexes, 'accusative', 2);
+	addCase(word, searchIndexes, 'vocative', 2.5);
 }
 
-function addCase(word, searchIndexes, caseName) {
+function addCase(word, searchIndexes, caseName, priority) {
 	pushIndex(
-		searchIndexes, word.pronoun[caseName], 2,
+		searchIndexes, word.pronoun[caseName], priority,
 		caseName, word
 	);
 }
@@ -509,20 +509,20 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 }
 
 function addCopulaGerund(word, searchIndexes) {
-	addCopulaGerundCase(word, searchIndexes, 'nominative');
-	addCopulaGerundCase(word, searchIndexes, 'genitive');
-	addCopulaGerundCase(word, searchIndexes, 'dative');
-	addCopulaGerundCase(word, searchIndexes, 'accusative');
-	addCopulaGerundCase(word, searchIndexes, 'vocative');
+	addCopulaGerundCase(word, searchIndexes, 'nominative', 3);
+	addCopulaGerundCase(word, searchIndexes, 'genitive', 3);
+	addCopulaGerundCase(word, searchIndexes, 'dative', 3);
+	addCopulaGerundCase(word, searchIndexes, 'accusative', 3);
+	addCopulaGerundCase(word, searchIndexes, 'vocative', 3.5);
 }
 
-function addCopulaGerundCase(word, searchIndexes, gerundCase) {
+function addCopulaGerundCase(word, searchIndexes, gerundCase, priority) {
 	pushIndex(
-		searchIndexes, word.copula.gerund[gerundCase].singular, 3,
+		searchIndexes, word.copula.gerund[gerundCase].singular, priority,
 		'gerund ' + gerundCase + ' singular', word
 	);
 	pushIndex(
-		searchIndexes, word.copula.gerund[gerundCase].plural, 3,
+		searchIndexes, word.copula.gerund[gerundCase].plural, priority,
 		'gerund ' + gerundCase + ' plural', word
 	);
 }
