@@ -615,7 +615,7 @@ function addCopula(word, searchIndexes) {
 	addCopulaGerund(word, searchIndexes);
 	searchIndexes.push({
 		keyword: word.copula.infinitive.present,
-		priority: 2,
+		priority: 0,
 		message: 'present infinitive',
 		word: {
 			orcish: word.orcish,
@@ -626,7 +626,7 @@ function addCopula(word, searchIndexes) {
 	});
 	searchIndexes.push({
 		keyword: word.copula.infinitive.future,
-		priority: 2,
+		priority: 0,
 		message: 'future infinitive',
 		word: {
 			orcish: word.orcish,
@@ -641,7 +641,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	var tense = word.copula[verbTense];
 	searchIndexes.push({
 		keyword: tense.first.singular,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 1st person singular',
 		word: {
 			orcish: word.orcish,
@@ -652,7 +652,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	});
 	searchIndexes.push({
 		keyword: tense.first.plural,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 1st person plural',
 		word: {
 			orcish: word.orcish,
@@ -663,7 +663,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	});
 	searchIndexes.push({
 		keyword: tense.second.singular,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 2nd person singular',
 		word: {
 			orcish: word.orcish,
@@ -674,7 +674,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	});
 	searchIndexes.push({
 		keyword: tense.second.plural,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 2nd person plural',
 		word: {
 			orcish: word.orcish,
@@ -685,7 +685,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	});
 	searchIndexes.push({
 		keyword: tense.third.singular,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 3rd person singular',
 		word: {
 			orcish: word.orcish,
@@ -696,7 +696,7 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 	});
 	searchIndexes.push({
 		keyword: tense.third.plural,
-		priority: 2,
+		priority: 0,
 		message: verbTense + ' 3rd person plural',
 		word: {
 			orcish: word.orcish,
