@@ -107,10 +107,6 @@ function bulkAdd(data, encoding, method, order) {
 				word[word.PoS] = autofill(word.orcish, word.PoS);
 			}
 
-			if (word.PoS === 'copular verb') {
-				throw new Error('Cannot use bulkadd with copular verbs');
-			}
-
 			return word;
 		});
 	})
@@ -192,6 +188,9 @@ function handleExtras(word, extra) {
 			if (operation === 'p.i.') {
 				addPronounInfo(word, value);
 			}
+			if (operation === 'c.i.') {
+				addCopulaInfo(word, value);
+			}
 		} else {
 			return word;
 		}
@@ -211,5 +210,84 @@ function addPronounInfo(word, info) {
 		dative: values[4],
 		accusative: values[5],
 		vocative: values[6],
+	};
+}
+
+function addCopulaInfo(word, info) {
+	var values = info.split(' ');
+	if (values.length !== 32) {
+		throw new Error('Word ' + word.orcish + ' c.i. must have 32 values');
+	}
+	word.copula = {
+		infinitive: {
+			present: values[0],
+			future: values[1]
+		},
+		present: {
+			first: {
+				singular: values[2],
+				plural: values[3]
+			},
+			second: {
+				singular: values[4],
+				plural: values[5]
+			},
+			third: {
+				singular: values[6],
+				plural: values[7]
+			}
+		},
+		past: {
+			first: {
+				singular: values[8],
+				plural: values[9]
+			},
+			second: {
+				singular: values[10],
+				plural: values[11]
+			},
+			third: {
+				singular: values[12],
+				plural: values[13]
+			}
+		},
+		future: {
+			first: {
+				singular: values[14],
+				plural: values[15]
+			},
+			second: {
+				singular: values[16],
+				plural: values[17]
+			},
+			third: {
+				singular: values[18],
+				plural: values[19]
+			}
+		},
+		gerund: {
+			declension: values[20],
+			gender: values[21],
+			nominative: {
+				singular: values[22],
+				plural: values[23]
+			},
+			genitive: {
+				singular: values[24],
+				plural: values[25]
+			},
+			dative: {
+				singular: values[26],
+				plural: values[27]
+			},
+			accusative: {
+				singular: values[28],
+				plural: values[29]
+			},
+			vocative: {
+				singular: values[30],
+				plural: values[31]
+			}
+		}
 	};
 }
