@@ -14,8 +14,8 @@ function getMatches(text) {
 	var searches = [];
 	while ((match = regex.exec(text.toLowerCase()))) {
 		var s = match[1] ? match[1] : match[0];
-		s = s.replace(/^[\.\,]/, '');
-		s = s.replace(/[\.\,]$/, '');
+		s = s.replace(/^[.,?!]/, '');
+		s = s.replace(/[.,?!]$/, '');
 		if (s) {
 			searches.push(s);
 		}
