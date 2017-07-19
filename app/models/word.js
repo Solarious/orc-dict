@@ -439,8 +439,9 @@ WordSchema.pre('save', function(next) {
 	if (this.PoS === 'verb') {
 		let verb = this.verb;
 		if (!verb) {
-			next(new Error('Word has PoS=="verb" but verb is undefined'));
-			return;
+			return next(
+				new Error('Word has PoS=="verb" but verb is undefined')
+			);
 		}
 		let result = validateNoun(verb.gerund, 'Gerund as a ');
 		if (result) {
@@ -467,20 +468,17 @@ WordSchema.pre('save', function(next) {
 	} else if (this.PoS === 'noun') {
 		let noun = this.noun;
 		if (!noun) {
-			next(new Error('Word has PoS==noun but noun is undefined'));
-			return;
+			return next(new Error('Word has PoS==noun but noun is undefined'));
 		}
 		let result = validateNoun(noun);
 		if (result) {
-			next(new Error(result));
-			return;
+			return next(new Error(result));
 		}
 	} else if (this.PoS === 'adjective') {
 		if (!this.adjective) {
-			next(new Error(
+			return next(new Error(
 				'Word has PoS==adjective but adjective is undefined'
 			));
-			return;
 		}
 	} else if (this.PoS === 'pronoun') {
 		if (!this.pronoun) {
@@ -496,7 +494,7 @@ WordSchema.pre('save', function(next) {
 		}
 	} else if (this.PoS === 'copular verb') {
 		if (!this.copula) {
-			next(new Error(
+			return next(new Error(
 				'Word has PoS=="copular verb" but copula is undefined'
 			));
 		}
