@@ -49,7 +49,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
   * email.js - Used to send the password reset email.
   * errorHelper.js - Contains the function getBetterErrorMessage.
   * [indexes.js](#appindexesjs) - Used to create/remove/replace the Search Indexes.
-  * sanitize.js - Middleware to reject request with unsafe values.
+  * sanitize.js - Middleware to reject requests with unsafe values.
   * [search.js](#appsearchjs) - Used for searching.
   * [stats.js](#appstatsjs) - Used to get statistics about the words.
   * [stopWords.js](#appstopwordsjs) - Used to find stop words and.
