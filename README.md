@@ -35,7 +35,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
     * [searchIndex.js](#appmodelssearchindexjs) - Model for Search Indexes. Used to assist searching for words by their orcish or by one of their conjugations/cases, and with affixes.
     * [sentence.js](#appmodelssentencejs) - Model for sentences.
   * routes - Contains the routing code.
-    * index.js - Joins all the other routing code together. Also responsible for setting the Cache-Control header and rejecting unauthorized users.
+    * index.js - Joins all the other routing code together. Also responsible for setting the Cache-Control header, rejecting unauthorized users, sending the index page on all non /api/\* GET requests, and GET /api/routes.
     * wordRoutes.js - Routes for viewing and modifying words.
     * userRoutes.js - Routes for logging in and out, and handing users.
     * searchRoutes.js - Routes for searching.
