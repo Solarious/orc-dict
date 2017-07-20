@@ -17,6 +17,8 @@ describe('Autofill', function() {
 			'adverb',
 			'cardinal',
 			'conjunction',
+			'contraction',
+			'copular verb',
 			'exclamation',
 			'interjection',
 			'preposition',
