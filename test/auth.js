@@ -10,6 +10,46 @@ var User = require('../app/models/user');
 
 chai.use(chaiHttp);
 
+var routesLogin = [];
+var routesTokenOnly = [];
+
+function addRouteLogin(method, path, examplePath) {
+	if (!examplePath) {
+		examplePath = path;
+	}
+	routesLogin.push({
+		method: method,
+		path: path,
+		examplePath: examplePath
+	});
+}
+
+function addRouteTokenOnly(method, path, examplePath) {
+	if (!examplePath) {
+		examplePath = path;
+	}
+	routesTokenOnly.push({
+		method: method,
+		path: path,
+		examplePath: examplePath
+	});
+}
+
+addRouteLogin('POST', '/api/bulkadd');
+addRouteLogin('POST', '/api/search/rebuild');
+addRouteLogin('POST', '/api/sentences');
+addRouteLogin('PUT', '/api/sentences/:id', '/api/sentences/12301');
+addRouteLogin('DELETE', '/api/sentences/:id', '/api/sentences/12301');
+addRouteLogin('POST', '/api/stats');
+addRouteTokenOnly('POST', '/api/user/login');
+addRouteTokenOnly('POST', '/api/user/logout');
+addRouteTokenOnly('POST', '/api/user/forgot');
+addRouteTokenOnly('POST', '/api/user/reset');
+addRouteLogin('POST', '/api/words');
+addRouteLogin('PUT', '/api/words/:orcish/:num', '/api/words/ka/1');
+addRouteLogin('DELETE', '/api/words/:orcish/:num', '/api/words/ka/1');
+addRouteLogin('DELETE', '/api/words-by-pos/:pos', '/api/words-by-pos/noun');
+
 describe('authentication', function() {
 	var wordObj = {
 		orcish: 'nul',
@@ -18,83 +58,18 @@ describe('authentication', function() {
 	};
 
 	describe('without XSRF-TOKEN', function() {
-
-		it('POST /api/words should send a 403', function(done) {
-			chai.request(server)
-			.post('/api/words')
-			.send(wordObj)
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('PUT /api/words/:orcish/:num should send a 403', function(done) {
-			chai.request(server)
-			.put('/api/words/ka/1')
-			.send(wordObj)
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('DELETE /api/words/:orcish/:num should send a 403', function(done) {
-			chai.request(server)
-			.delete('/api/words/ka/1')
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('POST /api/user/login should send a 403', function(done) {
-			chai.request(server)
-			.post('/api/user/login')
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('POST /api/user/reset should send a 403', function(done) {
-			chai.request(server)
-			.post('/api/user/reset')
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('POST /api/bulkadd should send a 403', function(done) {
-			chai.request(server)
-			.post('/api/bulkadd')
-			.end(function(error, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
-			});
-		});
-
-		it('DELETE /api/words-by-pos/:pos should send a 403', function(done) {
-			chai.request(server)
-			.delete('/api/words-by-pos/verb')
-			.end(function(err, res) {
-				res.should.have.status(403);
-				res.text.should.be.a('string');
-				res.text.should.eql('Invalid/Missing csrf token');
-				done();
+		routesLogin.concat(routesTokenOnly).forEach(function(route) {
+			it(route.method + ' ' + route.path + ' should send a 403',
+			function() {
+				return chai.request(server)
+				[route.method.toLowerCase()](route.examplePath)
+				.then(function(res) {
+					res.should.have.status(403);
+				}, function(err) {
+					err.response.should.have.status(403);
+					err.response.text.should.be.a('string');
+					err.response.text.should.eql('Invalid/Missing csrf token');
+				});
 			});
 		});
 	});
@@ -205,65 +180,19 @@ describe('authentication', function() {
 			});
 		});
 
-		it('POST /api/words should send a 401', function(done) {
-			agent
-			.post('/api/words')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.send(wordObj)
-			.end(function(error, res) {
-				res.should.have.status(401);
-				res.text.should.be.a('string');
-				res.text.should.eql('Unauthorized');
-				done();
-			});
-		});
-
-		it('PUT /api/words/:orcish/:num should send a 401', function(done) {
-			agent
-			.put('/api/words/ka/1')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.send(wordObj)
-			.end(function(error, res) {
-				res.should.have.status(401);
-				res.text.should.be.a('string');
-				res.text.should.eql('Unauthorized');
-				done();
-			});
-		});
-
-		it('DELETE /api/words/:orcish/:num should send a 401', function(done) {
-			agent
-			.delete('/api/words/ka/1')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.end(function(error, res) {
-				res.should.have.status(401);
-				res.text.should.be.a('string');
-				res.text.should.eql('Unauthorized');
-				done();
-			});
-		});
-
-		it('POST /api/bulkadd should send a 401', function(done) {
-			agent
-			.post('/api/bulkadd')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.end(function(error, res) {
-				res.should.have.status(401);
-				res.text.should.be.a('string');
-				res.text.should.eql('Unauthorized');
-				done();
-			});
-		});
-
-		it('DELETE /api/words-by-pos/:pos should send a 403', function(done) {
-			agent
-			.delete('/api/words-by-pos/verb')
-			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
-			.end(function(err, res) {
-				res.should.have.status(401);
-				res.text.should.be.a('string');
-				res.text.should.eql('Unauthorized');
-				done();
+		routesLogin.forEach(function(route) {
+			it(route.method + ' ' + route.path + ' should send a 401',
+			function() {
+				return agent
+				[route.method.toLowerCase()](route.examplePath)
+				.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
+				.then(function(res) {
+					res.should.have.status(401);
+				}, function(err) {
+					err.response.should.have.status(401);
+					err.response.text.should.be.a('string');
+					err.response.text.should.eql('Unauthorized');
+				});
 			});
 		});
 	});
