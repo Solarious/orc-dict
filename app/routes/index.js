@@ -30,6 +30,19 @@ function addRoutes(app) {
 	statsRoutes(app);
 	sentenceRoutes(app);
 
+	app.get('/api/routes', function(req, res) {
+		var results = [];
+		app._router.stack.forEach(function(r) {
+			if (r.route && r.route.path && r.route.path !== '/api/*') {
+				results.push({
+					path: r.route.path,
+					method: Object.keys(r.route.methods)[0]
+				});
+			}
+		});
+		res.json(results);
+	});
+
 	app.get('(?!/api/)*', function(req, res) {
 		res.sendFile(path.resolve(__dirname, '../../public/index.html'));
 	});
