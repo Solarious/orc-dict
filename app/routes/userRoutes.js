@@ -114,8 +114,4 @@ function addRoutesForUser(app) {
 			return res.status(400).send(message);
 		});
 	});
-
-	app.post('/api/csrftest', function(req, res) {
-		res.json({ message: 'CSRF test success' });
-	});
 }
