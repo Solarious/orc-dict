@@ -32,7 +32,7 @@ function config($locationProvider, $routeProvider) {
 		restricted: false
 	})
 	.when('/forgot', {
-		templateUrl: 'src/accout/forgot.html',
+		templateUrl: 'src/account/forgot.html',
 		controller: 'ForgotController',
 		controllerAs: 'vm',
 		restricted: false
