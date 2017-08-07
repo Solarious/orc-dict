@@ -18,6 +18,7 @@ var port;
 if (process.env.NODE_ENV === 'test') {
 	port = process.env.PORT_TESTING;
 	dburl = process.env.MONGODB_TESTING_URI;
+	process.env.WORK_FACTOR = 5;
 } else {
 	port = process.env.PORT;
 	dburl = process.env.MONGODB_URI;
