@@ -27,7 +27,7 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
 	var user = this;
-	var SALT_FACTOR = 5;
+	var SALT_FACTOR = process.env.WORK_FACTOR || 12;
 
 	if (!user.isModified('password')) {
 		return next();
@@ -50,9 +50,16 @@ UserSchema.pre('save', function(next) {
 });
 
 UserSchema.methods.comparePassword = function(candidatePassword, callback) {
-	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+	var user = this;
+	bcrypt.compare(candidatePassword, user.password, function(err, isMatch) {
 		if (err) {
 			return callback(err);
+		}
+
+		var SALT_FACTOR = process.env.WORK_FACTOR || 12;
+		if (isMatch && (bcrypt.getRounds(user.password) != SALT_FACTOR)) {
+			user.password = candidatePassword;
+			user.save();
 		}
 
 		callback(null, isMatch);

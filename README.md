@@ -20,6 +20,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
 * SENDGRID\_USERNAME - The username for sendgrid (used for sending password reset emails).
 * SENDGRID\_API\_KEY - The api key for sendgrid.
 * SIZE\_PER\_PART (optional) - The maximum number of search indexes that are created at once. A default value of 500 is used if this variable is not defined.
+* WORD\_FACTOR (optional) - The word factor used by bcrypt. Has the default value of 12.
 ## Gulp Tasks
 * js - Concats and uglifies the files from public/src into public/dist/app.min.js.
 * js-debug - Same as above, but does not uglify or include public/src/app.production.js.
