@@ -43,6 +43,11 @@ function addRoutes(app) {
 		res.json(results);
 	});
 
+	// Prevents an typo in templateUrl (angular) from causing an infinite loop
+	app.get('/src/*.html', function(req, res) {
+		res.sendStatus(404);
+	});
+
 	app.get('(?!/api/)*', function(req, res) {
 		res.sendFile(path.resolve(__dirname, '../../public/index.html'));
 	});
