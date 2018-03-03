@@ -1,6 +1,9 @@
 'use strict';
 
 var Word = require('./models/word');
+var AsyncLock = require('async-lock');
+var SearchIndex = require('./models/searchIndex');
+var lock = new AsyncLock();
 
 module.exports = {
 	get: get,
@@ -8,23 +11,31 @@ module.exports = {
 };
 
 var statsStore = {};
-var timeOfLastChange = new Date(1);
-var timeOfLastUpdate = new Date(0);
+var needsUpdate = true;
 
 function get() {
-	if (timeOfLastUpdate < timeOfLastChange) {
-		return build();
-	} else {
-		return Promise.resolve(statsStore);
-	}
+	return lock.acquire('stats', function() {
+		if (needsUpdate) {
+			console.log('Rebuilding stats');
+			return build()
+			.then(function(data) {
+				if (needsUpdate)
+					needsUpdate = false;
+				statsStore = data;
+				console.log('Done rebuilding stats');
+				return data;
+			});
+		} else {
+			return statsStore;
+		}
+	});
 }
 
 function setNeedsUpdate() {
-	timeOfLastChange = new Date();
+	needsUpdate = true;
 }
 
 function build() {
-	var startTime = new Date();
 	return Word.find({})
 	.exec()
 	.then(function(words) {
@@ -138,13 +149,6 @@ function build() {
 			},
 			total: 0
 		});
-	})
-	.then(function(stats) {
-		if (startTime > timeOfLastUpdate) {
-			statsStore = stats;
-			timeOfLastUpdate = startTime;
-		}
-		return stats;
 	});
 }
 
