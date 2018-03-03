@@ -141,6 +141,7 @@ function addRoutesForWords(app) {
 				console.log('error with indexes.forUpdate:');
 				console.log(error);
 			});
+			stats.setNeedsUpdate();
 		})
 		.catch(function(error) {
 			console.log(error);
