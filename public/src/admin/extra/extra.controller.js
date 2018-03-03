@@ -5,9 +5,12 @@ angular.
 	module('orcDictApp').
 	controller('ExtraController', ExtraController);
 
-ExtraController.$inject = ['WordsService', 'SearchService', 'AlertService'];
+ExtraController.$inject = [
+	'WordsService', 'SearchService', 'AlertService', 'StatsService'
+];
 
-function ExtraController(WordsService, SearchService, AlertService) {
+function ExtraController(WordsService, SearchService, AlertService,
+StatsService) {
 	var vm = this;
 
 	vm.showRemoveAllModal = showRemoveAllModal;
@@ -15,6 +18,7 @@ function ExtraController(WordsService, SearchService, AlertService) {
 	vm.showRebuildModal = showRebuildModal;
 	vm.rebuildModalAction = rebuildModalAction;
 	vm.getCorrectArticle = getCorrectArticle;
+	vm.setStatsNeedsUpdate = setStatsNeedsUpdate;
 
 	activate();
 
@@ -60,6 +64,17 @@ function ExtraController(WordsService, SearchService, AlertService) {
 		} else {
 			return 'a';
 		}
+	}
+
+	function setStatsNeedsUpdate() {
+		StatsService.setNeedsUpdate()
+		.then(function(response) {
+			AlertService.success(response);
+		})
+		.catch(function(error) {
+			AlertService.error(error ||
+				'Unknown error with set stats needs update');
+		});
 	}
 }
 

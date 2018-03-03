@@ -14,4 +14,9 @@ function addRoutesForStats(app) {
 			res.status(500).send(error.message);
 		});
 	});
+
+	app.post('/api/stats/set-needs-update', function(req, res) {
+		stats.setNeedsUpdate();
+		res.send('Stats will now update when next viewed');
+	});
 }
