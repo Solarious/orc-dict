@@ -67,12 +67,6 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
-	.when('/admin/statistics', {
-		templateUrl: 'src/admin/stats/stats.html',
-		controller: 'StatsController',
-		controllerAs: 'vm',
-		restricted: true
-	})
 	.when('/admin/extra', {
 		templateUrl: 'src/admin/extra/extra.html',
 		controller: 'ExtraController',
@@ -108,6 +102,12 @@ function config($locationProvider, $routeProvider) {
 		controller: 'BulkAddSentenceController',
 		controllerAs: 'vm',
 		restricted: true
+	})
+	.when('/statistics', {
+		templateUrl: 'src/stats/stats.html',
+		controller: 'StatsController',
+		controllerAs: 'vm',
+		restricted: false
 	})
 	.otherwise({
 		redirectTo: '/'

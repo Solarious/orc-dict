@@ -16,7 +16,6 @@ function wordsService($http, $q) {
 		remove: remove,
 		autofill: autofill,
 		bulkAdd: bulkAdd,
-		stats: stats,
 		removeByPoS: removeByPoS
 	};
 
@@ -107,16 +106,6 @@ function wordsService($http, $q) {
 			updateMethod: updateMethod,
 			order: order
 		})
-		.then(function(response) {
-			return response.data;
-		})
-		.catch(function(error) {
-			return $q.reject(error.data);
-		});
-	}
-
-	function stats() {
-		return $http.post('/api/stats')
 		.then(function(response) {
 			return response.data;
 		})

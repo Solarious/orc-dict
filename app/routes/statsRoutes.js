@@ -5,7 +5,7 @@ var stats = require('../stats');
 module.exports = addRoutesForStats;
 
 function addRoutesForStats(app) {
-	app.post('/api/stats', function(req, res) {
+	app.get('/api/stats', function(req, res) {
 		stats.get()
 		.then(function(stats) {
 			res.json(stats);

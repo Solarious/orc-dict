@@ -5,15 +5,15 @@ angular.
 	module('orcDictApp').
 	controller('StatsController', StatsController);
 
-StatsController.$inject = ['WordsService', 'AlertService'];
+StatsController.$inject = ['StatsService', 'AlertService'];
 
-function StatsController(WordsService, AlertService) {
+function StatsController(StatsService, AlertService) {
 	var vm = this;
 
 	activate();
 
 	function activate() {
-		WordsService.stats()
+		StatsService.get()
 		.then(function(stats) {
 			vm.stats = stats;
 		})

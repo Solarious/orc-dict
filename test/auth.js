@@ -40,7 +40,6 @@ addRouteLogin('POST', '/api/search/rebuild');
 addRouteLogin('POST', '/api/sentences');
 addRouteLogin('PUT', '/api/sentences/:id', '/api/sentences/12301');
 addRouteLogin('DELETE', '/api/sentences/:id', '/api/sentences/12301');
-addRouteLogin('POST', '/api/stats');
 addRouteTokenOnly('POST', '/api/user/login');
 addRouteTokenOnly('POST', '/api/user/logout');
 addRouteTokenOnly('POST', '/api/user/forgot');
