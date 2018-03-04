@@ -41,7 +41,10 @@ function build() {
 	.then(function(words) {
 		return words.reduce(reduceWord, {
 			adjective: {
-				count: 0
+				count: 0,
+				types: {
+					irregular: 0
+				}
 			},
 			adverb: {
 				count: 0
@@ -196,6 +199,28 @@ function reduceWord(stats, word) {
 		var number = word.pronoun.number;
 		stats[word.PoS][type].count += 1;
 		stats[word.PoS][type][number] += 1;
+	}
+	if (word.PoS === 'adjective') {
+		var regexA = /^[^,]*([^,]{2}), -([^,]{2})/;
+		var regexB = /^[^,]*([^,]{2}), [^,]*([^,]{2})/;
+		var result;
+		if ((result = regexA.exec(word.orcish)) !== null) {
+			let adjType = '' + result[1] + ', -' + result[2];
+			if (stats[word.PoS].types[adjType]) {
+				stats[word.PoS].types[adjType] += 1;
+			} else {
+				stats[word.PoS].types[adjType] = 1;
+			}
+		} else if ((result = regexB.exec(word.orcish)) !== null) {
+			let adjType = '' + result[1] + ', -' + result[2] + ' (custom)';
+			if (stats[word.PoS].types[adjType]) {
+				stats[word.PoS].types[adjType] += 1;
+			} else {
+				stats[word.PoS].types[adjType] = 1;
+			}
+		} else {
+			stats[word.PoS].types.irregular += 1;
+		}
 	}
 
 	return stats;

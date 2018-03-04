@@ -232,5 +232,22 @@
 				<td>{{vm.stats.pronoun.relative.count}}</td>
 			</tr>
 		</table>
+		<table class="table table-condensed">
+			<tr>
+				<th colspan="2">Adjective</th>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<th>Total</th>
+			</tr>
+			<tr ng-repeat="type in vm.adjTypes">
+				<td>{{type[0]}}</td>
+				<td>{{type[1]}}</td>
+			</tr>
+			<tr>
+				<td>Irregular</td>
+				<td>{{vm.stats.adjective.types.irregular}}</td>
+			</tr>
+		</table>
 	</div>
 </div>
