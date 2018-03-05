@@ -8,11 +8,15 @@ var lock = new AsyncLock();
 module.exports = {
 	get: get,
 	setNeedsUpdate: setNeedsUpdate,
-	getKeywords: getKeywords
+	getKeywords: getKeywords,
+	setKeywordsNeedsUpdate: setKeywordsNeedsUpdate
 };
 
 var statsStore = {};
+var keywordsStore = [{}, {}];
 var needsUpdate = true;
+var keywordsNeedUpdate = [true, true];
+const MAX_LIMIT = 20;
 
 function get() {
 	return lock.acquire('stats', function() {
@@ -37,69 +41,31 @@ function setNeedsUpdate() {
 }
 
 function getKeywords(sortByWords, limit) {
-	if (sortByWords) {
-		return getKeywordsSortWords(limit);
-	} else {
-		return getKeywordsSortKeywords(limit);
-	}
+	return lock.acquire('keywords' + sortByWords, function() {
+		if ((limit > MAX_LIMIT) || (limit < 0)) {
+			throw new Error('Invalid value for limit');
+		}
+
+		if (keywordsNeedUpdate[sortByWords]) {
+			console.log('Rebuilding keyword stats (' + sortByWords + ')');
+			return buildKeywords(sortByWords, MAX_LIMIT)
+			.then(function(data) {
+				if (keywordsNeedUpdate[sortByWords])
+					keywordsNeedUpdate[sortByWords] = false;
+				keywordsStore[sortByWords] = data;
+				console.log('Done rebuilding keyword stats (' + sortByWords +
+					')');
+				return data.slice(0, limit);
+			});
+		} else {
+			return keywordsStore[sortByWords].slice(0, limit);
+		}
+	});
 }
 
-function getKeywordsSortKeywords(limit) {
-	return SearchIndex.aggregate()
-	.group({
-		_id: '$keyword',
-		count: {
-			$sum: 1
-		},
-		searchIndexes: {
-			$push: {
-				message: '$message',
-				orcish: '$word.orcish',
-				PoS: '$word.PoS',
-				english: '$word.english',
-				num: '$word.num'
-			}
-		}
-	})
-	.sort({
-		count: -1
-	})
-	.limit(limit)
-	.exec();
-}
-
-function getKeywordsSortWords(limit) {
-	return SearchIndex.aggregate()
-	.allowDiskUse(true)
-	.group({
-		_id: '$keyword',
-		words: {
-			$addToSet: {
-				orcish: '$word.orcish',
-				num: '$word.num'
-			}
-		},
-		searchIndexes: {
-			$push: {
-				message: '$message',
-				orcish: '$word.orcish',
-				PoS: '$word.PoS',
-				english: '$word.english',
-				num: '$word.num'
-			}
-		}
-	})
-	.project({
-		searchIndexes: 1,
-		count: {
-			$size: '$words'
-		}
-	})
-	.sort({
-		count: -1
-	})
-	.limit(limit)
-	.exec();
+function setKeywordsNeedsUpdate() {
+	keywordsNeedUpdate[0] = true;
+	keywordsNeedUpdate[1] = true;
 }
 
 function build() {
@@ -304,4 +270,70 @@ function addNounEnding(stats, word, declStr, endings) {
 	throw new Error(
 		'word ' + word.orcish + ' does not have any of the given endings'
 	);
+}
+
+function buildKeywords(sortByWords, limit) {
+	if (sortByWords) {
+		return buildKeywordsSortWords(limit);
+	} else {
+		return buildKeywordsSortKeywords(limit);
+	}
+}
+
+function buildKeywordsSortKeywords(limit) {
+	return SearchIndex.aggregate()
+	.group({
+		_id: '$keyword',
+		count: {
+			$sum: 1
+		},
+		searchIndexes: {
+			$push: {
+				message: '$message',
+				orcish: '$word.orcish',
+				PoS: '$word.PoS',
+				english: '$word.english',
+				num: '$word.num'
+			}
+		}
+	})
+	.sort({
+		count: -1
+	})
+	.limit(limit)
+	.exec();
+}
+
+function buildKeywordsSortWords(limit) {
+	return SearchIndex.aggregate()
+	.allowDiskUse(true)
+	.group({
+		_id: '$keyword',
+		words: {
+			$addToSet: {
+				orcish: '$word.orcish',
+				num: '$word.num'
+			}
+		},
+		searchIndexes: {
+			$push: {
+				message: '$message',
+				orcish: '$word.orcish',
+				PoS: '$word.PoS',
+				english: '$word.english',
+				num: '$word.num'
+			}
+		}
+	})
+	.project({
+		searchIndexes: 1,
+		count: {
+			$size: '$words'
+		}
+	})
+	.sort({
+		count: -1
+	})
+	.limit(limit)
+	.exec();
 }

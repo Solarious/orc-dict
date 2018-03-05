@@ -2,6 +2,7 @@
 
 var SearchIndex = require('./models/searchIndex');
 var Word = require('./models/word');
+var stats = require('./stats');
 
 module.exports = {
 	rebuild: rebuild,
@@ -25,7 +26,11 @@ function rebuild() {
 
 function forCreate(word) {
 	var searchIndexes = createIndexesForWord(word);
-	return SearchIndex.insertMany(searchIndexes);
+	return SearchIndex.insertMany(searchIndexes)
+	.then(function(data) {
+		stats.setKeywordsNeedsUpdate();
+		return data;
+	});
 }
 
 function forUpdate(prevOrcish, prevNum, word) {
@@ -42,17 +47,21 @@ function forRemove(word) {
 	return SearchIndex.remove({
 		'word.orcish': word.orcish,
 		'word.num': word.num
+	})
+	.then(function(data) {
+		stats.setKeywordsNeedsUpdate();
+		return data;
 	});
 }
 
 function forRemoveByPoS(PoS) {
-	if (PoS === 'all') {
-		return SearchIndex.remove({});
-	} else {
-		return SearchIndex.remove({
-			'word.PoS': PoS
-		});
-	}
+	var args = (PoS === 'all') ? {} : { 'word.PoS': PoS };
+
+	return SearchIndex.remove(args)
+	.then(function(data) {
+		stats.setKeywordsNeedsUpdate();
+		return data;
+	});
 }
 
 function forInsertMany(words) {
@@ -91,7 +100,11 @@ function forInsertMany(words) {
 			return insertPart(part);
 		});
 	});
-	return promise;
+	return promise
+	.then(function(data) {
+		stats.setKeywordsNeedsUpdate();
+		return data;
+	});
 }
 
 function insertPart(words) {
