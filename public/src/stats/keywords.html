@@ -1,0 +1,46 @@
+<h1>Statistics: Keywords</h1>
+
+<p>The search terms that have the most results</p>
+
+<form class="form-horizontal col-md-6">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Sort by num of</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.sortBy"
+			ng-change="vm.reloadStats()">
+				<option value="0">Search Results</option>
+				<option value="1">Unique Words</option>
+			</select>
+		</div>
+	</div>
+</form>
+
+<div class="clearfix"></div>
+
+<div class="loader" ng-if="!vm.keywords"></div>
+
+<div ng-if="vm.keywords">
+	<ul class="nav nav-tabs">
+		<li ng-repeat="keyword in vm.keywords"
+		ng-class="{active: vm.activeKeyword === $index}">
+			<a href="#" draggable="false" ng-click="vm.setActive($index)">
+				{{$index + 1}}: {{keyword._id}} ({{keyword.count}})
+			</a>
+		</li>
+	</ul>
+
+	<div class="col-md-8">
+		<table class="table table-condensed">
+			<tr>
+				<th class="width-half">Word</th>
+				<th class="width-half">Type</th>
+			</tr>
+			<tr ng-repeat="match in vm.activeData.searchIndexes">
+				<td><a ng-href="/words/{{match.orcish}}/{{match.num}}">
+					<strong>{{match.orcish}}</strong>,
+					<em>{{match.PoS}}</em>, {{match.english}}.
+				</a></td>
+				<td>{{match.message}}</td>
+		</table>
+	</div>
+</div>

@@ -7,7 +7,8 @@ var lock = new AsyncLock();
 
 module.exports = {
 	get: get,
-	setNeedsUpdate: setNeedsUpdate
+	setNeedsUpdate: setNeedsUpdate,
+	getKeywords: getKeywords
 };
 
 var statsStore = {};
@@ -33,6 +34,72 @@ function get() {
 
 function setNeedsUpdate() {
 	needsUpdate = true;
+}
+
+function getKeywords(sortByWords, limit) {
+	if (sortByWords) {
+		return getKeywordsSortWords(limit);
+	} else {
+		return getKeywordsSortKeywords(limit);
+	}
+}
+
+function getKeywordsSortKeywords(limit) {
+	return SearchIndex.aggregate()
+	.group({
+		_id: '$keyword',
+		count: {
+			$sum: 1
+		},
+		searchIndexes: {
+			$push: {
+				message: '$message',
+				orcish: '$word.orcish',
+				PoS: '$word.PoS',
+				english: '$word.english',
+				num: '$word.num'
+			}
+		}
+	})
+	.sort({
+		count: -1
+	})
+	.limit(limit)
+	.exec();
+}
+
+function getKeywordsSortWords(limit) {
+	return SearchIndex.aggregate()
+	.allowDiskUse(true)
+	.group({
+		_id: '$keyword',
+		words: {
+			$addToSet: {
+				orcish: '$word.orcish',
+				num: '$word.num'
+			}
+		},
+		searchIndexes: {
+			$push: {
+				message: '$message',
+				orcish: '$word.orcish',
+				PoS: '$word.PoS',
+				english: '$word.english',
+				num: '$word.num'
+			}
+		}
+	})
+	.project({
+		searchIndexes: 1,
+		count: {
+			$size: '$words'
+		}
+	})
+	.sort({
+		count: -1
+	})
+	.limit(limit)
+	.exec();
 }
 
 function build() {

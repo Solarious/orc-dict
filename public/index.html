@@ -30,27 +30,34 @@
 		ng-controller="NavbarController as navbarVM">
 			<ul class="nav navbar-nav">
 				<li><a href="/words">Words List</a></li>
-			</ul>
-			<ul class="nav navbar-nav">
 				<li><a href="/sentences">Sentences</a></li>
-			</ul>
-			<ul class="nav navbar-nav">
-				<li><a href="/statistics">Stats</a></li>
-			</ul>
-			<ul class="nav navbar-nav" ng-if="!navbarVM.isLoggedIn()" ng-cloak>
-				<li><a href="/login">Login</a></li>
-			</ul>
-			<ul class="nav navbar-nav" ng-if="navbarVM.isLoggedIn()" ng-cloak>
-				<li><p class="navbar-text">
-					Logged in as <em>{{ navbarVM.getUserName() }}</em>
-				</p></li>
-				<li><a href="/admin">Admin</a></li>
-				<li>
-					<button type="button" class="btn btn-link navbar-btn"
-					ng-click="navbarVM.logout()">
-						Logout
-					</button>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">
+						Stats <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu ">
+						<li><a href="/statistics/pos">Parts of Speech</a></li>
+						<li><a href="/statistics/keywords">Keywords</a></li>
+					</ul>
 				</li>
+				<li class="nav navbar-nav" ng-if="!navbarVM.isLoggedIn()"
+				ng-cloak>
+					<a href="/login">Login</a>
+				</li>
+				<div class="nav navbar-nav" ng-if="navbarVM.isLoggedIn()"
+				ng-cloak>
+					<li><p class="navbar-text">
+						Logged in as <em>{{ navbarVM.getUserName() }}</em>
+					</p></li>
+					<li><a href="/admin">Admin</a></li>
+					<li>
+						<button type="button" class="btn btn-link navbar-btn"
+						ng-click="navbarVM.logout()">
+							Logout
+						</button>
+					</li>
+				</div>
 			</ul>
 
 			<form class="navbar-form navbar-right"

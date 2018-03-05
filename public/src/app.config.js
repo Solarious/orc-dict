@@ -103,9 +103,15 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
-	.when('/statistics', {
+	.when('/statistics/pos', {
 		templateUrl: 'src/stats/stats.html',
 		controller: 'StatsController',
+		controllerAs: 'vm',
+		restricted: false
+	})
+	.when('/statistics/keywords', {
+		templateUrl: 'src/stats/keywords.html',
+		controller: 'KeywordsController',
 		controllerAs: 'vm',
 		restricted: false
 	})

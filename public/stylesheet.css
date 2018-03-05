@@ -41,6 +41,10 @@ body {
 	width: 33%;
 }
 
+.width-half {
+	width: 50%;
+}
+
 textarea {
 	-moz-tab-size: 64;
 	-o-tab-size: 64;

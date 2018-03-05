@@ -10,7 +10,8 @@ statsService.$inject = ['$http', '$q'];
 function statsService($http, $q) {
 	var service = {
 		get: get,
-		setNeedsUpdate: setNeedsUpdate
+		setNeedsUpdate: setNeedsUpdate,
+		keywords: keywords
 	};
 
 	return service;
@@ -27,6 +28,16 @@ function statsService($http, $q) {
 
 	function setNeedsUpdate() {
 		return $http.post('/api/stats/set-needs-update')
+		.then(function(response) {
+			return response.data;
+		})
+		.catch(function(error) {
+			return $q.reject(error.data);
+		});
+	}
+
+	function keywords(sortBy, limit) {
+		return $http.get('/api/stats/keywords/' + sortBy + '/' + limit)
 		.then(function(response) {
 			return response.data;
 		})
