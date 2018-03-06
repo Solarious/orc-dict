@@ -70,6 +70,31 @@
 				<td><strong>{{vm.stats.total}}</strong></td>
 			</tr>
 		</table>
+		<table class="table">
+			<tr>
+				<th colspan="4">Pronoun</th>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<th>Total</th>
+			</tr>
+			<tr>
+				<td>Pronoun</td>
+				<td>{{vm.stats.pronoun.pronoun.count}}</td>
+			</tr>
+			<tr>
+				<td>Possessive</td>
+				<td>{{vm.stats.pronoun.possessive.count}}</td>
+			</tr>
+			<tr>
+				<td>Demonstrative</td>
+				<td>{{vm.stats.pronoun.demonstrative.count}}</td>
+			</tr>
+			<tr>
+				<td>Relative</td>
+				<td>{{vm.stats.pronoun.relative.count}}</td>
+			</tr>
+		</table>
 	</div>
 	<div class="col-md-5">
 		<table class="table table-condensed">
@@ -205,31 +230,6 @@
 			<tr>
 				<td>Second</td>
 				<td>{{vm.stats.verb.second}}</td>
-			</tr>
-		</table>
-		<table class="table">
-			<tr>
-				<th colspan="4">Pronoun</th>
-			</tr>
-			<tr>
-				<th>Type</th>
-				<th>Total</th>
-			</tr>
-			<tr>
-				<td>Pronoun</td>
-				<td>{{vm.stats.pronoun.pronoun.count}}</td>
-			</tr>
-			<tr>
-				<td>Possessive</td>
-				<td>{{vm.stats.pronoun.possessive.count}}</td>
-			</tr>
-			<tr>
-				<td>Demonstrative</td>
-				<td>{{vm.stats.pronoun.demonstrative.count}}</td>
-			</tr>
-			<tr>
-				<td>Relative</td>
-				<td>{{vm.stats.pronoun.relative.count}}</td>
 			</tr>
 		</table>
 		<table class="table table-condensed">
