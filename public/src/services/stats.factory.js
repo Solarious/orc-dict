@@ -36,8 +36,9 @@ function statsService($http, $q) {
 		});
 	}
 
-	function keywords(sortBy, limit) {
-		return $http.get('/api/stats/keywords/' + sortBy + '/' + limit)
+	function keywords(sortBy, from, to) {
+		return $http.get('/api/stats/keywords/' +
+			sortBy + '/' + from + '/' + to)
 		.then(function(response) {
 			return response.data;
 		})

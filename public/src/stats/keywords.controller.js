@@ -16,13 +16,17 @@ function KeywordsController(StatsService, AlertService) {
 	vm.setActive = setActive;
 
 	function activate() {
-		vm.sortBy = "0";
+		vm.sortBy = '0';
+		vm.fromTo = '0 10';
 		reloadStats();
 	}
 
 	function reloadStats() {
 		vm.keywords = null;
-		StatsService.keywords(vm.sortBy, 20)
+		var ft = vm.fromTo.split(' ');
+		vm.from = Number(ft[0]);
+		vm.to = Number(ft[1]);
+		StatsService.keywords(vm.sortBy, vm.from, vm.to)
 		.then(function(keywords) {
 			vm.keywords = keywords.data;
 			setActive(0);

@@ -15,10 +15,11 @@ function addRoutesForStats(app) {
 		});
 	});
 
-	app.get('/api/stats/keywords/:sortByWords/:limit', function(req, res) {
+	app.get('/api/stats/keywords/:sortByWords/:from/:to', function(req, res) {
 		var sortByWords = Number(req.params.sortByWords);
-		var limit = Number(req.params.limit);
-		stats.getKeywords(sortByWords, limit)
+		var from = Number(req.params.from);
+		var to = Number(req.params.to);
+		stats.getKeywords(sortByWords, from, to)
 		.then(function(data) {
 			res.json({
 				data: data

@@ -16,7 +16,7 @@ var statsStore = {};
 var keywordsStore = [{}, {}];
 var needsUpdate = true;
 var keywordsNeedUpdate = [true, true];
-const MAX_LIMIT = 20;
+const MAX_LIMIT = 100;
 
 function get() {
 	return lock.acquire('stats', function() {
@@ -40,10 +40,10 @@ function setNeedsUpdate() {
 	needsUpdate = true;
 }
 
-function getKeywords(sortByWords, limit) {
+function getKeywords(sortByWords, from, to) {
 	return lock.acquire('keywords' + sortByWords, function() {
-		if ((limit > MAX_LIMIT) || (limit < 0)) {
-			throw new Error('Invalid value for limit');
+		if ((to > MAX_LIMIT) || (from < 0) || (to < 0) || (from > to)) {
+			throw new Error('Invalid input range');
 		}
 
 		if (keywordsNeedUpdate[sortByWords]) {
@@ -55,10 +55,10 @@ function getKeywords(sortByWords, limit) {
 				keywordsStore[sortByWords] = data;
 				console.log('Done rebuilding keyword stats (' + sortByWords +
 					')');
-				return data.slice(0, limit);
+				return data.slice(from, to);
 			});
 		} else {
-			return keywordsStore[sortByWords].slice(0, limit);
+			return keywordsStore[sortByWords].slice(from, to);
 		}
 	});
 }
