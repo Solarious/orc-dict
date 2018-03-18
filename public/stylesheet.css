@@ -99,3 +99,48 @@ dd:before {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
 }
+
+.grammar-text span {
+	display: inline-block;
+	text-indent: 1.5em;
+}
+
+.grammar-text span:first-child {
+	/*text-indent: 0em;*/
+}
+
+ol.brackets {
+	counter-reset: brackets
+}
+
+ol.brackets > li {
+	list-style: none;
+	position: relative;
+	padding-left: 1.8em;
+	text-indent: -1.8em;
+}
+
+ol.brackets > li:before {
+	counter-increment: brackets;
+	content: "(" counter(brackets)") ";
+}
+
+.table-pron {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-pron td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-pron td:first-child {
+	width: 5em;
+	text-align: center
+}
+
+.table-pron td:nth-child(2) {
+	width: 15em;
+	text-align: center
+}

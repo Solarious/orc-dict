@@ -115,6 +115,10 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
+	.when('/grammar/primer', {
+		templateUrl: 'src/grammar/primer.html',
+		restricted: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
