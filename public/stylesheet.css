@@ -109,6 +109,18 @@ dd:before {
 	/*text-indent: 0em;*/
 }
 
+ul.decl-def-list {
+	padding-left: 3.0em;
+	margin-top: -10px;
+	margin-bottom: -0px;
+}
+
+ul.decl-def-list > li {
+	list-style: none;
+	position: relative;
+	text-indent: -1.5em;
+}
+
 ol.brackets {
 	counter-reset: brackets
 }
@@ -171,6 +183,27 @@ ol.brackets > li:before {
 	width: 12em;
 }
 
+.table-noun-decl {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-noun-decl td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-noun-decl td:first-child {
+	width: 15em;
+}
+
+.table-noun-decl td:nth-child(2) {
+	width: 12em;
+}
+
+.table-noun-decl td:nth-child(3) {
+	width: 12em;
+}
 .sidebar {
 	display: block;
 	position: fixed;
