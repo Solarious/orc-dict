@@ -144,3 +144,54 @@ ol.brackets > li:before {
 	width: 15em;
 	text-align: center
 }
+
+.table-verb-conj {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-verb-conj td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-verb-conj td:first-child {
+	width: 8em;
+}
+
+.table-verb-conj td:nth-child(2) {
+	width: 5em;
+}
+
+.table-verb-conj td:nth-child(3) {
+	width: 12em;
+}
+
+.table-verb-conj td:nth-child(4) {
+	width: 12em;
+}
+
+.sidebar {
+	display: block;
+	position: fixed;
+	top: 120px;
+	padding-left: 20px;
+}
+
+.sidebar > ul {
+	list-style: none;
+}
+
+.sidebar a {
+	padding: 4px 20px;
+	font-size: 13px;
+	font-weight: 500;
+	color: #767676;
+}
+
+.sidebar a:hover, .sidebar a:active, .sidebar a:focus {
+	color: #004784;
+	border-left: 1px solid #337ab7;
+	outline: 0;
+	padding-left: 19px;
+}

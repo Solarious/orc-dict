@@ -119,6 +119,11 @@ function config($locationProvider, $routeProvider) {
 		templateUrl: 'src/grammar/primer.html',
 		restricted: false
 	})
+	.when('/grammar/verbs', {
+		templateUrl: 'src/grammar/verbs.html',
+		restricted: false,
+		reloadOnSearch: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
