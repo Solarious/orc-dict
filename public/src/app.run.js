@@ -6,9 +6,10 @@ angular.
 	run(run);
 
 run.$inject = ['$rootScope', '$location', '$route', 'AuthService',
-'AlertService'];
+'AlertService', '$anchorScroll'];
 
-function run($rootScope, $location, $route, AuthService, AlertService) {
+function run($rootScope, $location, $route, AuthService, AlertService,
+$anchorScroll) {
 	$rootScope.$on('$routeChangeStart', function(angularEvent, next, current) {
 		AlertService.clear();
 		AuthService.getUserStatus()
@@ -25,6 +26,8 @@ function run($rootScope, $location, $route, AuthService, AlertService) {
 	function(angularEvent, next, current, rejection) {
 		AlertService.error(rejection.message);
 	});
+
+	$anchorScroll.yOffset = 55;
 }
 
 })();
