@@ -109,6 +109,11 @@ dd:before {
 	/*text-indent: 0em;*/
 }
 
+.grammar-text span.sentence-structure {
+	margin-left: 3.5em;
+	text-indent: -2em;
+}
+
 ul.decl-def-list {
 	padding-left: 3.0em;
 	margin-top: -10px;
@@ -336,4 +341,60 @@ ol.brackets > li:before {
 	border-left: 1px solid #337ab7;
 	outline: 0;
 	padding-left: 19px;
+}
+
+.list-style-none {
+	list-style: none;
+}
+
+.table-com-sup {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-com-sup td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-com-sup td:first-child {
+	width: 12em;
+}
+
+.table-com-sup td:nth-child(2) {
+	width: 8em;
+}
+
+.table-com-sup td:nth-child(3) {
+	width: 8em;
+}
+
+.table-com-sup td:nth-child(4) {
+	width: 8em;
+}
+
+.table-gerund {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-gerund td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-gerund td:first-child {
+	width: 7em;
+}
+
+.table-gerund td:nth-child(2) {
+	width: 10em;
+}
+
+.table-gerund td:nth-child(3) {
+	width: 10em;
+}
+
+.table-gerund td:nth-child(4) {
+	width: 10em;
 }

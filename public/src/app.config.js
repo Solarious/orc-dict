@@ -134,6 +134,11 @@ function config($locationProvider, $routeProvider) {
 		restricted: false,
 		reloadOnSearch: false
 	})
+	.when('/grammar/miscellaneous', {
+		templateUrl: 'src/grammar/miscellaneous.html',
+		restricted: false,
+		reloadOnSearch: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
