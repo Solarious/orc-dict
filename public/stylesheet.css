@@ -204,6 +204,115 @@ ol.brackets > li:before {
 .table-noun-decl td:nth-child(3) {
 	width: 12em;
 }
+
+.table-pronoun-2 {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-pronoun-2 td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-pronoun-2 td:first-child {
+	width: 10em;
+}
+
+.table-pronoun-2 td:nth-child(2) {
+	width: 15em;
+}
+
+.table-pronoun-2 td:nth-child(3) {
+	width: 15em;
+}
+
+.table-pronoun-3 {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-pronoun-3 td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-pronoun-3 td:first-child {
+	width: 10em;
+}
+
+.table-pronoun-3 td:nth-child(2) {
+	width: 10em;
+}
+
+.table-pronoun-3 td:nth-child(3) {
+	width: 10em;
+}
+
+.table-pronoun-3 td:nth-child(4) {
+	width: 10em;
+}
+
+.table-pronoun-small {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-pronoun-small td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-pronoun-small td:first-child {
+	width: 8em;
+}
+
+.table-pronoun-small td:nth-child(2) {
+	width: 15em;
+}
+
+.table-pronoun-small td:nth-child(3) {
+	width: 12em;
+}
+
+.table-pronoun-6 {
+	width: auto;
+	margin: 0px auto 1em;
+}
+
+.table-pronoun-6 td {
+	border: none !important;
+	padding: 2px !important;
+}
+
+.table-pronoun-6 td:first-child {
+	width: 8em;
+}
+
+.table-pronoun-6 td:nth-child(2) {
+	width: 4em;
+}
+
+.table-pronoun-6 td:nth-child(3) {
+	width: 4em;
+}
+
+.table-pronoun-6 td:nth-child(4) {
+	width: 7em;
+}
+
+.table-pronoun-6 td:nth-child(5) {
+	width: 4em;
+}
+
+.table-pronoun-6 td:nth-child(6) {
+	width: 4em;
+}
+
+.table-pronoun-6 td:nth-child(7) {
+	width: 4em;
+}
+
 .sidebar {
 	display: block;
 	position: fixed;

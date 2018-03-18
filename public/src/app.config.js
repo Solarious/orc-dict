@@ -129,6 +129,11 @@ function config($locationProvider, $routeProvider) {
 		restricted: false,
 		reloadOnSearch: false
 	})
+	.when('/grammar/pronouns', {
+		templateUrl: 'src/grammar/pronouns.html',
+		restricted: false,
+		reloadOnSearch: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
