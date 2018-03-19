@@ -819,6 +819,354 @@ function getNouns() {
 				}
 			}
 		},
+		{
+			orcish: 'zsagord',
+			english: 'arrow',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'zsagord',
+					plural: 'zsagalz'
+				},
+				genitive: {
+					singular: 'zsagarn',
+					plural: 'zsagarnu'
+				},
+				dative: {
+					singular: 'zsagan',
+					plural: 'zsagahan'
+				},
+				accusative: {
+					singular: 'zsagach',
+					plural: 'zsagarach'
+				},
+				vocative: {
+					singular: 'zsagano',
+					plural: 'zsaganosh'
+				}
+			}
+		},
+		{
+			orcish: 'laerd',
+			english: 'turtle',
+			PoS: 'noun',
+			noun: {
+				declension: 'third',
+				gender: 'feminine',
+				nominative: {
+					singular: 'laerd',
+					plural: 'laalz'
+				},
+				genitive: {
+					singular: 'laarn',
+					plural: 'laarnu'
+				},
+				dative: {
+					singular: 'laan',
+					plural: 'laahan'
+				},
+				accusative: {
+					singular: 'laach',
+					plural: 'laarach'
+				},
+				vocative: {
+					singular: 'laano',
+					plural: 'laanosh'
+				}
+			}
+		},
+		{
+			orcish: 'korab',
+			english: 'siege',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'korab',
+					plural: 'korelz'
+				},
+				genitive: {
+					singular: 'korem',
+					plural: 'korerrum'
+				},
+				dative: {
+					singular: 'kore',
+					plural: 'korero'
+				},
+				accusative: {
+					singular: 'korenz',
+					plural: 'koreluz'
+				},
+				vocative: {
+					singular: 'korom',
+					plural: 'koremo'
+				}
+			}
+		},
+		{
+			orcish: 'stoab',
+			english: 'kidney',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'stoab',
+					plural: 'stoelz'
+				},
+				genitive: {
+					singular: 'stoem',
+					plural: 'stoerrum'
+				},
+				dative: {
+					singular: 'stoe',
+					plural: 'stoero'
+				},
+				accusative: {
+					singular: 'stoenz',
+					plural: 'stoeluz'
+				},
+				vocative: {
+					singular: 'stoom',
+					plural: 'stoemo'
+				}
+			}
+		},
+		{
+			orcish: 'oglaf',
+			english: 'taunt',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'oglaf',
+					plural: 'oglelz'
+				},
+				genitive: {
+					singular: 'oglem',
+					plural: 'oglerrum'
+				},
+				dative: {
+					singular: 'ogle',
+					plural: 'oglero'
+				},
+				accusative: {
+					singular: 'oglenz',
+					plural: 'ogleluz'
+				},
+				vocative: {
+					singular: 'oglom',
+					plural: 'oglemo'
+				}
+			}
+		},
+		{
+			orcish: 'darriaf',
+			english: 'quagruaf',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'darriaf',
+					plural: 'darrielz'
+				},
+				genitive: {
+					singular: 'darriem',
+					plural: 'darrierrum'
+				},
+				dative: {
+					singular: 'darrie',
+					plural: 'darriero'
+				},
+				accusative: {
+					singular: 'darrienz',
+					plural: 'darrieluz'
+				},
+				vocative: {
+					singular: 'darriom',
+					plural: 'darriemo'
+				}
+			}
+		},
+		{
+			orcish: 'thrip',
+			english: 'dairy',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'thrip',
+					plural: 'threlz'
+				},
+				genitive: {
+					singular: 'threm',
+					plural: 'threrrum'
+				},
+				dative: {
+					singular: 'thre',
+					plural: 'threro'
+				},
+				accusative: {
+					singular: 'threnz',
+					plural: 'threluz'
+				},
+				vocative: {
+					singular: 'throm',
+					plural: 'thremo'
+				}
+			}
+		},
+		{
+			orcish: 'reip',
+			english: '(fake word)',
+			PoS: 'noun',
+			noun: {
+				declension: 'fourth',
+				gender: 'masculine',
+				nominative: {
+					singular: 'reip',
+					plural: 'reelz'
+				},
+				genitive: {
+					singular: 'reem',
+					plural: 'reerrum'
+				},
+				dative: {
+					singular: 'ree',
+					plural: 'reero'
+				},
+				accusative: {
+					singular: 'reenz',
+					plural: 'reeluz'
+				},
+				vocative: {
+					singular: 'reom',
+					plural: 'reemo'
+				}
+			}
+		},
+		{
+			orcish: 'kamath',
+			english: 'skill',
+			PoS: 'noun',
+			noun: {
+				declension: 'fifth',
+				gender: 'neutral',
+				nominative: {
+					singular: 'kamath',
+					plural: 'kamataz'
+				},
+				genitive: {
+					singular: 'kamuzu',
+					plural: 'kamatsu'
+				},
+				dative: {
+					singular: 'kamord',
+					plural: 'kamoran'
+				},
+				accusative: {
+					singular: 'kamatz',
+					plural: 'kamatuz'
+				},
+				vocative: {
+					singular: 'kamordo',
+					plural: 'kamonosh'
+				}
+			}
+		},
+		{
+			orcish: 'veniath',
+			english: 'reflection',
+			PoS: 'noun',
+			noun: {
+				declension: 'fifth',
+				gender: 'neutral',
+				nominative: {
+					singular: 'veniath',
+					plural: 'veniataz'
+				},
+				genitive: {
+					singular: 'veniuzu',
+					plural: 'veniatsu'
+				},
+				dative: {
+					singular: 'veniord',
+					plural: 'venioran'
+				},
+				accusative: {
+					singular: 'veniatz',
+					plural: 'veniatuz'
+				},
+				vocative: {
+					singular: 'veniordo',
+					plural: 'venionosh'
+				}
+			}
+		},
+		{
+			orcish: 'presat',
+			english: 'kin',
+			PoS: 'noun',
+			noun: {
+				declension: 'fifth',
+				gender: 'neutral',
+				nominative: {
+					singular: 'presat',
+					plural: 'presataz'
+				},
+				genitive: {
+					singular: 'presuzu',
+					plural: 'presatsu'
+				},
+				dative: {
+					singular: 'presord',
+					plural: 'presoran'
+				},
+				accusative: {
+					singular: 'presatz',
+					plural: 'presatuz'
+				},
+				vocative: {
+					singular: 'presordo',
+					plural: 'presonosh'
+				}
+			}
+		},
+		{
+			orcish: 'kraeat',
+			english: 'knee',
+			PoS: 'noun',
+			noun: {
+				declension: 'fifth',
+				gender: 'neutral',
+				nominative: {
+					singular: 'kraeat',
+					plural: 'kraeataz'
+				},
+				genitive: {
+					singular: 'kraeuzu',
+					plural: 'kraeatsu'
+				},
+				dative: {
+					singular: 'kraeord',
+					plural: 'kraeoran'
+				},
+				accusative: {
+					singular: 'kraeatz',
+					plural: 'kraeatuz'
+				},
+				vocative: {
+					singular: 'kraeordo',
+					plural: 'kraeonosh'
+				}
+			}
+		},
 	];
 }
 
@@ -1434,5 +1782,3 @@ function getVerbs() {
 		}
 	];
 }
-
-//zsagord
