@@ -21,7 +21,7 @@ function SearchController(SearchService, $location, AlertService) {
 			vm.textResults = data.textResults;
 			setActive(0);
 		}, function(error) {
-			AlertService.error(error);
+			AlertService.error(error || 'Unknown error with search');
 		});
 	}
 
