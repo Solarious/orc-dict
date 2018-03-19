@@ -702,6 +702,11 @@ function secondDeclNoun(orcish, ending, gender) {
 
 function thirdDeclNoun(orcish, ending) {
 	var base = orcish.slice(0, -(ending.length));
+	var lastLetterOfBase = base[base.length - 1];
+	if (ending === 'rd' && isVowel(lastLetterOfBase)) {
+		base = base.slice(0, -1);
+	}
+
 	return {
 		declension: 'third',
 		gender: 'feminine',
