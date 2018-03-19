@@ -9,7 +9,7 @@ module.exports = {
 };
 
 function getMatches(text) {
-	var regex = /[^\s"]+|"([^"]*)"/g;
+	var regex = /[^\s\/"]+|"([^"]*)"/g;
 	var match;
 	var searches = [];
 	while ((match = regex.exec(text.toLowerCase()))) {
