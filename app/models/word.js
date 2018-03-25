@@ -142,13 +142,36 @@ var VerbVoiceSchema = new Schema({
 	}
 }, { _id: false });
 
-var VerbInfinitiveSchema = new Schema({
-	active: {
+var VerbInfinitiveVoiceSchema = new Schema({
+	present: {
 		type: String,
 		required: true
 	},
-	passive: {
+	past: {
 		type: String,
+		required: true
+	},
+	future: {
+		type: String,
+		required: true
+	},
+	pastPerfect: {
+		type: String,
+		required: true
+	},
+	futurePerfect: {
+		type: String,
+		required: true
+	}
+}, { _id: false });
+
+var VerbInfinitiveSchema = new Schema({
+	active: {
+		type: VerbInfinitiveVoiceSchema,
+		required: true
+	},
+	passive: {
+		type: VerbInfinitiveVoiceSchema,
 		required: true
 	}
 }, { _id: false });

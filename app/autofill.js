@@ -238,8 +238,20 @@ function firstConjVerb(orcish) {
 	return {
 		conjugation: 'first',
 		infinitive: {
-			active: orcish,
-			passive: orcish + 're'
+			active: {
+				present: orcish,
+				past: 'ash' + orcish,
+				future: 'ar' + orcish,
+				pastPerfect: 'hush' + orcish,
+				futurePerfect: 'hur' + orcish
+			},
+			passive: {
+				present: orcish + 're',
+				past: 'ash' + orcish + 're',
+				future: 'ar' + orcish + 're',
+				pastPerfect: 'hush' + orcish + 're',
+				futurePerfect: 'hur' + orcish + 're'
+			},
 		},
 		active: {
 			present: {
@@ -405,8 +417,20 @@ function secondConjVerb(orcish) {
 	return {
 		conjugation: 'second',
 		infinitive: {
-			active: orcish,
-			passive: base + 'ae'
+			active: {
+				present: orcish,
+				past: 'zsa' + orcish,
+				future: 'zsur' + orcish,
+				pastPerfect: 'huzs' + orcish,
+				futurePerfect: 'azsur' + orcish
+			},
+			passive: {
+				present: base + 'ae',
+				past: 'zsa' + base + 'ae',
+				future: 'zsur' + base + 'ae',
+				pastPerfect: 'huzs' + base + 'ae',
+				futurePerfect: 'azsur' + base + 'ae'
+			},
 		},
 		active: {
 			present: {

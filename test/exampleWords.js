@@ -1179,8 +1179,20 @@ function getVerbs() {
 			verb: {
 				conjugation: 'first',
 				infinitive: {
-					active: 'ka',
-					passive: 'kare'
+					active: {
+						present: 'ka',
+						past: 'ashka',
+						future: 'arka',
+						pastPerfect: 'hushka',
+						futurePerfect: 'hurka'
+					},
+					passive: {
+						present: 'kare',
+						past: 'ashkare',
+						future: 'arkare',
+						pastPerfect: 'hushkare',
+						futurePerfect: 'hurkare'
+					}
 				},
 				active: {
 					present: {
@@ -1483,8 +1495,20 @@ function getVerbs() {
 			verb: {
 				conjugation: 'second',
 				infinitive: {
-					active: 'humai',
-					passive: 'humae'
+					active: {
+						present: 'humai',
+						past: 'zsahumai',
+						future: 'zsurhumai',
+						pastPerfect: 'huzshumai',
+						futurePerfect: 'azsurhumai',
+					},
+					passive: {
+						present: 'humae',
+						past: 'zsahumae',
+						future: 'zsurhumae',
+						pastPerfect: 'huzshumae',
+						futurePerfect: 'azsurhumae',
+					}
 				},
 				active: {
 					present: {
