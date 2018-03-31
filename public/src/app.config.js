@@ -139,6 +139,36 @@ function config($locationProvider, $routeProvider) {
 		restricted: false,
 		reloadOnSearch: false
 	})
+	.when('/clans', {
+		templateUrl: 'src/clan/clansIndex.html',
+		controller: 'ClansIndexController',
+		controllerAs: 'vm',
+		restricted: false
+	})
+	.when('/clans/bulkadd', {
+		templateUrl: 'src/clan/bulkAdd/bulkAddClan.html',
+		controller: 'BulkAddClanController',
+		controllerAs: 'vm',
+		restricted: true
+	})
+	.when('/clans/new', {
+		templateUrl: 'src/clan/new/newClan.html',
+		controller: 'NewClanController',
+		controllerAs: 'vm',
+		restricted: true
+	})
+	.when('/clans/edit/:name', {
+		templateUrl: 'src/clan/edit/editClan.html',
+		controller: 'EditClanController',
+		controllerAs: 'vm',
+		restricted: true
+	})
+	.when('/clans/:name', {
+		templateUrl: 'src/clan/clan.html',
+		controller: 'ClanController',
+		controllerAs: 'vm',
+		restricted: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

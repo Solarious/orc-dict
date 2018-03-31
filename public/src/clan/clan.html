@@ -1,0 +1,37 @@
+<div class="col-md-8 col-md-offset-2 clan-text" ng-if="vm.clan">
+	<h2 class="text-center">
+		{{vm.clan.name}} <em>({{vm.clan.orcishName}})</em>
+	</h2>
+	<h4 class="text-center" ng-if="vm.clan.foundedBy">
+		Founded by {{vm.clan.foundedBy}}
+	</h4>
+	<div class="col-sm-10 col-sm-offset-1">
+		<p class="text-center"><em>{{vm.clan.shortDesc}}</em></p>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<p><strong>History</strong></p>
+
+	<p>
+		<span ng-repeat="entry in vm.clan.history">
+			{{entry}}
+		</span>
+	</p>
+
+	<p><strong>Customs</strong></p>
+
+	<p>
+		<span ng-repeat="entry in vm.clan.customs">
+			{{entry}}
+		</span>
+	</p>
+
+	<p><strong>Relations</strong></p>
+
+	<p>
+		<span ng-repeat="entry in vm.clan.relations">
+			{{entry}}
+		</span>
+	</p>
+</div>

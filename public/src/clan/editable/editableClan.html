@@ -1,0 +1,70 @@
+<div class="col-md-5">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-xs-3">Name</label>
+			<div class="col-xs-9">
+				<input type="text" class="form-control"
+				ng-model="vm.clan.name"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Orcish Name</label>
+			<div class="col-xs-9">
+				<input type="text" class="form-control"
+				ng-model="vm.clan.orcishName"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">Founded By (optional)</label>
+			<div class="col-xs-9">
+				<input type="text" class="form-control"
+				ng-model="vm.clan.foundedBy"/>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="col-md-7">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label>Short Description</label>
+			<textarea class="form-control" spellcheck="false" rows="2"
+			ng-model="vm.clan.shortDesc"></textarea>
+		</div>
+	</form>
+</div>
+
+<div class="col-md-12">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label>History (leave an empty line between each paragraph)</label>
+			<textarea class="form-control" spellcheck="false" rows="7"
+			ng-model="vm.clan.history" ng-list="&#10;&#10;" ng-trim="false">
+			</textarea>
+		</div>
+		<div class="form-group">
+			<label>Customs (leave an empty line between each paragraph)</label>
+			<textarea class="form-control" spellcheck="false" rows="7"
+			ng-model="vm.clan.customs" ng-list="&#10;&#10;" ng-trim="false">
+			</textarea>
+		</div>
+		<div class="form-group">
+			<label>Relations (leave an empty line between each paragraph)</label>
+			<textarea class="form-control" spellcheck="false" rows="7"
+			ng-model="vm.clan.relations" ng-list="&#10;&#10;" ng-trim="false">
+			</textarea>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-primary"
+			ng-click="vm.submitFunction()">
+				<span class="glyphicon glyphicon-edit">
+				</span> {{vm.submitText}}
+			</button>
+			<button type="button" class="btn btn-success"
+			ng-click="vm.clean()">
+				<span class="glyphicon glyphicon-flash">
+				</span> Clean Whitespace
+			</button>
+		</div>
+	</form>
+</div>

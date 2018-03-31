@@ -114,6 +114,19 @@ dd:before {
 	text-indent: -2em;
 }
 
+.clan-text span {
+	display: inline-block;
+	text-indent: 1.5em;
+}
+
+.clan-text span:first-child {
+	text-indent: 0em;
+}
+
+.clan-text {
+	margin-bottom: 5em;
+}
+
 ul.decl-def-list {
 	padding-left: 3.0em;
 	margin-top: -10px;

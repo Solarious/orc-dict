@@ -1,0 +1,79 @@
+<orc-dict-modal action-function="vm.removeModalAction()" action-text="Delete"
+close-text="Cancel" modal-id="removeModal" classes="modal-lg">
+	<h4 class="text-center">Are you sure you want to remove this clan?</h4>
+	<h3 class="text-center">
+		{{vm.clanToRemove.name}} <em>({{vm.clanToRemove.orcishName}})</em>
+	</h3>
+	<h4 class="text-center" ng-if="vm.clanToRemove.foundedBy">
+		Founded by {{vm.clanToRemove.foundedBy}}
+	</h4>
+	<p class="text-center"><em>{{vm.clanToRemove.shortDesc}}</em></p>
+</orc-dict-modal>
+
+<h1>Clans</h1>
+
+<div class="btn-toolbar form-group" ng-if="vm.isLoggedIn()">
+	<a class="btn btn-primary" href="/clans/new">
+		<span class="glyphicon glyphicon-pencil"></span> New Clan
+	</a>
+	<a class="btn btn-success" href="/clans/bulkadd">
+		<span class="glyphicon glyphicon-download-alt"></span> Bulk Add
+	</a>
+</div>
+
+<form class="form-horizontal col-md-6">
+	<div class="form-group">
+		<label class="control-label col-sm-4">Clans per Page</label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="vm.numPerPage"
+			ng-change="vm.resetPageAndLoadClans()">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="30">30</option>
+			</select>
+		</div>
+	</div>
+</form>
+
+<div class="clearfix"></div>
+<div class="loader" ng-if="!vm.clans"></div>
+
+<div ng-if="vm.clans">
+	<nav>
+		<ul class="pagination">
+			<li ng-class="{disabled: vm.goBackDisabled}">
+				<a href="#" ng-click="vm.goBack()">&laquo;</a>
+			</li>
+			<li ng-repeat="num in vm.nums" ng-class="{active: num.selected}">
+				<a href="#" ng-click="vm.changePage(num.num)">{{num.num}}</a>
+			</li>
+			<li ng-class="{disabled: vm.goForwardDisabled}">
+				<a href="#" ng-click="vm.goForward()">&raquo;</a>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="panel" ng-repeat="clan in vm.clans">
+		<a class="btn btn-default btn-block" ng-href="/clans/{{clan.name}}">
+			<h3 class="text-center">
+				{{clan.name}} <em>({{clan.orcishName}})</em>
+			</h3>
+			<h4 class="text-center" ng-if="clan.foundedBy">
+				Founded by {{clan.foundedBy}}
+			</h4>
+			<p class="text-center"><em>{{clan.shortDesc}}</em></p>
+		</a>
+		<div class="text-center" ng-if="vm.isLoggedIn()">
+			<a class="btn btn-primary" ng-href="/clans/edit/{{clan.name}}">
+				<span class="glyphicon glyphicon-pencil"></span>
+				 Edit Clan
+			</a>
+			<button type="button" class="btn btn-danger"
+			ng-click="vm.showRemoveModal(clan)">
+				<span class="glyphicon glyphicon-remove"></span>
+				 Remove
+			</a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>

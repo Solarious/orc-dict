@@ -8,6 +8,7 @@ var autofillRoutes = require('./autofillRoutes.js');
 var bulkAddRoutes = require('./bulkAddRoutes.js');
 var statsRoutes = require('./statsRoutes.js');
 var sentenceRoutes = require('./sentenceRoutes.js');
+var clanRoutes = require('./clanRoutes.js');
 
 module.exports = addRoutes;
 
@@ -29,6 +30,7 @@ function addRoutes(app) {
 	bulkAddRoutes(app);
 	statsRoutes(app);
 	sentenceRoutes(app);
+	clanRoutes(app);
 
 	app.get('/api/routes', function(req, res) {
 		var results = [];
