@@ -128,7 +128,7 @@ function addRoutesForSentences(app) {
 				res.status(500).send(err.message);
 			} else if (!sentence) {
 				res.status(404).send(
-					'sentence with id ' + req.params.id + ' does not exits'
+					'sentence with id ' + req.params.id + ' does not exist'
 				);
 			} else {
 				res.json(sentence);
