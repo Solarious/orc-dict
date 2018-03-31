@@ -9,6 +9,11 @@ var ClanSchema = new Schema({
 	name: {
 		type: String,
 		required: true,
+		unique: true
+	},
+	orderingName: {
+		type: String,
+		required: true,
 		index: true
 	},
 	orcishName: {
@@ -33,5 +38,10 @@ ClanSchema.statics.bulkAdd = function(data) {
 	}
 	return Clan.insertMany(data);
 };
+
+ClanSchema.pre('validate', function(next) {
+	this.orderingName = this.name.replace(/^The /, '');
+	next();
+});
 
 module.exports = mongoose.model('Clan', ClanSchema);

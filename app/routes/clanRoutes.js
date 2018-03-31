@@ -14,11 +14,12 @@ function addRoutesForClans(app) {
 
 		var query = Clan.find({}).select({
 			name: 1,
+			orderingName: 1,
 			orcishName: 1,
 			foundedBy: 1,
 			shortDesc: 1
 		})
-		.sort('name');
+		.sort('orderingName');
 
 		if (skip) {
 			query = query.skip(skip);
