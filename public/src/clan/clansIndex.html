@@ -10,6 +10,13 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 	<p class="text-center"><em>{{vm.clanToRemove.shortDesc}}</em></p>
 </orc-dict-modal>
 
+<orc-dict-modal action-function="vm.removeAllModalAction()" action-text="Delete"
+close-text="Cancel" modal-id="removeAllModal">
+	<h4>
+		Are you sure you want to remove <strong>every single clan</strong>
+	</h4>
+</orc-dict-modal>
+
 <h1>Clans</h1>
 
 <div class="btn-toolbar form-group" ng-if="vm.isLoggedIn()">
@@ -18,6 +25,9 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 	</a>
 	<a class="btn btn-success" href="/clans/bulkadd">
 		<span class="glyphicon glyphicon-download-alt"></span> Bulk Add
+	</a>
+	<a class="btn btn-danger" ng-click="vm.showRemoveAllModal()">
+		<span class="glyphicon glyphicon-remove"></span> Remove all Clans
 	</a>
 </div>
 

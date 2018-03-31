@@ -22,6 +22,8 @@ function ClansIndexController(ClansService, AlertService, AuthService) {
 	vm.resetPageAndLoadClans = resetPageAndLoadClans;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
+	vm.showRemoveAllModal = showRemoveAllModal;
+	vm.removeAllModalAction = removeAllModalAction;
 
 	activate();
 
@@ -103,6 +105,24 @@ function ClansIndexController(ClansService, AlertService, AuthService) {
 			AlertService.error(error || 'Unknown error removing clan');
 		});
 		$('#removeModal').modal('hide');
+	}
+
+	function showRemoveAllModal() {
+		$('#removeAllModal').modal('show');
+	}
+
+	function removeAllModalAction() {
+		ClansService.removeAll()
+		.then(function(response) {
+			var num = response.n;
+			var str = (num === 1) ? ' clan removed' : ' clans removed';
+			AlertService.success(num + str);
+			vm.loadClans();
+		})
+		.catch(function(error) {
+			AlertService.success(error || 'Unknown error removing clans');
+		});
+		$('#removeAllModal').modal('hide');
 	}
 }
 
