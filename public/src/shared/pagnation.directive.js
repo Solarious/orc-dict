@@ -106,7 +106,9 @@ function PagnationController($scope) {
 
 		if (endPage < vm.numOfPages) {
 			if (endPage === vm.numOfPages - 2) {
-				vm.nums.push({ num: vm.numOfPages - 1, sel: false, go: 2 });
+				vm.nums.push({
+					num: vm.numOfPages - 1, sel: false, go: vm.numOfPages - 1
+				});
 			} else if (endPage !== vm.numOfPages - 1) {
 				vm.nums.push({ num: '...', sel: false, go: endPage + 1 });
 			}
