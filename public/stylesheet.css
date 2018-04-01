@@ -127,6 +127,11 @@ dd:before {
 	margin-bottom: 5em;
 }
 
+.pagnation-equal-width > li > a {
+	min-width: 3.0em;
+	text-align: center;
+}
+
 ul.decl-def-list {
 	padding-left: 3.0em;
 	margin-top: -10px;

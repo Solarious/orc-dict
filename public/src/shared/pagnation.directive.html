@@ -1,0 +1,15 @@
+<nav>
+	<ul class="pagination pagnation-equal-width">
+		<li ng-class="{disabled: vm.goBackDisabled}">
+			<a href="#" ng-click="vm.goBack()">&laquo;</a>
+		</li>
+		<li ng-repeat="n in vm.nums" ng-class="{active: n.sel}">
+			<a href="#" ng-click="vm.changePage({num:n.go})">
+				{{n.num}}
+			</a>
+		</li>
+		<li ng-class="{disabled: vm.goForwardDisabled}">
+			<a href="#" ng-click="vm.goForward()">&raquo;</a>
+		</li>
+	</ul>
+</nav>

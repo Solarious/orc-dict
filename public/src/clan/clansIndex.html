@@ -49,19 +49,12 @@ close-text="Cancel" modal-id="removeAllModal">
 <div class="loader" ng-if="!vm.clans"></div>
 
 <div ng-if="vm.clans">
-	<nav>
-		<ul class="pagination">
-			<li ng-class="{disabled: vm.goBackDisabled}">
-				<a href="#" ng-click="vm.goBack()">&laquo;</a>
-			</li>
-			<li ng-repeat="num in vm.nums" ng-class="{active: num.selected}">
-				<a href="#" ng-click="vm.changePage(num.num)">{{num.num}}</a>
-			</li>
-			<li ng-class="{disabled: vm.goForwardDisabled}">
-				<a href="#" ng-click="vm.goForward()">&raquo;</a>
-			</li>
-		</ul>
-	</nav>
+	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
+	change-page="vm.changePage(num)"
+	go-back="vm.goBack()" go-forward="vm.goForward()"
+	go-back-disabled="vm.goBackDisabled"
+	go-forward-disabled="vm.goForwardDisabled" max-boxes="15">
+	</orc-dict-pagnation>
 
 	<div class="panel" ng-repeat="clan in vm.clans">
 		<a class="btn btn-default btn-block" ng-href="/clans/{{clan.name}}">
@@ -86,4 +79,11 @@ close-text="Cancel" modal-id="removeAllModal">
 		</div>
 		<div class="clearfix"></div>
 	</div>
+
+	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
+	change-page="vm.changePage(num)"
+	go-back="vm.goBack()" go-forward="vm.goForward()"
+	go-back-disabled="vm.goBackDisabled"
+	go-forward-disabled="vm.goForwardDisabled" max-boxes="15">
+	</orc-dict-pagnation>
 </div>
