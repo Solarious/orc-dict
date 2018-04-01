@@ -4,7 +4,7 @@
 			<a href="#" ng-click="vm.goBack()">&laquo;</a>
 		</li>
 		<li ng-repeat="n in vm.nums" ng-class="{active: n.sel}">
-			<a href="#" ng-click="vm.changePage({num:n.go})">
+			<a href="#" ng-click="vm.changePage(n.go)">
 				{{n.num}}
 			</a>
 		</li>

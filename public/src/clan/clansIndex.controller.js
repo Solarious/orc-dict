@@ -16,9 +16,8 @@ function ClansIndexController(ClansService, AlertService, AuthService) {
 
 	vm.isLoggedIn = isLoggedIn;
 	vm.loadClans = loadClans;
-	vm.changePage = changePage;
-	vm.goBack = goBack;
-	vm.goForward = goForward;
+	vm.onPageChange = onPageChange;
+	vm.onPageChangeWithScroll = onPageChangeWithScroll;
 	vm.resetPageAndLoadClans = resetPageAndLoadClans;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
@@ -31,9 +30,6 @@ function ClansIndexController(ClansService, AlertService, AuthService) {
 		vm.numPerPage = '10';
 		vm.page = 1;
 		vm.numOfPages = 0;
-		vm.nums = [];
-		vm.goBackDisabled = true;
-		vm.goForwardDisabled = true;
 
 		vm.loadClans();
 	}
@@ -53,37 +49,23 @@ function ClansIndexController(ClansService, AlertService, AuthService) {
 		.then(function(data) {
 			vm.clans = data.clans;
 			vm.numOfPages = Math.ceil(data.count / vm.numPerPage);
-			vm.goBackDisabled = (vm.page <= 1);
-			vm.goForwardDisabled = (vm.page >= vm.numOfPages);
-			vm.nums = [];
-			for (var i = 1; i <= vm.numOfPages; i++) {
-				vm.nums.push({
-					num: i,
-					selected: (i === vm.page)
-				});
-			}
-
 			return vm.clans;
 		}, function(error) {
 			AlertService.error(error || 'Unknown error loading clans');
 		});
 	}
 
-	function changePage(pageNum) {
+	function onPageChange(pageNum) {
 		vm.page = pageNum;
 		vm.loadClans();
 	}
 
-	function goBack() {
-		if (!vm.goBackDisabled) {
-			vm.changePage(vm.page - 1);
-		}
-	}
-
-	function goForward() {
-		if (!vm.goForwardDisabled) {
-			vm.changePage(vm.page + 1);
-		}
+	function onPageChangeWithScroll(pageNum) {
+		vm.page = pageNum;
+		vm.loadClans();
+		$('html, body').animate({
+			scrollTop: $('#target').offset().top - 50
+		});
 	}
 
 	function resetPageAndLoadClans() {

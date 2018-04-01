@@ -26,9 +26,8 @@ function WordsTableController(WordsService, AlertService) {
 	var vm = this;
 
 	vm.loadWords = loadWords;
-	vm.changePage = changePage;
-	vm.goBack = goBack;
-	vm.goForward = goForward;
+	vm.onPageChange = onPageChange;
+	vm.onPageChangeWithScroll = onPageChangeWithScroll;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
 	vm.resetPageAndLoadWords = resetPageAndLoadWords;
@@ -39,9 +38,6 @@ function WordsTableController(WordsService, AlertService) {
 		vm.numPerPage = "50";
 		vm.page = 1;
 		vm.numOfPages = 0;
-		vm.nums = [];
-		vm.goBackDisabled = false;
-		vm.goForwardDisabled = false;
 		vm.order = 'orcish';
 
 		vm.PoS = "";
@@ -76,41 +72,23 @@ function WordsTableController(WordsService, AlertService) {
 		.then(function(data) {
 			vm.words = data.words;
 			vm.numOfPages = Math.ceil(data.count / vm.numPerPage);
-			vm.goBackDisabled = (vm.page <= 1);
-			vm.goForwardDisabled = (vm.page >= vm.numOfPages);
-			vm.nums = [];
-			for (var i = 1; i <= vm.numOfPages; i++) {
-				vm.nums.push({
-					num: i,
-					selected: (i === vm.page)
-				});
-			}
-			if (vm.page > vm.numOfPages && vm.numOfPages > 0) {
-				vm.page = vm.numOfPages;
-				return vm.loadWords();
-			} else {
-				return vm.words;
-			}
+			return vm.words;
 		}, function(error) {
 			AlertService.error(error || 'Unknown error loading words');
 		});
 	}
 
-	function changePage(pageNum) {
-		vm.page = pageNum;
-		vm.loadWords();
+	function onPageChange(num) {
+		vm.page = num;
+		loadWords();
 	}
 
-	function goBack() {
-		if (!vm.goBackDisabled) {
-			vm.changePage(vm.page - 1);
-		}
-	}
-
-	function goForward() {
-		if (!vm.goForwardDisabled) {
-			vm.changePage(vm.page + 1);
-		}
+	function onPageChangeWithScroll(num) {
+		vm.page = num;
+		loadWords();
+		$('html, body').animate({
+			scrollTop: $('#target').offset().top - 50
+		});
 	}
 
 	function showRemoveModal(word) {

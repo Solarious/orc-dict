@@ -11,11 +11,7 @@ function pagnation() {
 		scope: {
 			page: '=',
 			numOfPages: '=',
-			changePage: '&',
-			goBack: '&',
-			goForward: '&',
-			goBackDisabled: '=',
-			goForwardDisabled: '=',
+			onPageChange: '&',
 			maxBoxes: '='
 		},
 		templateUrl: 'src/shared/pagnation.directive.html',
@@ -42,17 +38,12 @@ PagnationController.$inject = ['$scope'];
 function PagnationController($scope) {
 	var vm = this;
 
-	vm.overflowing = overflowing;
 	vm.updateNums = updateNums;
-
-	activate();
-
-	function activate() {
-	}
-
-	function overflowing() {
-		return (vm.nums.length >= vm.overflowAt);
-	}
+	vm.changePage = changePage;
+	vm.goBack = goBack;
+	vm.goForward = goForward;
+	vm.backDisabled = backDisabled;
+	vm.forwardDisabled = forwardDisabled;
 
 	function updateNums() {
 		vm.nums = [];
@@ -116,6 +107,30 @@ function PagnationController($scope) {
 				num: vm.numOfPages, sel: false, go: vm.numOfPages
 			});
 		}
+	}
+
+	function changePage(pageNum) {
+		if (pageNum > vm.numOfPages) pageNum = vm.numOfPages;
+		if (pageNum < 1) pageNum = 1;
+
+		vm.page = pageNum;
+		vm.onPageChange({ num: pageNum });
+	}
+
+	function goBack() {
+		if (!backDisabled()) changePage(vm.page - 1);
+	}
+
+	function goForward() {
+		if (!forwardDisabled()) changePage(vm.page + 1);
+	}
+
+	function backDisabled() {
+		return vm.page <= 1;
+	}
+
+	function forwardDisabled() {
+		return vm.page >= vm.numOfPages;
 	}
 }
 

@@ -16,9 +16,8 @@ function SentenceController(SentencesService, AlertService, AuthService) {
 
 	vm.isLoggedIn = isLoggedIn;
 	vm.loadSentences = loadSentences;
-	vm.changePage = changePage;
-	vm.goBack = goBack;
-	vm.goForward = goForward;
+	vm.onPageChange = onPageChange;
+	vm.onPageChangeWithScroll = onPageChangeWithScroll;
 	vm.resetPageAndLoadSentences = resetPageAndLoadSentences;
 	vm.showRemoveModal = showRemoveModal;
 	vm.removeModalAction = removeModalAction;
@@ -31,9 +30,6 @@ function SentenceController(SentencesService, AlertService, AuthService) {
 		vm.numPerPage = '10';
 		vm.page = 1;
 		vm.numOfPages = 0;
-		vm.nums = [];
-		vm.goBackDisabled = true;
-		vm.goForwardDisabled = true;
 		vm.category = '';
 		vm.categories = [];
 
@@ -61,37 +57,23 @@ function SentenceController(SentencesService, AlertService, AuthService) {
 			vm.sentences = data.sentences;
 			vm.categories = data.categories;
 			vm.numOfPages = Math.ceil(data.count / vm.numPerPage);
-			vm.goBackDisabled = (vm.page <= 1);
-			vm.goForwardDisabled = (vm.page >= vm.numOfPages);
-			vm.nums = [];
-			for (var i = 1; i <= vm.numOfPages; i++) {
-				vm.nums.push({
-					num: i,
-					selected: (i === vm.page)
-				});
-			}
-
 			return vm.sentences;
 		}, function(error) {
 			AlertService.error(error || 'Unknown error loading sentences');
 		});
 	}
 
-	function changePage(pageNum) {
+	function onPageChange(pageNum) {
 		vm.page = pageNum;
 		vm.loadSentences();
 	}
 
-	function goBack() {
-		if (!vm.goBackDisabled) {
-			vm.changePage(vm.page - 1);
-		}
-	}
-
-	function goForward() {
-		if (!vm.goForwardDisabled) {
-			vm.changePage(vm.page + 1);
-		}
+	function onPageChangeWithScroll(pageNum) {
+		vm.page = pageNum;
+		vm.loadSentences();
+		$('html, body').animate({
+			scrollTop: $('#target').offset().top - 50
+		});
 	}
 
 	function resetPageAndLoadSentences() {

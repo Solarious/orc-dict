@@ -104,10 +104,7 @@ close-text="Cancel" modal-id="removeModal">
 
 <div ng-if="vm.words">
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	change-page="vm.changePage(num)"
-	go-back="vm.goBack()" go-forward="vm.goForward()"
-	go-back-disabled="vm.goBackDisabled"
-	go-forward-disabled="vm.goForwardDisabled" max-boxes="15">
+	on-page-change="vm.onPageChange(num)" max-boxes="15" id="target">
 	</orc-dict-pagnation>
 
 	<table class="table table-condensed" ng-if="!vm.isAdmin">
@@ -154,9 +151,6 @@ close-text="Cancel" modal-id="removeModal">
 	</table>
 
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	change-page="vm.changePage(num)"
-	go-back="vm.goBack()" go-forward="vm.goForward()"
-	go-back-disabled="vm.goBackDisabled"
-	go-forward-disabled="vm.goForwardDisabled" max-boxes="15">
+	on-page-change="vm.onPageChangeWithScroll(num)" max-boxes="15">
 	</orc-dict-pagnation>
 </div>
