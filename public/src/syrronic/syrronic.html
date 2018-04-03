@@ -1,0 +1,29 @@
+<h1>Syrronic</h1>
+
+<div class="row">
+	<form>
+		<div class="form-group col-sm-10">
+			<label for="input-text" class="control-label" spellcheck="false">
+				Type some orcish here and it will be transformed into Syrronic
+			</label>
+			<textarea class="form-control" id="input-text" ng-model="vm.input"/>
+		</div>
+		<div class="form-group col-sm-2">
+			<label for="align" class="control-label">
+				Align
+			</label>
+			<select class="form-control" ng-model="vm.align">
+				<option value="left">Left</option>
+				<option value="center">Center</option>
+				<option value="right">Right</option>
+			</select>
+		</div>
+	</form>
+</div>
+
+<div class="row">
+	<h1 class="col-xs-12">
+		<orc-dict-syrronize text="vm.input"
+		ng-style="{'white-space': 'pre-wrap', 'text-align': vm.align}"/>
+	</h1>
+</div>

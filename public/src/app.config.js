@@ -169,6 +169,12 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
+	.when('/syrronic', {
+		templateUrl: 'src/syrronic/syrronic.html',
+		controller: 'SyrronicController',
+		controllerAs: 'vm',
+		restricted: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});

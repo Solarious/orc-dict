@@ -1,3 +1,26 @@
+@font-face {
+	font-family: 'syrronic';
+	src:  url('syrronic.ttf?5qddbi') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.syrronic {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'syrronic' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	font-size: 1.2em;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
 /* Required to prevent fixed navbar from overlaying other content */
 body {
 	padding-top: 100px;
