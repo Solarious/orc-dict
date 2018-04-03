@@ -38,7 +38,7 @@ function WordsTableController(WordsService, AlertService) {
 		vm.numPerPage = "50";
 		vm.page = 1;
 		vm.numOfPages = 0;
-		vm.order = 'orcish';
+		vm.order = 'orderedOrcish';
 
 		vm.PoS = "";
 		vm.declension = "";

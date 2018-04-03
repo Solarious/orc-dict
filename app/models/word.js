@@ -361,6 +361,11 @@ var WordSchema = new Schema({
 	num: {
 		type: Number
 	},
+	orderedOrcish: {
+		type: String,
+		required: true,
+		index: true
+	},
 	extraInfo: String,
 	coinedBy: String,
 	namedAfter: String,
@@ -427,6 +432,14 @@ WordSchema.pre('validate', function(next) {
 	if (this.copula !== undefined && this.PoS !== 'copular verb') {
 		this.copula = undefined;
 	}
+
+	var n = this.orcish.toLowerCase();
+	n = n.replace('dj', 'j');
+	n = n.replace('sh', 's~');
+	n = n.replace('th', 't~');
+	n = n.replace('zs', 'z~');
+	this.orderedOrcish = n;
+
 	next();
 });
 
