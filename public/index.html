@@ -72,19 +72,21 @@
 				ng-cloak>
 					<a href="/login">Login</a>
 				</li>
-				<div class="nav navbar-nav" ng-if="navbarVM.isLoggedIn()"
-				ng-cloak>
-					<li><p class="navbar-text">
-						Logged in as <em>{{ navbarVM.getUserName() }}</em>
-					</p></li>
-					<li><a href="/admin">Admin</a></li>
-					<li>
-						<button type="button" class="btn btn-link navbar-btn"
-						ng-click="navbarVM.logout()">
-							Logout
-						</button>
-					</li>
-				</div>
+				<li class="dropdown" ng-if="navbarVM.isLoggedIn()" ng-cloak>
+					<a class="dropdown-toggle" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">
+						Admin <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu ">
+						<li class="dropdown-header">
+							Logged in as <em>{{ navbarVM.getUserName() }}</em>
+						</li>
+						<li><a href="/admin">Admin Page</a></li>
+						<li>
+							<a href="#" ng-click="navbarVM.logout()">Logout</a>
+						</li>
+					</ul>
+				</li>
 			</ul>
 
 			<form class="navbar-form navbar-right"
