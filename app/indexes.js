@@ -250,14 +250,7 @@ function addNounCase(word, searchIndexes, nounCase, priority) {
 // -----
 
 function addVerb(word, searchIndexes) {
-	pushIndex(
-		searchIndexes, word.verb.infinitive.active, 2,
-		'infinitive active', word
-	);
-	pushIndex(
-		searchIndexes, word.verb.infinitive.passive, 2,
-		'infinitive passive', word
-	);
+	addVerbInfinitives(word, searchIndexes);
 	pushIndex(
 		searchIndexes, word.verb.imperative.singular, 2,
 		'inperative singular', word
@@ -274,6 +267,34 @@ function addVerb(word, searchIndexes) {
 	addVerbAgent(word, searchIndexes, 'feminine');
 	addVerbAgent(word, searchIndexes, 'masculine');
 	addVerbAgent(word, searchIndexes, 'dishonorable');
+}
+
+function addVerbInfinitives(word, searchIndexes) {
+	addVerbInfinitiveVoice(word, searchIndexes, 'active');
+	addVerbInfinitiveVoice(word, searchIndexes, 'passive');
+}
+
+function addVerbInfinitiveVoice(word, searchIndexes, voice) {
+	pushIndex(
+		searchIndexes, word.verb.infinitive[voice].present, 2,
+		voice + ' present infinitive', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.infinitive[voice].past, 2,
+		voice + ' past infinitive', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.infinitive[voice].future, 2,
+		voice + ' future infinitive', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.infinitive[voice].pastPerfect, 2,
+		voice + ' past perfect infinitive', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.infinitive[voice].futurePerfect, 2,
+		voice + ' future perfect infinitive', word
+	);
 }
 
 function addVerbVoice(word, searchIndexes, verbVoice) {
