@@ -1,6 +1,12 @@
 <div class="col-md-8 col-md-offset-2 clan-text" ng-if="vm.clan">
-	<h2 class="text-center">
-		{{vm.clan.name}} <em>({{vm.clan.orcishName}})</em>
+	<h2 class="text-center" ng-if="vm.clan.name !== vm.clan.orcishName">
+		<span class="avoid-wrap">{{vm.clan.name}}</span> 
+		<span class="avoid-wrap"><em>({{vm.clan.orcishName}})</em></span>
+		<orc-dict-syrronize text="vm.clan.orcishName"
+		on-global="true" size="2"/>
+	</h2>
+	<h2 class="text-center" ng-if="vm.clan.name === vm.clan.orcishName">
+		<em>{{vm.clan.orcishName}}</em>
 		<orc-dict-syrronize text="vm.clan.orcishName"
 		on-global="true" size="2"/>
 	</h2>
