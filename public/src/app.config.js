@@ -157,6 +157,10 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: true
 	})
+	.when('/clans/history', {
+		templateUrl: 'src/clan/history.html',
+		restricted: false
+	})
 	.when('/clans/edit/:name', {
 		templateUrl: 'src/clan/edit/editClan.html',
 		controller: 'EditClanController',
