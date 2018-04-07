@@ -10,14 +10,40 @@ function syrronize() {
 		restrict: 'E',
 		scope: {
 			text: '=',
-			raw: '@'
+			raw: '@',
+			onGlobal: '@',
+			size: '@'
 		},
-		template:
-			'<div class="syrronic">{{raw ? raw : text | orcDictToSyrronic}}</div>'
+		templateUrl: 'src/shared/syrronize.directive.html',
+		controller: SyrronizeController,
+		controllerAs: 'vm',
+		bindToController: true
 
 	};
 
 	return directive;
+}
+
+SyrronizeController.$inject = ['SyrronicService'];
+
+function SyrronizeController(SyrronicService) {
+	var vm = this;
+
+	vm.convert = convert;
+	vm.show = show;
+	vm.getSize = getSize;
+
+	function convert() {
+		return SyrronicService.getConvert();
+	}
+
+	function show() {
+		return ((!vm.onGlobal) || convert());
+	}
+
+	function getSize() {
+		return (vm.size || 1) + 'em';
+	}
 }
 
 })();

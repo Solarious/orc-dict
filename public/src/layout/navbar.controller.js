@@ -6,16 +6,18 @@ angular.
 	controller('NavbarController', NavbarController);
 
 NavbarController.$inject = [
-	'AuthService', '$location', 'AlertService', '$route'
+	'AuthService', '$location', 'AlertService', '$route', 'SyrronicService'
 ];
 
-function NavbarController(AuthService, $location, AlertService, $route) {
+function NavbarController(AuthService, $location, AlertService, $route, SyrronicService) {
 	var vm = this;
 
 	vm.isLoggedIn = isLoggedIn;
 	vm.getUserName = getUserName;
 	vm.logout = logout;
 	vm.search = search;
+	vm.syrronicOn = syrronicOn;
+	vm.toggleSyrronic = toggleSyrronic;
 
 	activate();
 
@@ -51,6 +53,14 @@ function NavbarController(AuthService, $location, AlertService, $route) {
 			});
 			$route.reload();
 		}
+	}
+
+	function syrronicOn() {
+		return SyrronicService.getConvert();
+	}
+
+	function toggleSyrronic() {
+		SyrronicService.toggleConvert();
 	}
 }
 

@@ -117,6 +117,8 @@ close-text="Cancel" modal-id="removeModal">
 			<td>
 				<a href="/words/{{word.orcish}}/{{word.num}}">
 					{{word.orcish}}
+					<orc-dict-syrronize text="word.orcish"
+					on-global="true" size="3"/>
 				</a>
 			</td>
 			<td>{{word.english}}</td>
@@ -132,7 +134,11 @@ close-text="Cancel" modal-id="removeModal">
 			<th colspan="2" class="minimize-width"></th>
 		</tr>
 		<tr ng-repeat="word in vm.words">
-			<td>{{word.orcish}}</td>
+			<td>
+				{{word.orcish}}
+				<orc-dict-syrronize text="word.orcish"
+				on-global="true" size="3"/>
+			</td>
 			<td>{{word.english}}</td>
 			<td>{{word.PoS}}</td>
 			<td>

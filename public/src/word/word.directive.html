@@ -2,7 +2,10 @@
 	<table class="table table-condensed min-first-col">
 		<tr>
 			<th>Orcish</th>
-			<td>{{word.orcish}}</td>
+			<td>
+				{{word.orcish}}
+				<orc-dict-syrronize text="word.orcish" on-global="true" size="3"/>
+			</td>
 		</tr>
 		<tr>
 			<th>English</th>
