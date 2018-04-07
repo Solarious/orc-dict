@@ -138,7 +138,7 @@ dd:before {
 
 .clan-text p span {
 	display: inline-block;
-	text-indent: 1.5em;
+	text-indent: 1.0em;
 }
 
 .clan-text p span:first-child {
