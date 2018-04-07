@@ -73,7 +73,7 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 
 <div ng-if="vm.sentences">
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	on-page-change="vm.onPageChange(num)" max-boxes="15" id="target">
+	on-page-change="vm.onPageChange(num)" id="target">
 	</orc-dict-pagnation>
 
 	<table class="table table-bordered" ng-if="!vm.isLoggedIn()">
@@ -128,6 +128,6 @@ close-text="Cancel" modal-id="removeModal" classes="modal-lg">
 	</table>
 
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	on-page-change="vm.onPageChangeWithScroll(num)" max-boxes="15">
+	on-page-change="vm.onPageChangeWithScroll(num)">
 	</orc-dict-pagnation>
 </div>

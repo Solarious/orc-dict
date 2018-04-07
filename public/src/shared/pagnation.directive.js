@@ -5,14 +5,16 @@ angular
 	.module('orcDictApp')
 	.directive('orcDictPagnation', pagnation);
 
-function pagnation() {
+pagnation.$inject = ['$window', '$timeout']
+
+function pagnation($window, $timeout) {
 	var directive = {
 		restrict: 'E',
 		scope: {
 			page: '=',
 			numOfPages: '=',
 			onPageChange: '&',
-			maxBoxes: '='
+			maxBoxes: '=',
 		},
 		templateUrl: 'src/shared/pagnation.directive.html',
 		controller: PagnationController,
@@ -22,16 +24,53 @@ function pagnation() {
 	};
 
 	return directive;
+
+	function link(scope, element, attrs, ctrl) {
+		scope.$watch('vm.page', function(o, n) {
+			resize();
+		});
+		scope.$watch('vm.numOfPages', function(o, n) {
+			resize();
+		});
+
+		angular.element($window).on('resize', onResize);
+
+		element.on('$destroy', function() {
+			angular.element($window).off('resize', onResize);
+		});
+
+		ctrl.updateNums();
+		resize();
+
+		$timeout(function() {
+			resize();
+		}, 5);
+
+		function resize() {
+			var navWidth = element.outerWidth();
+			var aElements = element.find('a')
+			var boxWidth = aElements.outerWidth() * 1.2;
+			aElements.each(function() {
+				boxWidth = Math.max(boxWidth, $(this).outerWidth() * 1.1)
+			});
+			var maxFit = Math.floor(navWidth / boxWidth);
+			if (maxFit % 2 === 0) maxFit--;
+			if (ctrl.maxBoxes && (maxFit > ctrl.maxBoxes)) {
+				maxFit = ctrl.maxBoxes;
+			}
+			if (maxFit < 5) maxFit = 5;
+			ctrl.maxFit = maxFit;
+			ctrl.updateNums();
+		}
+
+		function onResize() {
+			scope.$apply(function() {
+				resize();
+			});
+		}
+	}
 }
 
-function link(scope, element, attrs, ctrl) {
-	scope.$watch('vm.page', function(o, n) {
-		ctrl.updateNums();
-	});
-	scope.$watch('vm.numOfPages', function(o, n) {
-		ctrl.updateNums();
-	});
-}
 
 PagnationController.$inject = ['$scope'];
 
@@ -50,7 +89,7 @@ function PagnationController($scope) {
 
 		var startPage = 1;
 		var endPage = vm.numOfPages;
-		var maxLen = vm.maxBoxes - 4;
+		var maxLen = (vm.maxFit || vm.maxBoxes) - 4;
 
 		function calc() {
 			if (maxLen < vm.numOfPages) {

@@ -59,7 +59,7 @@ close-text="Cancel" modal-id="removeAllModal">
 
 <div ng-if="vm.clans">
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	on-page-change="vm.onPageChange(num)" max-boxes="15" id="target">
+	on-page-change="vm.onPageChange(num)" id="target">
 	</orc-dict-pagnation>
 
 	<div class="panel" ng-repeat="clan in vm.clans">
@@ -94,6 +94,6 @@ close-text="Cancel" modal-id="removeAllModal">
 	</div>
 
 	<orc-dict-pagnation page="vm.page" num-of-pages="vm.numOfPages"
-	on-page-change="vm.onPageChangeWithScroll(num)" max-boxes="15">
+	on-page-change="vm.onPageChangeWithScroll(num)">
 	</orc-dict-pagnation>
 </div>
