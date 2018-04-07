@@ -7,7 +7,7 @@ angular
 
 function toSyrronic() {
 	return function(input) {
-		input = input || '';
+		if ((typeof input) !== 'string') return input;
 		return input.toLowerCase()
 		.replace(/dj/g, '\ue904')
 		.replace(/ch/g, '\ue902')
@@ -28,6 +28,8 @@ function toSyrronic() {
 		.replace(/n/g, '\ue90d')
 		.replace(/o/g, '\ue90e')
 		.replace(/p/g, '\ue90f')
+		.replace(/qu/g, '\ue90a\ue917')
+		.replace(/q/g, '\ue90a\ue917')
 		.replace(/r/g, '\ue910')
 		.replace(/s/g, '\ue911')
 		.replace(/t/g, '\ue913')
