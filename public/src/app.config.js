@@ -179,6 +179,10 @@ function config($locationProvider, $routeProvider) {
 		controllerAs: 'vm',
 		restricted: false
 	})
+	.when('/syrronic-alphabet', {
+		templateUrl: 'src/syrronic/syrronicAlphabet.html',
+		restricted: false
+	})
 	.otherwise({
 		redirectTo: '/'
 	});
