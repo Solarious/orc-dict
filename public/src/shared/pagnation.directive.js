@@ -27,10 +27,10 @@ function pagnation($window, $timeout) {
 
 	function link(scope, element, attrs, ctrl) {
 		scope.$watch('vm.page', function(o, n) {
-			resize();
+			resizeTwice();
 		});
 		scope.$watch('vm.numOfPages', function(o, n) {
-			resize();
+			resizeTwice();
 		});
 
 		angular.element($window).on('resize', onResize);
@@ -40,11 +40,7 @@ function pagnation($window, $timeout) {
 		});
 
 		ctrl.updateNums();
-		resize();
-
-		$timeout(function() {
-			resize();
-		}, 5);
+		resizeTwice();
 
 		function resize() {
 			var navWidth = element.outerWidth();
@@ -65,6 +61,14 @@ function pagnation($window, $timeout) {
 
 		function onResize() {
 			scope.$apply(function() {
+				resize();
+			});
+		}
+
+		function resizeTwice() {
+			resize();
+
+			$timeout(function() {
 				resize();
 			});
 		}
