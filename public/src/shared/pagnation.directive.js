@@ -5,7 +5,7 @@ angular
 	.module('orcDictApp')
 	.directive('orcDictPagnation', pagnation);
 
-pagnation.$inject = ['$window', '$timeout']
+pagnation.$inject = ['$window', '$timeout'];
 
 function pagnation($window, $timeout) {
 	var directive = {
@@ -44,10 +44,10 @@ function pagnation($window, $timeout) {
 
 		function resize() {
 			var navWidth = element.outerWidth();
-			var aElements = element.find('a')
+			var aElements = element.find('a');
 			var boxWidth = aElements.outerWidth() * 1.2;
 			aElements.each(function() {
-				boxWidth = Math.max(boxWidth, $(this).outerWidth() * 1.1)
+				boxWidth = Math.max(boxWidth, $(this).outerWidth() * 1.1);
 			});
 			var maxFit = Math.floor(navWidth / boxWidth);
 			if (maxFit % 2 === 0) maxFit--;
