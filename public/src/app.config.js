@@ -74,7 +74,7 @@ function config($locationProvider, $routeProvider) {
 		restricted: true
 	})
 	.when('/search', {
-		templateUrl: 'src/viewing/search.html',
+		templateUrl: 'src/search/search.html',
 		controller: 'SearchController',
 		controllerAs: 'vm',
 		restricted: false
