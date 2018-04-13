@@ -9,7 +9,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
 * npm run listUsers - Lists the username and email of all the users.
 * npm run rebuildSearchIndexes - Removes then recreates all the Search Indexes in the database.
 * npm run removeAllWords - Removes all the words in the database.
-* npm run getDuplicateWords - Prints out all the words that share their orcish with another word
+* npm run getDuplicateWords - Prints out all the words that share their orcish with another word.
 * npm run testNyan - Like test, but more fun.
 ### Environment Variables
 * PORT - The port used.
@@ -35,6 +35,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
     * user.js - User model.
     * [searchIndex.js](#appmodelssearchindexjs) - Model for Search Indexes. Used to assist searching for words by their orcish or by one of their conjugations/cases, and with affixes.
     * [sentence.js](#appmodelssentencejs) - Model for sentences.
+    * [clan.js](#appmodelsclanjs) - Model for clans.
   * routes - Contains the routing code.
     * index.js - Joins all the other routing code together. Also responsible for setting the Cache-Control header, rejecting unauthorized users, sending the index page on all non /api/\* GET requests, and GET /api/routes.
     * wordRoutes.js - Routes for viewing and modifying words.
@@ -42,8 +43,9 @@ An online dictionary for the orcish language created by *Matt Vancil*
     * searchRoutes.js - Routes for searching.
     * autofillRoutes.js - Route for getting the conjugations/cases for a verb, noun or adjective.
     * bulkAddRoutes.js - Route for adding multiple words at once using a csv or tsv file.
-    * statsRoutes.js - Route for getting statistics about words
+    * statsRoutes.js - Route for getting statistics about words.
     * sentenceRoutes.js - Routes for viewing and modifying sentences.
+    * clanRoutes.js - Routes for viewing and modifying clans.
   * authentication.js - Sets up the local strategy for passport.
   * [autofill.js](#appautofilljs) - Used to get the conjugations/cases for a verb, noun or adjective.
   * [bulkAdd.js](#appbulkaddjs) - Used to add multiple words at once using a csv or tsv file.
@@ -58,8 +60,8 @@ An online dictionary for the orcish language created by *Matt Vancil*
   * index.html
   * stylesheet.css
   * libs - Contains client side packages. Generated and populated by bower.
+  * bootstrap - Contains customized bootstrap code.
   * dist - Contains app.min.js, generated and populated by gulp.
-  * src - JS files and html pages for angular directives and routes.
   * src - Contains the Angular js files and html pages.
     * account - Code for forgot, login and reset password pages.
     * admin - Code for admin pages.
@@ -69,16 +71,24 @@ An online dictionary for the orcish language created by *Matt Vancil*
       * new - Page for creating an new word.
       * stats - Page for displaying stats.
     * alert - Contains the alert service and directive.
+    * clan - Contains all the clan pages for viewing and editing.
     * editable - Contains the editableWord directive, used for showing an editable version of a word.
+    * grammar - Contains all the grammar pages.
     * layout - Contains the home page, and the root controller.
+    * search - Contains the search page.
     * sentence - Contains the pages for viewing and editing sentences.
     * services - Contains factories for communicating with the server.
-    * shared - Contains directives used throughout the project.
+    * shared - Contains directives and filters used throughout the project.
       * fileDrop - Directive for allowing file drop.
+      * italize - Italizes text enclosed with \*s by replacing the \*s with <em> and </em> tags.
       * modal - Directive for bootstrap modal.
+      * pagnation - Responsize pagnation directive. Resizes itself to best fit its environment.
+      * syrronize - Directive to display syrronic.
+      * toSyrronic - Filter that replaces text with the syrronic unicode(s) equivalent.
       * wordsTable - Directive for loading and viewing words with filters and pagnation. Use attribute is-admin="true" to use version with edit and delete buttons.
-    * viewing - Contains the search, word, and wordsIndex pages.
-    * word - Contains the word directive, used for showing a read only version of a word.
+    * stats - Contains pages for displaying statistics.
+    * syrronic - Contains pages for the syrronic alphabet and converter.
+    * word - Contains the word and wordsIndex pages, and directives used to display additional info required by specific parts of speech.
 * scripts - Contains node scripts. Can be run using npm scripts.
 * test - Contains tests, and testing data.
 ## Specific file information
@@ -88,6 +98,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
   * english - The meaning of the word in english.
   * PoS - Part of Speech (verb, noun, etc.).
   * num - An automatically generated number used to differentiate words with the same orcish.
+  * orderedOrcish - The word's orcish with certain characters added or removed so that it can be used to order words the same way as in the book.
   * extraInfo (Optional) - Contains detailed english descriptions, historical information, and other useful info that doesn't fit anywhere else .
   * coindedBy (Optional) - The person who coined the word.
   * namedAfter (Optional) - What the word is named after.
@@ -120,6 +131,16 @@ Used to assist searching for words by their orcish or by one of their conjugatio
 	"category","english","orcish"
 	"category","english","orcish","submittedBy"
 	```
+### app/models/clan.js
+* Schema
+  * name - The name of the clan.
+  * orderingName - The clan name, but without a 'The ' at the start. Used for ordering clans.
+  * orcishName - The name of the clan in orcish. If the same as the name, indicates that the clan only has an orcishName.
+  * foundedBy (optional) - Who founded the clan.
+  * shortDesc - A short description of the clan.
+  * history - An array of paragraphs describing the history of the clan.
+  * customs - An array of paragraphs describing the customs of the clan.
+  * relations - An array of paragraphs describing the relations of the clan with others.
 ### app/autofill.js
 * autofill(orcish, PoS) - Generates and returns the noun/verb/adjective part for a word. Will throw error.
 * autofillAsync(orcish, PoS) - As above, but returns a Promise.
@@ -155,8 +176,10 @@ Used to assist searching for words by their orcish or by one of their conjugatio
 * getMatches(text) - For each word/quoted string in text, finds words that have a matching orcish/case. Will also find the affixes used.
 * getTextMatches(text) - Searches through through the english, extraInfo, coinedBy and namedAfter fields of the words for text matches. Uses stop word removal and stemming to improve results. If a word has textIndexHelper, searches through textIndexHelper.english without using stop word removal.
 ### app/stats.js
-* get() - Returns the statistics using a promise. Using caching.
-* setNeedsUpdate() - Tells stats that the cache is now invalid. This function should be called when words is modified.
+* get() - Returns the PoS statistics using a promise. Using caching.
+* setNeedsUpdate() - Tells stats that the PoS statistics cache is now invalid. This function should be called when words is modified.
+* getKeywords(sortByWords, from, to) - Returns the keyword statistics using a promise. Using caching.
+* setKeywordsNeedsUpdate() -  Tells stats that the PoS statistics cache is now invalid. This function should be called when the indexes are modified.
 ### app/stopWords.js
 * isStopWord(wordStr) - Return true if wordStr is a stop word, otherwise false.
 * getLangNone(english, PoS) - Given a word's english and PoS values, return the textIndexHelper.english value the word should have. A return value of "" indicates that the word does not need textIndexHelper.
