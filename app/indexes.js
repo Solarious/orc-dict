@@ -210,8 +210,21 @@ function pushIndex(searchIndexes, keyword, priority, message, word) {
 // -----
 
 function addNoun(word, searchIndexes) {
+	var decl = word.noun.declension;
 	if (nounDoesNotDecline(word)) {
 		pushIndex(searchIndexes, word.orcish, 2, 'all cases', word);
+	} else if (decl === 'first' || decl === 'second') {
+		addNounCase(word, searchIndexes, 'nominative', 2);
+		addNounCase(word, searchIndexes, 'genitive', 2);
+		pushIndex(
+			searchIndexes, word.noun.dative.singular, 2,
+			'dative/vocative singular', word
+		);
+		pushIndex(
+			searchIndexes, word.noun.dative.plural, 2,
+			' dative/vocative plural', word
+		);
+		addNounCase(word, searchIndexes, 'accusative', 2);
 	} else {
 		addNounCase(word, searchIndexes, 'nominative', 2);
 		addNounCase(word, searchIndexes, 'genitive', 2);
@@ -337,9 +350,15 @@ function addVerbConj(word, searchIndexes, verbVoice, verbTense) {
 function addVerbGerund(word, searchIndexes) {
 	addVerbGerundCase(word, searchIndexes, 'nominative', 3);
 	addVerbGerundCase(word, searchIndexes, 'genitive', 3);
-	addVerbGerundCase(word, searchIndexes, 'dative', 3);
+	pushIndex(
+		searchIndexes, word.verb.gerund.dative.singular, 3,
+		'gerund dative/vocative singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.gerund.dative.plural, 3,
+		'gerund dative/vocative plural', word
+	);
 	addVerbGerundCase(word, searchIndexes, 'accusative', 3);
-	addVerbGerundCase(word, searchIndexes, 'vocative', 3.5);
 }
 
 function addVerbGerundCase(word, searchIndexes, gerundCase, priority) {
@@ -356,9 +375,15 @@ function addVerbGerundCase(word, searchIndexes, gerundCase, priority) {
 function addVerbParticiple(word, searchIndexes, gender) {
 	addVerbParticipleCase(word, searchIndexes, gender, 'nominative');
 	addVerbParticipleCase(word, searchIndexes, gender, 'genitive');
-	addVerbParticipleCase(word, searchIndexes, gender, 'dative');
+	pushIndex(
+		searchIndexes, word.verb.participle[gender].dative.singular, 3,
+		'participle ' + gender + ' dative/vocative singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.participle[gender].dative.plural, 3,
+		'participle ' + gender + ' dative/vocative plural', word
+	);
 	addVerbParticipleCase(word, searchIndexes, gender, 'accusative');
-	addVerbParticipleCase(word, searchIndexes, gender, 'vocative');
 }
 
 function addVerbParticipleCase(word, searchIndexes, gender, pCase) {
@@ -376,9 +401,15 @@ function addVerbParticipleCase(word, searchIndexes, gender, pCase) {
 function addVerbAgent(word, searchIndexes, type) {
 	addVerbAgentCase(word, searchIndexes, type, 'nominative', 3);
 	addVerbAgentCase(word, searchIndexes, type, 'genitive', 3);
-	addVerbAgentCase(word, searchIndexes, type, 'dative', 3);
+	pushIndex(
+		searchIndexes, word.verb.agent[type].dative.singular, 3,
+		'agent ' + type + ' dative/vocative singular', word
+	);
+	pushIndex(
+		searchIndexes, word.verb.agent[type].dative.plural, 3,
+		'agent ' + type + ' dative/vocative plural', word
+	);
 	addVerbAgentCase(word, searchIndexes, type, 'accusative', 3);
-	addVerbAgentCase(word, searchIndexes, type, 'vocative', 3.5);
 }
 
 function addVerbAgentCase(word, searchIndexes, type, agentCase, priority) {
@@ -413,11 +444,27 @@ function adjectiveDoesNotDecline(word) {
 }
 
 function addAdjectiveGender(word, searchIndexes, gender) {
-	addAdjectiveCase(word, searchIndexes, gender, 'nominative', 2);
-	addAdjectiveCase(word, searchIndexes, gender, 'genitive', 2);
-	addAdjectiveCase(word, searchIndexes, gender, 'dative', 2);
-	addAdjectiveCase(word, searchIndexes, gender, 'accusative', 2);
-	addAdjectiveCase(word, searchIndexes, gender, 'vocative', 2.5);
+	var d = word.adjective[gender].dative;
+	var v = word.adjective[gender].vocative;
+	if ((d.singular === v.singular) && (d.plural === v.plural)) {
+		addAdjectiveCase(word, searchIndexes, gender, 'nominative', 2);
+		addAdjectiveCase(word, searchIndexes, gender, 'genitive', 2);
+		pushIndex(
+			searchIndexes, word.adjective[gender].dative.singular, 2,
+			gender + ' dative/vocative singular', word
+		);
+		pushIndex(
+			searchIndexes, word.adjective[gender].dative.plural, 2,
+			gender + ' dative/vocative plural', word
+		);
+		addAdjectiveCase(word, searchIndexes, gender, 'accusative', 2);
+	} else {
+		addAdjectiveCase(word, searchIndexes, gender, 'nominative', 2);
+		addAdjectiveCase(word, searchIndexes, gender, 'genitive', 2);
+		addAdjectiveCase(word, searchIndexes, gender, 'dative', 2);
+		addAdjectiveCase(word, searchIndexes, gender, 'accusative', 2);
+		addAdjectiveCase(word, searchIndexes, gender, 'vocative', 2.5);
+	}
 }
 
 function addAdjectiveCase(word, searchIndexes, gender, adjCase, priority) {
@@ -437,11 +484,21 @@ function addAdjectiveCase(word, searchIndexes, gender, adjCase, priority) {
 // --------
 
 function addPronoun(word, searchIndexes) {
-	addCase(word, searchIndexes, 'nominative', 2);
-	addCase(word, searchIndexes, 'genitive', 2);
-	addCase(word, searchIndexes, 'dative', 2);
-	addCase(word, searchIndexes, 'accusative', 2);
-	addCase(word, searchIndexes, 'vocative', 2.5);
+	if (word.pronoun.dative === word.pronoun.vocative) {
+		addCase(word, searchIndexes, 'nominative', 2);
+		addCase(word, searchIndexes, 'genitive', 2);
+		pushIndex(
+			searchIndexes, word.pronoun.dative, 2,
+			'dative/vocative', word
+		);
+		addCase(word, searchIndexes, 'accusative', 2);
+	} else {
+		addCase(word, searchIndexes, 'nominative', 2);
+		addCase(word, searchIndexes, 'genitive', 2);
+		addCase(word, searchIndexes, 'dative', 2);
+		addCase(word, searchIndexes, 'accusative', 2);
+		addCase(word, searchIndexes, 'vocative', 2.5);
+	}
 }
 
 function addCase(word, searchIndexes, caseName, priority) {
@@ -545,9 +602,15 @@ function addCopulaConj(word, searchIndexes, verbTense) {
 function addCopulaGerund(word, searchIndexes) {
 	addCopulaGerundCase(word, searchIndexes, 'nominative', 3);
 	addCopulaGerundCase(word, searchIndexes, 'genitive', 3);
-	addCopulaGerundCase(word, searchIndexes, 'dative', 3);
+	pushIndex(
+		searchIndexes, word.copula.gerund.dative.singular, 3,
+		'gerund dative/vocative singular', word
+	);
+	pushIndex(
+		searchIndexes, word.copula.gerund.dative.plural, 3,
+		'gerund dative/vocative plural', word
+	);
 	addCopulaGerundCase(word, searchIndexes, 'accusative', 3);
-	addCopulaGerundCase(word, searchIndexes, 'vocative', 3.5);
 }
 
 function addCopulaGerundCase(word, searchIndexes, gerundCase, priority) {
