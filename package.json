@@ -18,7 +18,8 @@
     "removeAllWords": "node scripts/removeAllWords.js",
     "getDuplicateWords": "node scripts/getDuplicateWords.js",
     "gulp": "gulp",
-    "testNyan": "mocha --reporter nyan"
+    "testNyan": "mocha --reporter nyan",
+	"checkSentences": "node scripts/checkSentences.js"
   },
   "author": "Nathan Aplin",
   "dependencies": {

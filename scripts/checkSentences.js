@@ -48,7 +48,7 @@ Sentence.find({})
 		console.log(d.orcish);
 		d.matches.forEach(m => {
 			if (m.numMatches == 0) {
-				console.log('\t' + m.str + ': ' + m.numMatches);
+				console.log('\t' + m.str);
 			}
 		});
 		console.log();

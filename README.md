@@ -11,6 +11,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
 * npm run removeAllWords - Removes all the words in the database.
 * npm run getDuplicateWords - Prints out all the words that share their orcish with another word.
 * npm run testNyan - Like test, but more fun.
+* npm run checkSentences - Finds sentences with invalid words by running them through search and checking which ones have words with no search results.
 ### Environment Variables
 * PORT - The port used.
 * PORT\_TESTING - The port used for testing.
