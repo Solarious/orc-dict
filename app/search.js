@@ -55,6 +55,11 @@ function getTextMatches(text) {
 				data.push(word);
 			}
 		});
+
+		data.sort(function(a, b) {
+			return b.score - a.score;
+		});
+
 		return data;
 	});
 }
@@ -78,6 +83,7 @@ function getNormalTextMatches(text) {
 			$meta: 'textScore'
 		}
 	})
+	.lean()
 	.exec();
 }
 
@@ -101,6 +107,7 @@ function getOtherTextMatches(text) {
 			$meta: 'textScore'
 		}
 	})
+	.lean()
 	.exec();
 }
 
