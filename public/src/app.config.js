@@ -14,13 +14,13 @@ function config($locationProvider, $routeProvider) {
 		restricted: false
 	})
 	.when('/words', {
-		templateUrl: 'src/viewing/wordsIndex.html',
+		templateUrl: 'src/word/wordsIndex.html',
 		controller: 'WordsIndexController',
 		controllerAs: 'vm',
 		restricted: false
 	})
 	.when('/words/:orcish/:num', {
-		templateUrl: 'src/viewing/word.html',
+		templateUrl: 'src/word/word.html',
 		controller: 'WordController',
 		controllerAs: 'vm',
 		restricted: false

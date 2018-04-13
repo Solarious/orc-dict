@@ -1,0 +1,61 @@
+<div class="col-md-12">
+	<h1 class="col-md-6">
+		{{vm.orcish}}
+		<a class="btn btn-primary pull-right"
+		ng-if="vm.isLoggedIn()"
+		ng-href="/admin/words/{{vm.word.orcish}}/{{vm.word.num}}">
+			<span class="glyphicon glyphicon-edit"></span> Edit
+		</a>
+	</h1>
+</div>
+
+<div class="col-md-6">
+	<table class="table table-condensed min-first-col">
+		<tr>
+			<th>Orcish</th>
+			<td>
+				{{vm.word.orcish}}
+				<orc-dict-syrronize text="vm.word.orcish" on-global="true" size="3"/>
+			</td>
+		</tr>
+		<tr>
+			<th>English</th>
+			<td>{{vm.word.english}}</td>
+		</tr>
+		<tr>
+			<th>Part of Speech</th>
+			<td class="capitalize">{{vm.word.PoS}}</td>
+		</tr>
+		<tr ng-if="vm.word.extraInfo">
+			<th>Extra Info</th>
+			<td>{{vm.word.extraInfo}}</td>
+		</tr>
+		<tr ng-if="vm.word.coinedBy">
+			<th>Coined By</th>
+			<td>{{vm.word.coinedBy}}</td>
+		</tr>
+		<tr ng-if="vm.word.namedAfter">
+			<th>Named After</th>
+			<td>{{vm.word.namedAfter}}</td>
+		</tr>
+	</table>
+</div>
+
+<orc-dict-verb ng-if="vm.word.PoS==='verb'" verb="vm.word.verb">
+</orc-dict-verb>
+
+<orc-dict-noun ng-if="vm.word.PoS==='noun'" noun="vm.word.noun">
+</orc-dict-noun>
+
+<orc-dict-adjective ng-if="vm.word.PoS==='adjective'" adjective="vm.word.adjective">
+</orc-dict-adjective>
+
+<orc-dict-pronoun ng-ifvm.="word.PoS==='pronoun'" pronoun="vm.word.pronoun">
+</orc-dict-pronoun>
+
+<orc-dict-affix ng-if="vm.word.PoS==='prefix' || vm.word.PoS==='suffix'"
+affix="vm.word.affix">
+</orc-dict-affix>
+
+<orc-dict-copula ng-if="vm.word.PoS==='copular verb'" copula="vm.word.copula">
+</orc-dict-copula>
