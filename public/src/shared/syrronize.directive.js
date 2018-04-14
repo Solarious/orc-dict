@@ -9,7 +9,7 @@ function syrronize() {
 	var directive = {
 		restrict: 'E',
 		scope: {
-			text: '=',
+			text: '=?',
 			raw: '@',
 			onGlobal: '@',
 			size: '@'
