@@ -14,6 +14,7 @@ function SyrronicController() {
 
 	function activate() {
 		vm.align = 'left';
+		vm.size = 1;
 	}
 }
 
