@@ -34,11 +34,19 @@ MongoClient.connect(url, function(err, db) {
 		}
 	])
 	.toArray(function(err, docs) {
-		console.dir(docs, {
-			depth: 3,
-			breakLength: 1
-		});
-		console.log(docs.length);
+		prettyDraw(docs);
 		db.close();
 	});
 });
+
+function prettyDraw(input) {
+	console.log(`There are ${input.length} duplicates`);
+	console.log();
+	input.forEach(entry => {
+		console.log(entry._id);
+		entry.words.forEach(
+			w => console.log(`    ${w.orcish}, ${w.PoS}, ${w.english}`)
+		);
+		console.log();
+	});
+}
