@@ -20,6 +20,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
 * SECRET\_KEY - The secret used by express-session to sign the session ID cookies.
 * SENDGRID\_USERNAME - The username for sendgrid (used for sending password reset emails).
 * SENDGRID\_API\_KEY - The api key for sendgrid.
+* FORCE\_HTTPS - If "true", and NODE\_ENV = "production", redirects all http requests to https
 * SIZE\_PER\_PART (optional) - The maximum number of search indexes that are created at once. A default value of 500 is used if this variable is not defined.
 * WORK\_FACTOR (optional) - The word factor used by bcrypt. Has the default value of 12.
 ## Gulp Tasks
