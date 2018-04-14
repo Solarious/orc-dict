@@ -56,7 +56,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
   * sanitize.js - Middleware to reject requests with unsafe values.
   * [search.js](#appsearchjs) - Used for searching.
   * [stats.js](#appstatsjs) - Used to get statistics about the words.
-  * [stopWords.js](#appstopwordsjs) - Used to find stop words and.
+  * [stopWords.js](#appstopwordsjs) - Used to identify stop words and get the textIndexHelper.english value a word should have.
 * public - Contains all the client side files.
   * index.html
   * stylesheet.css
