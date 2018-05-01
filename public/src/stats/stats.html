@@ -4,250 +4,263 @@
 
 <div ng-if="vm.stats">
 	<div class="col-md-3">
-		<table class="table">
-			<tr>
-				<th>Part of Speech</th>
-				<th>Total</th>
-			</tr>
-			<tr>
-				<td>Adjective</td>
-				<td>{{vm.stats.adjective.count}}</td>
-			</tr>
-			<tr>
-				<td>Adverb</td>
-				<td>{{vm.stats.adverb.count}}</td>
-			</tr>
-			<tr>
-				<td>Cardinal</td>
-				<td>{{vm.stats.cardinal.count}}</td>
-			</tr>
-			<tr>
-				<td>Conjunction</td>
-				<td>{{vm.stats.conjunction.count}}</td>
-			</tr>
-			<tr>
-				<td>Contraction</td>
-				<td>{{vm.stats.contraction.count}}</td>
-			</tr>
-			<tr>
-				<td>Copular Verb</td>
-				<td>{{vm.stats['copular verb'].count}}</td>
-			</tr>
-			<tr>
-				<td>Exclamation</td>
-				<td>{{vm.stats.exclamation.count}}</td>
-			</tr>
-			<tr>
-				<td>Interjection</td>
-				<td>{{vm.stats.interjection.count}}</td>
-			</tr>
-			<tr>
-				<td>Noun</td>
-				<td>{{vm.stats.noun.count}}</td>
-			</tr>
-			<tr>
-				<td>Prefix</td>
-				<td>{{vm.stats.prefix.count}}</td>
-			</tr>
-			<tr>
-				<td>Preposition</td>
-				<td>{{vm.stats.preposition.count}}</td>
-			</tr>
-			<tr>
-				<td>Pronoun</td>
-				<td>{{vm.stats.pronoun.count}}</td>
-			</tr>
-			<tr>
-				<td>Suffix</td>
-				<td>{{vm.stats.suffix.count}}</td>
-			</tr>
-			<tr>
-				<td>Verb</td>
-				<td>{{vm.stats.verb.count}}</td>
-			</tr>
-			<tr>
-				<td><strong>Total</strong></td>
-				<td><strong>{{vm.stats.total}}</strong></td>
-			</tr>
-		</table>
-		<table class="table">
-			<tr>
-				<th colspan="4">Pronoun</th>
-			</tr>
-			<tr>
-				<th>Type</th>
-				<th>Total</th>
-			</tr>
-			<tr>
-				<td>Pronoun</td>
-				<td>{{vm.stats.pronoun.pronoun.count}}</td>
-			</tr>
-			<tr>
-				<td>Possessive</td>
-				<td>{{vm.stats.pronoun.possessive.count}}</td>
-			</tr>
-			<tr>
-				<td>Demonstrative</td>
-				<td>{{vm.stats.pronoun.demonstrative.count}}</td>
-			</tr>
-			<tr>
-				<td>Relative</td>
-				<td>{{vm.stats.pronoun.relative.count}}</td>
-			</tr>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<strong>Part of Speech</strong>
+			</div>
+			<table class="table">
+				<tr>
+					<th>Part of Speech</th>
+					<th>Total</th>
+				</tr>
+				<tr>
+					<td>Adjective</td>
+					<td>{{vm.stats.adjective.count}}</td>
+				</tr>
+				<tr>
+					<td>Adverb</td>
+					<td>{{vm.stats.adverb.count}}</td>
+				</tr>
+				<tr>
+					<td>Cardinal</td>
+					<td>{{vm.stats.cardinal.count}}</td>
+				</tr>
+				<tr>
+					<td>Conjunction</td>
+					<td>{{vm.stats.conjunction.count}}</td>
+				</tr>
+				<tr>
+					<td>Contraction</td>
+					<td>{{vm.stats.contraction.count}}</td>
+				</tr>
+				<tr>
+					<td>Copular Verb</td>
+					<td>{{vm.stats['copular verb'].count}}</td>
+				</tr>
+				<tr>
+					<td>Exclamation</td>
+					<td>{{vm.stats.exclamation.count}}</td>
+				</tr>
+				<tr>
+					<td>Interjection</td>
+					<td>{{vm.stats.interjection.count}}</td>
+				</tr>
+				<tr>
+					<td>Noun</td>
+					<td>{{vm.stats.noun.count}}</td>
+				</tr>
+				<tr>
+					<td>Prefix</td>
+					<td>{{vm.stats.prefix.count}}</td>
+				</tr>
+				<tr>
+					<td>Preposition</td>
+					<td>{{vm.stats.preposition.count}}</td>
+				</tr>
+				<tr>
+					<td>Pronoun</td>
+					<td>{{vm.stats.pronoun.count}}</td>
+				</tr>
+				<tr>
+					<td>Suffix</td>
+					<td>{{vm.stats.suffix.count}}</td>
+				</tr>
+				<tr>
+					<td>Verb</td>
+					<td>{{vm.stats.verb.count}}</td>
+				</tr>
+				<tr>
+					<td><strong>Total</strong></td>
+					<td><strong>{{vm.stats.total}}</strong></td>
+				</tr>
+			</table>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<strong>Pronoun</strong>
+			</div>
+			<table class="table">
+				<tr>
+					<th>Type</th>
+					<th>Total</th>
+				</tr>
+				<tr>
+					<td>Pronoun</td>
+					<td>{{vm.stats.pronoun.pronoun.count}}</td>
+				</tr>
+				<tr>
+					<td>Possessive</td>
+					<td>{{vm.stats.pronoun.possessive.count}}</td>
+				</tr>
+				<tr>
+					<td>Demonstrative</td>
+					<td>{{vm.stats.pronoun.demonstrative.count}}</td>
+				</tr>
+				<tr>
+					<td>Relative</td>
+					<td>{{vm.stats.pronoun.relative.count}}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div class="col-md-5">
-		<table class="table table-condensed">
-			<tr>
-				<th colspan="4">Noun</th>
-			</tr>
-			<tr>
-				<th>Declension</th>
-				<th>Total</th>
-				<th>Ending</th>
-				<th>Count</th>
-			</tr>
-			<tr>
-				<td rowspan="4">First</td>
-				<td rowspan="4">{{vm.stats.noun.first.count}}</td>
-				<td>-ad</td>
-				<td>{{vm.stats.noun.first.ad}}</td>
-			</tr>
-			<tr>
-				<td>-am</td>
-				<td>{{vm.stats.noun.first.am}}</td>
-			</tr>
-			<tr>
-				<td>-ag</td>
-				<td>{{vm.stats.noun.first.ag}}</td>
-			</tr>
-			<tr>
-				<td>-aed</td>
-				<td>{{vm.stats.noun.first.aed}}</td>
-			</tr>
-			<tr>
-				<td rowspan="4">Second (Masculine)</td>
-				<td rowspan="4">{{vm.stats.noun.secondMasculine.count}}</td>
-				<td>-ul</td>
-				<td>{{vm.stats.noun.secondMasculine.ul}}</td>
-			</tr>
-			<tr>
-				<td>-or</td>
-				<td>{{vm.stats.noun.secondMasculine.or}}</td>
-			</tr>
-			<tr>
-				<td>-k</td>
-				<td>{{vm.stats.noun.secondMasculine.k}}</td>
-			</tr>
-			<tr>
-				<td>-x</td>
-				<td>{{vm.stats.noun.secondMasculine.x}}</td>
-			</tr>
-			<tr>
-				<td rowspan="6">Second (Neutral)</td>
-				<td rowspan="6">{{vm.stats.noun.secondNeutral.count}}</td>
-				<td>-id</td>
-				<td>{{vm.stats.noun.secondNeutral.id}}</td>
-			</tr>
-			<tr>
-				<td>-ed</td>
-				<td>{{vm.stats.noun.secondNeutral.ed}}</td>
-			</tr>
-			<tr>
-				<td>-d</td>
-				<td>{{vm.stats.noun.secondNeutral.d}}</td>
-			</tr>
-			<tr>
-				<td>-z</td>
-				<td>{{vm.stats.noun.secondNeutral.z}}</td>
-			</tr>
-			<tr>
-				<td>-dj</td>
-				<td>{{vm.stats.noun.secondNeutral.dj}}</td>
-			</tr>
-			<tr>
-				<td>-on</td>
-				<td>{{vm.stats.noun.secondNeutral.on}}</td>
-			</tr>
-			<tr>
-				<td rowspan="3">Third</td>
-				<td rowspan="3">{{vm.stats.noun.third.count}}</td>
-				<td>-ash</td>
-				<td>{{vm.stats.noun.third.ash}}</td>
-			</tr>
-			<tr>
-				<td>-ard</td>
-				<td>{{vm.stats.noun.third.ard}}</td>
-			</tr>
-			<tr>
-				<td>-rd</td>
-				<td>{{vm.stats.noun.third.rd}}</td>
-			</tr>
-			<tr>
-				<td rowspan="3">Fourth</td>
-				<td rowspan="3">{{vm.stats.noun.fourth.count}}</td>
-				<td>-b</td>
-				<td>{{vm.stats.noun.fourth.b}}</td>
-			</tr>
-			<tr>
-				<td>-f</td>
-				<td>{{vm.stats.noun.fourth.f}}</td>
-			</tr>
-			<tr>
-				<td>-p</td>
-				<td>{{vm.stats.noun.fourth.p}}</td>
-			</tr>
-			<tr>
-				<td rowspan="2">Fifth</td>
-				<td rowspan="2">{{vm.stats.noun.fifth.count}}</td>
-				<td>-ath</td>
-				<td>{{vm.stats.noun.fifth.ath}}</td>
-			</tr>
-			<tr>
-				<td>-at</td>
-				<td>{{vm.stats.noun.fifth.at}}</td>
-			</tr>
-			<tr>
-				<td>Irregular</td>
-				<td>{{vm.stats.noun.irregular.count}}</td>
-				<td colspan="2"></td>
-			</tr>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<strong>Noun</strong>
+			</div>
+			<table class="table table-condensed">
+				<tr>
+					<th>Declension</th>
+					<th>Total</th>
+					<th>Ending</th>
+					<th>Count</th>
+				</tr>
+				<tr>
+					<td rowspan="4">First</td>
+					<td rowspan="4">{{vm.stats.noun.first.count}}</td>
+					<td>-ad</td>
+					<td>{{vm.stats.noun.first.ad}}</td>
+				</tr>
+				<tr>
+					<td>-am</td>
+					<td>{{vm.stats.noun.first.am}}</td>
+				</tr>
+				<tr>
+					<td>-ag</td>
+					<td>{{vm.stats.noun.first.ag}}</td>
+				</tr>
+				<tr>
+					<td>-aed</td>
+					<td>{{vm.stats.noun.first.aed}}</td>
+				</tr>
+				<tr>
+					<td rowspan="4">Second (Masculine)</td>
+					<td rowspan="4">{{vm.stats.noun.secondMasculine.count}}</td>
+					<td>-ul</td>
+					<td>{{vm.stats.noun.secondMasculine.ul}}</td>
+				</tr>
+				<tr>
+					<td>-or</td>
+					<td>{{vm.stats.noun.secondMasculine.or}}</td>
+				</tr>
+				<tr>
+					<td>-k</td>
+					<td>{{vm.stats.noun.secondMasculine.k}}</td>
+				</tr>
+				<tr>
+					<td>-x</td>
+					<td>{{vm.stats.noun.secondMasculine.x}}</td>
+				</tr>
+				<tr>
+					<td rowspan="6">Second (Neutral)</td>
+					<td rowspan="6">{{vm.stats.noun.secondNeutral.count}}</td>
+					<td>-id</td>
+					<td>{{vm.stats.noun.secondNeutral.id}}</td>
+				</tr>
+				<tr>
+					<td>-ed</td>
+					<td>{{vm.stats.noun.secondNeutral.ed}}</td>
+				</tr>
+				<tr>
+					<td>-d</td>
+					<td>{{vm.stats.noun.secondNeutral.d}}</td>
+				</tr>
+				<tr>
+					<td>-z</td>
+					<td>{{vm.stats.noun.secondNeutral.z}}</td>
+				</tr>
+				<tr>
+					<td>-dj</td>
+					<td>{{vm.stats.noun.secondNeutral.dj}}</td>
+				</tr>
+				<tr>
+					<td>-on</td>
+					<td>{{vm.stats.noun.secondNeutral.on}}</td>
+				</tr>
+				<tr>
+					<td rowspan="3">Third</td>
+					<td rowspan="3">{{vm.stats.noun.third.count}}</td>
+					<td>-ash</td>
+					<td>{{vm.stats.noun.third.ash}}</td>
+				</tr>
+				<tr>
+					<td>-ard</td>
+					<td>{{vm.stats.noun.third.ard}}</td>
+				</tr>
+				<tr>
+					<td>-rd</td>
+					<td>{{vm.stats.noun.third.rd}}</td>
+				</tr>
+				<tr>
+					<td rowspan="3">Fourth</td>
+					<td rowspan="3">{{vm.stats.noun.fourth.count}}</td>
+					<td>-b</td>
+					<td>{{vm.stats.noun.fourth.b}}</td>
+				</tr>
+				<tr>
+					<td>-f</td>
+					<td>{{vm.stats.noun.fourth.f}}</td>
+				</tr>
+				<tr>
+					<td>-p</td>
+					<td>{{vm.stats.noun.fourth.p}}</td>
+				</tr>
+				<tr>
+					<td rowspan="2">Fifth</td>
+					<td rowspan="2">{{vm.stats.noun.fifth.count}}</td>
+					<td>-ath</td>
+					<td>{{vm.stats.noun.fifth.ath}}</td>
+				</tr>
+				<tr>
+					<td>-at</td>
+					<td>{{vm.stats.noun.fifth.at}}</td>
+				</tr>
+				<tr>
+					<td>Irregular</td>
+					<td>{{vm.stats.noun.irregular.count}}</td>
+					<td colspan="2"></td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div class="col-md-4">
-		<table class="table">
-			<tr>
-				<th colspan="2">Verb</th>
-			</tr>
-			<tr>
-				<th>Conjugation</th>
-				<th>Total</th>
-			</tr>
-			<tr>
-				<td>First</td>
-				<td>{{vm.stats.verb.first}}</td>
-			</tr>
-			<tr>
-				<td>Second</td>
-				<td>{{vm.stats.verb.second}}</td>
-			</tr>
-		</table>
-		<table class="table table-condensed">
-			<tr>
-				<th colspan="2">Adjective</th>
-			</tr>
-			<tr>
-				<th>Type</th>
-				<th>Total</th>
-			</tr>
-			<tr ng-repeat="type in vm.adjTypes">
-				<td>{{type[0]}}</td>
-				<td>{{type[1]}}</td>
-			</tr>
-			<tr>
-				<td>Irregular</td>
-				<td>{{vm.stats.adjective.types.irregular}}</td>
-			</tr>
-		</table>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<strong>Verb</strong>
+			</div>
+			<table class="table">
+				<tr>
+					<th>Conjugation</th>
+					<th>Total</th>
+				</tr>
+				<tr>
+					<td>First</td>
+					<td>{{vm.stats.verb.first}}</td>
+				</tr>
+				<tr>
+					<td>Second</td>
+					<td>{{vm.stats.verb.second}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				<strong>Adjective</strong>
+			</div>
+			<table class="table table-condensed">
+				<tr>
+					<th>Type</th>
+					<th>Total</th>
+				</tr>
+				<tr ng-repeat="type in vm.adjTypes">
+					<td>{{type[0]}}</td>
+					<td>{{type[1]}}</td>
+				</tr>
+				<tr>
+					<td>Irregular</td>
+					<td>{{vm.stats.adjective.types.irregular}}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 </div>
