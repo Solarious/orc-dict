@@ -43,7 +43,7 @@ function pagnation($window, $timeout) {
 		resizeTwice();
 
 		function resize() {
-			var navWidth = element.outerWidth();
+			var navWidth = element.find('nav').outerWidth();
 			var aElements = element.find('a');
 			var boxWidth = aElements.outerWidth() * 1.2;
 			aElements.each(function() {
