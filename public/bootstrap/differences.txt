@@ -1,0 +1,4 @@
+@grid-float-breakpoint
+	changed from @screen-sm-min to 1200px
+@navbar-collapse-max-height
+	changed from 340px to none
