@@ -149,6 +149,10 @@ dd:before {
 	margin-bottom: 5em;
 }
 
+.clan-btn {
+	white-space: normal;
+}
+
 .avoid-wrap {
 	display: inline-block;
 }

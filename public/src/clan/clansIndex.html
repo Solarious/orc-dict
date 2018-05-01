@@ -63,7 +63,8 @@ close-text="Cancel" modal-id="removeAllModal">
 	</orc-dict-pagnation>
 
 	<div class="panel" ng-repeat="clan in vm.clans">
-		<a class="btn btn-default btn-block" ng-href="/clans/{{clan.name}}">
+		<a class="btn btn-default btn-block clan-btn"
+		ng-href="/clans/{{clan.name}}">
 			<h3 class="text-center" ng-if="clan.name !== clan.orcishName">
 				{{clan.name}} <em>({{clan.orcishName}})</em>
 				<orc-dict-syrronize text="clan.orcishName"
