@@ -96,6 +96,11 @@ select.form-control {
 	appearance: none;
 }
 
+/* appearance: none for ie */
+select::-ms-expand {
+    display: none;
+} 
+
 dd {
 	margin-left: 0;
 	padding-left: 1em;
