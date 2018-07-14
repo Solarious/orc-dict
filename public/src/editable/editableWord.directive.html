@@ -66,7 +66,8 @@
 		<tr>
 			<td>
 				<button type="button" class="btn btn-primary"
-				ng-click="vm.submitFunction()">
+				ng-click="vm.submitFunction()"
+				ng-disabled="vm.submitDisabled">
 					<span class="glyphicon glyphicon-edit">
 					</span> {{vm.submitText}}
 				</button>
