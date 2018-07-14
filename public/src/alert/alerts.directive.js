@@ -11,7 +11,8 @@ function alerts() {
 		templateUrl: 'src/alert/alerts.directive.html',
 		controller: AlertsController,
 		controllerAs: 'vm',
-		bindToController: true
+		bindToController: true,
+		scope: true
 	};
 
 	return directive;
