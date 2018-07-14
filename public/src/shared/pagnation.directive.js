@@ -54,7 +54,7 @@ function pagnation($window, $timeout) {
 			if (ctrl.maxBoxes && (maxFit > ctrl.maxBoxes)) {
 				maxFit = ctrl.maxBoxes;
 			}
-			if (maxFit < 5) maxFit = 5;
+			if (maxFit < 7) maxFit = 7;
 			ctrl.maxFit = maxFit;
 			ctrl.updateNums();
 		}
