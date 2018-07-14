@@ -26,6 +26,10 @@ if (process.env.NODE_ENV === 'test') {
 
 mongoose.connect(dburl);
 
+app.use(helmet({
+	hsts: (process.env.NODE_ENV === 'production')
+}));
+
 app.enable('trust proxy');
 
 if ((process.env.NODE_ENV === 'production') && (process.env.FORCE_HTTPS === 'true')) {
@@ -38,10 +42,6 @@ if ((process.env.NODE_ENV === 'production') && (process.env.FORCE_HTTPS === 'tru
 	});
 	console.log('Using https redirect');
 }
-
-app.use(helmet({
-	hsts: (process.env.NODE_ENV === 'production')
-}));
 
 app.use(bodyParser.json({
 	limit: '200kb'
