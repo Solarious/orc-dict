@@ -16,10 +16,8 @@ describe('Sanitize', function() {
 			.get('/api/words/?$skip=all')
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Query $skip=all rejected by sanitizer: key must not' +
 					' start with a "$"'
 				);
@@ -31,10 +29,8 @@ describe('Sanitize', function() {
 			.get('/api/words/?skip=$all')
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Query skip=$all rejected by sanitizer: value must not' +
 					' start with a "$"'
 				);
@@ -46,10 +42,8 @@ describe('Sanitize', function() {
 			.get('/api/words/?skip=all&skip=none')
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Query skip=["all","none"] rejected by sanitizer:' +
 					' value must be a number or a string'
 				);
@@ -61,10 +55,8 @@ describe('Sanitize', function() {
 			.get('/api/words/?skip[a]=all&skip[b]=none')
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Query skip={"a":"all","b":"none"} rejected by' +
 					' sanitizer: value must be a number or a string'
 				);
@@ -79,10 +71,8 @@ describe('Sanitize', function() {
 			.send({$thing: 6})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: key $thing must not' +
 					' start with a "$"'
 				);
@@ -95,10 +85,8 @@ describe('Sanitize', function() {
 			.send({thing: '$s'})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key thing must' +
 					' not start with a "$"'
 				);
@@ -111,10 +99,8 @@ describe('Sanitize', function() {
 			.send({thing: 'one < s'})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key thing must' +
 					' not contain a "<"'
 				);
@@ -127,10 +113,8 @@ describe('Sanitize', function() {
 			.send({thing: 'one > s'})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key thing must' +
 					' not contain a ">"'
 				);
@@ -143,10 +127,8 @@ describe('Sanitize', function() {
 			.send({thing: {$bad: 6}})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: key $bad must not' +
 					' start with a "$"'
 				);
@@ -159,10 +141,8 @@ describe('Sanitize', function() {
 			.send({thing: {bad: "$y"}})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key bad must' +
 					' not start with a "$"'
 				);
@@ -175,10 +155,8 @@ describe('Sanitize', function() {
 			.send({thing: {bad: "<y"}})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key bad must' +
 					' not contain a "<"'
 				);
@@ -191,10 +169,8 @@ describe('Sanitize', function() {
 			.send({thing: {bad: ">y"}})
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(err) {
-				err.response.should.have.status(400);
-				err.response.text.should.be.a('string');
-				err.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Body rejected by sanitizer: value for key bad must' +
 					' not contain a ">"'
 				);

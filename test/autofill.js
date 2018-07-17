@@ -33,10 +33,8 @@ describe('Autofill', function() {
 				.get('/api/autofillword/' + PoS + '/thaen')
 				.then(function(res) {
 					res.should.have.status(404);
-				}, function(error) {
-					error.response.should.have.status(404);
-					error.response.text.should.be.a('string');
-					error.response.text.should.eql(
+					res.text.should.be.a('string');
+					res.text.should.eql(
 						'Can not use autofill with PoS: ' + PoS
 					);
 				});
@@ -60,10 +58,8 @@ describe('Autofill', function() {
 				.get('/api/autofillword/' + PoS + '/thaen')
 				.then(function(res) {
 					res.should.have.status(404);
-				}, function(error) {
-					error.response.should.have.status(404);
-					error.response.text.should.be.a('string');
-					error.response.text.should.eql(
+					res.text.should.be.a('string');
+					res.text.should.eql(
 						'Invalid PoS: ' + PoS
 					);
 				});

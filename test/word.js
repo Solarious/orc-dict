@@ -126,10 +126,8 @@ describe('Words', function() {
 			.get('/api/words/notaword/1')
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql('cannot find word: notaword 1');
+				res.text.should.be.a('string');
+				res.text.should.eql('cannot find word: notaword 1');
 			});
 		});
 
@@ -138,10 +136,8 @@ describe('Words', function() {
 			.get('/api/words/nul/2')
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql('cannot find word: nul 2');
+				res.text.should.be.a('string');
+				res.text.should.eql('cannot find word: nul 2');
 			});
 		});
 
@@ -329,10 +325,8 @@ describe('Words', function() {
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
 			.then(function(res) {
 				res.should.have.status(400);
-			}, function(error) {
-				error.response.should.have.status(400);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql('Invalid PoS nul');
+				res.text.should.be.a('string');
+				res.text.should.eql('Invalid PoS nul');
 			});
 		});
 

@@ -168,8 +168,6 @@ describe('Bulk Add', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
 				return agent
 				.get('/api/words');
 			})
@@ -193,10 +191,8 @@ describe('Bulk Add', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql(errorText);
+				res.text.should.be.a('string');
+				res.text.should.eql(errorText);
 			});
 		}
 
@@ -232,10 +228,8 @@ describe('Bulk Add', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql(
+				res.text.should.be.a('string');
+				res.text.should.eql(
 					'Record me,nudz has less than 3 values'
 				);
 			});

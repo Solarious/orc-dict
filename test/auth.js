@@ -64,10 +64,8 @@ describe('authentication', function() {
 				[route.method.toLowerCase()](route.examplePath)
 				.then(function(res) {
 					res.should.have.status(403);
-				}, function(err) {
-					err.response.should.have.status(403);
-					err.response.text.should.be.a('string');
-					err.response.text.should.eql('Invalid/Missing csrf token');
+					res.text.should.be.a('string');
+					res.text.should.eql('Invalid/Missing csrf token');
 				});
 			});
 		});
@@ -109,7 +107,7 @@ describe('authentication', function() {
 			cookies['XSRF-TOKEN'].should.be.a('string');
 		});
 
-		it('it should send a 401 on incorrect username', function(done) {
+		it('it should send a 401 on incorrect username', function() {
 			agent
 			.post('/api/user/login')
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
@@ -117,13 +115,12 @@ describe('authentication', function() {
 				username: 'noauser',
 				password: 'noauserspassword'
 			})
-			.end(function(error, res) {
+			.then(function(res) {
 				res.should.have.status(401);
-				done();
 			});
 		});
 
-		it('it should login with correct credentials', function(done) {
+		it('it should login with correct credentials', function() {
 			agent
 			.post('/api/user/login')
 			.set('X-XSRF-TOKEN', cookies['XSRF-TOKEN'])
@@ -131,13 +128,12 @@ describe('authentication', function() {
 				username: 'test',
 				password: 'testpassword'
 			})
-			.end(function(error, res) {
+			.then(function(res) {
 				res.should.have.status(200);
 				res.body.should.be.a('object');
 				res.body.should.eql({
 					status: 'Login successful'
 				});
-				done();
 			});
 		});
 
@@ -172,10 +168,8 @@ describe('authentication', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(401);
-			}, function(error) {
-				error.response.should.have.status(401);
-				error.response.text.should.be.a('string');
-				error.response.text.should.eql('Unauthorized');
+				res.text.should.be.a('string');
+				res.text.should.eql('Unauthorized');
 			});
 		});
 

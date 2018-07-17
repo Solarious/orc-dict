@@ -183,8 +183,6 @@ describe('Indexes', function() {
 		.send(searchData.duliNoun())
 		.then(function() {
 			return SearchIndex.find({}).exec();
-		}, function(error) {
-			console.log(error);
 		})
 		.then(function(searchIndexes) {
 			test(searchData.withDuliNoun(), searchIndexes);
@@ -358,8 +356,6 @@ describe('Indexes', function() {
 			})
 			.then(function(res) {
 				res.should.have.status(404);
-			}, function(error) {
-				error.response.should.have.status(404);
 				return SearchIndex.find({}).exec();
 			})
 			.then(function(searchIndexes) {
