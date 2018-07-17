@@ -7,7 +7,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "start": "node server.js",
     "postinstall": "bower install && gulp js",
     "createUser": "node scripts/userActions.js createUser",
@@ -18,7 +18,7 @@
     "removeAllWords": "node scripts/removeAllWords.js",
     "getDuplicateWords": "node scripts/getDuplicateWords.js",
     "gulp": "gulp",
-    "testNyan": "mocha --reporter nyan",
+    "testNyan": "mocha --reporter nyan --exit",
     "checkSentences": "node scripts/checkSentences.js"
   },
   "author": "Nathan Aplin",
@@ -52,6 +52,6 @@
     "gulp-using": "^0.1.1",
     "jshint": "^2.9.4",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^3.5.3"
+    "mocha": "^5.2.0"
   }
 }
