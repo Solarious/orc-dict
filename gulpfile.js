@@ -1,10 +1,9 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-if (process.env.NODE_ENV !== 'production') {
-	var jshint = require('gulp-jshint');
-	var using = require('gulp-using');
-}
+var jshint = require('gulp-jshint');
+var gulpUsing = require('gulp-using');
+
 
 var jsPublicFiles = [
 	'public/src/app.module.js',
@@ -26,35 +25,35 @@ var jsTestFiles = [
 	'test/**/*.js'
 ];
 
-gulp.task('js', function() {
+function js() {
 	return gulp.src(jsPublicProductionFiles)
 	.pipe(concat('app.min.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('public/dist'));
-});
+}
 
-gulp.task('js-debug', function() {
+function jsDebug() {
 	return gulp.src(jsPublicFiles)
 	.pipe(concat('app.min.js'))
 	.pipe(gulp.dest('public/dist'));
-});
+}
 
-gulp.task('lintPublic', function() {
+function lintPublic() {
 	return gulp.src(jsPublicProductionFiles)
 	.pipe(jshint())
 	.pipe(jshint.reporter('jshint-stylish'))
-});
+}
 
-gulp.task('lintApp', function() {
+function lintApp() {
 	return gulp.src(jsAppFiles)
 	.pipe(jshint({
 		node: true,
 		esversion: 6
 	}))
 	.pipe(jshint.reporter('jshint-stylish'))
-});
+}
 
-gulp.task('lintTest', function() {
+function lintTest() {
 	return gulp.src(jsTestFiles)
 	.pipe(jshint({
 		node: true,
@@ -62,26 +61,40 @@ gulp.task('lintTest', function() {
 		esversion: 6
 	}))
 	.pipe(jshint.reporter('jshint-stylish'));
-})
+}
 
-gulp.task('using', function() {
+var lint = gulp.series(lintPublic, lintApp, lintTest);
+
+function using() {
 	return gulp.src(jsAppFiles.concat(jsPublicProductionFiles))
-	.pipe(using());
-});
+	.pipe(gulpUsing());
+}
 
-gulp.task('using-no-prod', function() {
+function usingNoProd() {
 	return gulp.src(jsAppFiles.concat(jsPublicFiles))
-	.pipe(using());
-});
+	.pipe(gulpUsing());
+}
 
-gulp.task('lint', ['lintPublic', 'lintApp', 'lintTest'], function() {});
+function justWatch() {
+	gulp.watch(jsPublicFiles, js);
+}
 
-gulp.task('watch', ['js'], function() {
-	gulp.watch(jsPublicFiles, ['js']);
-});
+function justWatchDebug() {
+	gulp.watch(jsPublicFiles, jsDebug);
+}
 
-gulp.task('watch-debug', ['js-debug'], function() {
-	gulp.watch(jsPublicFiles, ['js-debug']);
-});
+var watch = gulp.series(js, justWatch);
 
-gulp.task('default', ['js'], function(){});
+var watchDebug = gulp.series(jsDebug, justWatchDebug);
+
+gulp.task(js);
+gulp.task(jsDebug);
+gulp.task(lintPublic);
+gulp.task(lintApp);
+gulp.task(lintTest);
+gulp.task('lint', lint);
+gulp.task(using);
+gulp.task(usingNoProd);
+gulp.task('watch', watch);
+gulp.task('watchDebug', watchDebug);
+gulp.task('default', js);
