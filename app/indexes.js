@@ -3,6 +3,7 @@
 var SearchIndex = require('./models/searchIndex');
 var Word = require('./models/word');
 var stats = require('./stats');
+var config = require('../config');
 
 module.exports = {
 	rebuild: rebuild,
@@ -65,7 +66,7 @@ function forRemoveByPoS(PoS) {
 }
 
 function forInsertMany(words) {
-	const sizePerPart = Number(process.env.SIZE_PER_PART || 500);
+	const sizePerPart = Number(config.SIZE_PER_PART);
 	var arrays = [];
 	var part = [];
 	var partSize = 0;
@@ -94,7 +95,7 @@ function forInsertMany(words) {
 
 	arrays.forEach(function(part, i) {
 		promise = promise.then(function() {
-			if (process.env.NODE_ENV !== 'test') {
+			if (config.NODE_ENV !== 'test') {
 				console.log('rebuilding part ' + (i + 1) + '/' + numOfParts);
 			}
 			return insertPart(part);

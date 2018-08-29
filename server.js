@@ -12,27 +12,28 @@ var MongoStore = require('connect-mongo')(session);
 var helmet = require('helmet');
 var sanitize = require('./app/sanitize');
 var stats = require('./app/stats');
+var config = require('./config');
 
 var dburl;
 var port;
-if (process.env.NODE_ENV === 'test') {
-	port = process.env.PORT_TESTING;
-	dburl = process.env.MONGODB_TESTING_URI;
-	process.env.WORK_FACTOR = 5;
+if (config.NODE_ENV === 'test') {
+	port = config.PORT_TESTING;
+	dburl = config.MONGODB_TESTING_URI;
+	config.WORK_FACTOR = 5;
 } else {
-	port = process.env.PORT;
-	dburl = process.env.MONGODB_URI;
+	port = config.PORT;
+	dburl = config.MONGODB_URI;
 }
 
 mongoose.connect(dburl);
 
 app.use(helmet({
-	hsts: (process.env.NODE_ENV === 'production')
+	hsts: (config.NODE_ENV === 'production')
 }));
 
 app.enable('trust proxy');
 
-if ((process.env.NODE_ENV === 'production') && (process.env.FORCE_HTTPS === 'true')) {
+if ((config.NODE_ENV === 'production') && (config.FORCE_HTTPS === 'true')) {
 	app.use(function(req, res, next) {
 		if (req.headers['x-forwarded-proto'] !== 'https') {
 			return res.redirect(301, 'https://' + req.headers.host + req.url);
@@ -50,7 +51,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
-if (process.env.NODE_ENV !== 'test') {
+if (config.NODE_ENV !== 'test') {
 	app.use(morgan('dev'));
 }
 
@@ -58,12 +59,12 @@ app.use(sanitize);
 
 app.disable('etag');
 app.use(session({
-	secret: process.env.SECRET_KEY,
+	secret: config.SECRET_KEY,
 	name: 'sessionId',
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
-		secure: (process.env.NODE_ENV === 'production'),
+		secure: (config.NODE_ENV === 'production'),
 		httpOnly: true
 	},
 	store: new MongoStore({
@@ -97,7 +98,7 @@ app.use(function(err, req, res, next) {
 stats.get();
 
 require('./app/routes')(app);
-console.log('NODE_ENV: ' + process.env.NODE_ENV);
+console.log('NODE_ENV: ' + config.NODE_ENV);
 app.listen(port);
 console.log('Server started on port ' + port);
 

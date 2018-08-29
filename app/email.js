@@ -2,6 +2,7 @@
 
 var sendgrid = require('sendgrid');
 var helper = sendgrid.mail;
+var config = require('../config');
 
 module.exports = {
 	sendReset: sendReset
@@ -15,7 +16,7 @@ function sendReset(toEmail, token, host) {
 
 	var mail = new helper.Mail(
 		new helper.Email(
-			process.env.SENDGRID_USERNAME,
+			config.SENDGRID_USERNAME,
 			'The Orcish Dictionary Team'
 		),
 		'Orc Dict Password Reset',
@@ -23,7 +24,7 @@ function sendReset(toEmail, token, host) {
 		new helper.Content('text/plain', text)
 	);
 
-	var sg = sendgrid(process.env.SENDGRID_API_KEY);
+	var sg = sendgrid(config.SENDGRID_API_KEY);
 	var request = sg.emptyRequest({
 		method: 'POST',
 		path: '/v3/mail/send',

@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 // Use mative ES6 promises
 mongoose.Promise = global.Promise;
 var bcrypt = require('bcrypt-nodejs');
+var config = require('../../config.js');
 
 var UserSchema = new Schema({
 	username: {
@@ -27,7 +28,7 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
 	var user = this;
-	var SALT_FACTOR = process.env.WORK_FACTOR || 12;
+	var SALT_FACTOR = config.WORK_FACTOR;
 
 	if (!user.isModified('password')) {
 		return next();
@@ -56,7 +57,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, callback) {
 			return callback(err);
 		}
 
-		var SALT_FACTOR = process.env.WORK_FACTOR || 12;
+		var SALT_FACTOR = config.WORK_FACTOR || 12;
 		if (isMatch && (bcrypt.getRounds(user.password) != SALT_FACTOR)) {
 			user.password = candidatePassword;
 			user.save();

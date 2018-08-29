@@ -4,11 +4,12 @@ var parse = require('csv-parse');
 var Word = require('./models/word');
 var autofill = require('./autofill').autofill;
 var indexes = require('./indexes');
+var config = require('../config');
 
 module.exports = bulkAdd;
 
 function print(str) {
-	if (process.env.NODE_ENV !== 'test') {
+	if (config.NODE_ENV !== 'test') {
 		console.log(str);
 	}
 }
