@@ -267,11 +267,11 @@ function addVerb(word, searchIndexes) {
 	addVerbInfinitives(word, searchIndexes);
 	pushIndex(
 		searchIndexes, word.verb.imperative.singular, 2,
-		'inperative singular', word
+		'imperative singular', word
 	);
 	pushIndex(
 		searchIndexes, word.verb.imperative.plural, 2,
-		'inperative plural', word
+		'imperative plural', word
 	);
 	addVerbVoice(word, searchIndexes, 'active');
 	addVerbVoice(word, searchIndexes, 'passive');
