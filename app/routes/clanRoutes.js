@@ -30,7 +30,7 @@ function addRoutesForClans(app) {
 
 		var promises = [query.lean().exec()];
 		if (getCount) {
-			promises.push(Clan.count());
+			promises.push(Clan.countDocuments());
 		}
 		Promise.all(promises)
 		.then(function(values) {
@@ -131,7 +131,7 @@ function addRoutesForClans(app) {
 	});
 
 	app.delete('/api/allclans', function(req, res) {
-		Clan.remove({})
+		Clan.deleteMany({})
 		.then(function(result) {
 			res.json(result);
 		})
@@ -141,7 +141,7 @@ function addRoutesForClans(app) {
 	});
 
 	app.delete('/api/allclans', (req, res) => {
-		Clan.remove({})
+		Clan.deleteMany({})
 		.then(result => res.json(result))
 		.catch(error => res.status(500).send(error.message));
 	});

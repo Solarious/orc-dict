@@ -46,7 +46,7 @@ function test(expected, actual) {
 
 describe('Words.insertManyWithRetry', function() {
 	beforeEach(function() {
-		return Word.remove({})
+		return Word.deleteMany({})
 		.then(function() {
 			return Word.insertMany(exampleData.initialWords());
 		});

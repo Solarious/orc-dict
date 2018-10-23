@@ -31,7 +31,7 @@ function addRoutesForWords(app) {
 			PoS: 1,
 			num: 1
 		});
-		var countQuery = Word.count();
+		var countQuery = Word.countDocuments();
 		if (sort) {
 			query = query.sort(sort);
 		}
@@ -178,11 +178,11 @@ function addRoutesForWords(app) {
 		var PoS = req.params.pos;
 		var query;
 		if (PoS === 'all') {
-			query = Word.remove({});
+			query = Word.deleteMany({});
 		} else {
 			let enums = Word.schema.path('PoS').enumValues;
 			if (Word.schema.path('PoS').enumValues.indexOf(PoS) !== -1) {
-				query = Word.remove({
+				query = Word.deleteMany({
 					PoS: PoS
 				});
 			} else {

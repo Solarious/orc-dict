@@ -90,7 +90,7 @@ describe('authentication', function() {
 					let cvalue = c[1];
 					cookies[cname] = cvalue;
 				}
-				return User.remove({});
+				return User.deleteMany({});
 			})
 			.then(function() {
 				var user = new User({

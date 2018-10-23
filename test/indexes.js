@@ -124,7 +124,7 @@ describe('Indexes', function() {
 				let cvalue = c[1];
 				cookies[cname] = cvalue;
 			}
-			return User.remove({});
+			return User.deleteMany({});
 		})
 		.then(function() {
 			var user = new User({
@@ -144,10 +144,10 @@ describe('Indexes', function() {
 			});
 		})
 		.then(function() {
-			return Word.remove({});
+			return Word.deleteMany({});
 		})
 		.then(function() {
-			return SearchIndex.remove({});
+			return SearchIndex.deleteMany({});
 		});
 	});
 
@@ -204,9 +204,9 @@ describe('Indexes', function() {
 
 	describe('with some Words and SearchIndexes already added', function() {
 		beforeEach(function() {
-			return Word.remove({})
+			return Word.deleteMany({})
 			.then(function() {
-				return SearchIndex.remove({});
+				return SearchIndex.deleteMany({});
 			})
 			.then(function() {
 				return Word.insertMany([

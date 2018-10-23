@@ -53,7 +53,7 @@ describe('Words', function() {
 	}
 
 	beforeEach(function() {
-		return Word.remove({})
+		return Word.deleteMany({})
 		.then(function() {
 			return Word.insertMany([
 				{
@@ -174,7 +174,7 @@ describe('Words', function() {
 					let cvalue = c[1];
 					cookies[cname] = cvalue;
 				}
-				return User.remove({});
+				return User.deleteMany({});
 			})
 			.then(function() {
 				var user = new User({

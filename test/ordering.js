@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 describe('Ordering', function() {
 	beforeEach(function() {
-		return Word.remove({});
+		return Word.deleteMany({});
 	});
 
 	exampleOrderings.getWordGroups().forEach(function(group) {

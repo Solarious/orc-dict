@@ -16,7 +16,7 @@ module.exports = {
 };
 
 function rebuild() {
-	return SearchIndex.remove({})
+	return SearchIndex.deleteMany({})
 	.then(function() {
 		return Word.find({});
 	})
@@ -35,7 +35,7 @@ function forCreate(word) {
 }
 
 function forUpdate(prevOrcish, prevNum, word) {
-	return SearchIndex.remove({
+	return SearchIndex.deleteMany({
 		'word.orcish': prevOrcish,
 		'word.num': prevNum
 	})
@@ -45,7 +45,7 @@ function forUpdate(prevOrcish, prevNum, word) {
 }
 
 function forRemove(word) {
-	return SearchIndex.remove({
+	return SearchIndex.deleteMany({
 		'word.orcish': word.orcish,
 		'word.num': word.num
 	})
@@ -58,7 +58,7 @@ function forRemove(word) {
 function forRemoveByPoS(PoS) {
 	var args = (PoS === 'all') ? {} : { 'word.PoS': PoS };
 
-	return SearchIndex.remove(args)
+	return SearchIndex.deleteMany(args)
 	.then(function(data) {
 		stats.setKeywordsNeedsUpdate();
 		return data;

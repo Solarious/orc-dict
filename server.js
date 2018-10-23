@@ -25,7 +25,11 @@ if (config.NODE_ENV === 'test') {
 	dburl = config.MONGODB_URI;
 }
 
-mongoose.connect(dburl);
+mongoose.connect(dburl, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+});
 
 app.use(helmet({
 	hsts: (config.NODE_ENV === 'production')

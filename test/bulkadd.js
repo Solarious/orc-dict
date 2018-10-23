@@ -61,7 +61,7 @@ describe('Bulk Add', function() {
 				let cvalue = c[1];
 				cookies[cname] = cvalue;
 			}
-			return User.remove({});
+			return User.deleteMany({});
 		})
 		.then(function() {
 			var user = new User({
@@ -81,7 +81,7 @@ describe('Bulk Add', function() {
 			});
 		})
 		.then(function() {
-			return Word.remove({});
+			return Word.deleteMany({});
 		});
 	});
 
@@ -141,7 +141,7 @@ describe('Bulk Add', function() {
 
 	describe('with some words already added', function() {
 		beforeEach(function() {
-			return Word.remove({})
+			return Word.deleteMany({})
 			.then(function() {
 				var word = new Word({
 					orcish: 'nul',

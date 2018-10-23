@@ -38,10 +38,10 @@ function addRoutesForSentences(app) {
 		if (getcount) {
 			if (category) {
 				promises.push(
-					Sentence.count().where('category', category).exec()
+					Sentence.countDocuments().where('category', category).exec()
 				);
 			} else {
-				promises.push(Sentence.count({}).exec());
+				promises.push(Sentence.countDocuments({}).exec());
 			}
 		}
 
@@ -147,7 +147,7 @@ function addRoutesForSentences(app) {
 	});
 
 	app.delete('/api/allsentences/', function(req, res) {
-		Sentence.remove({})
+		Sentence.deleteMany({})
 		.then(function(result) {
 			res.json(result);
 		})
