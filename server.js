@@ -37,7 +37,7 @@ app.use(helmet({
 
 app.enable('trust proxy');
 
-if ((config.NODE_ENV === 'production') && (config.FORCE_HTTPS === 'true')) {
+if ((config.NODE_ENV === 'production') && (config.FORCE_HTTPS === true)) {
 	app.use(function(req, res, next) {
 		if (req.headers['x-forwarded-proto'] !== 'https') {
 			return res.redirect(301, 'https://' + req.headers.host + req.url);
