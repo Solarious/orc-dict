@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
 var Word = require('../app/models/word');
+var config = require('../config');
 
-var dburl = process.env.MONGODB_URI;
+mongoose.connect(config.MONGODB_URI, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
+});
 
-mongoose.connect(dburl);
-
-Word.remove({}).exec()
+Word.deleteMany({}).exec()
 .then(function(data) {
 	console.log(data.result);
 	process.exit();

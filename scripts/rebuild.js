@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
 var search = require('../app/search');
+var config = require('../config');
 
-var dburl = process.env.MONGODB_URI;
-
-mongoose.connect(dburl);
+mongoose.connect(config.MONGODB_URI, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
+});
 
 rebuild();
 

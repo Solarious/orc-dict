@@ -1,6 +1,6 @@
 'use strict';
 
-var parse = require('csv-parse');
+var parse = require('csv-parse').parse;
 var Word = require('./models/word');
 var autofill = require('./autofill').autofill;
 var indexes = require('./indexes');

@@ -8,7 +8,7 @@ var morgan = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
 var csurf = require('csurf');
-var MongoStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo');
 var helmet = require('helmet');
 var sanitize = require('./app/sanitize');
 var stats = require('./app/stats');
@@ -28,7 +28,8 @@ if (config.NODE_ENV === 'test') {
 mongoose.connect(dburl, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
-	useFindAndModify: false
+	useFindAndModify: false,
+	useUnifiedTopology: true
 });
 
 app.use(helmet({
@@ -71,8 +72,8 @@ app.use(session({
 		secure: (config.NODE_ENV === 'production'),
 		httpOnly: true
 	},
-	store: new MongoStore({
-		mongooseConnection: mongoose.connection,
+	store: MongoStore.create({
+		mongoUrl: config.MONGODB_URI,
 		touchAfter: 24 * 3600
 	})
 }));

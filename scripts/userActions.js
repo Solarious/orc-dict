@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 var readlineSync = require('readline-sync');
 var User = require('../app/models/user');
+var config = require('../config');
 
-var dburl = process.env.MONGODB_URI;
-
-mongoose.connect(dburl);
+mongoose.connect(config.MONGODB_URI, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
+});
 
 var action = process.argv[2];
 
