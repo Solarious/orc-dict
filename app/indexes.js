@@ -15,14 +15,26 @@ module.exports = {
 	forReplaceMany: forReplaceMany
 };
 
-function rebuild() {
-	return SearchIndex.deleteMany({})
-	.then(function() {
-		return Word.find({});
-	})
-	.then(function(words) {
-		return forInsertMany(words);
-	});
+async function rebuild() {
+	await SearchIndex.deleteMany({});
+
+	var skip = 0;
+	var words;
+
+	while (true) {
+		words = await Word.find({})
+			.sort({ id: 'asc' })
+			.skip(skip)
+			.limit(config.MAX_WORDS_LOAD)
+			.lean()
+			.exec();
+		if (words.length == 0) break;
+		skip += words.length;
+
+		await forInsertMany(words);
+	}
+
+	return stats;
 }
 
 function forCreate(word) {

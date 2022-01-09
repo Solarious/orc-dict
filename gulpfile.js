@@ -48,7 +48,7 @@ function lintApp() {
 	return gulp.src(jsAppFiles)
 	.pipe(jshint({
 		node: true,
-		esversion: 6
+		esversion: 8
 	}))
 	.pipe(jshint.reporter('jshint-stylish'))
 }

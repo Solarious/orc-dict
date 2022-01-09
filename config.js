@@ -13,7 +13,8 @@ var config = {
 	SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
 	FORCE_HTTPS: (process.env.FORCE_HTTPS === 'true'),
 	SIZE_PER_PART: Number(process.env.SIZE_PER_PART || 500),
-	WORK_FACTOR: Number(process.env.WORK_FACTOR || 12)
+	WORK_FACTOR: Number(process.env.WORK_FACTOR || 12),
+	MAX_WORDS_LOAD: (Number(process.env.MAX_WORDS_LOAD) || 200)
 };
 
 for (let key in config) {

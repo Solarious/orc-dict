@@ -3,6 +3,7 @@
 var Word = require('./models/word');
 var AsyncLock = require('async-lock');
 var SearchIndex = require('./models/searchIndex');
+var config = require('../config');
 var lock = new AsyncLock();
 
 module.exports = {
@@ -19,17 +20,14 @@ var keywordsNeedUpdate = [true, true];
 const MAX_LIMIT = 100;
 
 function get() {
-	return lock.acquire('stats', function() {
+	return lock.acquire('stats', async function() {
 		if (needsUpdate) {
 			console.log('Rebuilding stats');
-			return build()
-			.then(function(data) {
-				if (needsUpdate)
-					needsUpdate = false;
-				statsStore = data;
-				console.log('Done rebuilding stats');
-				return data;
-			});
+			statsStore = await build();
+			if (needsUpdate)
+				needsUpdate = false;
+			console.log('Done rebuilding stats');
+			return statsStore;
 		} else {
 			return statsStore;
 		}
@@ -68,124 +66,141 @@ function setKeywordsNeedsUpdate() {
 	keywordsNeedUpdate[1] = true;
 }
 
-function build() {
-	return Word.find({})
-	.exec()
-	.then(function(words) {
-		return words.reduce(reduceWord, {
-			adjective: {
+function getEmptyStats() {
+	return {
+		adjective: {
+			count: 0,
+			types: {
+				irregular: 0
+			}
+		},
+		adverb: {
+			count: 0
+		},
+		cardinal: {
+			count: 0
+		},
+		conjunction: {
+			count: 0
+		},
+		contraction: {
+			count: 0
+		},
+		'copular verb': {
+			count: 0
+		},
+		exclamation: {
+			count: 0
+		},
+		interjection: {
+			count: 0
+		},
+		noun: {
+			count: 0,
+			first: {
 				count: 0,
-				types: {
-					irregular: 0
-				}
+				ad: 0,
+				am: 0,
+				ag: 0,
+				aed: 0
 			},
-			adverb: {
-				count: 0
-			},
-			cardinal: {
-				count: 0
-			},
-			conjunction: {
-				count: 0
-			},
-			contraction: {
-				count: 0
-			},
-			'copular verb': {
-				count: 0
-			},
-			exclamation: {
-				count: 0
-			},
-			interjection: {
-				count: 0
-			},
-			noun: {
+			secondMasculine: {
 				count: 0,
-				first: {
-					count: 0,
-					ad: 0,
-					am: 0,
-					ag: 0,
-					aed: 0
-				},
-				secondMasculine: {
-					count: 0,
-					ul: 0,
-					or: 0,
-					k: 0,
-					x: 0
-				},
-				secondNeutral: {
-					count: 0,
-					id: 0,
-					ed: 0,
-					d: 0,
-					z: 0,
-					dj: 0,
-					on: 0
-				},
-				third: {
-					count: 0,
-					ash: 0,
-					ard: 0,
-					rd: 0
-				},
-				fourth: {
-					count: 0,
-					b: 0,
-					f: 0,
-					p: 0
-				},
-				fifth: {
-					count: 0,
-					ath: 0,
-					at: 0
-				},
-				irregular: {
-					count: 0
-				}
+				ul: 0,
+				or: 0,
+				k: 0,
+				x: 0
 			},
-			prefix: {
+			secondNeutral: {
+				count: 0,
+				id: 0,
+				ed: 0,
+				d: 0,
+				z: 0,
+				dj: 0,
+				on: 0
+			},
+			third: {
+				count: 0,
+				ash: 0,
+				ard: 0,
+				rd: 0
+			},
+			fourth: {
+				count: 0,
+				b: 0,
+				f: 0,
+				p: 0
+			},
+			fifth: {
+				count: 0,
+				ath: 0,
+				at: 0
+			},
+			irregular: {
 				count: 0
-			},
-			preposition: {
-				count: 0
-			},
+			}
+		},
+		prefix: {
+			count: 0
+		},
+		preposition: {
+			count: 0
+		},
+		pronoun: {
+			count: 0,
 			pronoun: {
 				count: 0,
-				pronoun: {
-					count: 0,
-					singular: 0,
-					plural: 0
-				},
-				possessive: {
-					count: 0,
-					singular: 0,
-					plural: 0
-				},
-				demonstrative: {
-					count: 0,
-					singular: 0,
-					plural: 0
-				},
-				relative: {
-					count: 0,
-					singular: 0,
-					plural: 0
-				}
+				singular: 0,
+				plural: 0
 			},
-			suffix: {
-				count: 0
-			},
-			verb: {
+			possessive: {
 				count: 0,
-				first: 0,
-				second: 0,
+				singular: 0,
+				plural: 0
 			},
-			total: 0
-		});
-	});
+			demonstrative: {
+				count: 0,
+				singular: 0,
+				plural: 0
+			},
+			relative: {
+				count: 0,
+				singular: 0,
+				plural: 0
+			}
+		},
+		suffix: {
+			count: 0
+		},
+		verb: {
+			count: 0,
+			first: 0,
+			second: 0,
+		},
+		total: 0
+	};
+}
+
+async function build() {
+	var skip = 0;
+	var words;
+	var stats = getEmptyStats();
+
+	while (true) {
+		words = await Word.find({})
+			.sort({ id: 'asc' })
+			.skip(skip)
+			.limit(config.MAX_WORDS_LOAD)
+			.lean()
+			.exec();
+		if (words.length == 0) break;
+		skip += words.length;
+
+		stats = words.reduce(reduceWord, stats);
+	}
+
+	return stats;
 }
 
 function reduceWord(stats, word) {

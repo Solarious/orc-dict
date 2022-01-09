@@ -23,6 +23,7 @@ An online dictionary for the orcish language created by *Matt Vancil*
 * FORCE\_HTTPS - If "true", and NODE\_ENV = "production", redirects all http requests to https
 * SIZE\_PER\_PART (optional) - The maximum number of search indexes that are created at once. A default value of 500 is used if this variable is not defined.
 * WORK\_FACTOR (optional) - The word factor used by bcrypt. Has the default value of 12.
+* MAX\_WORDS\_LOAD (optional) - The maximun number of words loaded at a time when updating stats or search indexes. Used to limit RAM usage. Has the default value of 200
 ## Gulp Tasks
 * js - Concats and uglifies the files from public/src into public/dist/app.min.js.
 * js-debug - Same as above, but does not uglify or include public/src/app.production.js.
